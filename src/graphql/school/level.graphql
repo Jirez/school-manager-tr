@@ -1,0 +1,51 @@
+fragment levelFields on Level {
+  id
+  numberOrder
+  name
+  note
+  branchCount
+  cycle {
+    id
+    name
+    schoolSection {
+      id
+      name
+    }
+    schoolYear {
+      id
+      label
+    }
+  }
+}
+
+query Levels($id: Int!) {
+  levels: findLevel(id: $id) {
+    ...levelFields
+  }
+}
+
+mutation LevelSave($level: LevelInput) {
+  level: storeLevel(level: $level) {
+    ...levelFields
+  }
+}
+
+mutation LevelDelete($id: Int!) {
+  deleteLevelById(id: $id)
+}
+
+subscription LevelCreated {
+  level: onLevelCreated {
+    id
+    numberOrder
+    name
+    note
+    branchCount
+  }
+}
+
+query LevelsBySchoolYear($id: Int!) {
+  levels: levelsBySchoolYear(schoolYearId: $id) {
+    ...levelFields
+  }
+}

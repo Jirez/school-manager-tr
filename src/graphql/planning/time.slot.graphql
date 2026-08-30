@@ -1,0 +1,36 @@
+fragment timeSlotFields on TimeSlot {
+  id
+  name
+  startTime
+  endTime
+  isBreakTime
+  isActive
+}
+
+query TimeSlots($id: Int!) {
+  timeSlots: findTimeSlot(id: $id) {
+    ...timeSlotFields
+  }
+}
+
+mutation TimeSlotSave($timeSlot: TimeSlotCreateInput!) {
+  timeSlot: timeSlotSave(timeSlot: $timeSlot) {
+    ...timeSlotFields
+  }
+}
+
+mutation TimeSlotUpdate($timeSlot: TimeSlotUpdateInput!) {
+  timeSlot: timeSlotUpdate(timeSlot: $timeSlot) {
+    ...timeSlotFields
+  }
+}
+
+mutation TimeSlotDelete($id: Int!) {
+  deleteTimeSlotById(id: $id)
+}
+
+subscription TimeSlotCreated {
+  timeSlot: onTimeSlotCreated {
+    ...timeSlotFields
+  }
+}

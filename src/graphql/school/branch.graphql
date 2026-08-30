@@ -1,0 +1,98 @@
+fragment branchFields on Branch {
+  id
+  name
+  maxStudent
+  totalCoefficient
+  subjectCount
+  classCount
+  level {
+    id
+    name
+    cycle {
+      id
+      name
+      schoolYear {
+        id
+        label
+      }
+    }
+  }
+  subjectBranchCollection {
+    subjectBranchPK {
+      branchId
+      subjectId
+    }
+    coefficient
+    weeklyHourCount
+    sessionCount
+    maxSessionDuration
+    priority
+    number
+    scale
+    subject {
+      id
+      name
+      code
+    }
+  }
+}
+
+query Branches($id: Int!) {
+  branches: findBranch(id: $id) {
+    ...branchFields
+  }
+}
+
+query BranchesBySchoolYear($id: Int!) {
+  branches: findBranchBySchoolYear(schoolYearId: $id) {
+    ...branchFields
+  }
+}
+
+mutation BranchSave($branch: BranchCreateInput!) {
+  branch: storeBranch(branch: $branch) {
+    ...branchFields
+  }
+}
+
+mutation BranchUpdate($branch: BranchUpdateInput!) {
+  branch: branchUpdate(branch: $branch) {
+    ...branchFields
+  }
+}
+
+mutation BranchDelete($id: Int!) {
+  deleteBranchById(id: $id)
+}
+
+subscription BranchCreated {
+  branch: onBranchCreated {
+    id
+    name
+    maxStudent
+    totalCoefficient
+    subjectCount
+    classCount
+  }
+}
+
+query SubjectBranches($branchId: Int!) {
+  subjectBranches: findSubjectBranch(branchId: $branchId) {
+    subjectBranchPK {
+      branchId
+      subjectId
+    }
+    coefficient
+    weeklyHourCount
+    sessionCount
+    maxSessionDuration
+    priority
+    number
+    scale
+    subject {
+      id
+      name
+      code
+    }
+  }
+}

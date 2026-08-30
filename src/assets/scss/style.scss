@@ -1,0 +1,433 @@
+/*================================================================================
+	Version: 1.0
+	Author: Jirez Tchinda
+	Author URL: https://www.facebook.com/epstechnologies
+================================================================================*/
+
+@font-face {
+    font-family: "AccountsUI";
+    src: url("./fonts/AccountsUI.eot?y0vb69");
+    src:
+        url("./fonts/AccountsUI.eot?y0vb69#iefix") format("embedded-opentype"),
+        url("./fonts/AccountsUI.ttf?y0vb69") format("truetype"),
+        url("./fonts/AccountsUI.woff?y0vb69") format("woff");
+    /*url('./fonts/AccountsUI.svg?y0vb69#AccountsUI') format('svg');*/
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "ZohoPuvi";
+    src: url("./fonts/zoho_puvi_medium.eot"); /* IE9 Compat Modes */
+    src:
+        url("./fonts/zoho_puvi_medium.eot?#iefix") format("embedded-opentype"),
+        /* IE6-IE8 */ url("./fonts/zoho_puvi_medium.woff") format("woff"),
+        /* Modern Browsers */ url("./fonts/zoho_puvi_medium.ttf")
+            format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: 500;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "ZohoPuvi";
+    src: url("./fonts/zoho_puvi_regular.eot"); /* IE9 Compat Modes */
+    src:
+        url("./fonts/zoho_puvi_regular.eot?#iefix") format("embedded-opentype"),
+        /* IE6-IE8 */ url("./fonts/zoho_puvi_regular.woff") format("woff"),
+        /* Modern Browsers */ url("./fonts/zoho_puvi_regular.ttf")
+            format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "ZohoPuvi";
+    src: url("./fonts/zoho_puvi_bold.eot"); /* IE9 Compat Modes */
+    src:
+        url("./fonts/zoho_puvi_bold.eot?#iefix") format("embedded-opentype"),
+        /* IE6-IE8 */ url("./fonts/zoho_puvi_bold.woff") format("woff"),
+        /* Modern Browsers */ url("./fonts/zoho_puvi_bold.ttf")
+            format("truetype"); /* Safari, Android, iOS */
+    font-style: normal;
+    font-weight: 600;
+    text-rendering: optimizeLegibility;
+}
+
+// ** Tailwind CSS config
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .modal-lg {
+        //@apply w-4/12 fixed right-0 top-0
+        max-width: 800px;
+        margin: auto;
+        height: auto;
+        top: 25px;
+    }
+
+    .modal-full {
+        width: 100vw;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+    }
+}
+
+@layer components {
+    /* Badge */
+    .badge {
+        @apply relative my-1 rounded border border-transparent px-2 py-0.5 text-xs font-semibold text-white;
+    }
+    .badge-outline-primary {
+        @apply border-primary text-primary hover:bg-primary-light dark:hover:bg-primary dark:hover:text-white-light;
+    }
+    .badge-outline-secondary {
+        @apply border-secondary text-secondary hover:bg-secondary-light dark:hover:bg-secondary dark:hover:text-white-light;
+    }
+    .badge-outline-success {
+        @apply border-success text-success hover:bg-success-light dark:hover:bg-success dark:hover:text-white-light;
+    }
+    .badge-outline-danger {
+        @apply border-danger text-danger hover:bg-danger-light dark:hover:bg-danger dark:hover:text-white-light;
+    }
+    .badge-outline-warning {
+        @apply border-warning text-warning hover:bg-warning-light dark:hover:bg-warning dark:hover:text-white-light;
+    }
+    .badge-outline-info {
+        @apply border-info text-info hover:bg-info-light dark:hover:bg-info dark:hover:text-white-light;
+    }
+    .badge-outline-dark {
+        @apply border-dark text-dark hover:bg-dark-light dark:hover:bg-dark dark:hover:text-white-light;
+    }
+}
+
+// ** Custom theme
+
+.navigation {
+    font-family: "ZohoPuvi", serif;
+    font-weight: 500;
+    font-size: 1.01rem;
+}
+
+.navigation li {
+    margin-bottom: 10px;
+}
+
+.header-navbar {
+    padding: 0px;
+    min-height: 4.45rem;
+    font-family: "ZohoPuvi", Helvetica, Arial, serif;
+    transition:
+        300ms ease all,
+        background 0s;
+    z-index: 997;
+}
+
+.header-navbar .enterprise-name {
+    font-weight: 400;
+    font-size: 1.05rem;
+}
+
+//.offcanvas-header .btn-close
+.modal-header {
+    .btn-close {
+        background: transparent url("../images/svg/close-btn.svg")
+            center/0.75rem auto no-repeat;
+    }
+}
+
+.offcanvas-header {
+    .btn-close {
+        background: transparent url("../images/svg/close-btn.svg")
+            center/0.75rem auto no-repeat;
+        padding: 0.8rem;
+        box-shadow: 0 5px 10px 0 rgba(#000, 0.1);
+        border-radius: 5px;
+        background-color: #fff;
+        opacity: 1;
+        transition: all 0.23s ease 0.1s;
+        position: relative;
+        top: 15px;
+        right: 18px;
+        transform: translate(18px, -10px);
+
+        // For hover effect of close btn
+        &:hover,
+        &:focus,
+        &:active {
+            opacity: 1;
+            outline: none;
+            transform: translate(15px, -2px);
+            box-shadow: none;
+        }
+    }
+}
+
+.dark-layout {
+    .offcanvas-header {
+        .btn-close {
+            background: transparent url("../images/svg/close-btn-light.svg")
+                center/0.75rem auto no-repeat;
+            text-shadow: none;
+            background-color: #283046 !important;
+            color: #b4b7bd;
+            box-shadow: 0 3px 8px 0 rgb(11 10 25 / 49%) !important;
+        }
+    }
+}
+
+.form-switch {
+    //margin-left: 3.5rem;
+    bottom: -3px;
+    .form-label {
+        margin-left: -3.5rem;
+    }
+}
+
+.form-label {
+    font-size: 0.98rem;
+}
+
+table.tableur td {
+    padding: 0;
+    margin: 0;
+}
+
+table.spreadsheet td {
+    padding: 0;
+    margin: 0;
+}
+
+.tableur input {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.form-control {
+    box-sizing: border-box;
+    margin: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: "tnum", "tnum";
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    /*height: 36px;*/
+    height: auto;
+    padding: 5px 11px;
+    color: #545454;
+    font-size: 13px !important;
+    line-height: 1.5715;
+    //background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+input {
+    font-weight: 500;
+    //color: rgba(0,0,0,.65) !important;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    /* font-size: 1rem; */
+    font-weight: 400;
+    line-height: 1.45;
+    color: #6e6b7b;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #ffffff;
+    border: 1px solid #d8d6de;
+    border-radius: 2px;
+}
+
+.form-select {
+    //height: auto;
+    padding: 5px 11px;
+    color: #545454;
+    font-size: 14px;
+    line-height: 1.5715;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#displayStudentName {
+    position: fixed;
+    right: 0;
+    top: 65px;
+    font-size: 2.2em;
+    background-color: #039be5;
+    border-radius: 5px;
+    padding: 0 10px;
+    color: #ffffff;
+    z-index: 10000000;
+}
+
+.rah-hint {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.tw-bg-white {
+    background-color: #ffffff;
+}
+
+.table > :not(thead) > * > * {
+    background-color: #fff !important;
+}
+
+.table-hover0 > tbody > tr:hover {
+    background-color: #f5f5f5 !important;
+}
+
+.dark-layout {
+    .simple-input {
+        background-color: #1b2337;
+    }
+    .simple-input:disabled {
+        background-color: rgb(69, 61, 61);
+    }
+    .tw-bg-white {
+        background-color: #1b2337;
+    }
+
+    .rah-hint {
+        color: rgba(247, 57, 57, 0.562) !important;
+    }
+
+    .table > :not(caption) > * > * {
+        background-color: transparent !important;
+    }
+
+    .table-hover0 > tbody > tr:hover {
+        background-color: #2c3e50 !important;
+    }
+}
+
+.layout-page-content,
+.layout-navbar,
+.layout-footer {
+    padding-inline: 0.5rem !important;
+}
+
+.content-wrapper {
+    padding-top: -0.95rem !important;
+    margin: -20px !important;
+}
+
+.layout-navbar {
+    inset-block-start: 0rem !important;
+}
+
+.table thead th,
+.table tfoot th {
+    text-transform: uppercase;
+    font-size: 0.757rem;
+    letter-spacing: 0.35px;
+}
+
+/* table  {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem;
+} */
+
+.navigation {
+    font-size: 0.92rem;
+}
+
+.form-control,
+.form-select,
+.form-switch,
+.form-label,
+.react-select {
+    font-size: 13px;
+}
+
+.page-item,
+.page-link {
+    font-size: 0.95rem;
+}
+
+body {
+    font-size: 13px !important;
+    font-family: "Inter", sans-serif !important;
+    padding: 10px;
+    padding-top: 0;
+}
+
+// ** Custom Scrollbar
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d8d6de;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+
+    &:hover {
+        background: #b4b7bd;
+        background-clip: content-box;
+    }
+}
+
+.dark-layout {
+    ::-webkit-scrollbar-thumb {
+        background: #404656;
+
+        &:hover {
+            background: #505767;
+        }
+    }
+}
+
+// ** Table Fix Head Sticky Header
+.tableFixHead {
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 70vh;
+    position: relative;
+
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background-color: #fff;
+        // Fix for border disappearing during sticky
+        box-shadow: inset 0 -1px 0 #d8d6de;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .dark-layout & {
+        thead th {
+            background-color: #283046;
+            box-shadow: inset 0 -1px 0 #404656;
+        }
+    }
+}

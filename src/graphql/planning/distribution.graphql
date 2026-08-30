@@ -1,0 +1,54 @@
+fragment distributionFields on Distribution {
+  distributionPK {
+    classId
+    subjectId
+    schoolYearId
+  }
+  weekHoursCount
+  headerTeacher
+  subject {
+    id
+    name
+    subjectDepartment {
+      id
+    }
+  }
+  teacher {
+    id
+    lastName
+    firstName
+    code
+  }
+  coTeacher {
+    id
+    lastName
+    firstName
+    code
+  }
+}
+
+query ClassDistributions($classId: Int!, $schoolId: Int!) {
+  distributions: findClassDistribution(classId: $classId, schoolId: $schoolId) {
+    ...distributionFields
+  }
+}
+
+mutation ClassDistributionSave(
+  $distributions: [DistributionInput!]!
+  $classId: Int!
+) {
+  distributions: storeClassDistribution(
+    distributions: $distributions
+    classId: $classId
+  ) {
+    ...distributionFields
+  }
+}
+
+query AssignedTeachers($schoolId: Int!) {
+  teachers: assignedTeachers(schoolId: $schoolId) {
+    id
+    lastName
+    firstName
+  }
+}

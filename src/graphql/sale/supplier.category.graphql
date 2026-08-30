@@ -1,0 +1,41 @@
+fragment supplierCategoryFragment on SupplierCategory {
+  id
+  name
+  active
+  description
+  enterpriseId
+  parent {
+    id
+    name
+  }
+}
+
+query SupplierCategories($id: Int!) {
+  supplierCategories(enterpriseId: $id) {
+    ...supplierCategoryFragment
+  }
+}
+
+mutation SupplierCategorySave($category: SupplierCategoryCreateInput!) {
+  supplierCategory: supplierCategorySave(category: $category) {
+    ...supplierCategoryFragment
+  }
+}
+
+mutation SupplierCategoryUpdate($category: SupplierCategoryUpdateInput!) {
+  supplierCategory: supplierCategoryUpdate(category: $category) {
+    ...supplierCategoryFragment
+  }
+}
+
+mutation SupplierCategoryDelete($id: Int!) {
+  supplierCategoryDeleteById(id: $id)
+}
+
+subscription SupplierCategoryCreated {
+  onSupplierCategoryCreated {
+    id
+    name
+    enterpriseId
+  }
+}

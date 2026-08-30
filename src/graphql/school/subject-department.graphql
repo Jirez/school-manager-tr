@@ -1,0 +1,37 @@
+fragment subjectDepartmentFields on SubjectDepartment {
+	id
+	name
+	code
+	active
+	note
+	schoolSection {
+		id
+		name
+	}
+	school {
+		id
+		name
+	}
+}
+
+query SubjectDepartments($id: Int!) {
+	subjectDepartments: findSubjectDepartment(id: $id) {
+		...subjectDepartmentFields
+	}
+}
+
+mutation saveSubjectDepartment($department: SubjectDepartmentInput) {
+	subjectDepartment: storeSubjectDepartment(department: $department) {
+		...subjectDepartmentFields
+	}
+}
+
+mutation deleteSubjectDepartment($id: Int!) {
+	deleteSubjectDepartmentById(id: $id)
+}
+
+subscription onSubjectDepartment {
+	subjectDepartment: onSubjectDepartmentCreated {
+		...subjectDepartmentFields
+	}
+}

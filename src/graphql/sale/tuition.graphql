@@ -1,0 +1,98 @@
+mutation TuitionSave($tuition: TuitionCreateInput!) {
+  product: tuitionSave(tuition: $tuition) {
+    ...productList
+  }
+}
+
+mutation TuitionUpdate($tuition: TuitionUpdateInput!) {
+  product: tuitionUpdate(tuition: $tuition) {
+    ...productList
+  }
+}
+
+mutation TuitionDelete($id: Long!) {
+  tuitionDeleteById(productId: $id)
+}
+
+query TuitionUnionById($id: Long!) {
+  tuition: tuitionUnionById(productId: $id) {
+    productId
+    name
+    sku
+    active
+    salePrice
+    minSalePrice
+    cost
+    purchasePrice
+    saleDescription
+    purchaseDescription
+    picture
+    productCategory {
+      id
+      name
+    }
+    saleAccount {
+      id
+      number
+      name
+    }
+    purchaseAccount {
+      id
+      number
+      name
+    }
+    enterprise {
+      id
+      name
+    }
+    tuitionId
+    numberOrder
+    name2
+    isMandatory
+    isCollected
+    allowPaymentInKind
+    isDeliverable
+  }
+}
+
+query Tuitions($id: Int!) {
+  tuitions: tuitionByEnterpriseId(enterpriseId: $id) {
+    productId
+    name
+    sku
+    active
+    salePrice
+    minSalePrice
+    cost
+    purchasePrice
+    saleDescription
+    purchaseDescription
+    picture
+    productCategory {
+      id
+      name
+    }
+    saleAccount {
+      id
+      number
+      name
+    }
+    purchaseAccount {
+      id
+      number
+      name
+    }
+    enterprise {
+      id
+      name
+    }
+    tuitionId
+    id: tuitionId
+    numberOrder
+    name2
+    isMandatory
+    isCollected
+    allowPaymentInKind
+    isDeliverable
+  }
+}

@@ -1,0 +1,32 @@
+fragment accountModelFields on AccountModel {
+	id
+	code
+	languageType
+	country
+	active
+	current
+	name
+	note
+}
+
+query AccountModels {
+	accountModels: findAllAccountModel {
+		...accountModelFields
+	}
+}
+
+mutation AccountModelSave($model: AccountModelInput, $id: Int!) {
+	accountModel: storeAccountModel(accountModel: $model, id: $id) {
+		...accountModelFields
+	}
+}
+
+mutation AccountModelDelete($id: Int!) {
+	deleteAccountModelById(id: $id)
+}
+
+subscription AccountModelCreated {
+	accountModel: onAccountModelCreated {
+		...accountModelFields
+	}
+}

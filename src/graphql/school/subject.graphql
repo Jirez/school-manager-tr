@@ -1,0 +1,78 @@
+fragment subjectFields on Subject {
+  id
+  name
+  code
+  displayName
+  active
+  showInTimeTable
+  note
+  subjectDepartment {
+    id
+    code
+    name
+    schoolSection {
+      id
+      name
+    }
+  }
+}
+
+query Subjects($id: Int!) {
+  subjects: findSubject(id: $id) {
+    ...subjectFields
+  }
+}
+
+query SubjectsByClass($id: Int!) {
+  subjects: findSubjectByClass(id: $id) {
+    ...subjectFields
+  }
+}
+
+query SubjectsForNotes($id: Int!) {
+  subjects: findSubjectForNote(classId: $id) {
+    ...subjectFields
+  }
+}
+
+query SubjectsNotInGroup($id: Int!) {
+  subjects: findSubjectNotInSubjectGroup(id: $id) {
+    ...subjectFields
+  }
+}
+
+mutation SubjectSave($subject: SubjectInput) {
+  subject: storeSubject(subject: $subject) {
+    ...subjectFields
+  }
+}
+
+mutation BatchSubjectSave($subjects: [SubjectInput!]) {
+  subject: storeBatchSubject(subjects: $subjects) {
+    ...subjectFields
+  }
+}
+
+mutation SubjectDelete($id: Int!) {
+  deleteSubjectById(id: $id)
+}
+
+subscription SubjectCreated {
+  subject: onSubjectCreated {
+    id
+    name
+    code
+    displayName
+    active
+    showInTimeTable
+    note
+  }
+}
+
+query SubjectLanguage($id: Int!) {
+  lang: findSubjectLanguage(id: $id) {
+    id
+    code
+    name
+  }
+}

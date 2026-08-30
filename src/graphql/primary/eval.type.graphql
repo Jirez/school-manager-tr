@@ -1,0 +1,35 @@
+fragment evalTypeFields on EvalType {
+  id
+  name
+  description
+  active
+  enterpriseId: schoolId
+}
+
+query EvalTypes($id: Int!) {
+  evalTypes(schoolId: $id) {
+    ...evalTypeFields
+  }
+}
+
+query EvalTypeById($id: Int!) {
+  evalTypeById(id: $id) {
+    ...evalTypeFields
+  }
+}
+
+mutation EvalTypeSave($type: EvalTypeInput!) {
+  evalType: evalTypeSave(type: $type) {
+    ...evalTypeFields
+  }
+}
+
+mutation EvalTypeDeleteById($id: Int!) {
+  evalTypeDeleteById(id: $id)
+}
+
+subscription EvalTypeCreated {
+  evalType: evalTypeCreated {
+    ...evalTypeFields
+  }
+}

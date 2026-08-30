@@ -1,0 +1,39 @@
+fragment customerCategoryFragment on CustomerCategory {
+  id
+  name
+  active
+  description
+  enterpriseId
+  parent {
+    id
+    name
+  }
+}
+
+query CustomerCategories($id: Int!) {
+  customerCategories(enterpriseId: $id) {
+    ...customerCategoryFragment
+  }
+}
+
+mutation CustomerCategorySave($category: CustomerCategoryCreateInput!) {
+  customerCategory: customerCategorySave(category: $category) {
+    ...customerCategoryFragment
+  }
+}
+
+mutation CustomerCategoryUpdate($category: CustomerCategoryUpdateInput!) {
+  customerCategory: customerCategoryUpdate(category: $category) {
+    ...customerCategoryFragment
+  }
+}
+
+mutation CustomerCategoryDelete($id: Int!) {
+  customerCategoryDeleteById(id: $id)
+}
+
+subscription CustomerCategoryCreated {
+  customerCategory: onCustomerCategoryCreated {
+    ...customerCategoryFragment
+  }
+}

@@ -1,0 +1,23 @@
+query FeeStructure($levelId: Int!, $schoolId: Int!) {
+  fees: feeStructure(levelId: $levelId, schoolId: $schoolId) {
+    feeGroupId
+    feeGroupName
+    items {
+      installmentId
+      installmentName
+      items {
+        tuitionId
+        tuitionName
+        requiredAmount
+        requiredAmountF: requiredAmount
+        lateFee
+        dueDate
+        gracePeriodDays
+      }
+    }
+  }
+}
+
+mutation FeeStructureSave($form: [FeeStructureInputI!]!, $levelId: Int!) {
+  feeStructureSave(form: $form, levelId: $levelId)
+}

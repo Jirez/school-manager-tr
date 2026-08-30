@@ -1,0 +1,102 @@
+fragment schoolFeeFields on SchoolFee {
+  id
+  numberOrder
+  code
+  name
+  name2
+  note
+  active
+  mandatory
+  saleAccount {
+    id
+    name
+  }
+  school {
+    id
+    name
+  }
+}
+
+query SchoolFees($id: Int!) {
+  schoolFees: findSchoolFee(id: $id) {
+    ...schoolFeeFields
+  }
+}
+
+mutation SchoolFeeSave($schoolFee: SchoolFeeInput) {
+  schoolFee: storeSchoolFee(schoolFee: $schoolFee) {
+    ...schoolFeeFields
+  }
+}
+
+mutation SchoolFeeDelete($id: Int!) {
+  deleteSchoolFeeById(id: $id)
+}
+
+subscription SchoolFeeCreated {
+  schoolFee: onSchoolFeeCreated {
+    id
+    numberOrder
+    code
+    name
+    name2
+    note
+    active
+    mandatory
+  }
+}
+
+mutation SchoolFeeLevelSave($form: SchoolFeeLevelForm) {
+  storeSchoolFeeLevel(form: $form)
+}
+
+query SchoolFeeLevels($id: Int!) {
+  schoolFeeLevels: findSchoolFeeLevel(levelId: $id) {
+    schoolFeeLevelPK {
+      levelId
+      schoolFeeId
+      paymentGroupId
+      paymentSliceId
+    }
+    requiredAmount
+    level {
+      id
+      name
+    }
+    schoolFee {
+      id
+      name
+    }
+    paymentGroup {
+      id
+      name
+    }
+    paymentSlice {
+      id
+      name
+    }
+  }
+}
+
+query SchoolFeeLevelSimple($levelId: Int!, $schoolId: Int!) {
+  fees: schoolFeeLevel(levelId: $levelId, schoolId: $schoolId) {
+    paymentGroupId
+    paymentGroupName
+    items {
+      paymentSliceId
+      paymentSliceName
+      items {
+        schoolFeeId
+        schoolFeeName
+        requiredAmount
+      }
+    }
+  }
+}
+
+mutation SchoolFeeLevelSimpleSave(
+  $form: [SchoolFeeLevelInputI!]!
+  $levelId: Int!
+) {
+  schoolFeeLevelSave(form: $form, levelId: $levelId)
+}

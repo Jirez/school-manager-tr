@@ -1,0 +1,87 @@
+fragment expenseFields on Expense {
+  id
+  number
+  operationDate
+  recordDate
+  amount
+  taxAmount
+  quantity
+  note
+  enterpriseId
+  paymentMode {
+    id
+    name
+  }
+  paymentAccount {
+    id
+    name
+  }
+  department {
+    id
+    name
+  }
+  voucher {
+    id
+    number
+    date
+    amount
+    usedAmount
+  }
+}
+
+query Expenses($id: Int!) {
+  expenses(enterpriseId: $id) {
+    ...expenseFields
+  }
+}
+
+query ExpenseById($id: Long!) {
+  expense: expenseById(id: $id) {
+    ...expenseFields
+  }
+}
+
+query ExpenseItems($id: Long!) {
+  items: expenseItems(expenseId: $id) {
+    id
+    quantity
+    quantityF: quantity
+    unitPrice
+    unitPriceF: unitPrice
+    description
+    category {
+      id
+      name
+    }
+    person {
+      id
+      displayName
+    }
+    operationClass {
+      id
+      name
+    }
+  }
+}
+
+mutation ExpenseSave($expense: ExpenseCreateInput!) {
+  expense: expenseSave(expense: $expense) {
+    ...expenseFields
+  }
+}
+
+mutation ExpenseUpdate($expense: ExpenseUpdateInput!) {
+  expense: expenseUpdate(expense: $expense) {
+    ...expenseFields
+  }
+}
+
+mutation ExpenseDeleteById($id: Long!) {
+  expenseDeleteById(id: $id)
+}
+
+subscription ExpenseCreated {
+  expense: onExpenseCreated {
+    ...expenseFields
+  }
+}

@@ -1,0 +1,150 @@
+mutation Login($authRequest: AuthRequestInput!) {
+  loginUser(authRequest: $authRequest) {
+    token
+    mfa
+    user {
+      username
+      authorities
+      enterprise {
+        id
+        name
+      }
+      person {
+        id
+        lastName
+        firstName
+        displayName
+      }
+      schoolCategory
+      schoolFeeCompulsory
+    }
+  }
+}
+
+mutation Verify($username: String!, $code: String!) {
+  verify(username: $username, code: $code) {
+    token
+    user {
+      username
+      authorities
+      enterprise {
+        id
+        name
+      }
+      person {
+        id
+        lastName
+        firstName
+        displayName
+      }
+    }
+  }
+}
+
+fragment userFields on User {
+  id
+  username
+  email
+  creationDate
+  lastLogin
+  isEnabled
+  person {
+    id
+    displayName
+    lastName
+    firstName
+  }
+  roles {
+    id
+    name
+  }
+  secretImageUri
+  mfa
+}
+
+query Users($id: Int!) {
+  users: findUserByEnterprise(id: $id) {
+    ...userFields
+  }
+}
+
+query UserById($id: Int!) {
+  findUserById(id: $id) {
+    ...userFields
+  }
+}
+
+query UserByUsername($username: String!) {
+  user: findUserByUsername(username: $username) {
+    ...userFields
+  }
+}
+
+mutation UserSave($user: UserCreateInput!) {
+  user: storeUser(user: $user) {
+    ...userFields
+  }
+}
+
+mutation UserUpdate($user: UserUpdateInput!) {
+  user: userUpdate(user: $user) {
+    ...userFields
+  }
+}
+
+mutation UserDelete($id: Int!) {
+  deleteUserById(id: $id)
+}
+
+mutation UserDeleteMany($ids: [Int!]!) {
+  deleteUserByIds(ids: $ids)
+}
+
+subscription UserCreated {
+  user: onUserCreated {
+    id
+    username
+    email
+    creationDate
+    lastLogin
+    isEnabled
+  }
+}
+
+mutation UserPasswordUpdate(
+  $username: String!
+  $updatePasswordInput: UpdatePasswordInput!
+) {
+  updateUserPassword(
+    username: $username
+    updatePasswordInput: $updatePasswordInput
+  ) {
+    ...userFields
+  }
+}
+
+mutation MfaUpdate($username: String!, $mfa: Boolean!) {
+  updateMfa(username: $username, mfa: $mfa) {
+    ...userFields
+  }
+}
+
+mutation UserToggleStatus($userId: Int!) {
+  userToggleStatus(userId: $userId) {
+    ...userFields
+  }
+}
+
+mutation UsersChangeStatus($ids: [Int!]!, $status: Boolean!) {
+  usersChangeStatus(ids: $ids, status: $status)
+}
+
+query PeopleWithoutAccount($id: Int!) {
+  people: findPeopleWithoutAccount(enterpriseId: $id) {
+    id
+    displayName
+    lastName
+    firstName
+    __typename
+  }
+}

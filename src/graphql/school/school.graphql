@@ -1,0 +1,85 @@
+fragment schoolFields on School {
+  id
+  name
+  name2
+  registrationNumber
+  shortName
+  schoolCode
+  schoolType
+  schoolCategory
+  studentType
+  motto
+  webSite
+  note
+  logo
+  active
+  motto2
+  creationDate
+  address {
+    state
+    street
+    town
+    country
+    zipCode
+  }
+  contactInfo {
+    telephone
+    mobile
+    email
+    fax
+    postOfficeBox
+  }
+  legalInfo {
+    legalForm
+    taxpayerNumber
+    tradeRegister
+    shareCapital
+  }
+  authNumber
+  nsifNumber
+  venue
+  signingAddress
+  bilingualName
+  identifier
+}
+
+query SchoolById($id: Int!) {
+  schools: findSchoolById(id: $id) {
+    ...schoolFields
+  }
+}
+
+mutation SchoolSave($school: SchoolInput) {
+  school: storeSchool(school: $school) {
+    ...schoolFields
+  }
+}
+
+mutation CloneConfig($schoolYearId: Int!, $destSchoolYearId: Int!) {
+  cloneConfig(schoolYearId: $schoolYearId, destSchoolYearId: $destSchoolYearId)
+}
+
+query PeopleByEnterprise($id: Int!) {
+  people: findPeopleByEnterprise(enterpriseId: $id) {
+    id
+    lastName
+    firstName
+    displayName
+    active
+    __typename
+  }
+}
+
+mutation SchoolUpdate($school: SchoolUpdateInput!) {
+  school: schoolUpdate(school: $school) {
+    ...schoolFields
+  }
+}
+
+query SchoolByIdentifier($identifier: String!) {
+  school: schoolByIdentifier(identifier: $identifier) {
+    id
+    name
+    logo
+  }
+}

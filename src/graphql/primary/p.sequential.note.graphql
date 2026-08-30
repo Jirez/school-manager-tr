@@ -1,0 +1,83 @@
+query PSequentialNote(
+  $classId: Int!
+  $subCompetenceId: Int!
+  $subPeriodId: Int!
+  $schoolId: Int!
+) {
+  sequentialNotes: pSequentialNote(
+    classId: $classId
+    subCompetenceId: $subCompetenceId
+    subPeriodId: $subPeriodId
+    schoolId: $schoolId
+  ) {
+    studentId
+    studentFullName
+    registrationNumber
+    items {
+      evalTypeId
+      note
+      evalTypeName
+      marks
+    }
+  }
+}
+
+mutation PSequentialNoteSave(
+  $notes: [PSequentialNoteInput!]!
+  $classId: Int!
+  $subPeriodId: Int!
+  $subCompetenceId: Int!
+  $schoolId: Int!
+) {
+  sequentialNote: pSequentialNoteSave(
+    notes: $notes
+    classId: $classId
+    subPeriodId: $subPeriodId
+    subCompetenceId: $subCompetenceId
+    schoolId: $schoolId
+  )
+}
+
+######## Free sequential notes
+
+query PFreeSequentialNote(
+  $classId: Int!
+  $subCompetenceId: Int!
+  $subPeriodIds: [Int!]!
+  $schoolId: Int!
+) {
+  sequentialNotes: pFreeSequentialNote(
+    classId: $classId
+    subCompetenceId: $subCompetenceId
+    subPeriodIds: $subPeriodIds
+    schoolId: $schoolId
+  ) {
+    studentId
+    studentFullName
+    registrationNumber
+    items {
+      subPeriodId
+      subPeriodName
+      items {
+        evalTypeId
+        note
+        evalTypeName
+        marks
+      }
+    }
+  }
+}
+
+mutation PFreeSequentialNoteSave(
+  $notes: [PFreeSequentialNoteInput!]!
+  $classId: Int!
+  $subCompetenceId: Int!
+  $schoolId: Int!
+) {
+  sequentialNote: pFreeSequentialNoteSave(
+    notes: $notes
+    classId: $classId
+    subCompetenceId: $subCompetenceId
+    schoolId: $schoolId
+  )
+}

@@ -1,0 +1,47 @@
+{
+  "include": ["**/*.ts", "**/*.tsx", "eslint.config.js", "prettier.config.js", "vite.config.js"],
+
+  "compilerOptions": {
+    "target": "ES2022",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    // "baseUrl": ".",
+    "paths": {
+      "#/*": ["./src/*"],
+      "@/*": ["./src/*"],
+      // "@assets/*": ["src/@core/assets/*"],
+      /* "@myAssets/*": ["src/assets/*"],
+      "@components/*": ["src/@core/components/*"],
+      "@layouts/*": ["src/@core/layouts/*"],
+      "@myLayouts/*": ["src/layouts/*"],
+      "@store/*": ["src/redux/*"],
+      "@styles/*": ["src/@core/scss/*"],
+      "@configs/*": ["src/configs/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@context/*": ["src/context/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@router/*": ["src/router/*"],
+      "@views/*": ["src/views/*"],
+      "@auth/*": ["src/@core/auth/*"],
+      "@queries/*": ["src/queries/*"],
+      "@gql/*": ["src/gql/*"],*/
+    },
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+
+    /* Linting */
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+  }
+}

@@ -1,0 +1,28 @@
+fragment mobileOperationFields on MobileOperation {
+  id
+  operationId
+  type
+  invoiceType: type
+  operationDate
+  referenceOrder
+  reference
+  amount
+  fee
+  person
+  personType
+  enterpriseId
+  description
+  paymentNumber
+  payObject
+  status
+}
+
+query MobileOperations($id: Int!, $startDate: Date!, $endDate: Date!) {
+  mobileOperations(
+    enterpriseId: $id
+    startDate: $startDate
+    endDate: $endDate
+  ) {
+    ...mobileOperationFields
+  }
+}

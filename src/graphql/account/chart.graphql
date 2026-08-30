@@ -1,0 +1,52 @@
+fragment chartOfAccountFields on ChartOfAccount {
+  id
+  name
+  number
+  active
+  note
+  logCodes
+  accountGroup {
+    id
+    name
+  }
+  accountCategory {
+    id
+    name
+  }
+  parent {
+    id
+    number
+    name
+  }
+}
+
+query ChartOfAccounts($id: Int!) {
+  chartOfAccounts: findChartOfAccount(id: $id) {
+    ...chartOfAccountFields
+  }
+}
+
+mutation ChartOfAccountSave($account: ChartOfAccountInput) {
+  chartOfAccount: storeChartOfAccount(account: $account) {
+    ...chartOfAccountFields
+  }
+}
+
+mutation ChartOfAccountDelete($id: Int!) {
+  deleteChartOfAccountById(id: $id)
+}
+
+subscription ChartOfAccountCreated {
+  chartOfAccount: onChartOfAccountCreated {
+    id
+    name
+    number
+    active
+    note
+    logCodes
+  }
+}
+
+query ChartOfAccountNextId {
+  id: findChartOfAccountNextId
+}

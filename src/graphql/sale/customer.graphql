@@ -1,0 +1,75 @@
+fragment customerFragment on Customer {
+  id
+  lastName
+  firstName
+  displayName
+  active
+  note
+  address {
+    street
+    state
+    country
+    town
+    zipCode
+  }
+  contactInfo {
+    telephone
+    email
+    postOfficeBox
+    mobile
+    fax
+  }
+  birthDate
+  webSite
+  taxNumber
+  tradeRegister
+  prefix
+  paymentMode {
+    id
+    name
+  }
+  paymentCondition {
+    id
+    name
+  }
+  category {
+    id
+    name
+  }
+  customerAccount {
+    id
+    name
+  }
+}
+
+query Customers($id: Int!) {
+  customers(enterpriseId: $id) {
+    ...customerFragment
+  }
+}
+
+mutation CustomerSave($customer: CustomerCreateInput!) {
+  customer: customerSave(customer: $customer) {
+    ...customerFragment
+  }
+}
+
+mutation CustomerUpdate($customer: CustomerUpdateInput!) {
+  customer: customerUpdate(customer: $customer) {
+    ...customerFragment
+  }
+}
+
+mutation CustomerDelete($id: Long!) {
+  customerDeleteById(id: $id)
+}
+
+subscription CustomerCreated {
+  onCustomerCreated {
+    id
+    lastName
+    firstName
+    displayName
+    enterpriseId
+  }
+}

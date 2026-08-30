@@ -1,0 +1,40 @@
+fragment installmentFragment on Installment {
+  id
+  numberOrder
+  name
+  name2
+  dueDate
+  gracePeriodDays
+  lateFeePercentage
+  isActive
+  note
+  isRefundable
+}
+
+query Installments($id: Int!) {
+  installments(schoolId: $id) {
+    ...installmentFragment
+  }
+}
+
+mutation InstallmentSave($installment: InstallmentCreateInput!) {
+  installment: installmentSave(installment: $installment) {
+    ...installmentFragment
+  }
+}
+
+mutation InstallmentUpdate($installment: InstallmentUpdateInput!) {
+  installment: installmentUpdate(installment: $installment) {
+    ...installmentFragment
+  }
+}
+
+mutation InstallmentDelete($id: Int!) {
+  installmentDeleteById(id: $id)
+}
+
+subscription InstallmentCreated {
+  installment: onInstallmentCreated {
+    ...installmentFragment
+  }
+}

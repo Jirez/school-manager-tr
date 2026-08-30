@@ -1,0 +1,16 @@
+fragment enrollmentHistoryFragment on EnrollmentHistory {
+  studentId
+  registrationNumber
+  lastName
+  firstName
+  schoolYearId
+  schoolYearLabel
+  classId
+  className
+}
+
+query EnrollmentsOfStudent($studentId: Long!) {
+  enrollments: enrollmentsOfStudent(studentId: $studentId) {
+    ...enrollmentHistoryFragment
+  }
+}

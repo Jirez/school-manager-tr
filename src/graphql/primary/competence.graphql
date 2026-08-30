@@ -1,0 +1,73 @@
+fragment competenceFields on Competence {
+  id
+  numberOrder
+  name
+  marks
+  description
+  active
+  enterpriseId: schoolId
+  level {
+    id
+    name
+  }
+}
+
+query Competences($id: Int!) {
+  competences(schoolId: $id) {
+    ...competenceFields
+  }
+}
+
+query CompetenceById($id: Int!) {
+  competenceById(id: $id) {
+    ...competenceFields
+  }
+}
+
+mutation CompetenceSave($competence: CompetenceCreateInput!) {
+  competence: competenceSave(competence: $competence) {
+    ...competenceFields
+  }
+}
+
+mutation CompetenceUpdate($competence: CompetenceUpdateInput!) {
+  competence: competenceUpdate(competence: $competence) {
+    ...competenceFields
+  }
+}
+
+mutation CompetenceDeleteById($id: Int!) {
+  competenceDeleteById(id: $id)
+}
+
+subscription CompetenceCreated {
+  competence: competenceCreated {
+    id
+    numberOrder
+    name
+    marks
+    description
+    active
+    enterpriseId: schoolId
+  }
+}
+
+query CompetencesByLevel($levelId: Int!, $schoolId: Int!) {
+  competences: competencesByLevel(levelId: $levelId, schoolId: $schoolId) {
+    levelId
+    levelName
+    schoolId
+    items {
+      competenceId
+      numberOrder
+      name
+      marks
+      description
+      active
+    }
+  }
+}
+
+mutation CompetenceLevelSave($competences: [CompetenceLevelInput!]!) {
+  competenceLevelSave(competences: $competences)
+}

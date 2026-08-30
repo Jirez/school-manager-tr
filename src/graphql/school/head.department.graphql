@@ -1,0 +1,24 @@
+query HeadDepartment($id: Int!) {
+  headDepartments(schoolId: $id) {
+    headDepartmentPK {
+      schoolYearId
+      departmentId
+    }
+    teacher {
+      id
+      lastName
+      firstName
+    }
+    department {
+      id
+      name
+    }
+  }
+}
+
+mutation HeadDepartmentsSave(
+  $headDepartments: [HeadDepartmentInput!]!
+  $schoolId: Int!
+) {
+  headDepartmentsSave(headDepartments: $headDepartments, schoolId: $schoolId)
+}

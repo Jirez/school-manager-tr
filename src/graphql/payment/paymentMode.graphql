@@ -1,0 +1,34 @@
+fragment paymentModeFields on PaymentMode {
+  id
+  name
+  description
+  active
+  school {
+    id
+  }
+}
+
+query PaymentModes($id: Int!) {
+  paymentModes: findPaymentMode(id: $id) {
+    ...paymentModeFields
+  }
+}
+
+mutation PaymentModeSave($mode: PaymentModeInput) {
+  paymentMode: storePaymentMode(mode: $mode) {
+    ...paymentModeFields
+  }
+}
+
+mutation PaymentModeDelete($id: Int!) {
+  deletePaymentModeById(id: $id)
+}
+
+subscription PaymentModeCreated {
+  paymentMode: onPaymentModeCreated {
+    id
+    name
+    description
+    active
+  }
+}

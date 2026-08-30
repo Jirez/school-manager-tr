@@ -1,0 +1,41 @@
+fragment paymentSliceFields on PaymentSlice {
+  id
+  numberOrder
+  name
+  name2
+  note
+  refundable
+  deadline
+  schoolYear {
+    id
+    label
+  }
+}
+
+query PaymentSlices($id: Int!) {
+  paymentSlices: findPaymentSlice(id: $id) {
+    ...paymentSliceFields
+  }
+}
+
+mutation PaymentSliceSave($slice: PaymentSliceInput) {
+  paymentSlice: storePaymentSlice(slice: $slice) {
+    ...paymentSliceFields
+  }
+}
+
+mutation PaymentSliceDelete($id: Int!) {
+  deletePaymentSliceById(id: $id)
+}
+
+subscription PaymentSliceCreated {
+  paymentSlice: onPaymentSliceCreated {
+    id
+    numberOrder
+    name
+    name2
+    note
+    refundable
+    deadline
+  }
+}

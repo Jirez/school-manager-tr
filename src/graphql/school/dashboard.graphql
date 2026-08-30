@@ -1,0 +1,12 @@
+query Dashboard($id: Int!) {
+	dashboard(id: $id) {
+		students
+		personnel
+		sections
+		cycles
+		levels
+		branches
+		classes
+		users
+	}
+}

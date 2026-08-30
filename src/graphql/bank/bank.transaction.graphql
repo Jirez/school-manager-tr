@@ -1,0 +1,47 @@
+fragment bankTransactionFragment on BankTransaction {
+  id
+  type
+  status
+  referenceNumber
+  transactionDate
+  amount
+  description
+  bankAccount {
+    id
+    name
+  }
+  account {
+    id
+    name
+    number
+  }
+}
+
+query BankTransactions($id: Int!) {
+  bankTransactions(enterpriseId: $id) {
+    ...bankTransactionFragment
+  }
+}
+
+mutation BankTransactionCreate($transaction: BankTransactionCreateInput!) {
+  bankTransaction: bankTransactionSave(transaction: $transaction) {
+    ...bankTransactionFragment
+  }
+}
+
+mutation BankTransactionUpdate($transaction: BankTransactionUpdateInput!) {
+  bankTransaction: bankTransactionUpdate(transaction: $transaction) {
+    ...bankTransactionFragment
+  }
+}
+
+mutation BankTransactionDelete($id: Long!) {
+  bankTransactionDeleteById(id: $id)
+}
+
+subscription BankTransactionCreated {
+  bankTransaction: onBankTransactionCreated {
+    id
+    enterpriseId
+  }
+}

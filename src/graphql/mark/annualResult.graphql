@@ -1,0 +1,106 @@
+fragment annualResultFields on AnnualResult {
+  annualReportPK {
+    studentId
+    schoolYearId
+  }
+  observation
+  councilDecision {
+    id
+    code
+    name
+  }
+  clazz {
+    id
+    name
+  }
+  branch {
+    id
+    name
+  }
+  student {
+    id
+    registrationNumber
+    lastName
+    firstName
+  }
+  annualReport {
+    average
+    rank
+  }
+}
+
+query AnnualResults($classId: Int!, $schoolYearId: Int!) {
+  annualResults: findAnnualResult(
+    classId: $classId
+    schoolYearId: $schoolYearId
+  ) {
+    ...annualResultFields
+  }
+}
+
+mutation AnnualResultSave(
+  $results: [AnnualResultInput!]!
+  $classId: Int!
+  $schoolYearId: Int!
+) {
+  annualResults: storeAnnualResult(
+    results: $results
+    classId: $classId
+    schoolYearId: $schoolYearId
+  ) {
+    ...annualResultFields
+  }
+}
+
+mutation BulkAnnualResultSave($anForm: AnnualResultFormInput) {
+  storeBulkAnnualResult(form: $anForm)
+}
+
+query AnnualReportRanking(
+  $search: String!
+  $newClassIsNull: Boolean!
+  $shuffle: Boolean!
+  $limit: Int
+  $sortByMerit: Boolean!
+) {
+  annualReportSummary: findAnnualReportSummary(
+    search: $search
+    newClassIsNull: $newClassIsNull
+    shuffle: $shuffle
+    limit: $limit
+    sortByMerit: $sortByMerit
+  ) {
+    studentId
+    studentName
+    average
+    decision
+    gender
+    newBranch
+    newClass
+    birthDate
+    className
+    levelName
+    branchName
+    numberOrder
+  }
+}
+
+mutation StudentProgression(
+  $currentSchoolYearId: Int!
+  $nextSchoolYearId: Int!
+) {
+  makeStudentProgression(
+    currentSchoolYearId: $currentSchoolYearId
+    nextSchoolYearId: $nextSchoolYearId
+  )
+}
+
+query AnnualResultSummary($schoolYearId: Int!) {
+  findAnnualResultSummary(schoolYearId: $schoolYearId) {
+    className
+    boysCount
+    girlsCount
+    repeaterCount
+    totalCount
+  }
+}

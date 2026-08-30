@@ -1,0 +1,61 @@
+query QuarterlyCompNotes(
+  $classId: Int!
+  $periodId: Int!
+  $subjectId: Int!
+  $schoolId: Int!
+) {
+  quarterlyCompNote(
+    classId: $classId
+    periodId: $periodId
+    subjectId: $subjectId
+    schoolId: $schoolId
+  ) {
+    studentId
+    studentFullName
+    registrationNumber
+    items {
+      competenceId
+      numberOrder
+      note
+    }
+  }
+}
+
+query QuarterlyCompNoteFromEval(
+  $classId: Int!
+  $periodId: Int!
+  $subjectId: Int!
+  $schoolId: Int!
+) {
+  quarterlyCompNote: quarterlyCompNoteFromEval(
+    classId: $classId
+    periodId: $periodId
+    subjectId: $subjectId
+    schoolId: $schoolId
+  ) {
+    studentId
+    studentFullName
+    registrationNumber
+    items {
+      competenceId
+      numberOrder
+      note
+    }
+  }
+}
+
+mutation QuarterlyCompNoteSave(
+  $notes: [QuarterlyCompNote!]!
+  $classId: Int!
+  $periodId: Int!
+  $schoolId: Int!
+  $subjectId: Int!
+) {
+  quarterlyCompNoteSave(
+    notes: $notes
+    classId: $classId
+    periodId: $periodId
+    schoolId: $schoolId
+    subjectId: $subjectId
+  )
+}

@@ -1,0 +1,15 @@
+mutation BillPaymentSave($payment: BillPaymentInput!) {
+  billPaymentSave(payment: $payment)
+}
+
+mutation BillPaymentDelete($id: Long!) {
+  billPaymentDeleteById(id: $id)
+}
+
+query SupplierByBillId($billId: Long!) {
+  supplier: supplierByBillId(billId: $billId) {
+    id
+    lastName
+    firstName
+  }
+}

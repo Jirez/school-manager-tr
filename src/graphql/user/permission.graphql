@@ -1,0 +1,67 @@
+fragment permissionFields on Permission {
+  id
+  code
+  description
+  active
+}
+
+query Permissions {
+  permissions {
+    ...permissionFields
+  }
+}
+
+query PermissionSelect {
+  permissions {
+    value: id
+    label: code
+  }
+}
+
+mutation PermissionSave($permission: PermissionCreateInput!) {
+  permission: permissionSave(permission: $permission) {
+    ...permissionFields
+  }
+}
+
+mutation PermissionUpdate($permission: PermissionUpdateInput!) {
+  permission: permissionUpdate(permission: $permission) {
+    ...permissionFields
+  }
+}
+
+mutation PermissionDelete($id: Int!) {
+  permissionDeleteById(id: $id)
+}
+
+subscription PermissionSubscription {
+  permission: onPermissionCreated {
+    ...permissionFields
+  }
+}
+
+query PermissionGroups2 {
+  groups: permissionGroups2 {
+    groupName
+    items {
+      id
+      code
+      checked
+    }
+  }
+}
+
+query PermissionsOfRole2($id: Int!) {
+  permissions: permissionsOfRole2(roleId: $id) {
+    groupName
+    items {
+      id
+      code
+      checked
+    }
+  }
+}
+
+mutation InitPermissions {
+  initPermissions
+}

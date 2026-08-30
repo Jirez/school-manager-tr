@@ -1,0 +1,19 @@
+// ** Logo
+import { LogoIcon } from '@/@core/components/icons/logo'
+// import logo from '@src/assets/images/logo/logo.png'
+
+const SpinnerComponent = () => {
+  return (
+    <div className="fallback-spinner app-loader">
+      {/* <img className='fallback-logo' src={logo} alt='logo' /> */}
+      <LogoIcon />
+      <div className="loading">
+        <div className="effect-1 effects" />
+        <div className="effect-2 effects" />
+        <div className="effect-3 effects" />
+      </div>
+    </div>
+  )
+}
+
+export default SpinnerComponent

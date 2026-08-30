@@ -1,0 +1,45 @@
+fragment dayOfClassFields on DayOfClass {
+  id
+  dayOfWeek
+  openingTime {
+    id
+    name
+    startTime
+    endTime
+  }
+  closingTime {
+    id
+    name
+    startTime
+    endTime
+  }
+  active
+}
+
+query DayOfClasses($id: Int!) {
+  dayOfClasses: findDayOfClass(id: $id) {
+    ...dayOfClassFields
+  }
+}
+
+mutation DayOfClassSave($dayOfClass: DayOfClassCreateInput!) {
+  dayOfClass: dayOfClassSave(dayOfClass: $dayOfClass) {
+    ...dayOfClassFields
+  }
+}
+
+mutation DayOfClassUpdate($dayOfClass: DayOfClassUpdateInput!) {
+  dayOfClass: dayOfClassUpdate(dayOfClass: $dayOfClass) {
+    ...dayOfClassFields
+  }
+}
+
+mutation DayOfClassDelete($id: Int!) {
+  deleteDayOfClassById(id: $id)
+}
+
+subscription DayOfClassCreated {
+  dayOfClass: onDayOfClassCreated {
+    ...dayOfClassFields
+  }
+}

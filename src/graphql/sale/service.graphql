@@ -1,0 +1,52 @@
+mutation ServiceSave($service: ServiceCreateInput!) {
+  product: serviceSave(service: $service) {
+    ...productList
+  }
+}
+
+mutation serviceUpdate($service: ServiceUpdateInput!) {
+  product: serviceUpdate(service: $service) {
+    ...productList
+  }
+}
+
+mutation ServiceDelete($id: Long!) {
+  serviceDeleteById(productId: $id)
+}
+
+query ServiceUnionById($id: Long!) {
+  service: serviceUnionById(productId: $id) {
+    productId
+    name
+    sku
+    active
+    salePrice
+    minSalePrice
+    cost
+    purchasePrice
+    saleDescription
+    purchaseDescription
+    picture
+    productCategory {
+      id
+      name
+    }
+
+    saleAccount {
+      id
+      number
+      name
+    }
+    purchaseAccount {
+      id
+      number
+      name
+    }
+    enterprise {
+      id
+      name
+    }
+    serviceId
+    hoursCount
+  }
+}

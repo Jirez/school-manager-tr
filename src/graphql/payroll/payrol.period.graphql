@@ -1,0 +1,39 @@
+fragment payrollPeriodFields on PayrollPeriod {
+  id
+  startDate
+  endDate
+  paymentDate
+  status
+  createdAt
+  updatedAt
+  type
+  enterpriseId
+}
+
+query PayrollPeriods($id: Int!) {
+  payrollPeriods(enterpriseId: $id) {
+    ...payrollPeriodFields
+  }
+}
+
+mutation PayrollPeriodSave($period: PayrollPeriodCreateInput!) {
+  payrollPeriod: payrollPeriodSave(period: $period) {
+    ...payrollPeriodFields
+  }
+}
+
+mutation PayrollPeriodUpdate($period: PayrollPeriodUpdateInput!) {
+  payrollPeriod: payrollPeriodUpdate(period: $period) {
+    ...payrollPeriodFields
+  }
+}
+
+mutation PayrollPeriodDelete($id: Int!) {
+  payrollPeriodDeleteById(id: $id)
+}
+
+subscription PayrollPeriodCreated {
+  payrollPeriod: onPayrollPeriodCreated {
+    ...payrollPeriodFields
+  }
+}

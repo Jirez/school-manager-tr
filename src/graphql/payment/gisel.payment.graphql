@@ -1,0 +1,13 @@
+mutation InitiatePayment($input: GiselPayRequestedInput!) {
+  reference: initiatePayment(input: $input)
+}
+
+mutation CheckAndConfirmPayment($input: GiselPaymentCheckInput!) {
+  checkPaymentAndConfirm(input: $input) {
+    code
+    result {
+      statut
+      description
+    }
+  }
+}

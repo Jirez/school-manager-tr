@@ -1,0 +1,63 @@
+fragment productList on ProductUnion {
+  id
+  productType
+  name
+  sku
+  reference: sku
+  active
+  salePrice
+  purchasePrice
+  picture
+  productCategory {
+    id
+    name
+  }
+  quantity
+  articleId
+  serviceId
+  enterprise {
+    id
+  }
+}
+
+query Products($id: Int!) {
+  products(enterpriseId: $id) {
+    ...productList
+  }
+}
+
+subscription NewProductCreated {
+  product: onProductCreated {
+    ...productList
+  }
+}
+
+query productReference($name: String!, $id: Int!) {
+  reference: getProductReference(name: $name, enterpriseId: $id)
+}
+
+query ProductNameExists($name: String!, $id: Int!) {
+  productNameExists(name: $name, enterpriseId: $id)
+}
+
+query ProductReferenceExists($reference: String!, $id: Int!) {
+  productReferenceExists(reference: $reference, enterpriseId: $id)
+}
+
+query ProductById($id: Long) {
+  product: productById(id: $id) {
+    id
+    name
+    productType
+    sku
+    salePrice
+    cost
+    purchasePrice
+  }
+}
+
+mutation ProductToggleStatus($productId: Long!) {
+  productToggleStatus(productId: $productId) {
+    ...productList
+  }
+}

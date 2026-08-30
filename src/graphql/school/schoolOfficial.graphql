@@ -1,0 +1,40 @@
+fragment schoolLiableFields on SchoolLiable {
+  id
+  name
+  signature
+  email
+  liableType {
+    id
+    prefix
+    name
+  }
+  schoolYear {
+    id
+    label
+  }
+}
+
+query SchoolOfficials($id: Int!) {
+  schoolOfficials: findSchoolLiable(id: $id) {
+    ...schoolLiableFields
+  }
+}
+
+mutation SchoolOfficialSave($liable: SchoolLiableInput) {
+  schoolOfficial: storeSchoolLiable(schoolLiable: $liable) {
+    ...schoolLiableFields
+  }
+}
+
+mutation SchoolOfficialDelete($id: Int!) {
+  deleteSchoolLiableById(id: $id)
+}
+
+subscription SchoolOfficialCreated {
+  schoolOfficial: onSchoolLiableCreated {
+    id
+    name
+    signature
+    email
+  }
+}

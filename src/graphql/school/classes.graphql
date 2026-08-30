@@ -1,0 +1,91 @@
+fragment classFields on Clazz {
+  id
+  name
+  code
+  examClass
+  autoTimeTable
+  competenceClass
+  headTeacher {
+    id
+    lastName
+    firstName
+  }
+  branch {
+    id
+    name
+    level {
+      id
+      name
+      cycle {
+        id
+        name
+        schoolYear {
+          id
+          label
+        }
+      }
+    }
+  }
+}
+
+query Classes($id: Int!) {
+  clazzes: findClass(id: $id) {
+    ...classFields
+  }
+}
+
+query ClassesBySchoolYear($id: Int!) {
+  clazzes: findClassBySchoolYear(schoolYearId: $id) {
+    ...classFields
+  }
+}
+
+query ClassesBySubject($subject: Int!, $school: Int!) {
+  classes: findClassSubject(subjectId: $subject, schoolId: $school) {
+    ...classFields
+  }
+}
+
+query ClassesForNote($id: Int!) {
+  clazzes: findClassForNoteInput(schoolId: $id) {
+    ...classFields
+  }
+}
+
+mutation ClassSave($clazz: ClazzInput) {
+  clazz: storeClass(clazz: $clazz) {
+    ...classFields
+  }
+}
+
+mutation ClassDelete($id: Int!) {
+  deleteClassById(id: $id)
+}
+
+subscription ClassCreated {
+  clazz: onClassCreated {
+    id
+    name
+    code
+    examClass
+    autoTimeTable
+  }
+}
+
+query ClassesWithSubPeriodReportCard($subPeriod: Int!) {
+  classes: findClassWhereReportCardReady(subPeriod: $subPeriod) {
+    ...classFields
+  }
+}
+
+query ClassesWithPeriodReportCard($period: Int!) {
+  classes: findClassWhereQuarterlyReportCardReady(period: $period) {
+    ...classFields
+  }
+}
+
+query ClassesWithAnnualReportCard($schoolYear: Int!) {
+  classes: findClassWhereAnnualReportCardReady(schoolYear: $schoolYear) {
+    ...classFields
+  }
+}

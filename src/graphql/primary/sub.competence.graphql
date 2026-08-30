@@ -1,0 +1,43 @@
+query SubCompetencesByLevel($levelId: Int!, $schoolId: Int!) {
+  subCompetences: subCompetencesByLevel(
+    levelId: $levelId
+    schoolId: $schoolId
+  ) {
+    competenceId
+    competenceName
+    schoolId
+    items {
+      subCompetenceId
+      code
+      name
+      active
+      optional
+      items {
+        id
+        evalTypeId
+        evalTypeName
+        marks
+      }
+    }
+  }
+}
+
+mutation SubCompetenceSave(
+  $competences: [SubCompetenceInputI!]!
+  $levelId: Int!
+) {
+  subCompetenceSave(competences: $competences, levelId: $levelId)
+}
+
+query SubCompetencesByClass($classId: Int!) {
+  subCompetencesByClass(classId: $classId) {
+    id
+    code
+    name
+    competence {
+      id
+      numberOrder
+      name
+    }
+  }
+}

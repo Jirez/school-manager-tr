@@ -1,0 +1,52 @@
+fragment schoolYearFields on SchoolYear {
+  id
+  label
+  label2
+  locked
+  closed
+  cycleCount
+  startDate
+  endDate
+  ageMin
+  ageMax
+  current
+  archived
+  periodType
+  schoolId
+}
+
+query SchoolYears($id: Int!, $removeArchived: Boolean) {
+  schoolYears: findSchoolYear(id: $id, removeArchived: $removeArchived) {
+    ...schoolYearFields
+  }
+}
+
+mutation SchoolYearSave($schoolYear: SchoolYearInput) {
+  schoolYear: storeSchoolYear(schoolYear: $schoolYear) {
+    ...schoolYearFields
+  }
+}
+
+mutation SchoolYearDelete($id: Int!) {
+  deleteSchoolYearById(id: $id)
+}
+
+subscription SchoolYearCreated {
+  schoolYear: onSchoolYearCreated {
+    ...schoolYearFields
+  }
+}
+
+query SchoolYearActive($schoolId: Int!) {
+  schoolYear: schoolYearActive(schoolId: $schoolId) {
+    id
+    label
+  }
+}
+
+query SchoolYearByIdentifier($identifier: String!) {
+  schoolYear: schoolYearByIdentifier(schoolIdentifier: $identifier) {
+    id
+    label
+  }
+}

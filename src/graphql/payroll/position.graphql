@@ -1,0 +1,40 @@
+fragment positionFields on Position {
+  id
+  title
+  active
+  baseSalary
+  bonusPercentage
+  overtimeRate
+  note
+  createdAt
+  updatedAt
+  enterpriseId
+}
+
+query Positions($id: Int!) {
+  positions(enterpriseId: $id) {
+    ...positionFields
+  }
+}
+
+mutation PositionSave($position: PositionCreateInput!) {
+  position: positionSave(position: $position) {
+    ...positionFields
+  }
+}
+
+mutation PositionUpdate($position: PositionUpdateInput!) {
+  position: positionUpdate(position: $position) {
+    ...positionFields
+  }
+}
+
+mutation PositionDelete($id: Int!) {
+  positionDeleteById(id: $id)
+}
+
+subscription PositionCreated {
+  position: onPositionCreated {
+    ...positionFields
+  }
+}

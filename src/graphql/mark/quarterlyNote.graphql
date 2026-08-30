@@ -1,0 +1,39 @@
+query QuarterlyNotes(
+	$classId: Int!
+	$subjectId: Int!
+	$periodId: Int!
+	$schoolId: Int!
+) {
+	quarterlyNotes: findQuarterlyNote(
+		classId: $classId
+		subjectId: $subjectId
+		periodId: $periodId
+		schoolId: $schoolId
+	) {
+		note1
+		note2
+		studentFullName
+		student {
+			id
+			registrationNumber
+			lastName
+			firstName
+		}
+	}
+}
+
+mutation QuarterlyNoteSave(
+	$notes: [QuarterlyNote!]!
+	$classId: Int!
+	$subjectId: Int!
+	$periodId: Int!
+	$schoolId: Int!
+) {
+	storeQuarterlyNote(
+		notes: $notes
+		classId: $classId
+		subjectId: $subjectId
+		periodId: $periodId
+		schoolId: $schoolId
+	)
+}

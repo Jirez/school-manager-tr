@@ -1,0 +1,66 @@
+fragment operationFields on Operation {
+	id
+	number
+	operationDate
+	recordDate
+	enterprise {
+		id
+		name
+	}
+}
+
+fragment accountingEntryFields on AccountingEntry {
+	amount
+	note
+}
+
+query AccountingEntryNumber($id: Int!) {
+	getAccountingEntryNumber(id: $id)
+}
+
+#mutation AccountingEntryDelete($id: Long!) {
+#deleteAccountingEntryById(id: $id)
+#}
+
+query AccountingEntryItem($id: Long!) {
+	accountingEntryItems: findAccountingEntryItem(id: $id) {
+		id
+		amount
+		directionType
+		description
+		person {
+			id
+			displayName
+		}
+		logCode {
+			id
+			name
+		}
+		account {
+			id
+			name
+			number
+		}
+	}
+}
+
+query Operations($id: Int!) {
+	operations: findOperation(id: $id) {
+		...operationFields
+		...accountingEntryFields
+	}
+}
+
+subscription OperationCreated {
+	operation: onOperationCreated {
+		...operationFields
+		...accountingEntryFields
+	}
+}
+
+mutation AccountingEntrySave($entry: AccountingEntryInput) {
+	operation: storeAccountingEntry(entry: $entry) {
+		...operationFields
+		...accountingEntryFields
+	}
+}

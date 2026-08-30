@@ -1,0 +1,74 @@
+fragment accountFields on Account {
+  id
+  number
+  name
+  displayName
+  active
+  balance
+  balanceType
+  description
+  chartOfAccount {
+    id
+    name
+    number
+    accountGroup {
+      id
+      name
+      sectionType
+    }
+    accountCategory {
+      id
+      name
+      accountType
+    }
+  }
+  parent {
+    id
+    number
+    name
+    displayName
+  }
+  enterprise {
+    id
+    name
+  }
+}
+
+query Accounts($id: Int!) {
+  accounts: findAccountByEnterprise(id: $id) {
+    ...accountFields
+  }
+}
+
+mutation AccountSave($account: AccountInput) {
+  account: storeAccount(account: $account) {
+    ...accountFields
+  }
+}
+
+mutation AccountDelete($id: Int!) {
+  deleteAccountById(id: $id)
+}
+
+subscription AccountCreated {
+  account: onAccountCreated {
+    id
+    number
+    name
+    displayName
+    active
+    balance
+    balanceType
+    description
+  }
+}
+
+query NextAccountNumber($number: String!, $id: Int!) {
+  generateAccountNumber(number: $number, id: $id)
+}
+
+query ExpenseAccounts($id: Int!) {
+  accounts: findExpenseAccount(id: $id) {
+    ...accountFields
+  }
+}

@@ -1,0 +1,49 @@
+query LoginHistoryUsername($username: String!) {
+	loginHistories: findLoginHistoryByUsername(username: $username) {
+		id
+		loginDate
+		logoutDate
+		user {
+			id
+			username
+			person {
+				id
+				displayName
+			}
+		}
+		browserInfo {
+			name
+			version
+			versionNumber
+			mobile
+			os
+		}
+	}
+}
+
+query LoginHistories($id: Int!) {
+	loginHistories: findLoginHistory(enterpriseId: $id) {
+		id
+		loginDate
+		logoutDate
+		user {
+			id
+			username
+			person {
+				id
+				displayName
+			}
+		}
+		browserInfo {
+			name
+			version
+			versionNumber
+			mobile
+			os
+		}
+	}
+}
+
+mutation LoginHistoryDeleteByIds($ids: [Long!]!) {
+	loginHistoryDeleteByIds(ids: $ids)
+}

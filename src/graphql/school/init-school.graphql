@@ -1,0 +1,3 @@
+mutation InitSchool($input: SchoolInitInput!) {
+	initSchool(input: $input)
+}

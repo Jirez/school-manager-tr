@@ -1,0 +1,45 @@
+fragment subPeriodFields on SubPeriod {
+  id
+  numberOrder
+  label
+  label2
+  startDate
+  endDate
+  coefficient
+  message
+  message2
+  period {
+    id
+    label
+  }
+}
+
+query SubPeriods($id: Int!) {
+  subPeriods: findSubPeriod(id: $id) {
+    ...subPeriodFields
+  }
+}
+
+mutation SubPeriodSave($subPeriod: SubPeriodInput) {
+  subPeriod: storeSubPeriod(subPeriod: $subPeriod) {
+    ...subPeriodFields
+  }
+}
+
+mutation SubPeriodDelete($id: Int!) {
+  deleteSubPeriodById(id: $id)
+}
+
+subscription SubPeriodCreated {
+  subPeriod: onSubPeriodCreated {
+    id
+    numberOrder
+    label
+    label2
+    startDate
+    endDate
+    coefficient
+    message
+    message2
+  }
+}

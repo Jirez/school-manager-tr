@@ -1,0 +1,95 @@
+fragment BillFragment on Bill {
+  id
+  number
+  operationDate
+  note
+  amount
+  originalNumber
+  deadline
+  balance
+  quantity
+  distinctProduct
+  discount
+  address
+  condition {
+    id
+    name
+  }
+  supplier {
+    id
+    lastName
+    firstName
+  }
+  voucher {
+    id
+    number
+  }
+  department {
+    id
+    name
+  }
+  enterpriseId
+}
+
+query Bills($id: Int!) {
+  bills(enterpriseId: $id) {
+    ...BillFragment
+  }
+}
+
+query BillById($id: Long!) {
+  bill: billById(id: $id) {
+    ...BillFragment
+  }
+}
+
+mutation BillSave($bill: BillCreateInput!) {
+  bill: billSave(bill: $bill) {
+    ...BillFragment
+  }
+}
+
+mutation BillUpdate($bill: BillUpdateInput!) {
+  bill: billUpdate(bill: $bill) {
+    ...BillFragment
+  }
+}
+
+mutation BillDeleteById($id: Long!) {
+  billDeleteById(id: $id)
+}
+
+subscription BillCreated {
+  bill: onBillCreated {
+    ...BillFragment
+  }
+}
+
+query BillItems($id: Long!) {
+  items: billItems(billId: $id) {
+    id
+    unitPrice
+    quantity
+    unitPriceF: unitPrice
+    quantityF: quantity
+    discount
+    description
+    total
+    product {
+      id
+      name
+      sku
+    }
+  }
+}
+
+query BillUnpaidBySupplier($supplierId: Long!) {
+  bills: findUnpaidBillBySupplierId(supplierId: $supplierId) {
+    id
+    number
+    operationDate
+    amount
+    balance
+    deadline
+  }
+}

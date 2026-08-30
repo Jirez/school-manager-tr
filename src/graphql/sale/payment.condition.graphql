@@ -1,0 +1,38 @@
+fragment paymentConditionFragment on PaymentCondition {
+  id
+  name
+  active
+  days
+  description
+  enterpriseId
+}
+
+query PaymentConditions($id: Int!) {
+  paymentConditions(enterpriseId: $id) {
+    ...paymentConditionFragment
+  }
+}
+
+mutation PaymentConditionSave($condition: PaymentConditionCreateInput!) {
+  paymentCondition: paymentConditionSave(condition: $condition) {
+    ...paymentConditionFragment
+  }
+}
+
+mutation PaymentConditionUpdate($condition: PaymentConditionUpdateInput!) {
+  paymentCondition: paymentConditionUpdate(condition: $condition) {
+    ...paymentConditionFragment
+  }
+}
+
+mutation PaymentConditionDelete($id: Int!) {
+  paymentConditionDeleteById(id: $id)
+}
+
+subscription PaymentConditionCreated {
+  onPaymentConditionCreated {
+    id
+    name
+    enterpriseId
+  }
+}

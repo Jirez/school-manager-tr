@@ -1,0 +1,71 @@
+fragment supplierFragment on Supplier {
+  id
+  lastName
+  firstName
+  displayName
+  active
+  note
+  address {
+    street
+    state
+    country
+    town
+    zipCode
+  }
+  contactInfo {
+    telephone
+    email
+    postOfficeBox
+    mobile
+    fax
+  }
+  birthDate
+  webSite
+  taxNumber
+  tradeRegister
+  rating
+  purchaseCondition {
+    id
+    name
+  }
+  category {
+    id
+    name
+  }
+  supplierAccount {
+    id
+    name
+  }
+}
+
+query Suppliers($id: Int!) {
+  suppliers(enterpriseId: $id) {
+    ...supplierFragment
+  }
+}
+
+mutation SupplierSave($supplier: SupplierCreateInput!) {
+  supplier: supplierSave(supplier: $supplier) {
+    ...supplierFragment
+  }
+}
+
+mutation SupplierUpdate($supplier: SupplierUpdateInput!) {
+  supplier: supplierUpdate(supplier: $supplier) {
+    ...supplierFragment
+  }
+}
+
+mutation SupplierDelete($id: Long!) {
+  supplierDeleteById(id: $id)
+}
+
+subscription SupplierCreated {
+  onSupplierCreated {
+    id
+    lastName
+    firstName
+    displayName
+    enterpriseId
+  }
+}

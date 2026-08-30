@@ -1,0 +1,45 @@
+fragment attendanceFields on Attendance {
+  id
+  personnel {
+    id
+    lastName
+    firstName
+  }
+  workDate
+  status
+  enterpriseId
+  type
+  arrivalTime
+  departureTime
+  breakStartTime
+  breakEndTime
+  note
+}
+
+query Attendances($id: Int!) {
+  attendances(enterpriseId: $id) {
+    ...attendanceFields
+  }
+}
+
+mutation AttendanceSave($attendance: AttendanceCreateInput!) {
+  attendance: attendanceSave(attendance: $attendance) {
+    ...attendanceFields
+  }
+}
+
+mutation AttendanceUpdate($attendance: AttendanceUpdateInput!) {
+  attendance: attendanceUpdate(attendance: $attendance) {
+    ...attendanceFields
+  }
+}
+
+mutation AttendanceDeleteById($id: Long!) {
+  attendanceDeleteById(id: $id)
+}
+
+subscription AttendanceCreated {
+  attendance: onAttendanceCreated {
+    ...attendanceFields
+  }
+}

@@ -1,0 +1,105 @@
+fragment studentInvoiceFields on StudentInvoice {
+  id
+  reference
+  operationDate
+  totalAmount
+  amountPaid
+  student {
+    id
+    lastName
+    firstName
+    registrationNumber
+    birthDate
+    birthplace
+    gender
+  }
+  frequent {
+    frequentPK {
+      studentId
+      classId
+      schoolYearId
+    }
+    clazz {
+      id
+      name
+    }
+  }
+}
+
+query StudentInvoices($id: Int!) {
+  studentInvoices(schoolId: $id) {
+    ...studentInvoiceFields
+  }
+}
+
+mutation StudentInvoiceSave($invoice: StudentInvoiceInput) {
+  studentInvoice: studentInvoiceSave(invoice: $invoice) {
+    ...studentInvoiceFields
+  }
+}
+
+mutation StudentInvoiceDelete($id: Long!) {
+  studentInvoiceDeleteById(id: $id)
+}
+
+mutation StudentInvoicesDelete($ids: [Long!]!) {
+  studentInvoiceDeleteByIds(ids: $ids)
+}
+
+subscription StudentInvoiceCreated {
+  studentInvoice: onStudentInvoiceCreated {
+    id
+    reference
+    operationDate
+    totalAmount
+    amountPaid
+  }
+}
+
+query StudentInvoiceItemByReference($reference: String!, $schoolId: Int!) {
+  studentInvoiceItemByReference(reference: $reference, schoolId: $schoolId) {
+    studentInvoiceItemPK {
+      schoolFeeId
+      studentInvoiceId
+      paymentSliceId
+    }
+    amount
+    schoolFee {
+      id
+      name
+    }
+    paymentSlice {
+      id
+      name
+      deadline
+    }
+    studentInvoice {
+      id
+      student {
+        id
+        lastName
+        firstName
+      }
+    }
+  }
+}
+
+query StudentInvoiceCompulsoryStatus($id: Int!) {
+  compulsoryStatus: studentInvoiceCompulsoryStatus(schoolId: $id)
+}
+
+query StudentInvoiceForUpdate($id: Long!) {
+  invoices: studentInvoiceForUpdate(invoiceId: $id) {
+    id
+    reference
+    operationDate
+    totalAmount
+    studentId
+    studentName
+    registrationNumber
+  }
+}
+
+mutation StudentInvoiceUpdate($invoice: StudentInvoiceUpdateInput!) {
+  studentInvoiceUpdate(invoice: $invoice)
+}

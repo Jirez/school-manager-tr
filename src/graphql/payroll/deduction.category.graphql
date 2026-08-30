@@ -1,0 +1,41 @@
+fragment deductionCategoryFields on DeductionCategory {
+  id
+  numberOrder
+  name
+  active
+  mandatory
+  description
+  enterpriseId
+}
+
+query DeductionCategory($id: Int!) {
+  deductionCategories(enterpriseId: $id) {
+    ...deductionCategoryFields
+  }
+}
+
+mutation DeductionCategorySave($category: DeductionCategoryCreateInput!) {
+  deductionCategory: deductionCategorySave(category: $category) {
+    ...deductionCategoryFields
+  }
+}
+
+mutation DeductionCategoryUpdate($category: DeductionCategoryUpdateInput!) {
+  deductionCategory: deductionCategoryUpdate(category: $category) {
+    ...deductionCategoryFields
+  }
+}
+
+mutation DeductionCategoryDelete($id: Int!) {
+  deductionCategoryDeleteById(id: $id)
+}
+
+subscription DeductionCategoryCreated {
+  deductionCategory: onDeductionCategoryCreated {
+    id
+    name
+    active
+    description
+    enterpriseId
+  }
+}

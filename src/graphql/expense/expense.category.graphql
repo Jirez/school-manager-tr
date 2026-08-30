@@ -1,0 +1,40 @@
+fragment expenseCategoryFragment on ExpenseCategory {
+  id
+  name
+  active
+  maxAllowedAmount
+  description
+  enterpriseId
+  account {
+    id
+    name
+  }
+}
+
+query ExpenseCategories($id: Int!) {
+  expenseCategories(enterpriseId: $id) {
+    ...expenseCategoryFragment
+  }
+}
+
+mutation ExpenseCategorySave($category: ExpenseCategoryCreateInput!) {
+  expenseCategory: expenseCategorySave(category: $category) {
+    ...expenseCategoryFragment
+  }
+}
+
+mutation ExpenseCategoryUpdate($category: ExpenseCategoryUpdateInput!) {
+  expenseCategory: expenseCategoryUpdate(category: $category) {
+    ...expenseCategoryFragment
+  }
+}
+
+mutation ExpenseCategoryDelete($id: Int!) {
+  expenseCategoryDeleteById(id: $id)
+}
+
+subscription ExpenseCategoryCreated {
+  expenseCategory: onExpenseCategoryCreated {
+    ...expenseCategoryFragment
+  }
+}

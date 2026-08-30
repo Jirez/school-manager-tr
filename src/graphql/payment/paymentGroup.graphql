@@ -1,0 +1,43 @@
+fragment paymentGroupFields on PaymentGroup {
+  id
+  name
+  name2
+  note
+  autoInclusion
+  formerStudent
+  external
+  fallback
+  schoolYear {
+    id
+    label
+  }
+}
+
+query PaymentGroups($id: Int!) {
+  paymentGroups: findPaymentGroup(id: $id) {
+    ...paymentGroupFields
+  }
+}
+
+mutation PaymentGroupSave($group: PaymentGroupInput) {
+  paymentGroup: storePaymentGroup(group: $group) {
+    ...paymentGroupFields
+  }
+}
+
+mutation PaymentGroupDelete($id: Int!) {
+  deletePaymentGroupById(id: $id)
+}
+
+subscription PaymentGroupCreated {
+  paymentGroup: onPaymentGroupCreated {
+    id
+    name
+    name2
+    note
+    autoInclusion
+    formerStudent
+    external
+    fallback
+  }
+}

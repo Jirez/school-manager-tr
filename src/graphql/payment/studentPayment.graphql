@@ -1,0 +1,159 @@
+fragment studentPaymentFields on StudentPayment {
+  id
+  reference
+  paymentDate
+  totalAmountPaid
+  inKindValue
+  student {
+    id
+    lastName
+    firstName
+    registrationNumber
+    birthDate
+    birthplace
+    gender
+  }
+  paymentAccount {
+    id
+    name
+  }
+  paymentMode {
+    id
+    name
+  }
+  frequent {
+    frequentPK {
+      studentId
+      classId
+      schoolYearId
+    }
+    clazz {
+      id
+      name
+    }
+  }
+  studentInvoice {
+    id
+    reference
+  }
+}
+
+query StudentPayments($id: Int!) {
+  studentPayments: findStudentPayment(id: $id) {
+    ...studentPaymentFields
+    studentInvoice {
+      id
+      reference
+    }
+  }
+}
+
+query StudentPaymentExists($studentId: Long!, $schoolId: Int!) {
+  studentPaymentExists(studentId: $studentId, schoolId: $schoolId)
+}
+
+query StudentPaymentsExists($studentIds: [Long!]!, $schoolId: Int!) {
+  studentPaymentsExists(studentIds: $studentIds, schoolId: $schoolId)
+}
+
+mutation StudentPaymentSave($payment: StudentPaymentInput) {
+  studentPayment: storeStudentPayment(payment: $payment) {
+    ...studentPaymentFields
+  }
+}
+
+mutation StudentPaymentDelete($id: Long!) {
+  deleteStudentPaymentById(id: $id)
+}
+
+mutation StudentPaymentsDelete($ids: [Long!]!) {
+  studentPaymentDeleteByIds(ids: $ids)
+}
+
+subscription StudentPaymentCreated {
+  studentPayment: onStudentPaymentCreated {
+    id
+    reference
+    paymentDate
+    totalAmountPaid
+  }
+}
+
+query UnpaidSchoolFee($studentId: Long!, $schoolId: Int!) {
+  findUnpaidSchoolFee(studentId: $studentId, schoolId: $schoolId) {
+    schoolFeeLevelPK {
+      schoolFeeId
+      levelId
+      paymentGroupId
+      paymentSliceId
+    }
+    requiredAmount
+    schoolFee {
+      id
+      name
+    }
+    paymentSlice {
+      id
+      name
+      deadline
+    }
+  }
+}
+
+query UnpaidSchoolFeeWithInvoice($studentId: Long!, $schoolId: Int!) {
+  schoolFeeLevels: findUnpaidSchoolFeeWithInvoice(
+    studentId: $studentId
+    schoolId: $schoolId
+  ) {
+    schoolFeeLevelPK {
+      schoolFeeId
+      levelId
+      paymentGroupId
+      paymentSliceId
+    }
+    requiredAmount
+    schoolFee {
+      id
+      name
+    }
+    paymentSlice {
+      id
+      name
+      deadline
+    }
+  }
+}
+
+mutation StudentPaymentUpdate($payment: StudentPaymentUpdateInput!) {
+  studentPaymentUpdate(payment: $payment)
+}
+
+query StudentPaymentForUpdate($paymentId: Long!) {
+  studentPayment: studentPaymentForUpdate(paymentId: $paymentId) {
+    id
+    reference
+    paymentDate
+    totalAmountPaid
+    note
+    studentId
+    studentName
+    registrationNumber
+    studentInvoiceId
+    paymentAccountId
+    paymentModeId
+    items: studentPaymentItemCollection {
+      studentPaymentItemPK {
+        paymentSliceId
+        schoolFeeId
+        studentPaymentId
+      }
+      paymentSlice
+      schoolFee
+      inKindPayment
+      paidAmount: amountPaid
+      paymentSliceId
+      schoolFeeId
+      studentPaymentId
+    }
+  }
+}

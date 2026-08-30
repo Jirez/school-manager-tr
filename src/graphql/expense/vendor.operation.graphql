@@ -1,0 +1,35 @@
+fragment vendorOperationFields on VendorOperation {
+  id
+  operationId
+  vendorOperationType
+  invoiceType: vendorOperationType
+  operationDate
+  number
+  amount
+  balance
+  quantity
+  distinctProduct
+  supplier
+  enterpriseId
+  discount
+}
+
+query VendorOperations($id: Int!, $startDate: Date!, $endDate: Date!) {
+  vendorOperations(
+    enterpriseId: $id
+    startDate: $startDate
+    endDate: $endDate
+  ) {
+    operations {
+      ...vendorOperationFields
+    }
+    paymentInfo {
+      overdue
+      overdueCount
+      openBill
+      openBillCount
+      paid
+      paidCount
+    }
+  }
+}

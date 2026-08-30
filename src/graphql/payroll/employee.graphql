@@ -1,0 +1,71 @@
+fragment employeeFragment on Employee {
+    id
+    nsifNumber
+    hireDate
+    terminationDate
+    employmentStatus
+    employmentType
+    baseSalary
+    createdAt
+    updatedAt
+    department {
+        id
+        name
+    }
+    position {
+        id
+        title
+    }
+    personnel {
+        id
+        firstName
+        lastName
+        code
+    }
+    enterpriseId
+    payType
+    hourlySalary
+}
+
+query Employees($id: Int!) {
+    employees(enterpriseId: $id) {
+        ...employeeFragment
+    }
+}
+
+query EmployeeById($id: Int!) {
+    employee: employeeById(id: $id) {
+        ...employeeFragment
+    }
+}
+
+mutation EmployeeSave($employee: EmployeeCreateInput!) {
+    employee: employeeSave(employee: $employee) {
+        ...employeeFragment
+    }
+}
+
+mutation EmployeeUpdate($employee: EmployeeUpdateInput!) {
+    employee: employeeUpdate(employee: $employee) {
+        ...employeeFragment
+    }
+}
+
+mutation EmployeeDeleteById($id: Int!) {
+    employeeDeleteById(id: $id)
+}
+
+subscription EmployeeCreated {
+    employee: onEmployeeCreated {
+        ...employeeFragment
+    }
+}
+
+query EmployeesWithoutPayroll($enterpriseId: Int!, $periodId: Int!) {
+    employees: employeesWithoutPayroll(
+        enterpriseId: $enterpriseId
+        periodId: $periodId
+    ) {
+        ...employeeFragment
+    }
+}

@@ -1,0 +1,35 @@
+fragment userGroupFields on UserGroup {
+  id
+  name
+  isActive
+  description
+  roleCollection {
+    id
+    name
+  }
+}
+
+query UserGroups {
+  userGroups: findAllUserGroups {
+    ...userGroupFields
+  }
+}
+
+mutation UserGroupSave($group: UserGroupInput) {
+  userGroup: storeUserGroup(userGroup: $group) {
+    ...userGroupFields
+  }
+}
+
+mutation UserGroupDelete($id: Int!) {
+  deleteUserGroupById(id: $id)
+}
+
+subscription UserGroupCreated {
+  userGroup: onUserGroupCreated {
+    id
+    name
+    isActive
+    description
+  }
+}

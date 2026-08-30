@@ -1,0 +1,40 @@
+fragment oldSchoolFields on OldSchool {
+	id
+	name
+	address {
+		street
+		state
+		country
+		town
+		zipCode
+	}
+	contactInfo {
+		telephone
+		email
+		postOfficeBox
+		mobile
+		fax
+	}
+}
+
+query OldSchools($id: Int!) {
+	oldSchools: findOldSchool(id: $id) {
+		...oldSchoolFields
+	}
+}
+
+mutation OldSchoolSave($oldSchool: OldSchoolInput) {
+	oldSchool: storeOldSchool(oldSchool: $oldSchool) {
+		...oldSchoolFields
+	}
+}
+
+mutation OldSchoolDelete($id: Int!) {
+	deleteOldSchoolById(id: $id)
+}
+
+subscription OldSchoolCreated {
+	oldSchool: onOldSchoolCreated {
+		...oldSchoolFields
+	}
+}

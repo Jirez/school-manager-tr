@@ -1,0 +1,117 @@
+fragment payrollFields on Payroll {
+  id
+  number
+  baseSalary
+  grossSalary
+  netSalary
+  totalEmployeeDeduction
+  totalEmployerDeduction
+  taxableSalary
+  operationDate
+  note
+  status
+  enterpriseId
+  period {
+    id
+    startDate
+    endDate
+  }
+  employee {
+    id
+    personnel {
+      id
+      lastName
+      firstName
+    }
+  }
+  paymentMode {
+    id
+    name
+  }
+}
+
+query EmployeeEarnings($payrollId: Long!) {
+  earnings: employeeEarningByPayrollId(payrollId: $payrollId) {
+    id
+    base
+    baseF: base
+    rate
+    rateF: rate
+    description
+    item: earning {
+      id
+      name
+    }
+    isTaxable
+  }
+}
+
+query EmployeeDeductions($payrollId: Long!) {
+  deductions: employeeDeductionByPayrollId(payrollId: $payrollId) {
+    id
+    base
+    baseF: base
+    rate
+    rateF: rate
+    description
+    item: deduction {
+      id
+      name
+    }
+  }
+}
+
+query EmployerDeductions($payrollId: Long!) {
+  deductions: employerDeductionByPayrollId(payrollId: $payrollId) {
+    id
+    base
+    baseF: base
+    rate
+    rateF: rate
+    description
+    item: deduction {
+      id
+      name
+    }
+  }
+}
+
+query PayrollById($id: Long!) {
+  payroll: payrollById(id: $id) {
+    ...payrollFields
+  }
+}
+
+query Payrolls($id: Int!) {
+  payrolls(enterpriseId: $id) {
+    ...payrollFields
+  }
+}
+
+mutation PayrollSave($payroll: PayrollCreateInput!) {
+  payroll: payrollSave(payroll: $payroll) {
+    ...payrollFields
+  }
+}
+
+mutation PayrollUpdate($payroll: PayrollUpdateInput!) {
+  payroll: payrollUpdate(payroll: $payroll) {
+    ...payrollFields
+  }
+}
+
+mutation PayrollDelete($id: Long!) {
+  payrollDeleteById(id: $id)
+}
+
+subscription PayrollCreated {
+  payroll: payrollCreated {
+    id
+    baseSalary
+    enterpriseId
+  }
+}
+
+mutation PayrollMarkAsPaid($id: Long!) {
+  payrollMarkAsPaid(id: $id)
+}

@@ -1,0 +1,29 @@
+fragment accountCategoryFields on AccountCategory {
+	id
+	name
+	accountType
+	active
+	description
+}
+
+query AccountCategories {
+	accountCategories: findAllAccountCategory {
+		...accountCategoryFields
+	}
+}
+
+mutation AccountCategorySave($category: AccountCategoryInput) {
+	accountCategory: storeAccountCategory(category: $category) {
+		...accountCategoryFields
+	}
+}
+
+mutation AccountCategoryDelete($id: Int!) {
+	deleteAccountCategoryById(id: $id)
+}
+
+subscription AccountCategoryCreated {
+	accountCategory: onAccountCategoryCreated {
+		...accountCategoryFields
+	}
+}

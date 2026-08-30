@@ -1,0 +1,29 @@
+fragment liableTypeFields on LiableType {
+	id
+	name
+	active
+	prefix
+	note
+}
+
+query OfficialTypes {
+	officialTypes: findAllLiableTypes {
+		...liableTypeFields
+	}
+}
+
+mutation OfficialTypeSave($type: LiableTypeInput) {
+	officialType: storeLiableType(liableType: $type) {
+		...liableTypeFields
+	}
+}
+
+mutation OfficialTypeDelete($id: Int!) {
+	deleteLiableTypeById(id: $id)
+}
+
+subscription OfficialTypeCreated {
+	officialType: onLiableTypeCreated {
+		...liableTypeFields
+	}
+}

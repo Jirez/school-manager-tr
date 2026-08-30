@@ -1,0 +1,137 @@
+fragment sequentialNoteFields on SequentialNote {
+  sequentialNotePK {
+    studentId
+    subjectId
+    subPeriodId
+  }
+  note
+  appreciation
+  rank
+  exAequo
+  student {
+    id
+    registrationNumber
+    lastName
+    firstName
+  }
+}
+
+query SequentialNotes(
+  $classId: Int!
+  $subjectId: Int!
+  $subPeriodId: Int!
+  $schoolId: Int!
+) {
+  sequentialNotes: findSequentialNote(
+    classId: $classId
+    subjectId: $subjectId
+    subPeriodId: $subPeriodId
+    schoolId: $schoolId
+  ) {
+    ...sequentialNoteFields
+  }
+}
+
+query DowngradeSubject($classId: Int!, $subjectId: Int!, $subPeriodId: Int!) {
+  sequentialNotes: downgradeSubject(
+    classId: $classId
+    subjectId: $subjectId
+    subPeriodId: $subPeriodId
+  ) {
+    ...sequentialNoteFields
+  }
+}
+
+mutation SequentialNotesSave(
+  $notes: [SequentialNoteInput!]!
+  $classId: Int!
+  $subjectId: Int!
+  $subPeriodId: Int!
+  $schoolId: Int!
+) {
+  sequentialNotes: storeSequentialNote(
+    notes: $notes
+    classId: $classId
+    subjectId: $subjectId
+    subPeriodId: $subPeriodId
+    schoolId: $schoolId
+  ) {
+    ...sequentialNoteFields
+  }
+}
+
+mutation SequentialNoteDelete(
+  $classId: Int!
+  $subjectId: Int!
+  $subPeriodId: Int!
+) {
+  deleteSequentialNote(
+    classId: $classId
+    subjectId: $subjectId
+    subPeriodId: $subPeriodId
+  )
+}
+
+mutation SequentialAverageCalculation(
+  $classId: Int!
+  $subPeriodId: Int!
+  $schoolId: Int!
+) {
+  calculateSequentialAverage(
+    classId: $classId
+    subPeriodId: $subPeriodId
+    schoolId: $schoolId
+  )
+}
+
+mutation SequentialAveragesCalculation($subPeriodId: Int!, $schoolId: Int!) {
+  calculateAllSequentialAverage(subPeriodId: $subPeriodId, schoolId: $schoolId)
+}
+
+mutation QuarterlyAverageCalculation($classId: Int!, $periodId: Int!) {
+  calculateQuarterlyAverage(classId: $classId, periodId: $periodId)
+}
+
+mutation QuarterlyAveragesCalculation($periodId: Int!, $schoolId: Int!) {
+  calculateAllQuarterlyAverage(periodId: $periodId, schoolId: $schoolId)
+}
+
+mutation AnnualAverageCalculation($classId: Int!, $schoolYearId: Int!) {
+  calculateAnnualAverage(classId: $classId, schoolYearId: $schoolYearId)
+}
+
+mutation AnnualAveragesCalculation($schoolYearId: Int!, $schoolId: Int!) {
+  calculateAllAnnualAverage(schoolYearId: $schoolYearId, schoolId: $schoolId)
+}
+
+mutation QuarterlyNoteCalculation($classId: Int!, $periodId: Int!) {
+  calculateQuarterlyNote(classId: $classId, periodId: $periodId)
+}
+
+mutation QuarterlyNotesCalculation($periodId: Int!, $schoolId: Int!) {
+  calculateAllQuarterlyNote(periodId: $periodId, schoolId: $schoolId)
+}
+
+mutation AnnualNoteCalculation($classId: Int!, $schoolYearId: Int!) {
+  calculateAnnualNote(classId: $classId, schoolYearId: $schoolYearId)
+}
+
+mutation AnnualNotesCalculation($schoolYearId: Int!, $schoolId: Int!) {
+  calculateAllAnnualNote(schoolYearId: $schoolYearId, schoolId: $schoolId)
+}
+
+query SequentialClassReportByGender($id: Int!) {
+  report: findSequentialClassReportByGender(id: $id) {
+    clazz {
+      id
+      name
+    }
+    subPeriod {
+      id
+      label
+    }
+    successRate
+    className
+    subPeriodName
+  }
+}

@@ -1,0 +1,41 @@
+fragment cycleFields on Cycle {
+  id
+  numberOrder
+  name
+  name2
+  levelCount
+  schoolYear {
+    id
+    label
+  }
+  schoolSection {
+    id
+    name
+  }
+}
+
+query Cycles($id: Int!) {
+  cycles: findCycle(id: $id) {
+    ...cycleFields
+  }
+}
+
+mutation CycleSave($cycle: CycleInput) {
+  cycle: storeCycle(cycle: $cycle) {
+    ...cycleFields
+  }
+}
+
+mutation CycleDelete($id: Int!) {
+  deleteCycleById(id: $id)
+}
+
+subscription CycleCreated {
+  cycle: onCycleCreated {
+    id
+    numberOrder
+    name
+    name2
+    levelCount
+  }
+}

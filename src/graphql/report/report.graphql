@@ -1,0 +1,66 @@
+query ReportCategories {
+	reportCategories {
+		id
+		name
+		language
+		icon
+	}
+}
+
+query ReportCategoriesByEnterprise($id: Int!) {
+	reportCategories: findReportCategoryByEnterprise(id: $id) {
+		id
+		name
+		language
+		icon
+		items {
+			id
+			title
+			help
+			link
+			favorite
+		}
+	}
+}
+
+query ReportItems {
+	reportItems {
+		id
+		title
+		help
+		link
+		favorite
+		categories {
+			id
+			name
+		}
+	}
+}
+
+query ReportItemsByEnterprise($id: Int!) {
+	reportItems: findReportItemByEnterprise(id: $id) {
+		id
+		title
+		help
+		link
+		favorite
+		categories {
+			id
+			name
+		}
+	}
+}
+
+mutation ReportSave($item: Int!, $enterprise: Int!, $favorite: Boolean!) {
+	enterpriseReport: storeEnterpriseReport(
+		reportItemId: $item
+		enterpriseId: $enterprise
+		favorite: $favorite
+	) {
+		enterpriseReportPK {
+			reportItemId
+			enterpriseId
+		}
+		favorite
+	}
+}

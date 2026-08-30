@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <filter id="shadow-dark" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <linearGradient id="grad-cap-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8F85F3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7367F0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Elements -->
+  <rect width="800" height="600" fill="#161D31"/>
+  <circle cx="400" cy="300" r="250" fill="#283046" opacity="0.8"/>
+
+  <!-- Central Illustration: Modern School Building / Education Hub -->
+  <g transform="translate(400, 300)" filter="url(#shadow-dark)">
+    <!-- Building / Hub Base -->
+    <path d="M-100,100 L-100,-50 L-50,-100 L0,-50 L50,-100 L100,-50 L100,100 Z" fill="#343D55" stroke="#4B5563" stroke-width="2"/>
+    <!-- Columns -->
+    <rect x="-80" y="-30" width="10" height="100" fill="#283046"/>
+    <rect x="-30" y="-30" width="10" height="100" fill="#283046"/>
+    <rect x="20" y="-30" width="10" height="100" fill="#283046"/>
+    <rect x="70" y="-30" width="10" height="100" fill="#283046"/>
+    <!-- Roof -->
+    <path d="M-120,-50 L0,-150 L120,-50 Z" fill="url(#grad-cap-dark)"/>
+    <!-- Door -->
+    <rect x="-20" y="20" width="40" height="80" fill="#7367F0" rx="2"/>
+  </g>
+
+  <!-- Floating Card: Student Registration (Left) -->
+  <g transform="translate(150, 200)" filter="url(#shadow-dark)">
+    <rect width="180" height="120" rx="12" fill="#283046" stroke="#4B5563" stroke-width="1"/>
+    <!-- User Icon -->
+    <circle cx="40" cy="40" r="15" fill="#1E2538"/>
+    <path d="M40,35 C48,35 52,28 52,25 C52,20 48,18 40,18 C32,18 28,20 28,25 C28,28 32,35 40,35" fill="#00CFE8"/>
+    <path d="M28,45 C28,50 32,55 40,55 C48,55 52,50 52,45 L28,45" fill="#00CFE8"/>
+    <!-- Text Lines -->
+    <rect x="70" y="30" width="80" height="8" rx="4" fill="#4B5563"/>
+    <rect x="70" y="45" width="50" height="6" rx="3" fill="#343D55"/>
+    <rect x="70" y="58" width="60" height="6" rx="3" fill="#343D55"/>
+  </g>
+
+  <!-- Floating Card: Payment (Bottom Right) -->
+  <g transform="translate(500, 400)" filter="url(#shadow-dark)">
+    <rect width="180" height="100" rx="12" fill="#283046" stroke="#4B5563" stroke-width="1"/>
+    <!-- Wallet/Card Icon -->
+    <rect x="30" y="30" width="40" height="40" rx="8" fill="#1E2538"/>
+    <text x="42" y="58" font-family="sans-serif" font-size="24" fill="#28C76F">$</text>
+    <!-- Text Lines -->
+    <rect x="85" y="35" width="70" height="8" rx="4" fill="#4B5563"/>
+    <rect x="85" y="52" width="40" height="6" rx="3" fill="#343D55"/>
+    <!-- Status Badge -->
+    <circle cx="155" cy="45" r="15" fill="#28C76F"/>
+    <path d="M150,45 L153,48 L160,41" stroke="#161D31" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Floating Card: Reports (Top Right) -->
+  <g transform="translate(520, 80)" filter="url(#shadow-dark)">
+    <rect width="160" height="100" rx="12" fill="#283046" stroke="#4B5563" stroke-width="1"/>
+    <!-- Chart Icon -->
+    <rect x="30" y="30" width="40" height="40" rx="4" fill="#1E2538"/>
+    <rect x="35" y="50" width="8" height="15" fill="#FF5B5C"/>
+    <rect x="46" y="42" width="8" height="23" fill="#FF8E8E"/>
+    <rect x="57" y="35" width="8" height="30" fill="#FF5B5C"/>
+    <!-- Text Lines -->
+    <rect x="85" y="35" width="50" height="6" rx="3" fill="#4B5563"/>
+    <rect x="85" y="48" width="60" height="6" rx="3" fill="#343D55"/>
+  </g>
+</svg>

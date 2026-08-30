@@ -1,0 +1,93 @@
+query SequentialDiscipline($classId: Int!, $subPeriodId: Int!) {
+	sequentialDisciplines: findSequentialDiscipline(
+		classId: $classId
+		subPeriodId: $subPeriodId
+	) {
+		sequentialDisciplinePK {
+			studentId
+			subPeriodId
+		}
+		unjustifiedAbsence
+		justifiedAbsence
+		detention
+		warning
+		behaviorBlame
+		temporaryExclusion
+		definitiveExclusion
+		disciplinaryBoard
+		student {
+			id
+			registrationNumber
+			lastName
+			firstName
+		}
+	}
+}
+
+mutation SequentialDisciplineSave(
+	$disciplines: [SequentialDisciplineInput!]
+	$classId: Int!
+	$subPeriodId: Int!
+	$schoolId: Int!
+) {
+	sequentialDiscipline: storeSequentialDiscipline(
+		discplines: $disciplines
+		classId: $classId
+		subPeriodId: $subPeriodId
+		schoolId: $schoolId
+	) {
+		sequentialDisciplinePK {
+			studentId
+			subPeriodId
+		}
+		unjustifiedAbsence
+		justifiedAbsence
+		detention
+		warning
+		behaviorBlame
+		temporaryExclusion
+		definitiveExclusion
+		disciplinaryBoard
+		student {
+			id
+			registrationNumber
+			lastName
+			firstName
+		}
+	}
+}
+
+mutation QuarterlyDisciplineCalculation(
+	$classId: Int!
+	$periodId: Int!
+	$schoolId: Int!
+) {
+	calculateQuarterlyDiscipline(
+		classId: $classId
+		periodId: $periodId
+		schoolId: $schoolId
+	)
+}
+
+mutation QuarterlyDisciplinesCalculation($periodId: Int!, $schoolId: Int!) {
+	calculateAllQuarterlyDiscipline(periodId: $periodId, schoolId: $schoolId)
+}
+
+mutation AnnualDisciplineCalculation(
+	$classId: Int!
+	$schoolYearId: Int!
+	$schoolId: Int!
+) {
+	calculateAnnualDiscipline(
+		classId: $classId
+		schoolYearId: $schoolYearId
+		schoolId: $schoolId
+	)
+}
+
+mutation AnnualDisciplinesCalculation($schoolYearId: Int!, $schoolId: Int!) {
+	calculateAllAnnualDiscipline(
+		schoolYearId: $schoolYearId
+		schoolId: $schoolId
+	)
+}

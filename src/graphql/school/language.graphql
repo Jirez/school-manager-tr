@@ -1,0 +1,29 @@
+fragment languageFields on Language {
+	id
+	code
+	name
+	active
+	description
+}
+
+query Languages {
+	languages: findAllLanguages {
+		...languageFields
+	}
+}
+
+mutation LanguageSave($language: LanguageInput) {
+	language: storeLanguage(language: $language) {
+		...languageFields
+	}
+}
+
+#mutation LanguageDelete($id: Int!) {
+#	deleteLanguageById(id: $id)
+#}
+
+subscription LanguageCreated {
+	language: onLanguageCreated {
+		...languageFields
+	}
+}

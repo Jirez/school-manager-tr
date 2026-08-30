@@ -1,0 +1,127 @@
+fragment subjectGroupFields on SubjectGroup {
+  id
+  name
+  numberOrder
+  note
+  branch {
+    id
+    name
+  }
+  subjectGroupItemCollection {
+    subjectGroupItemPK {
+      subjectId
+      subjectGroupId
+    }
+    position
+    subject {
+      id
+      name
+      code
+      subjectDepartment {
+        id
+        name
+        schoolSection {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+
+fragment subjectGroupsFields on SubjectGroups {
+  id
+  branch {
+    id
+    name
+  }
+  subjectGroups {
+    id
+    numberOrder
+    name
+    subjectGroupItemCollection {
+      subjectGroupItemPK {
+        subjectId
+        subjectGroupId
+      }
+      position
+      subject {
+        id
+        name
+      }
+    }
+  }
+}
+
+query SubjectGroups($id: Int!) {
+  subjectGroups: findSubjectGroup(id: $id) {
+    ...subjectGroupFields
+  }
+}
+
+mutation SubjectGroupSave($group: SubjectGroupInput!) {
+  subjectGroup: storeSubjectGroup(group: $group) {
+    ...subjectGroupFields
+  }
+}
+
+mutation BranchSubjectGroupSave($group: SubjectGroupsInput!) {
+  subjectGroup: storeBranchSubjectGroup(group: $group) {
+    ...subjectGroupsFields
+  }
+}
+
+mutation BranchSubjectGroupUpdate($group: SubjectGroupsUpdateInput!) {
+  subjectGroup: updateBranchSubjectGroup(group: $group) {
+    ...subjectGroupsFields
+  }
+}
+
+mutation SubjectGroupDelete($id: Int!) {
+  deleteSubjectGroupById(id: $id)
+}
+
+mutation BranchSubjectGroupDelete($id: Int!) {
+  deleteSubjectGroupByBranch(id: $id)
+}
+
+subscription SubjectGroupCreated {
+  subjectGroup: onSubjectGroupCreated {
+    id
+    name
+    numberOrder
+    note
+  }
+}
+
+subscription BranchSubjectGroupCreated {
+  subjectGroup: onBranchSubjectGroupCreated {
+    id
+  }
+}
+
+query SubjectGroupByBranch($id: Int!) {
+  subjectGroups: findSubjectGroups(id: $id) {
+    id
+    branch {
+      id
+      name
+    }
+    subjectGroups {
+      id
+      numberOrder
+      name
+      subjectGroupItemCollection {
+        subjectGroupItemPK {
+          subjectId
+          subjectGroupId
+        }
+        position
+        subject {
+          id
+          name
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+query EvalCompOfClass($classId: Int!, $periodId: Int!) {
+  competences: evalCompOfClass(classId: $classId, periodId: $periodId) {
+    classId
+    periodId
+    subjectId
+    subjectName
+    items {
+      id
+      numberOrder
+      competence
+      active
+    }
+  }
+}
+
+query EvalCompBySubject($classId: Int!, $periodId: Int!, $subjectId: Int!) {
+  competences: evalCompBySubject(
+    classId: $classId
+    periodId: $periodId
+    subjectId: $subjectId
+  ) {
+    classId
+    periodId
+    subjectId
+    subjectName
+    items {
+      id
+      numberOrder
+      competence
+      active
+    }
+  }
+}
+
+mutation EvalCompSave($competences: [EvalCompInput!]!) {
+  evalCompSave(competences: $competences)
+}

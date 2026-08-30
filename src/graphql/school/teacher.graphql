@@ -1,0 +1,148 @@
+fragment personnelFields on Personnel {
+  id
+  lastName
+  firstName
+  displayName
+  gender
+  active
+  note
+  address {
+    street
+    state
+    town
+    country
+    zipCode
+  }
+  contactInfo {
+    telephone
+    mobile
+    email
+    postOfficeBox
+    fax
+  }
+  # personnel fields
+  code
+  civility
+  birthDate
+  birthplace
+  status
+  personnelType
+  bloodGroup
+  rhesus
+  religion
+  ethnicGroup
+  departureDate
+  maritalStatus
+  fatherName
+  fatherProfession
+  motherName
+  motherProfession
+  childrenCount
+  rank
+  origin {
+    countryOrigin
+    departmentOrigin
+    regionOrigin
+    districtOrigin
+  }
+  registrationNumber
+  grading
+  category
+  clazz
+  administrationEntryDate
+  firstServiceDate
+  firstServicePlace
+  schoolServiceDate
+  function
+  currentPost
+  spouseProfession
+  schoolCharge
+  numberAssignment
+  cniNumber
+  currentPicture
+}
+
+fragment teacherFields on Teacher {
+  dueHours
+  speciality
+  academicDiploma
+  academicYear
+  academicPlace
+  professionalYear
+  professionalPlace
+  professionalDiploma
+  subjectDepartmentCollection {
+    id
+    name
+  }
+}
+
+query Personnel($id: Int!) {
+  personnels: findPersonnel(id: $id) {
+    ...personnelFields
+    ...teacherFields
+    __typename
+  }
+}
+
+mutation TeacherSave($teacher: TeacherCreateInput!) {
+  personnel: storeTeacher(teacher: $teacher) {
+    ...personnelFields
+    ...teacherFields
+    __typename
+  }
+}
+
+mutation TeacherUpdate($teacher: TeacherUpdateInput!) {
+  personnel: teacherUpdate(teacher: $teacher) {
+    ...personnelFields
+    ...teacherFields
+    __typename
+  }
+}
+
+mutation TeacherDelete($id: Long!) {
+  deleteTeacherById(id: $id)
+}
+
+mutation TeachersDelete($ids: [Long!]!) {
+  teacherDeleteByIds(ids: $ids)
+}
+
+subscription TeacherCreated {
+  personnel: onTeacherCreated {
+    id
+    lastName
+    firstName
+    displayName
+  }
+}
+
+subscription PersonnelCreated {
+  personnel: onPersonnelCreated {
+    id
+    lastName
+    firstName
+    displayName
+  }
+}
+
+query NewCode($id: Int!) {
+  newCode(id: $id)
+}
+
+query TeacherByDepartment($id: Int!) {
+  teachers: findTeacherBySubjectDepartment(id: $id) {
+    id
+    lastName
+    firstName
+    code
+    gender
+  }
+}
+
+query NonEmployeePersonnel($id: Int!) {
+  personnel: nonEmployeePersonnel(schoolId: $id) {
+    ...personnelFields
+  }
+}

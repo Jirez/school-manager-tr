@@ -1,0 +1,12 @@
+{
+  "serverAddress": "localhost",
+  "serverPort": 8080,
+  "pictureServer": "http://localhost:82",
+  "httpProtocol": "http",
+  "wsProtocol": "ws",
+  "apachePort": 80,
+  "picturePath": "C:/eps-technologies/html/pictures/",
+  "uploadDir": "C:/eps-technologies/html/pictures/",
+  "schoolCategory": "HIGH",
+  "timeout": 1800000
+}

@@ -1,0 +1,50 @@
+fragment BankAccountFragment on BankAccount {
+  id
+  name
+  number
+  balance
+  openingBalance
+  type
+  status
+  overdraftLimit
+  interestRate
+  openedDate
+  closedDate
+  createdAt
+  updatedAt
+  account {
+    id
+    number
+    name
+  }
+  enterpriseId
+}
+
+query bankAccounts($id: Int!) {
+  bankAccounts(enterpriseId: $id) {
+    ...BankAccountFragment
+  }
+}
+
+mutation BankAccountCreate($account: BankAccountCreateInput!) {
+  bankAccount: bankAccountSave(account: $account) {
+    ...BankAccountFragment
+  }
+}
+
+mutation BankAccountUpdate($account: BankAccountUpdateInput!) {
+  bankAccount: bankAccountUpdate(account: $account) {
+    ...BankAccountFragment
+  }
+}
+
+mutation BankAccountDelete($id: Int!) {
+  bankAccountDeleteById(id: $id)
+}
+
+subscription BankAccountCreated {
+  bankAccount: onBankAccountCreated {
+    id
+    name
+  }
+}

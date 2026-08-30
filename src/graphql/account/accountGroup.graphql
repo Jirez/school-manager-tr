@@ -1,0 +1,43 @@
+fragment accountGroupFields on AccountGroup {
+  id
+  sectionType
+  name
+  level
+  active
+  description
+  parent {
+    id
+    name
+  }
+  accountModel {
+    id
+    name
+  }
+}
+
+query AccountGroups($id: Int!) {
+  accountGroups: findAccountGroup(id: $id) {
+    ...accountGroupFields
+  }
+}
+
+mutation AccountGroupSave($group: AccountGroupInput) {
+  accountGroup: storeAccountGroup(accountGroup: $group) {
+    ...accountGroupFields
+  }
+}
+
+mutation AccountGroupDelete($id: Int!) {
+  deleteAccountGroupById(id: $id)
+}
+
+subscription AccountGroupCreated {
+  accountGroup: onAccountGroupCreated {
+    id
+    sectionType
+    name
+    level
+    active
+    description
+  }
+}

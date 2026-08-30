@@ -1,0 +1,90 @@
+fragment InvoiceFragment on Invoice {
+  id
+  number
+  invoiceType
+  operationDate
+  deadline
+  amount
+  balance
+  quantity
+  distinctProduct
+  discount
+  note
+  condition {
+    id
+    name
+  }
+  person {
+    id
+    lastName
+    firstName
+  }
+  enterpriseId
+}
+
+query Invoices($id: Int!) {
+  invoices(enterpriseId: $id) {
+    ...InvoiceFragment
+  }
+}
+
+mutation InvoiceSave($invoice: InvoiceCreateInput!) {
+  invoice: invoiceSave(invoice: $invoice) {
+    ...InvoiceFragment
+  }
+}
+
+mutation InvoiceUpdate($invoice: InvoiceUpdateInput!) {
+  invoice: invoiceUpdate(invoice: $invoice) {
+    ...InvoiceFragment
+  }
+}
+
+mutation InvoiceDelete($id: Long!) {
+  invoiceDeleteById(id: $id)
+}
+
+subscription InvoiceCreated {
+  invoice: onInvoiceCreated {
+    ...InvoiceFragment
+  }
+}
+
+query InvoiceById($id: Long!) {
+  invoice: invoiceById(id: $id) {
+    ...InvoiceFragment
+  }
+}
+
+query InvoiceItems($id: Long!) {
+  items: invoiceItems(invoiceId: $id) {
+    id
+    unitPrice
+    quantity
+    unitPriceF: unitPrice
+    quantityF: quantity
+    total
+    discount
+    description
+    product {
+      id
+      name
+      sku
+    }
+  }
+}
+
+query PaymentOfStudentBalance(
+  $registrationNumber: String!
+  $identifier: String!
+) {
+  info: paymentOfStudentBalance(
+    registrationNumber: $registrationNumber
+    schoolIdentifier: $identifier
+  ) {
+    studentId
+    studentName
+    amount
+    studentClass
+  }
+}

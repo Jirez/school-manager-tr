@@ -1,0 +1,45 @@
+fragment periodFields on Period {
+  id
+  numberOrder
+  label
+  label2
+  startDate
+  endDate
+  message
+  message2
+  coefficient
+  schoolYear {
+    id
+    label
+  }
+}
+
+query Periods($id: Int!) {
+  periods: findPeriod(id: $id) {
+    ...periodFields
+  }
+}
+
+mutation PeriodSave($period: PeriodInput) {
+  period: storePeriod(period: $period) {
+    ...periodFields
+  }
+}
+
+mutation PeriodDelete($id: Int!) {
+  deletePeriodById(id: $id)
+}
+
+subscription PeriodCreated {
+  period: onPeriodCreated {
+    id
+    numberOrder
+    label
+    label2
+    startDate
+    endDate
+    message
+    message2
+    coefficient
+  }
+}

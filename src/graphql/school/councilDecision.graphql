@@ -1,0 +1,37 @@
+fragment councilDecisionFields on CouncilDecision {
+  id
+  code
+  name
+  decisionType
+  note
+  school {
+    id
+    name
+  }
+}
+
+query CouncilDecisions($id: Int!) {
+  councilDecisions: findCouncilDecision(id: $id) {
+    ...councilDecisionFields
+  }
+}
+
+mutation CouncilDecisionSave($decision: CouncilDecisionInput) {
+  councilDecision: storeCouncilDecision(decision: $decision) {
+    ...councilDecisionFields
+  }
+}
+
+mutation CouncilDecisionDelete($id: Int!) {
+  deleteCouncilDecisionById(id: $id)
+}
+
+subscription CouncilDecisionCreated {
+  councilDecision: onCouncilDecisionCreated {
+    id
+    code
+    name
+    decisionType
+    note
+  }
+}

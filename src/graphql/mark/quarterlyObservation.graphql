@@ -1,0 +1,40 @@
+fragment quarterlyReportObservationFields on QuarterlyReportObservation {
+	quarterlyReportPK {
+		studentId
+		periodId
+	}
+	observation
+	student {
+		id
+		registrationNumber
+		lastName
+		firstName
+	}
+	quarterlyReport {
+		average
+		rank
+	}
+}
+
+query QuarterlyReportObservations($classId: Int!, $periodId: Int!) {
+	quarterlyReportObservations: findQuarterlyReportObservation(
+		classId: $classId
+		period: $periodId
+	) {
+		...quarterlyReportObservationFields
+	}
+}
+
+mutation QuarterlyReportObservationSave(
+	$observations: [QuarterlyReportObservationInput!]!
+	$classId: Int!
+	$periodId: Int!
+) {
+	quarterlyReportObservations: storeQuarterlyReportObservation(
+		observations: $observations
+		classId: $classId
+		period: $periodId
+	) {
+		...quarterlyReportObservationFields
+	}
+}

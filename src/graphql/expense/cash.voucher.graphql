@@ -1,0 +1,72 @@
+fragment CashVoucherFragment on CashVoucher {
+  id
+  number
+  date
+  amount
+  usedAmount
+  reason
+  status
+  createdAt
+  updatedAt
+  person {
+    id
+    lastName
+    firstName
+  }
+  category {
+    id
+    name
+  }
+  department {
+    id
+    name
+  }
+  enterpriseId
+  operator
+  personType
+  active
+}
+
+query CashVouchers($id: Int!) {
+  cashVouchers(enterpriseId: $id) {
+    ...CashVoucherFragment
+  }
+}
+
+query CashVoucher($id: Long!) {
+  cashVoucher: cashVoucherById(id: $id) {
+    ...CashVoucherFragment
+  }
+}
+
+mutation CashVoucherSave($cashVoucher: CashVoucherCreateInput!) {
+  cashVoucher: cashVoucherSave(cashVoucher: $cashVoucher) {
+    ...CashVoucherFragment
+  }
+}
+
+mutation CashVoucherUpdate($cashVoucher: CashVoucherUpdateInput!) {
+  cashVoucher: cashVoucherUpdate(cashVoucher: $cashVoucher) {
+    ...CashVoucherFragment
+  }
+}
+
+mutation CashVoucherDelete($id: Long!) {
+  cashVoucherDeleteById(id: $id)
+}
+
+subscription CashVoucherCreated {
+  cashVoucher: onCashVoucherCreated {
+    ...CashVoucherFragment
+  }
+}
+
+mutation CashVoucherApprove($id: Long!, $operator: String!) {
+  cashVoucherApprove(id: $id, operator: $operator)
+}
+
+query CashVoucherAvailable($id: Int!) {
+  cashVouchers: cashVoucherAvailable(enterpriseId: $id) {
+    ...CashVoucherFragment
+  }
+}

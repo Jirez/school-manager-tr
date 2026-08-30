@@ -1,0 +1,28 @@
+fragment expectedCompetenceFields on ExpectedCompetence {
+	expectedCompetencePK {
+		classId
+		periodId
+		subjectId
+	}
+	competence
+	subject {
+		id
+		code
+		name
+	}
+}
+
+query ExpectedCompetences($classId: Int!, $periodId: Int!) {
+	expectedCompetences: findExpectedCompetence(
+		classId: $classId
+		periodId: $periodId
+	) {
+		...expectedCompetenceFields
+	}
+}
+
+mutation ExpectedCompetencesSave($competences: [ExpectedCompetenceInput!]!) {
+	expectedCompetence: storeExpectedCompetence(competences: $competences) {
+		...expectedCompetenceFields
+	}
+}

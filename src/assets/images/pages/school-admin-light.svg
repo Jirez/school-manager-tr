@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" fill="none">
+  <!-- Background decoration -->
+  <circle cx="100" cy="100" r="150" fill="#F0F2F5" opacity="0.5"/>
+  <circle cx="800" cy="500" r="120" fill="#E8EAF6" opacity="0.6"/>
+  
+  <!-- Main Dashboard Interface -->
+  <g transform="translate(150, 100)">
+    <!-- Window Frame -->
+    <rect x="0" y="0" width="600" height="400" rx="12" fill="#FFFFFF" filter="url(#shadow)"/>
+    <!-- Header Bar -->
+    <rect x="0" y="0" width="600" height="40" rx="12" fill="#F8F9FA"/>
+    <!-- Window Controls -->
+    <circle cx="20" cy="20" r="5" fill="#FF5B5C"/>
+    <circle cx="40" cy="20" r="5" fill="#FDAC41"/>
+    <circle cx="60" cy="20" r="5" fill="#00CFE8"/>
+    
+    <!-- Sidebar -->
+    <rect x="0" y="40" width="120" height="360" fill="#F8F9FA" border-bottom-left-radius="12"/>
+    <rect x="20" y="70" width="80" height="8" rx="4" fill="#E0E0E0"/>
+    <rect x="20" y="90" width="60" height="8" rx="4" fill="#E0E0E0"/>
+    <rect x="20" y="110" width="70" height="8" rx="4" fill="#E0E0E0"/>
+    
+    <!-- Content Area -->
+    <!-- Chart Section -->
+    <rect x="150" y="70" width="400" height="150" rx="8" fill="#F0F2F5"/>
+    <path d="M170 180 L230 140 L290 160 L350 110 L410 150 L470 100" stroke="#7367F0" stroke-width="3" fill="none"/>
+    <circle cx="230" cy="140" r="4" fill="#7367F0"/>
+    <circle cx="350" cy="110" r="4" fill="#7367F0"/>
+    <circle cx="470" cy="100" r="4" fill="#7367F0"/>
+    
+    <!-- Stats Cards -->
+    <rect x="150" y="250" width="120" height="80" rx="8" fill="#E8EAF6"/>
+    <rect x="170" y="270" width="30" height="30" rx="6" fill="#7367F0" opacity="0.2"/>
+    <text x="178" y="292" font-family="sans-serif" font-size="16" fill="#7367F0">$</text>
+    
+    <rect x="290" y="250" width="120" height="80" rx="8" fill="#E0F7FA"/>
+    <rect x="310" y="270" width="30" height="30" rx="6" fill="#00CFE8" opacity="0.2"/>
+    
+    <rect x="430" y="250" width="120" height="80" rx="8" fill="#FFECEB"/>
+    <rect x="450" y="270" width="30" height="30" rx="6" fill="#FF5B5C" opacity="0.2"/>
+  </g>
+  
+  <!-- Floating Elements (School Theme) -->
+  <!-- Graduation Cap -->
+  <g transform="translate(680, 80) rotate(15)">
+    <path d="M0 20 L50 0 L100 20 L50 40 Z" fill="#283046"/>
+    <path d="M95 22 V50" stroke="#283046" stroke-width="2"/>
+  </g>
+  
+  <!-- Books -->
+  <g transform="translate(100, 380) rotate(-10)">
+    <rect x="0" y="0" width="20" height="80" rx="2" fill="#FF9F43"/>
+    <rect x="25" y="5" width="20" height="80" rx="2" fill="#28C76F"/>
+    <rect x="50" y="-5" width="20" height="80" rx="2" fill="#7367F0"/>
+  </g>
+  
+  <!-- Filters -->
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#B0B0B0" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+</svg>

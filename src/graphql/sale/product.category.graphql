@@ -1,0 +1,39 @@
+fragment productCategoryFragment on ProductCategory {
+  id
+  name
+  active
+  description
+  enterpriseId
+  parent {
+    id
+    name
+  }
+}
+
+query ProductCategories($id: Int!) {
+  productCategories(enterpriseId: $id) {
+    ...productCategoryFragment
+  }
+}
+
+mutation ProductCategorySave($category: ProductCategoryCreateInput!) {
+  productCategory: productCategorySave(category: $category) {
+    ...productCategoryFragment
+  }
+}
+
+mutation ProductCategoryUpdate($category: ProductCategoryUpdateInput!) {
+  productCategory: productCategoryUpdate(category: $category) {
+    ...productCategoryFragment
+  }
+}
+
+mutation ProductCategoryDelete($id: Int!) {
+  productCategory: productCategoryDeleteById(id: $id)
+}
+
+subscription ProductCategoryCreated {
+  productCategory: productCategoryCreated {
+    ...productCategoryFragment
+  }
+}

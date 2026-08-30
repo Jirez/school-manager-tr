@@ -1,0 +1,39 @@
+fragment roleNewFragment on RoleNew {
+  id
+  name
+  description
+  active
+  permissions {
+    id
+    code
+  }
+  enterpriseId
+}
+
+query Roles($id: Int!) {
+  roles(enterpriseId: $id) {
+    ...roleNewFragment
+  }
+}
+
+mutation RoleNewSave($role: RoleNewCreateInput!) {
+  role: roleNewSave(role: $role) {
+    ...roleNewFragment
+  }
+}
+
+mutation RoleNewUpdate($role: RoleNewUpdateInput!) {
+  role: roleNewUpdate(role: $role) {
+    ...roleNewFragment
+  }
+}
+
+mutation RoleNewDelete($id: Int!) {
+  roleNewDeleteById(id: $id)
+}
+
+subscription RoleNewCreated {
+  role: onRoleNewCreated {
+    ...roleNewFragment
+  }
+}

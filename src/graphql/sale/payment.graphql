@@ -1,0 +1,25 @@
+query PaymentOfStudent($invoiceId: Long!) {
+  payment: paymentOfStudent(invoiceId: $invoiceId) {
+    student
+    registrationNumber
+    studentClass
+    items {
+      installmentId
+      installmentName
+      dueDate
+      tuitionId
+      tuitionName
+      requiredAmount
+      inKindPayment
+      invoiceItemId
+    }
+  }
+}
+
+mutation PaymentOfStudentSave($payment: PaymentOfStudentInput!) {
+  paymentOfStudentSave(payment: $payment)
+}
+
+mutation PaymentDeleteById($id: Long!) {
+  paymentDeleteById(id: $id)
+}

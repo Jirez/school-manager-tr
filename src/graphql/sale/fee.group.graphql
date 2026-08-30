@@ -1,0 +1,49 @@
+fragment feeGroupFragment on FeeGroup {
+  id
+  name
+  name2
+  registrationDateAfter
+  registrationDateBefore
+  birthDateAfter
+  birthDateBefore
+  gender
+  levelId
+  familyOfXAndAboveChildren
+  oneTimePayment
+  isAlumni
+  isExternalStudent
+  hasScholarship
+  isSocialCase
+  isStaffStudent
+  useAsFallback
+  isActive
+  note
+}
+
+query FeeGroups($id: Int!) {
+  feeGroups(schoolId: $id) {
+    ...feeGroupFragment
+  }
+}
+
+mutation FeeGroupSave($group: FeeGroupCreateInput!) {
+  feeGroup: feeGroupSave(group: $group) {
+    ...feeGroupFragment
+  }
+}
+
+mutation FeeGroupUpdate($group: FeeGroupUpdateInput!) {
+  feeGroup: feeGroupUpdate(group: $group) {
+    ...feeGroupFragment
+  }
+}
+
+mutation FeeGroupDelete($id: Int!) {
+  feeGroupDeleteById(id: $id)
+}
+
+subscription FeeGroupCreated {
+  feeGroup: onFeeGroupCreated {
+    ...feeGroupFragment
+  }
+}

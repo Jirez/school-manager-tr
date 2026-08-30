@@ -1,0 +1,40 @@
+fragment earningCategoryFields on EarningCategory {
+  id
+  numberOrder
+  name
+  description
+  active
+  enterpriseId
+}
+
+query EarningCategory($id: Int!) {
+  earningCategories(enterpriseId: $id) {
+    ...earningCategoryFields
+  }
+}
+
+mutation EarningCategorySave($category: EarningCategoryCreateInput!) {
+  earningCategory: earningCategorySave(category: $category) {
+    ...earningCategoryFields
+  }
+}
+
+mutation EarningCategoryUpdate($category: EarningCategoryUpdateInput!) {
+  earningCategory: earningCategoryUpdate(category: $category) {
+    ...earningCategoryFields
+  }
+}
+
+mutation EarningCategoryDelete($id: Int!) {
+  earningCategoryDeleteById(id: $id)
+}
+
+subscription EarningCategoryCreated {
+  earningCategory: onEarningCategoryCreated {
+    id
+    name
+    active
+    description
+    enterpriseId
+  }
+}

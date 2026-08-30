@@ -1,0 +1,46 @@
+fragment deductionFields on Deduction {
+  id
+  code
+  name
+  active
+  description
+  calculationType
+  category {
+    id
+    name
+  }
+  enterpriseId
+}
+
+query Deductions($id: Int!) {
+  deductions(enterpriseId: $id) {
+    ...deductionFields
+  }
+}
+
+mutation DeductionSave($deduction: DeductionCreateInput!) {
+  deduction: deductionSave(deduction: $deduction) {
+    ...deductionFields
+  }
+}
+
+mutation DeductionUpdate($deduction: DeductionUpdateInput!) {
+  deduction: deductionUpdate(deduction: $deduction) {
+    ...deductionFields
+  }
+}
+
+mutation DeductionDelete($id: Int!) {
+  deductionDeleteById(id: $id)
+}
+
+subscription DeductionCreated {
+  deduction: onDeductionCreated {
+    id
+    code
+    name
+    active
+    description
+    enterpriseId
+  }
+}

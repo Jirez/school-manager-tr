@@ -1,0 +1,38 @@
+fragment departmentFields on Department {
+  id
+  name
+  manager
+  active
+  note
+  createdAt
+  updatedAt
+  enterpriseId
+}
+
+query Departments($id: Int!) {
+  departments(enterpriseId: $id) {
+    ...departmentFields
+  }
+}
+
+mutation DepartmentSave($department: DepartmentCreateInput!) {
+  department: departmentSave(department: $department) {
+    ...departmentFields
+  }
+}
+
+mutation DepartmentUpdate($department: DepartmentUpdateInput!) {
+  department: departmentUpdate(department: $department) {
+    ...departmentFields
+  }
+}
+
+mutation DepartmentDeleteById($id: Int!) {
+  departmentDeleteById(id: $id)
+}
+
+subscription DepartmentCreated {
+  department: onDepartmentCreated {
+    ...departmentFields
+  }
+}

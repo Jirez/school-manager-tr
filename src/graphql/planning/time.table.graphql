@@ -1,0 +1,49 @@
+query TimeTables($classId: Int!, $schoolId: Int!) {
+  timeTables(classId: $classId, schoolId: $schoolId) {
+    timeSlotId
+    startTime
+    endTime
+    items {
+      dayOfClassId
+      dayOfWeek
+      subjectId
+      subjectName
+      available
+      teacherId
+      teacherName
+    }
+  }
+}
+
+query SubjectAssignments($classId: Int!) {
+  subjectAssignments(classId: $classId) {
+    subjectId
+    subjectName
+    teacherId
+    teacherName
+  }
+}
+
+query CheckTeacherAvailability(
+  $teacherId: Long!
+  $timeSlotId: Int!
+  $dayOfClassId: Int!
+) {
+  checkTeacherAvailability(
+    teacherId: $teacherId
+    timeSlotId: $timeSlotId
+    dayOfClassId: $dayOfClassId
+  )
+}
+
+mutation TimeTableSave(
+  $classId: Int!
+  $schoolId: Int!
+  $items: [TimeTableFormInput!]!
+) {
+  timeTableSave(classId: $classId, schoolId: $schoolId, items: $items)
+}
+
+mutation GenerateTimeTable($schoolId: Int!) {
+  generateTimeTable(schoolId: $schoolId)
+}

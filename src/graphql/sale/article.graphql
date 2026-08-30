@@ -1,0 +1,51 @@
+mutation ArticleSave($article: ArticleCreateInput!) {
+  product: articleSave(article: $article) {
+    ...productList
+  }
+}
+
+mutation ArticleUpdate($article: ArticleUpdateInput!) {
+  product: articleUpdate(article: $article) {
+    ...productList
+  }
+}
+
+mutation ArticleDelete($id: Long!) {
+  articleDeleteById(productId: $id)
+}
+
+query ArticleUnionById($id: Long!) {
+  article: articleUnionById(productId: $id) {
+    productId
+    name
+    sku
+    active
+    salePrice
+    minSalePrice
+    cost
+    purchasePrice
+    saleDescription
+    purchaseDescription
+    picture
+    productCategory {
+      id
+      name
+    }
+    saleAccount {
+      id
+      number
+      name
+    }
+    purchaseAccount {
+      id
+      number
+      name
+    }
+    enterprise {
+      id
+      name
+    }
+    articleId
+    quantity
+  }
+}

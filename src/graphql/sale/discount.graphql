@@ -1,0 +1,37 @@
+fragment discountFragment on Discount {
+  id
+  discountType
+  name
+  value
+  note
+  active
+  enterpriseId
+}
+
+query Discounts($id: Int!) {
+  discounts(enterpriseId: $id) {
+    ...discountFragment
+  }
+}
+
+mutation DiscountSave($discount: DiscountCreateInput!) {
+  discount: discountSave(discount: $discount) {
+    ...discountFragment
+  }
+}
+
+mutation DiscountUpdate($discount: DiscountUpdateInput!) {
+  discount: discountUpdate(discount: $discount) {
+    ...discountFragment
+  }
+}
+
+mutation DiscountDelete($id: Int!) {
+  discount: discountDeleteById(id: $id)
+}
+
+subscription DiscountCreated {
+  discount: onDiscountCreated {
+    ...discountFragment
+  }
+}

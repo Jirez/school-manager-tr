@@ -1,0 +1,37 @@
+fragment CustomerOperation on CustomerOperation {
+  id
+  operationId
+  customerOperationType
+  invoiceType: customerOperationType
+  operationType: customerOperationType
+  operationDate
+  number
+  amount
+  balance
+  quantity
+  distinctProduct
+  customer
+  enterpriseId
+  discount
+  className
+}
+
+query CustomerOperations($id: Int!, $startDate: Date!, $endDate: Date!) {
+  customerOperations(
+    enterpriseId: $id
+    startDate: $startDate
+    endDate: $endDate
+  ) {
+    operations {
+      ...CustomerOperation
+    }
+    paymentInfo {
+      overdue
+      overdueCount
+      openInvoice
+      openInvoiceCount
+      paid
+      paidCount
+    }
+  }
+}

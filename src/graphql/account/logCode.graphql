@@ -1,0 +1,30 @@
+fragment logCodeFields on LogCode {
+  id
+  logType
+  name
+  active
+  note
+  enterpriseId
+}
+
+query LogCodes($id: Int!) {
+  logCodes: findLogCodeByEnterprise(id: $id) {
+    ...logCodeFields
+  }
+}
+
+mutation LogCodeSave($logCode: LogCodeInput) {
+  logCode: storeLogCode(logCode: $logCode) {
+    ...logCodeFields
+  }
+}
+
+mutation LogCodeDelete($id: Int!) {
+  deleteLogCodeById(id: $id)
+}
+
+subscription LogCodeCreated {
+  logCode: onLogCodeCreated {
+    ...logCodeFields
+  }
+}

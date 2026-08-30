@@ -1,0 +1,29 @@
+fragment operationClassFields on OperationClass {
+  id
+  name
+  active
+  description
+  enterpriseId
+}
+
+query OperationClasses($id: Int!) {
+  operationClasses: findOperationClass(id: $id) {
+    ...operationClassFields
+  }
+}
+
+mutation OperationClassSave($operationClass: OperationClassInput) {
+  operationClass: storeOperationClass(operationClass: $operationClass) {
+    ...operationClassFields
+  }
+}
+
+mutation OperationClassDelete($id: Int!) {
+  deleteOperationClassById(id: $id)
+}
+
+subscription OperationClassCreated {
+  operationClass: onOperationClassCreated {
+    ...operationClassFields
+  }
+}

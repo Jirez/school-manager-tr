@@ -1,0 +1,43 @@
+fragment specialAccountFields on SpecialAccount {
+  id
+  name
+  specialAccountPK {
+    accountId
+    enterpriseId
+  }
+  selected
+  specialAccountType
+  account {
+    id
+    number
+    name
+    displayName
+  }
+  enterprise {
+    id
+  }
+  note
+}
+
+query SpecialAccounts($id: Int!) {
+  specialAccounts: findSpecialAccount(id: $id) {
+    ...specialAccountFields
+  }
+}
+
+mutation SpecialAccountSave($account: SpecialAccountInput) {
+  specialAccount: storeSpecialAccount(account: $account) {
+    ...specialAccountFields
+  }
+}
+
+mutation SpecialAccountDelete($id: SpecialAccountPKInput) {
+  deleteSpecialAccountById(id: $id)
+}
+
+subscription SpecialAccountCreated {
+  specialAccount: onSpecialAccountCreated {
+    id
+    name
+  }
+}

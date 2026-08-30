@@ -1,0 +1,230 @@
+fragment configurationFields on Configuration {
+  id
+  configurationPK {
+    key
+    enterpriseId
+  }
+  createdBy
+  createdDate
+  lastModifiedBy
+  lastModifiedDate
+  configData
+}
+
+query Configuration($id: Int!) {
+  configs: findConfiguration(id: $id) {
+    ...configurationFields
+  }
+}
+
+mutation ConfigurationSave($config: ConfigurationInput) {
+  config: storeConfiguration(config: $config) {
+    ...configurationFields
+  }
+}
+
+subscription ConfigurationCreated {
+  config: onConfigurationCreated {
+    ...configurationFields
+  }
+}
+
+query EncodeDocumentHeader($json: DocumentHeaderJsonInput) {
+  configData: encodeDocumentHeader(json: $json)
+}
+
+query DecodeDocumentHeader($data: String) {
+  documentHeader: decodeDocumentHeader(data: $data) {
+    leftHeader
+    rightHeader
+  }
+}
+
+query EncodeDiscipline($json: DisciplineJsonInput) {
+  configData: encodeDiscipline(json: $json)
+}
+
+query DecodeDiscipline($data: String) {
+  discipline: decodeDiscipline(data: $data) {
+    warning
+    blame
+    exclusion3
+    exclusion5
+    exclusion8
+    definitiveExclusion
+  }
+}
+
+query EncodeReport($json: ReportJsonInput) {
+  configData: encodeReport(json: $json)
+}
+
+query DecodeReport($data: String) {
+  report: decodeReport(data: $data) {
+    minSubjectsPercentage
+    annualSubPeriodsRequired
+    quarterlySubPeriodsRequired
+    customReportHeader
+  }
+}
+
+query LoadLicenseFromText($base64Text: String!) {
+  license: loadLicenseFromText(base64Text: $base64Text) {
+    licenseKey
+    enterpriseId
+    schoolYearId
+    enterpriseName
+    expiryDate
+    subPeriods
+  }
+}
+
+query LoadLicenseFromFile($file: String!) {
+  license: loadLicense(fileName: $file) {
+    licenseKey
+    enterpriseId
+    schoolYearId
+    enterpriseName
+    expiryDate
+    subPeriods
+  }
+}
+
+query DecodeLicense($data: String) {
+  license: decodeLicense(data: $data) {
+    licenseKey
+    enterpriseId
+    schoolYearId
+    enterpriseName
+    expiryDate
+    subPeriods
+  }
+}
+
+query EncodeLicense($json: LicenseJsonInput) {
+  configData: encodeLicense(json: $json)
+}
+
+query EncodeSecurity($json: SecurityJsonInput) {
+  configData: encodeSecurity(json: $json)
+}
+
+query DecodeSecurity($data: String) {
+  security: decodeSecurity(data: $data) {
+    enableSecuredLogin
+    type
+  }
+}
+
+query EncodeRegistrationNumber($json: RegistrationNumberJsonInput) {
+  configData: encodeRegistrationNumber(json: $json)
+}
+
+query DecodeRegistrationNumber($data: String) {
+  registrationNumber: decodeRegistrationNumber(data: $data) {
+    prefix
+    prefixSep
+    radicalType
+    radicalLength
+    radicalFill
+    suffixLength
+    resetNumberOrder
+  }
+}
+
+query EncodeStudentInvoice($json: StudentInvoiceJsonInput) {
+  configData: encodeStudentInvoice(json: $json)
+}
+
+query DecodeStudentInvoice($data: String) {
+  studentInvoice: decodeStudentInvoice(data: $data) {
+    prefix
+    radical
+    suffixLength
+    resetNumberOrder
+  }
+}
+
+query EncodeStudentPayment($json: StudentPaymentJsonInput) {
+  configData: encodeStudentPayment(json: $json)
+}
+
+query DecodeStudentPayment($data: String) {
+  studentPayment: decodeStudentPayment(data: $data) {
+    prefix
+    radical
+    suffixLength
+    resetNumberOrder
+    paymentGroupCompulsory
+    schoolFeeCompulsory
+    uniqueInvoice
+    bigSizeReceipt
+    leftSignature
+    rightSignature
+    middleSignature
+    showEmptyNonCompulsory
+  }
+}
+
+query EncodePicture($json: PictureJsonInput) {
+  configData: encodePicture(json: $json)
+}
+
+query DecodePicture($data: String) {
+  picture: decodePicture(data: $data) {
+    picturePath
+  }
+}
+
+query EncodePersonnelCode($json: PersonnelCodeJsonInput) {
+  configData: encodePersonnelCode(json: $json)
+}
+
+query DecodePersonnelCode($data: String) {
+  personnelCode: decodePersonnelCode(data: $data) {
+    prefix
+    prefixSep
+    radicalType
+    radicalLength
+    radicalFill
+    postRadical
+    suffixLength
+    resetNumberOrder
+  }
+}
+
+query EncodeDuplicatedStudent($json: DuplicatedStudentJsonInput!) {
+  configData: encodeDuplicatedStudent(json: $json)
+}
+
+query DecodeDuplicatedStudent($data: String!) {
+  duplicatedStudent: decodeDuplicatedStudent(data: $data) {
+    verifyDuplicatedStudent
+    includeLastName
+    includeFirstName
+    includeBirthDate
+    includeBirthplace
+    includeGender
+  }
+}
+
+query EncodeReportHeader($json: ReportHeaderJsonInput) {
+  configData: encodeReportHeader(json: $json)
+}
+
+query DecodeReportHeader($data: String) {
+  reportHeader: decodeReportHeader(data: $data) {
+    leftHeader
+    rightHeader
+  }
+}
+
+query EncodeExpense($json: ExpenseJsonInput) {
+  configData: encodeExpense(json: $json)
+}
+
+query DecodeExpense($data: String) {
+  expense: decodeExpense(data: $data) {
+    voucherCompulsory
+  }
+}

@@ -1,0 +1,100 @@
+fragment guardianFields on Guardian {
+  id
+  lastName
+  firstName
+  displayName
+  gender
+  profession
+  active
+  note
+  job
+  religion
+  regionOrigin
+  departmentOrigin
+  districtOrigin
+  address {
+    street
+    state
+    country
+    town
+    zipCode
+  }
+  contactInfo {
+    telephone
+    email
+    postOfficeBox
+    mobile
+    fax
+  }
+  language {
+    id
+    name
+  }
+}
+
+fragment guardianCreateFields on Guardian {
+  id
+  lastName
+  firstName
+  displayName
+  gender
+  profession
+  active
+  note
+  address {
+    street
+    state
+    country
+    town
+    zipCode
+  }
+  contactInfo {
+    telephone
+    email
+    postOfficeBox
+    mobile
+    fax
+  }
+}
+
+query Guardians($id: Int!) {
+  guardians: findGuardian(id: $id) {
+    ...guardianFields
+  }
+}
+
+mutation GuardianSave($guardian: GuardianCreateInput!) {
+  guardian: storeGuardian(guardian: $guardian) {
+    ...guardianFields
+  }
+}
+
+mutation GuardianUpdate($guardian: GuardianUpdateInput!) {
+  guardian: updateGuardian(guardian: $guardian) {
+    ...guardianFields
+  }
+}
+
+mutation GuardianDelete($id: Long!) {
+  deleteGuardianById(id: $id)
+}
+
+subscription GuardianCreated {
+  guardian: onGuardianCreated {
+    ...guardianCreateFields
+  }
+}
+
+query GuardianStreets($id: Int!) {
+  guardianStreets(enterpriseId: $id)
+}
+
+query GuardianById($id: Long!) {
+  guardian: guardianById(id: $id) {
+    ...guardianFields
+  }
+}
+
+query GuardianReligions($id: Int!) {
+  guardianReligions(enterpriseId: $id)
+}

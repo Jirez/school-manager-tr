@@ -1,0 +1,51 @@
+fragment earningFields on Earning {
+  id
+  code
+  name
+  active
+  description
+  isTaxable
+  isOvertime
+  calculationType
+  category {
+    id
+    name
+  }
+  enterpriseId
+}
+
+query Earnings($id: Int!) {
+  earnings(enterpriseId: $id) {
+    ...earningFields
+  }
+}
+
+mutation EarningSave($earning: EarningCreateInput!) {
+  earning: earningSave(earning: $earning) {
+    ...earningFields
+  }
+}
+
+mutation EarningUpdate($earning: EarningUpdateInput!) {
+  earning: earningUpdate(earning: $earning) {
+    ...earningFields
+  }
+}
+
+mutation EarningDelete($id: Int!) {
+  earningDeleteById(id: $id)
+}
+
+subscription EarningCreated {
+  earning: onEarningCreated {
+    id
+    code
+    name
+    active
+    calculationType
+    isTaxable
+    description
+    isOvertime
+    enterpriseId
+  }
+}

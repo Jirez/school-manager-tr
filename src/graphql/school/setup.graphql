@@ -1,0 +1,59 @@
+query InitCycles($schoolId: Int) {
+	cycles: initCycles(schoolId: $schoolId) {
+		numberOrder
+		name
+		name2
+		schoolSectionId
+		levelCount
+		schoolSection {
+			id
+			name
+		}
+	}
+}
+
+mutation CyclesSave($items: [CycleSetupInput!]!, $schoolId: Int!) {
+	cycles: cyclesSave(items: $items, schoolId: $schoolId) {
+		id
+		numberOrder
+		name
+	}
+}
+
+query GuidedSetup($schoolId: Int!) {
+	guidedSetup(schoolId: $schoolId) {
+		schoolId
+		step
+		completed
+	}
+}
+
+mutation SchoolYearSetupSave($schoolYear: SchoolYearInput!) {
+	schoolYear: schoolYearSave(schoolYear: $schoolYear) {
+		id
+		label
+	}
+}
+
+query InitLevels($schoolId: Int) {
+	levels: initLevels(schoolId: $schoolId) {
+		branchCount
+		numberOrder
+		name
+		classCount
+		cycle {
+			id
+			name
+		}
+	}
+}
+
+mutation LevelsSave($items: [LevelSetupInput!]!, $schoolId: Int!) {
+	levels: levelsSave(items: $items, schoolId: $schoolId) {
+		id
+		name
+		note
+		numberOrder
+		branchCount
+	}
+}

@@ -1,0 +1,442 @@
+fragment studentFields on Student {
+    id
+    lastName
+    firstName
+    displayName
+    gender
+    birthDate
+    birthplace
+    presumeBirthDate
+    registrationNumber
+    active
+    note
+    inscriptionMode
+    knownHealthProblem
+    rhesus
+    religion
+    ethnicGroup
+    bloodGroup
+    otherUsefulInfo
+    origin {
+        countryOrigin
+        districtOrigin
+        departmentOrigin
+        regionOrigin
+    }
+    address {
+        street
+        state
+        country
+        town
+        zipCode
+    }
+    contactInfo {
+        telephone
+        email
+        postOfficeBox
+        mobile
+        fax
+    }
+    createdDate
+}
+
+query Students($id: Int!) {
+    students: findStudent(id: $id) {
+        ...studentFields
+    }
+}
+
+query UnregisteredStudents($id: Int!) {
+    students: unregisteredStudent(id: $id) {
+        ...studentFields
+    }
+}
+
+query StudentsById($id: Long!) {
+    student: findStudentById(id: $id) {
+        ...studentFields
+    }
+}
+
+query StudentsByClass($id: Int!) {
+    students: findStudentByClass(id: $id) {
+        ...studentFields
+    }
+}
+
+mutation StudentSave($student: StudentCreateInput!) {
+    student: storeStudent(student: $student) {
+        ...studentFields
+    }
+}
+
+mutation StudentUpdate($student: StudentUpdateInput!) {
+    student: updateStudent(student: $student) {
+        ...studentFields
+    }
+}
+
+mutation StudentDelete($id: Long!) {
+    deleteStudentById(id: $id)
+}
+
+mutation StudentsDelete($ids: [Long!]!) {
+    studentDeleteByIds(ids: $ids)
+}
+
+subscription StudentCreated {
+    student: onStudentCreated {
+        ...studentFields
+    }
+}
+
+query NewRegistrationNumber($id: Int!) {
+    newRegistrationNumber(id: $id)
+}
+
+fragment frequentFields on Frequent {
+    id
+    frequentPK {
+        id
+        studentId
+        schoolYearId
+        classId
+    }
+    numberOrder
+    repeater
+    formerStudent
+    external
+    apt
+    smsTo
+    mailTo
+    socialCase
+    scNature
+    scObservation
+    student {
+        id
+        lastName
+        firstName
+        gender
+        birthDate
+        birthplace
+        registrationNumber
+    }
+    clazz {
+        id
+        name
+        code
+    }
+    oldSchool {
+        id
+        name
+    }
+    paymentGroup {
+        id
+        name
+    }
+    feeGroup {
+        id
+        name
+    }
+    totalRequiredAmount
+    totalPaidAmount
+    lastPaymentDate
+}
+
+fragment frequentUnionFields on FrequentUnion {
+    id
+    frequentPK {
+        id
+        studentId
+        schoolYearId
+        classId
+    }
+    className
+    repeater
+    fullName
+    birthDate
+    birthplace
+    registrationNumber
+    sex
+    socialCase
+    totalRequiredAmount
+    totalPaidAmount
+    lastPaymentDate
+}
+
+query Frequents($id: Int!) {
+    frequents: findFrequent(id: $id) {
+        ...frequentFields
+    }
+}
+
+query FrequentBySchool($id: Int!) {
+    frequents(schoolId: $id) {
+        ...frequentUnionFields
+    }
+}
+
+#mutation FrequentSave($frequent: FrequentInput) {
+#	frequent: storeFrequent(frequent: $frequent) {
+#		...frequentFields
+#	}
+#}
+
+mutation FrequentSave($frequent: FrequentInput!) {
+    frequent: frequentSave(frequent: $frequent)
+}
+
+mutation UpdateFrequent(
+    $frequent: FrequentInput
+    $student: StudentUpdateInput!
+) {
+    frequent: updateFrequent(frequent: $frequent, student: $student) {
+        ...frequentFields
+    }
+}
+
+mutation FrequentUpdate(
+    $frequent: FrequentInput!
+    $student: StudentUpdateInput!
+) {
+    frequent: frequentUpdate(frequent: $frequent, student: $student)
+}
+
+mutation FrequentDelete($id: FrequentPKInput!) {
+    deleteFrequentById(id: $id)
+}
+
+mutation FrequentsDelete($ids: [FrequentPKInput!]!) {
+    deleteFrequentByIds(ids: $ids)
+}
+
+subscription FrequentCreated {
+    frequent: onFrequentCreated {
+        ...frequentFields
+    }
+}
+
+query StudentGuardians($id: Long!) {
+    studentGuardians: findStudentGuardianByStudent(id: $id) {
+        studentGuardianPK {
+            studentId
+            guardianId
+        }
+        guardian {
+            id
+            lastName
+            firstName
+            profession
+        }
+        relation
+    }
+}
+
+mutation FrequentSchoolNumberOrder($id: Int!) {
+    buildAllFrequentNumberOrder(id: $id)
+}
+
+query DuplicatedStudents($criteria: DuplicatedStudentCriteria, $id: Int!) {
+    duplicates: findDuplicatedStudent(criteria: $criteria, schoolId: $id) {
+        id
+        lastName
+        firstName
+        registrationNumber
+        gender
+        birthDate
+        birthplace
+        clazz
+        clazzId
+        repeater
+        schoolYearId
+    }
+}
+
+mutation PicturesSave($path: String!, $schoolId: Int!) {
+    storeFromRegistrationNumbers(folderName: $path, schoolId: $schoolId)
+}
+
+query StudentPictureByStudent($studentId: Long!, $schoolId: Int!) {
+    studentPicture: findStudentPicture(
+        studentId: $studentId
+        schoolId: $schoolId
+    ) {
+        studentPicturePK {
+            studentId
+            schoolYearId
+        }
+        image
+    }
+}
+
+query FrequentConnection(
+    $schoolId: Int!
+    $searchText: String
+    $first: Int
+    $after: String
+    $classIds: [Int!]
+    $orderBy: FrequentOrder
+) {
+    frequents: frequentConnection(
+        schoolId: $schoolId
+        searchText: $searchText
+        first: $first
+        after: $after
+        classIds: $classIds
+        orderBy: $orderBy
+    ) {
+        totalCount
+        edges {
+            node {
+                ...frequentFields
+            }
+        }
+    }
+}
+
+query FrequentByRegistrationNumber(
+    $registrationNumber: String!
+    $schoolId: Int!
+) {
+    frequent: frequentByRegistrationNumber(
+        registrationNumber: $registrationNumber
+        schoolId: $schoolId
+    ) {
+        frequentPK {
+            id
+            studentId
+            schoolYearId
+            classId
+        }
+        numberOrder
+        repeater
+        formerStudent
+        external
+        apt
+        smsTo
+        mailTo
+        student {
+            id
+            lastName
+            firstName
+            gender
+            birthDate
+            birthplace
+            registrationNumber
+        }
+        clazz {
+            id
+            name
+            code
+        }
+    }
+}
+
+query FrequentById($id: FrequentPKInput!) {
+    frequent: frequentById(frequentPK: $id) {
+        ...frequentFields
+    }
+}
+
+query FrequentByClass($classId: Int!) {
+    frequent: frequentByClass(classId: $classId) {
+        studentId
+        lastName
+        firstName
+        registrationNumber
+        birthDate
+        birthplace
+    }
+}
+
+mutation FrequentBulkUpdate(
+    $frequents: [FrequentBulkUpdateInput!]!
+    $schoolId: Int!
+) {
+    frequentBulkUpdate(frequents: $frequents, schoolId: $schoolId)
+}
+
+mutation StudentInvoiceCreate(
+    $studentId: Long!
+    $schoolYearId: Int!
+    $schoolId: Int!
+) {
+    studentInvoiceCreate(
+        studentId: $studentId
+        schoolYearId: $schoolYearId
+        schoolId: $schoolId
+    )
+}
+
+query StudentBirthplaces($id: Int!) {
+    studentBirthplaces(enterpriseId: $id)
+}
+
+query StudentReligions($id: Int!) {
+    studentReligions(enterpriseId: $id)
+}
+
+query GuardiansOfStudent($studentId: Long!) {
+    guardians: guardiansOfStudent(studentId: $studentId) {
+        relation
+        guardian {
+            id
+            lastName
+            firstName
+        }
+    }
+}
+
+mutation StudentImport(
+    $students: [StudentImportInput!]!
+    $schoolId: Int!
+    $classId: Int!
+) {
+    studentImport(students: $students, schoolId: $schoolId, classId: $classId)
+}
+
+query LoadPicturesFromRegistrationNumbers(
+    $folderName: String!
+    $schoolId: Int!
+) {
+    students: loadFromRegistrationNumbers(
+        folderName: $folderName
+        schoolId: $schoolId
+    ) {
+        studentId
+        lastName
+        firstName
+        registrationNumber
+        gender
+        picture
+        birthDate
+        birthplace
+    }
+}
+
+mutation StudentPicturesSave(
+    $pictures: [StudentPictureInput!]!
+    $schoolId: Int!
+) {
+    studentPicturesSave(pictures: $pictures, schoolId: $schoolId)
+}
+
+mutation StudentPicturesImportCancel($schoolId: Int!, $pictures: [String!]!) {
+    studentPicturesImportCancel(schoolId: $schoolId, pictures: $pictures)
+}
+
+mutation StudentInvoiceSync(
+    $studentId: Long!
+    $schoolYearId: Int!
+    $schoolId: Int!
+) {
+    studentInvoiceSync(
+        studentId: $studentId
+        schoolYearId: $schoolYearId
+        schoolId: $schoolId
+    )
+}
+
+mutation FrequentExclude($input: FrequentExcludeInput!) {
+    frequentExclude(input: $input)
+}

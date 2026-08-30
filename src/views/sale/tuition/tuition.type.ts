@@ -1,0 +1,30 @@
+export interface TuitionType {
+  id: number;
+  tuitionId: number;
+  name: string;
+  sku: string;
+  active: boolean;
+  productCategory: any;
+  productCategoryId: any;
+  productType: string;
+  salePrice: number | string;
+  salePriceF: number | string;
+  purchasePrice: number | string;
+  purchasePriceF: number | string;
+  quantity: number;
+  cost: number | string;
+  costF: number | string;
+  purchaseDescription: string;
+  saleDescription: string;
+  picture: string;
+  saleAccount: any;
+  saleAccountId: any;
+  purchaseAccount: any;
+  purchaseAccountId: any;
+  name2: string;
+  isMandatory: boolean;
+  isCollected: boolean;
+  numberOrder: number | "";
+  allowPaymentInKind: boolean;
+  isDeliverable: boolean;
+}

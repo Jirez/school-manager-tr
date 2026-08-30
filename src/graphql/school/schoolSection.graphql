@@ -1,0 +1,37 @@
+fragment schoolSectionFields on SchoolSection {
+	id
+	name
+	language {
+		id
+		name
+		code
+	}
+	school {
+		id
+		name
+	}
+	active
+	note
+}
+
+query SchoolSections($id: Int!) {
+	schoolSections: findSchoolSection(id: $id) {
+		...schoolSectionFields
+	}
+}
+
+mutation SchoolSectionSave($section: SchoolSectionInput) {
+	schoolSection: storeSchoolSection(section: $section) {
+		...schoolSectionFields
+	}
+}
+
+mutation SchoolSectionDelete($id: Int!) {
+	deleteSchoolSectionById(id: $id)
+}
+
+subscription SchoolSectionCreated {
+	schoolSection: onSchoolSectionCreated {
+		...schoolSectionFields
+	}
+}
