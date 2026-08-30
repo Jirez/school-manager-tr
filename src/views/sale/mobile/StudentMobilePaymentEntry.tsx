@@ -35,10 +35,14 @@ interface FormValue {
   registrationNumber: string
 }
 
-export default function StudentMobilePaymentEntry() {
+export default function StudentMobilePaymentEntry({
+  identifier,
+}: {
+  identifier: string
+}) {
   useTitle('Paiement mobile')
   const { t } = useTranslation()
-  const { identifier } = useParams()
+  // const { identifier } = useParams()
   const navigate = useNavigate()
   const [registrationNumber, setRegistrationNumber] = useState('')
   const [registrationNumberValid, setRegistrationNumberValid] = useState(false)

@@ -1,15 +1,9 @@
-import { useMount, useSafeState as useState } from 'ahooks'
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFnOption,
-  GroupingState,
-  PaginationState,
-  TableOptions,
-  TableState,
-} from '@tanstack/react-table'
-
+//'use no memo'
+import { useState } from 'react'
 import {
+  type ColumnDef,
+  type ColumnFiltersState,
+  type FilterFnOption,
   getCoreRowModel,
   getFacetedMinMaxValues,
   getFacetedRowModel,
@@ -18,11 +12,14 @@ import {
   getGroupedRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type GroupingState,
+  type PaginationState,
+  type TableOptions,
+  type TableState,
   useReactTable,
 } from '@tanstack/react-table'
+import checkboxColumn from '@/@core/components/react-table/checkbox-column'
 import { matchWord } from '@/utils/SearchFn'
-import checkboxColumn from './checkbox-column'
-import { useEffect } from 'react'
 
 export interface UseTableOptions<TData> extends Partial<TableOptions<TData>> {
   enableColumnResizing?: boolean
@@ -42,6 +39,7 @@ export function useTable<TData>(
     columns: ColumnDef<TData, any>[]
   },
 ) {
+  'use no memo'
   const {
     data,
     columns,
@@ -61,16 +59,14 @@ export function useTable<TData>(
   const [columnPinning, setColumnPinning] = useState({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
-  const [pagination, onPaginationChange] = useState<PaginationState>({
+  const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: pageSize || Number(localStorage.getItem('PageSize')) || 15,
   })
-  const [totalCount, setTotalCount] = useState(0)
-  const [isMount, setIsMount] = useState(false)
 
   const table = useReactTable({
     data,
-    // @ts-ignore desc
+    //@ts-ignore
     columns: showCheckbox ? [checkboxColumn, ...columns] : columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -88,7 +84,7 @@ export function useTable<TData>(
     onGroupingChange: setGrouping,
     onColumnPinningChange: setColumnPinning,
     onRowSelectionChange: setRowSelection,
-    onPaginationChange,
+    onPaginationChange: setPagination,
     globalFilterFn,
     state: {
       grouping,
@@ -100,18 +96,14 @@ export function useTable<TData>(
       pagination,
       ...restOptions.initialState,
     },
-    // debugTable,
-    // debugHeaders,
-    // debugColumns,
-    // ...restOptions,
+    debugTable,
+    debugHeaders,
+    debugColumns,
+    ...restOptions,
   })
 
-  const {
-    options: { rowCount },
-    getPrePaginationRowModel,
-  } = table
-  const rows = isMount ? getPrePaginationRowModel().rows : []
-  const selectedFlatRows = isMount ? table.getSelectedRowModel().flatRows : []
+  const totalCount = table.getFilteredRowModel().rows.length
+  const selectedFlatRows = table.getSelectedRowModel().flatRows
 
   // Optional: Add any table-specific effects here
   /* useEffect(() => {
@@ -121,14 +113,6 @@ export function useTable<TData>(
       }
     }
   }, [table.getState().columnFilters[0]?.id]); */
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  useEffect(() => {
-    setTotalCount(rows.length)
-  }, [rows])
 
   return {
     table,

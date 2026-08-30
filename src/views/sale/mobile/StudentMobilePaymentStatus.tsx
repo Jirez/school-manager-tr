@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from '@tanstack/react-router'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import { useCheckAndConfirmPaymentMutation } from '@/gql/graphql'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,9 +8,14 @@ import { useTitle } from 'ahooks'
 
 type PaymentStatus = 'valide' | 'non_valide' | 'en_attente' | 'error'
 
-export default function StudentMobilePaymentStatus() {
-  const { reference } = useParams()
+export default function StudentMobilePaymentStatus({
+  reference,
+}: {
+  reference: string
+}) {
+  //const { reference } = useParams()
   const navigate = useNavigate()
+  const router = useRouter()
   const { t } = useTranslation()
   useTitle(t('label-paymentStatus') || 'Payment Status')
 
@@ -213,7 +218,7 @@ export default function StudentMobilePaymentStatus() {
             <div className="flex flex-col gap-3">
               {status === 'valide' && (
                 <button
-                  onClick={() => navigate('/')}
+                  onClick={() => navigate({ to: '/' })}
                   className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-green-200 dark:shadow-none transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2"
                 >
                   <CheckCircle size={18} />
@@ -223,7 +228,7 @@ export default function StudentMobilePaymentStatus() {
 
               {status === 'non_valide' && (
                 <button
-                  onClick={() => navigate(-1)}
+                  onClick={() => router.history.back()}
                   className="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-red-200 dark:shadow-none transition-all transform hover:scale-[1.02]"
                 >
                   {t('label-tryAgain') || 'Try Again'}
@@ -239,7 +244,7 @@ export default function StudentMobilePaymentStatus() {
                     {t('label-retry') || 'Retry'}
                   </button>
                   <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate({ to: '/' })}
                     className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-3.5 rounded-xl transition-all"
                   >
                     {t('label-backToHome') || 'Back to Home'}

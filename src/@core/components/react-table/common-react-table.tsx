@@ -7,7 +7,6 @@ import type {
   RowSelectionState,
   OnChangeFn,
   ColumnDef,
-  flexRender,
   VisibilityState,
 } from '@tanstack/react-table'
 import {
@@ -16,6 +15,7 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
   useReactTable,
+  flexRender,
 } from '@tanstack/react-table'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useKeyPress, useMount, useUpdateEffect } from 'ahooks'

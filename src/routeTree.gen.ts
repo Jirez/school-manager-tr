@@ -14,13 +14,185 @@ import { Route as PrivateLayoutRouteImport } from './routes/_privateLayout'
 import { Route as InitSchoolRouteImport } from './routes/init-school'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as NotAuthorizedRouteImport } from './routes/not-authorized'
+import { Route as QrcodeRouteImport } from './routes/qrcode'
+import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as PrivateLayoutCleanLayoutRouteImport } from './routes/_privateLayout/_cleanLayout'
 import { Route as PrivateLayoutVerticalRouteImport } from './routes/_privateLayout/_vertical'
+import { Route as PaymentStatusReferenceRouteImport } from './routes/payment-status/$reference'
+import { Route as TuitionIdentifierRouteImport } from './routes/tuition/$identifier'
 import { Route as PrivateLayoutCleanLayoutAccount_listRouteImport } from './routes/_privateLayout/_cleanLayout/account_list'
+import { Route as PrivateLayoutCleanLayoutAnnual_bestRouteImport } from './routes/_privateLayout/_cleanLayout/annual_best'
+import { Route as PrivateLayoutCleanLayoutAnnual_comp_report_cardRouteImport } from './routes/_privateLayout/_cleanLayout/annual_comp_report_card'
+import { Route as PrivateLayoutCleanLayoutAnnual_mark_sheetRouteImport } from './routes/_privateLayout/_cleanLayout/annual_mark_sheet'
+import { Route as PrivateLayoutCleanLayoutAnnual_note_bookRouteImport } from './routes/_privateLayout/_cleanLayout/annual_note_book'
+import { Route as PrivateLayoutCleanLayoutAnnual_nth_firstRouteImport } from './routes/_privateLayout/_cleanLayout/annual_nth_first'
+import { Route as PrivateLayoutCleanLayoutAnnual_report_card_examRouteImport } from './routes/_privateLayout/_cleanLayout/annual_report_card_exam'
+import { Route as PrivateLayoutCleanLayoutAnnual_report_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/annual_report_summary'
+import { Route as PrivateLayoutCleanLayoutAnnual_school_bookRouteImport } from './routes/_privateLayout/_cleanLayout/annual_school_book'
+import { Route as PrivateLayoutCleanLayoutAnnual_statisticsRouteImport } from './routes/_privateLayout/_cleanLayout/annual_statistics'
+import { Route as PrivateLayoutCleanLayoutApplied_coefficientsRouteImport } from './routes/_privateLayout/_cleanLayout/applied_coefficients'
+import { Route as PrivateLayoutCleanLayoutBlank_note_bookRouteImport } from './routes/_privateLayout/_cleanLayout/blank_note_book'
+import { Route as PrivateLayoutCleanLayoutClass_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/class_summary'
+import { Route as PrivateLayoutCleanLayoutCompetence_input_progressRouteImport } from './routes/_privateLayout/_cleanLayout/competence_input_progress'
+import { Route as PrivateLayoutCleanLayoutEvaluated_competencesRouteImport } from './routes/_privateLayout/_cleanLayout/evaluated_competences'
+import { Route as PrivateLayoutCleanLayoutExcluded_studentsRouteImport } from './routes/_privateLayout/_cleanLayout/excluded_students'
+import { Route as PrivateLayoutCleanLayoutExpense_reportRouteImport } from './routes/_privateLayout/_cleanLayout/expense_report'
+import { Route as PrivateLayoutCleanLayoutExpense_report_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/expense_report_summary'
+import { Route as PrivateLayoutCleanLayoutInput_progressRouteImport } from './routes/_privateLayout/_cleanLayout/input_progress'
+import { Route as PrivateLayoutCleanLayoutInvoice_reportRouteImport } from './routes/_privateLayout/_cleanLayout/invoice_report'
+import { Route as PrivateLayoutCleanLayoutLogin_historyRouteImport } from './routes/_privateLayout/_cleanLayout/login_history'
+import { Route as PrivateLayoutCleanLayoutMark_sheetRouteImport } from './routes/_privateLayout/_cleanLayout/mark_sheet'
+import { Route as PrivateLayoutCleanLayoutMulti_column_studentRouteImport } from './routes/_privateLayout/_cleanLayout/multi_column_student'
+import { Route as PrivateLayoutCleanLayoutPayment_group_reportRouteImport } from './routes/_privateLayout/_cleanLayout/payment_group_report'
+import { Route as PrivateLayoutCleanLayoutPayment_reportRouteImport } from './routes/_privateLayout/_cleanLayout/payment_report'
+import { Route as PrivateLayoutCleanLayoutPersonnel_listRouteImport } from './routes/_privateLayout/_cleanLayout/personnel_list'
+import { Route as PrivateLayoutCleanLayoutQuarterly_comp_report_cardRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_comp_report_card'
+import { Route as PrivateLayoutCleanLayoutQuarterly_disciplineRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_discipline'
+import { Route as PrivateLayoutCleanLayoutQuarterly_honor_rollRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_honor_roll'
+import { Route as PrivateLayoutCleanLayoutQuarterly_mark_sheetRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_mark_sheet'
+import { Route as PrivateLayoutCleanLayoutQuarterly_note_bookRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_note_book'
+import { Route as PrivateLayoutCleanLayoutQuarterly_nth_firstRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_nth_first'
+import { Route as PrivateLayoutCleanLayoutQuarterly_report_cardRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_report_card'
+import { Route as PrivateLayoutCleanLayoutQuarterly_report_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/quarterly_report_summary'
+import { Route as PrivateLayoutCleanLayoutSchool_fee_reportRouteImport } from './routes/_privateLayout/_cleanLayout/school_fee_report'
+import { Route as PrivateLayoutCleanLayoutSequential_disciplineRouteImport } from './routes/_privateLayout/_cleanLayout/sequential_discipline'
+import { Route as PrivateLayoutCleanLayoutSequential_note_bookRouteImport } from './routes/_privateLayout/_cleanLayout/sequential_note_book'
+import { Route as PrivateLayoutCleanLayoutSequential_nth_fistRouteImport } from './routes/_privateLayout/_cleanLayout/sequential_nth_fist'
+import { Route as PrivateLayoutCleanLayoutSequential_report_cardRouteImport } from './routes/_privateLayout/_cleanLayout/sequential_report_card'
+import { Route as PrivateLayoutCleanLayoutSequential_report_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/sequential_report_summary'
+import { Route as PrivateLayoutCleanLayoutSingle_column_studentRouteImport } from './routes/_privateLayout/_cleanLayout/single_column_student'
+import { Route as PrivateLayoutCleanLayoutStudent_cardRouteImport } from './routes/_privateLayout/_cleanLayout/student_card'
+import { Route as PrivateLayoutCleanLayoutStudent_payment_detailRouteImport } from './routes/_privateLayout/_cleanLayout/student_payment_detail'
+import { Route as PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRouteImport } from './routes/_privateLayout/_cleanLayout/student_payment_detail_by_date'
+import { Route as PrivateLayoutCleanLayoutStudent_payment_slice_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/student_payment_slice_summary'
+import { Route as PrivateLayoutCleanLayoutStudent_payment_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/student_payment_summary'
+import { Route as PrivateLayoutCleanLayoutTeacher_distribution_levelRouteImport } from './routes/_privateLayout/_cleanLayout/teacher_distribution_level'
+import { Route as PrivateLayoutCleanLayoutTeacher_time_tableRouteImport } from './routes/_privateLayout/_cleanLayout/teacher_time_table'
+import { Route as PrivateLayoutCleanLayoutTime_tableRouteImport } from './routes/_privateLayout/_cleanLayout/time_table'
+import { Route as PrivateLayoutCleanLayoutWeekly_disciplineRouteImport } from './routes/_privateLayout/_cleanLayout/weekly_discipline'
 import { Route as PrivateLayoutVerticalConfigurationRouteImport } from './routes/_privateLayout/_vertical/configuration'
 import { Route as PrivateLayoutVerticalDashboardRouteImport } from './routes/_privateLayout/_vertical/dashboard'
+import { Route as PrivateLayoutVerticalReportsRouteImport } from './routes/_privateLayout/_vertical/reports'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_dashbard'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_detailRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_detail'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_detail_by_date'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_product_class_summary'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_product_student_summary'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary'
+import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_summary'
+import { Route as PrivateLayoutVerticalaccountingAccountCategoriesRouteImport } from './routes/_privateLayout/_vertical/(accounting)/account-categories'
+import { Route as PrivateLayoutVerticalaccountingAccountGroupsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/account-groups'
+import { Route as PrivateLayoutVerticalaccountingAccountsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/accounts'
+import { Route as PrivateLayoutVerticalaccountingChartOfAccountsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/chartOfAccounts'
+import { Route as PrivateLayoutVerticalaccountingJournalRouteImport } from './routes/_privateLayout/_vertical/(accounting)/journal'
+import { Route as PrivateLayoutVerticalaccountingLogCodesRouteImport } from './routes/_privateLayout/_vertical/(accounting)/log-codes'
+import { Route as PrivateLayoutVerticalaccountingModelsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/models'
+import { Route as PrivateLayoutVerticalaccountingSpecialAccountsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/special-accounts'
+import { Route as PrivateLayoutVerticalbankBankAccountsRouteImport } from './routes/_privateLayout/_vertical/(bank)/bank-accounts'
+import { Route as PrivateLayoutVerticalbankBankTransactionsRouteImport } from './routes/_privateLayout/_vertical/(bank)/bank-transactions'
+import { Route as PrivateLayoutVerticaldisciplineAnnualDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/annual-discipline'
+import { Route as PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport } from './routes/_privateLayout/_vertical/(discipline)/discipline-calculation'
+import { Route as PrivateLayoutVerticaldisciplineQuarterlyDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/quarterly-discipline'
+import { Route as PrivateLayoutVerticaldisciplineSequentialDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/sequential-discipline'
+import { Route as PrivateLayoutVerticalexpenseExpenseCategoriesRouteImport } from './routes/_privateLayout/_vertical/(expense)/expense-categories'
+import { Route as PrivateLayoutVerticalexpenseExpensesRouteImport } from './routes/_privateLayout/_vertical/(expense)/expenses'
+import { Route as PrivateLayoutVerticalexpenseOperationClassesRouteImport } from './routes/_privateLayout/_vertical/(expense)/operation-classes'
+import { Route as PrivateLayoutVerticalexpenseVouchersRouteImport } from './routes/_privateLayout/_vertical/(expense)/vouchers'
+import { Route as PrivateLayoutVerticalexportAnnualSchoolBookXlsxRouteImport } from './routes/_privateLayout/_vertical/(export)/annual-school-book-xlsx'
+import { Route as PrivateLayoutVerticalexportDataExportRouteImport } from './routes/_privateLayout/_vertical/(export)/data-export'
+import { Route as PrivateLayoutVerticalexportPersonnelXlsxRouteImport } from './routes/_privateLayout/_vertical/(export)/personnel-xlsx'
+import { Route as PrivateLayoutVerticalexportStudentXlsxRouteImport } from './routes/_privateLayout/_vertical/(export)/student-xlsx'
+import { Route as PrivateLayoutVerticalnoteAnnualAverageRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-average'
+import { Route as PrivateLayoutVerticalnoteAnnualCompAverageRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-comp-average'
+import { Route as PrivateLayoutVerticalnoteAnnualCompNoteRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-comp-note'
+import { Route as PrivateLayoutVerticalnoteAnnualNoteRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-note'
+import { Route as PrivateLayoutVerticalnoteAnnualNotesRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-notes'
+import { Route as PrivateLayoutVerticalnoteAnnualResultRouteImport } from './routes/_privateLayout/_vertical/(note)/annual-result'
+import { Route as PrivateLayoutVerticalnoteAverageCalculationRouteImport } from './routes/_privateLayout/_vertical/(note)/average-calculation'
+import { Route as PrivateLayoutVerticalnoteBulkAnnualResultRouteImport } from './routes/_privateLayout/_vertical/(note)/bulk-annual-result'
+import { Route as PrivateLayoutVerticalnoteCompetencesRouteImport } from './routes/_privateLayout/_vertical/(note)/competences'
+import { Route as PrivateLayoutVerticalnoteCouncilDecisionRouteImport } from './routes/_privateLayout/_vertical/(note)/council-decision'
+import { Route as PrivateLayoutVerticalnoteEvalCompetencesRouteImport } from './routes/_privateLayout/_vertical/(note)/eval-competences'
+import { Route as PrivateLayoutVerticalnoteEvalCompetencesSubjectRouteImport } from './routes/_privateLayout/_vertical/(note)/eval-competences-subject'
+import { Route as PrivateLayoutVerticalnoteNoteCalculationRouteImport } from './routes/_privateLayout/_vertical/(note)/note-calculation'
+import { Route as PrivateLayoutVerticalnoteQuarterlyAverageRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-average'
+import { Route as PrivateLayoutVerticalnoteQuarterlyCompNoteRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-comp-note'
+import { Route as PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-comp-note-eval'
+import { Route as PrivateLayoutVerticalnoteQuarterlyNoteRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-note'
+import { Route as PrivateLayoutVerticalnoteQuarterlyNotesRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-notes'
+import { Route as PrivateLayoutVerticalnoteQuarterlyReportObservationRouteImport } from './routes/_privateLayout/_vertical/(note)/quarterly-report-observation'
+import { Route as PrivateLayoutVerticalnoteSequentialAverageRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-average'
+import { Route as PrivateLayoutVerticalnoteSequentialNoteCopyRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-note-copy'
+import { Route as PrivateLayoutVerticalnoteSequentialNoteDeleteRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-note-delete'
+import { Route as PrivateLayoutVerticalnoteSequentialNoteDowngradeRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-note-downgrade'
+import { Route as PrivateLayoutVerticalnoteSequentialNoteImportRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-note-import'
+import { Route as PrivateLayoutVerticalnoteSequentialNoteTemplateRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-note-template'
+import { Route as PrivateLayoutVerticalnoteSequentialNotesRouteImport } from './routes/_privateLayout/_vertical/(note)/sequential-notes'
+import { Route as PrivateLayoutVerticalpayrollDeductionCategoriesRouteImport } from './routes/_privateLayout/_vertical/(payroll)/deduction-categories'
+import { Route as PrivateLayoutVerticalpayrollDeductionsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/deductions'
+import { Route as PrivateLayoutVerticalpayrollEarningCategoriesRouteImport } from './routes/_privateLayout/_vertical/(payroll)/earning-categories'
+import { Route as PrivateLayoutVerticalpayrollEarningsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/earnings'
+import { Route as PrivateLayoutVerticalpayrollEmployeesRouteImport } from './routes/_privateLayout/_vertical/(payroll)/employees'
+import { Route as PrivateLayoutVerticalpayrollPayrollDepartmentsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/payroll-departments'
+import { Route as PrivateLayoutVerticalpayrollPayrollPeriodsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/payroll-periods'
+import { Route as PrivateLayoutVerticalpayrollPayrollPositionsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/payroll-positions'
+import { Route as PrivateLayoutVerticalpayrollPayrollsRouteImport } from './routes/_privateLayout/_vertical/(payroll)/payrolls'
+import { Route as PrivateLayoutVerticalpersonnelPersonnelRouteImport } from './routes/_privateLayout/_vertical/(personnel)/personnel'
+import { Route as PrivateLayoutVerticalplanningDayOfClassesRouteImport } from './routes/_privateLayout/_vertical/(planning)/day-of-classes'
+import { Route as PrivateLayoutVerticalplanningDistributionRouteImport } from './routes/_privateLayout/_vertical/(planning)/distribution'
+import { Route as PrivateLayoutVerticalplanningTimeSlotsRouteImport } from './routes/_privateLayout/_vertical/(planning)/time-slots'
+import { Route as PrivateLayoutVerticalplanningTimeTablesRouteImport } from './routes/_privateLayout/_vertical/(planning)/time-tables'
+import { Route as PrivateLayoutVerticalprimaryEvalTypesRouteImport } from './routes/_privateLayout/_vertical/(primary)/eval-types'
+import { Route as PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRouteImport } from './routes/_privateLayout/_vertical/(primary)/free-primary-sequential-notes'
+import { Route as PrivateLayoutVerticalprimaryPrimaryCompetencesRouteImport } from './routes/_privateLayout/_vertical/(primary)/primary-competences'
+import { Route as PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRouteImport } from './routes/_privateLayout/_vertical/(primary)/primary-competences-level'
+import { Route as PrivateLayoutVerticalprimaryPrimarySequentialNotesRouteImport } from './routes/_privateLayout/_vertical/(primary)/primary-sequential-notes'
+import { Route as PrivateLayoutVerticalprimarySubCompetencesRouteImport } from './routes/_privateLayout/_vertical/(primary)/sub-competences'
+import { Route as PrivateLayoutVerticalsaleCustomerCategoriesRouteImport } from './routes/_privateLayout/_vertical/(sale)/customer-categories'
+import { Route as PrivateLayoutVerticalsaleCustomersRouteImport } from './routes/_privateLayout/_vertical/(sale)/customers'
+import { Route as PrivateLayoutVerticalsaleDiscountsRouteImport } from './routes/_privateLayout/_vertical/(sale)/discounts'
+import { Route as PrivateLayoutVerticalsaleFeeGroupsRouteImport } from './routes/_privateLayout/_vertical/(sale)/fee-groups'
+import { Route as PrivateLayoutVerticalsaleFeeStructuresRouteImport } from './routes/_privateLayout/_vertical/(sale)/fee-structures'
+import { Route as PrivateLayoutVerticalsaleInstallmentsRouteImport } from './routes/_privateLayout/_vertical/(sale)/installments'
+import { Route as PrivateLayoutVerticalsalePaymentConditionsRouteImport } from './routes/_privateLayout/_vertical/(sale)/payment-conditions'
+import { Route as PrivateLayoutVerticalsaleProductCategoriesRouteImport } from './routes/_privateLayout/_vertical/(sale)/product-categories'
+import { Route as PrivateLayoutVerticalsaleProductsRouteImport } from './routes/_privateLayout/_vertical/(sale)/products'
+import { Route as PrivateLayoutVerticalsaleSupplierCategoriesRouteImport } from './routes/_privateLayout/_vertical/(sale)/supplier-categories'
+import { Route as PrivateLayoutVerticalsaleSuppliersRouteImport } from './routes/_privateLayout/_vertical/(sale)/suppliers'
+import { Route as PrivateLayoutVerticalschoolBranchesRouteImport } from './routes/_privateLayout/_vertical/(school)/branches'
+import { Route as PrivateLayoutVerticalschoolClassesRouteImport } from './routes/_privateLayout/_vertical/(school)/classes'
+import { Route as PrivateLayoutVerticalschoolCopyOfParametersRouteImport } from './routes/_privateLayout/_vertical/(school)/copyOfParameters'
+import { Route as PrivateLayoutVerticalschoolCyclesRouteImport } from './routes/_privateLayout/_vertical/(school)/cycles'
+import { Route as PrivateLayoutVerticalschoolDatabaseBackupRouteImport } from './routes/_privateLayout/_vertical/(school)/database-backup'
+import { Route as PrivateLayoutVerticalschoolDepartmentsRouteImport } from './routes/_privateLayout/_vertical/(school)/departments'
+import { Route as PrivateLayoutVerticalschoolGuidedSetupRouteImport } from './routes/_privateLayout/_vertical/(school)/guided-setup'
+import { Route as PrivateLayoutVerticalschoolHeadDepartmentsRouteImport } from './routes/_privateLayout/_vertical/(school)/head-departments'
+import { Route as PrivateLayoutVerticalschoolLevelsRouteImport } from './routes/_privateLayout/_vertical/(school)/levels'
+import { Route as PrivateLayoutVerticalschoolLiableTypeRouteImport } from './routes/_privateLayout/_vertical/(school)/liable-type'
+import { Route as PrivateLayoutVerticalschoolPeriodsRouteImport } from './routes/_privateLayout/_vertical/(school)/periods'
 import { Route as PrivateLayoutVerticalschoolSchoolRouteImport } from './routes/_privateLayout/_vertical/(school)/school'
+import { Route as PrivateLayoutVerticalschoolSchoolLiableRouteImport } from './routes/_privateLayout/_vertical/(school)/school-liable'
+import { Route as PrivateLayoutVerticalschoolSchoolSectionsRouteImport } from './routes/_privateLayout/_vertical/(school)/school-sections'
 import { Route as PrivateLayoutVerticalschoolSchoolYearsRouteImport } from './routes/_privateLayout/_vertical/(school)/school-years'
+import { Route as PrivateLayoutVerticalschoolSubPeriodsRouteImport } from './routes/_privateLayout/_vertical/(school)/sub-periods'
+import { Route as PrivateLayoutVerticalschoolSubjectGroupsRouteImport } from './routes/_privateLayout/_vertical/(school)/subject-groups'
+import { Route as PrivateLayoutVerticalschoolSubjectsRouteImport } from './routes/_privateLayout/_vertical/(school)/subjects'
+import { Route as PrivateLayoutVerticalstudentBatchPicturesRouteImport } from './routes/_privateLayout/_vertical/(student)/batch-pictures'
+import { Route as PrivateLayoutVerticalstudentGuardiansRouteImport } from './routes/_privateLayout/_vertical/(student)/guardians'
+import { Route as PrivateLayoutVerticalstudentOldSchoolsRouteImport } from './routes/_privateLayout/_vertical/(student)/old-schools'
+import { Route as PrivateLayoutVerticalstudentStudentProgressionRouteImport } from './routes/_privateLayout/_vertical/(student)/student-progression'
+import { Route as PrivateLayoutVerticalstudentStudentUpdateByClassRouteImport } from './routes/_privateLayout/_vertical/(student)/student-update-by-class'
+import { Route as PrivateLayoutVerticalstudentStudentsRouteImport } from './routes/_privateLayout/_vertical/(student)/students'
+import { Route as PrivateLayoutVerticaluserLoginHistoriesRouteImport } from './routes/_privateLayout/_vertical/(user)/login-histories'
+import { Route as PrivateLayoutVerticaluserPermissionsRouteImport } from './routes/_privateLayout/_vertical/(user)/permissions'
+import { Route as PrivateLayoutVerticaluserProfileRouteImport } from './routes/_privateLayout/_vertical/(user)/profile'
+import { Route as PrivateLayoutVerticaluserRolesRouteImport } from './routes/_privateLayout/_vertical/(user)/roles'
+import { Route as PrivateLayoutVerticaluserUsersRouteImport } from './routes/_privateLayout/_vertical/(user)/users'
+import { Route as PrivateLayoutVerticalsaleOperationsIndexRouteImport } from './routes/_privateLayout/_vertical/(sale)/operations/index'
+import { Route as PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport } from './routes/_privateLayout/_vertical/(sale)/operations/mobile-operations'
+import { Route as PrivateLayoutVerticalstudentFrequentsIndexRouteImport } from './routes/_privateLayout/_vertical/(student)/frequents/index'
+import { Route as PrivateLayoutVerticalstudentFrequentsIdRouteImport } from './routes/_privateLayout/_vertical/(student)/frequents/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +218,16 @@ const NotAuthorizedRoute = NotAuthorizedRouteImport.update({
   path: '/not-authorized',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QrcodeRoute = QrcodeRouteImport.update({
+  id: '/qrcode',
+  path: '/qrcode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyRoute = VerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivateLayoutCleanLayoutRoute =
   PrivateLayoutCleanLayoutRouteImport.update({
     id: '/_cleanLayout',
@@ -55,10 +237,314 @@ const PrivateLayoutVerticalRoute = PrivateLayoutVerticalRouteImport.update({
   id: '/_vertical',
   getParentRoute: () => PrivateLayoutRoute,
 } as any)
+const PaymentStatusReferenceRoute = PaymentStatusReferenceRouteImport.update({
+  id: '/payment-status/$reference',
+  path: '/payment-status/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TuitionIdentifierRoute = TuitionIdentifierRouteImport.update({
+  id: '/tuition/$identifier',
+  path: '/tuition/$identifier',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivateLayoutCleanLayoutAccount_listRoute =
   PrivateLayoutCleanLayoutAccount_listRouteImport.update({
     id: '/account_list',
     path: '/account_list',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_bestRoute =
+  PrivateLayoutCleanLayoutAnnual_bestRouteImport.update({
+    id: '/annual_best',
+    path: '/annual_best',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute =
+  PrivateLayoutCleanLayoutAnnual_comp_report_cardRouteImport.update({
+    id: '/annual_comp_report_card',
+    path: '/annual_comp_report_card',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_mark_sheetRoute =
+  PrivateLayoutCleanLayoutAnnual_mark_sheetRouteImport.update({
+    id: '/annual_mark_sheet',
+    path: '/annual_mark_sheet',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_note_bookRoute =
+  PrivateLayoutCleanLayoutAnnual_note_bookRouteImport.update({
+    id: '/annual_note_book',
+    path: '/annual_note_book',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_nth_firstRoute =
+  PrivateLayoutCleanLayoutAnnual_nth_firstRouteImport.update({
+    id: '/annual_nth_first',
+    path: '/annual_nth_first',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_report_card_examRoute =
+  PrivateLayoutCleanLayoutAnnual_report_card_examRouteImport.update({
+    id: '/annual_report_card_exam',
+    path: '/annual_report_card_exam',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_report_summaryRoute =
+  PrivateLayoutCleanLayoutAnnual_report_summaryRouteImport.update({
+    id: '/annual_report_summary',
+    path: '/annual_report_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_school_bookRoute =
+  PrivateLayoutCleanLayoutAnnual_school_bookRouteImport.update({
+    id: '/annual_school_book',
+    path: '/annual_school_book',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutAnnual_statisticsRoute =
+  PrivateLayoutCleanLayoutAnnual_statisticsRouteImport.update({
+    id: '/annual_statistics',
+    path: '/annual_statistics',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutApplied_coefficientsRoute =
+  PrivateLayoutCleanLayoutApplied_coefficientsRouteImport.update({
+    id: '/applied_coefficients',
+    path: '/applied_coefficients',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutBlank_note_bookRoute =
+  PrivateLayoutCleanLayoutBlank_note_bookRouteImport.update({
+    id: '/blank_note_book',
+    path: '/blank_note_book',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutClass_summaryRoute =
+  PrivateLayoutCleanLayoutClass_summaryRouteImport.update({
+    id: '/class_summary',
+    path: '/class_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutCompetence_input_progressRoute =
+  PrivateLayoutCleanLayoutCompetence_input_progressRouteImport.update({
+    id: '/competence_input_progress',
+    path: '/competence_input_progress',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutEvaluated_competencesRoute =
+  PrivateLayoutCleanLayoutEvaluated_competencesRouteImport.update({
+    id: '/evaluated_competences',
+    path: '/evaluated_competences',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutExcluded_studentsRoute =
+  PrivateLayoutCleanLayoutExcluded_studentsRouteImport.update({
+    id: '/excluded_students',
+    path: '/excluded_students',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutExpense_reportRoute =
+  PrivateLayoutCleanLayoutExpense_reportRouteImport.update({
+    id: '/expense_report',
+    path: '/expense_report',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutExpense_report_summaryRoute =
+  PrivateLayoutCleanLayoutExpense_report_summaryRouteImport.update({
+    id: '/expense_report_summary',
+    path: '/expense_report_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutInput_progressRoute =
+  PrivateLayoutCleanLayoutInput_progressRouteImport.update({
+    id: '/input_progress',
+    path: '/input_progress',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutInvoice_reportRoute =
+  PrivateLayoutCleanLayoutInvoice_reportRouteImport.update({
+    id: '/invoice_report',
+    path: '/invoice_report',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutLogin_historyRoute =
+  PrivateLayoutCleanLayoutLogin_historyRouteImport.update({
+    id: '/login_history',
+    path: '/login_history',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutMark_sheetRoute =
+  PrivateLayoutCleanLayoutMark_sheetRouteImport.update({
+    id: '/mark_sheet',
+    path: '/mark_sheet',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutMulti_column_studentRoute =
+  PrivateLayoutCleanLayoutMulti_column_studentRouteImport.update({
+    id: '/multi_column_student',
+    path: '/multi_column_student',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutPayment_group_reportRoute =
+  PrivateLayoutCleanLayoutPayment_group_reportRouteImport.update({
+    id: '/payment_group_report',
+    path: '/payment_group_report',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutPayment_reportRoute =
+  PrivateLayoutCleanLayoutPayment_reportRouteImport.update({
+    id: '/payment_report',
+    path: '/payment_report',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutPersonnel_listRoute =
+  PrivateLayoutCleanLayoutPersonnel_listRouteImport.update({
+    id: '/personnel_list',
+    path: '/personnel_list',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute =
+  PrivateLayoutCleanLayoutQuarterly_comp_report_cardRouteImport.update({
+    id: '/quarterly_comp_report_card',
+    path: '/quarterly_comp_report_card',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_disciplineRoute =
+  PrivateLayoutCleanLayoutQuarterly_disciplineRouteImport.update({
+    id: '/quarterly_discipline',
+    path: '/quarterly_discipline',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_honor_rollRoute =
+  PrivateLayoutCleanLayoutQuarterly_honor_rollRouteImport.update({
+    id: '/quarterly_honor_roll',
+    path: '/quarterly_honor_roll',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute =
+  PrivateLayoutCleanLayoutQuarterly_mark_sheetRouteImport.update({
+    id: '/quarterly_mark_sheet',
+    path: '/quarterly_mark_sheet',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_note_bookRoute =
+  PrivateLayoutCleanLayoutQuarterly_note_bookRouteImport.update({
+    id: '/quarterly_note_book',
+    path: '/quarterly_note_book',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_nth_firstRoute =
+  PrivateLayoutCleanLayoutQuarterly_nth_firstRouteImport.update({
+    id: '/quarterly_nth_first',
+    path: '/quarterly_nth_first',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_report_cardRoute =
+  PrivateLayoutCleanLayoutQuarterly_report_cardRouteImport.update({
+    id: '/quarterly_report_card',
+    path: '/quarterly_report_card',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutQuarterly_report_summaryRoute =
+  PrivateLayoutCleanLayoutQuarterly_report_summaryRouteImport.update({
+    id: '/quarterly_report_summary',
+    path: '/quarterly_report_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSchool_fee_reportRoute =
+  PrivateLayoutCleanLayoutSchool_fee_reportRouteImport.update({
+    id: '/school_fee_report',
+    path: '/school_fee_report',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSequential_disciplineRoute =
+  PrivateLayoutCleanLayoutSequential_disciplineRouteImport.update({
+    id: '/sequential_discipline',
+    path: '/sequential_discipline',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSequential_note_bookRoute =
+  PrivateLayoutCleanLayoutSequential_note_bookRouteImport.update({
+    id: '/sequential_note_book',
+    path: '/sequential_note_book',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSequential_nth_fistRoute =
+  PrivateLayoutCleanLayoutSequential_nth_fistRouteImport.update({
+    id: '/sequential_nth_fist',
+    path: '/sequential_nth_fist',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSequential_report_cardRoute =
+  PrivateLayoutCleanLayoutSequential_report_cardRouteImport.update({
+    id: '/sequential_report_card',
+    path: '/sequential_report_card',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSequential_report_summaryRoute =
+  PrivateLayoutCleanLayoutSequential_report_summaryRouteImport.update({
+    id: '/sequential_report_summary',
+    path: '/sequential_report_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutSingle_column_studentRoute =
+  PrivateLayoutCleanLayoutSingle_column_studentRouteImport.update({
+    id: '/single_column_student',
+    path: '/single_column_student',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutStudent_cardRoute =
+  PrivateLayoutCleanLayoutStudent_cardRouteImport.update({
+    id: '/student_card',
+    path: '/student_card',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutStudent_payment_detailRoute =
+  PrivateLayoutCleanLayoutStudent_payment_detailRouteImport.update({
+    id: '/student_payment_detail',
+    path: '/student_payment_detail',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute =
+  PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRouteImport.update({
+    id: '/student_payment_detail_by_date',
+    path: '/student_payment_detail_by_date',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute =
+  PrivateLayoutCleanLayoutStudent_payment_slice_summaryRouteImport.update({
+    id: '/student_payment_slice_summary',
+    path: '/student_payment_slice_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutStudent_payment_summaryRoute =
+  PrivateLayoutCleanLayoutStudent_payment_summaryRouteImport.update({
+    id: '/student_payment_summary',
+    path: '/student_payment_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutTeacher_distribution_levelRoute =
+  PrivateLayoutCleanLayoutTeacher_distribution_levelRouteImport.update({
+    id: '/teacher_distribution_level',
+    path: '/teacher_distribution_level',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutTeacher_time_tableRoute =
+  PrivateLayoutCleanLayoutTeacher_time_tableRouteImport.update({
+    id: '/teacher_time_table',
+    path: '/teacher_time_table',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutTime_tableRoute =
+  PrivateLayoutCleanLayoutTime_tableRouteImport.update({
+    id: '/time_table',
+    path: '/time_table',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutWeekly_disciplineRoute =
+  PrivateLayoutCleanLayoutWeekly_disciplineRouteImport.update({
+    id: '/weekly_discipline',
+    path: '/weekly_discipline',
     getParentRoute: () => PrivateLayoutCleanLayoutRoute,
   } as any)
 const PrivateLayoutVerticalConfigurationRoute =
@@ -73,10 +559,620 @@ const PrivateLayoutVerticalDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
+const PrivateLayoutVerticalReportsRoute =
+  PrivateLayoutVerticalReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRouteImport.update({
+    id: '/(payment)/fee_payment_dashbard',
+    path: '/fee_payment_dashbard',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_detailRouteImport.update({
+    id: '/(payment)/fee_payment_detail',
+    path: '/fee_payment_detail',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRouteImport.update({
+    id: '/(payment)/fee_payment_detail_by_date',
+    path: '/fee_payment_detail_by_date',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRouteImport.update(
+    {
+      id: '/(payment)/fee_payment_product_class_summary',
+      path: '/fee_payment_product_class_summary',
+      getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+    } as any,
+  )
+const PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRouteImport.update(
+    {
+      id: '/(payment)/fee_payment_product_student_summary',
+      path: '/fee_payment_product_student_summary',
+      getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+    } as any,
+  )
+const PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRouteImport.update({
+    id: '/(payment)/fee_payment_product_summary',
+    path: '/fee_payment_product_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRouteImport.update({
+    id: '/(payment)/fee_payment_slice_summary',
+    path: '/fee_payment_slice_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute =
+  PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport.update({
+    id: '/(payment)/fee_payment_summary',
+    path: '/fee_payment_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingAccountCategoriesRoute =
+  PrivateLayoutVerticalaccountingAccountCategoriesRouteImport.update({
+    id: '/(accounting)/account-categories',
+    path: '/account-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingAccountGroupsRoute =
+  PrivateLayoutVerticalaccountingAccountGroupsRouteImport.update({
+    id: '/(accounting)/account-groups',
+    path: '/account-groups',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingAccountsRoute =
+  PrivateLayoutVerticalaccountingAccountsRouteImport.update({
+    id: '/(accounting)/accounts',
+    path: '/accounts',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingChartOfAccountsRoute =
+  PrivateLayoutVerticalaccountingChartOfAccountsRouteImport.update({
+    id: '/(accounting)/chartOfAccounts',
+    path: '/chartOfAccounts',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingJournalRoute =
+  PrivateLayoutVerticalaccountingJournalRouteImport.update({
+    id: '/(accounting)/journal',
+    path: '/journal',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingLogCodesRoute =
+  PrivateLayoutVerticalaccountingLogCodesRouteImport.update({
+    id: '/(accounting)/log-codes',
+    path: '/log-codes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingModelsRoute =
+  PrivateLayoutVerticalaccountingModelsRouteImport.update({
+    id: '/(accounting)/models',
+    path: '/models',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalaccountingSpecialAccountsRoute =
+  PrivateLayoutVerticalaccountingSpecialAccountsRouteImport.update({
+    id: '/(accounting)/special-accounts',
+    path: '/special-accounts',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalbankBankAccountsRoute =
+  PrivateLayoutVerticalbankBankAccountsRouteImport.update({
+    id: '/(bank)/bank-accounts',
+    path: '/bank-accounts',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalbankBankTransactionsRoute =
+  PrivateLayoutVerticalbankBankTransactionsRouteImport.update({
+    id: '/(bank)/bank-transactions',
+    path: '/bank-transactions',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaldisciplineAnnualDisciplineRoute =
+  PrivateLayoutVerticaldisciplineAnnualDisciplineRouteImport.update({
+    id: '/(discipline)/annual-discipline',
+    path: '/annual-discipline',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaldisciplineDisciplineCalculationRoute =
+  PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport.update({
+    id: '/(discipline)/discipline-calculation',
+    path: '/discipline-calculation',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute =
+  PrivateLayoutVerticaldisciplineQuarterlyDisciplineRouteImport.update({
+    id: '/(discipline)/quarterly-discipline',
+    path: '/quarterly-discipline',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaldisciplineSequentialDisciplineRoute =
+  PrivateLayoutVerticaldisciplineSequentialDisciplineRouteImport.update({
+    id: '/(discipline)/sequential-discipline',
+    path: '/sequential-discipline',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexpenseExpenseCategoriesRoute =
+  PrivateLayoutVerticalexpenseExpenseCategoriesRouteImport.update({
+    id: '/(expense)/expense-categories',
+    path: '/expense-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexpenseExpensesRoute =
+  PrivateLayoutVerticalexpenseExpensesRouteImport.update({
+    id: '/(expense)/expenses',
+    path: '/expenses',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexpenseOperationClassesRoute =
+  PrivateLayoutVerticalexpenseOperationClassesRouteImport.update({
+    id: '/(expense)/operation-classes',
+    path: '/operation-classes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexpenseVouchersRoute =
+  PrivateLayoutVerticalexpenseVouchersRouteImport.update({
+    id: '/(expense)/vouchers',
+    path: '/vouchers',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute =
+  PrivateLayoutVerticalexportAnnualSchoolBookXlsxRouteImport.update({
+    id: '/(export)/annual-school-book-xlsx',
+    path: '/annual-school-book-xlsx',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexportDataExportRoute =
+  PrivateLayoutVerticalexportDataExportRouteImport.update({
+    id: '/(export)/data-export',
+    path: '/data-export',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexportPersonnelXlsxRoute =
+  PrivateLayoutVerticalexportPersonnelXlsxRouteImport.update({
+    id: '/(export)/personnel-xlsx',
+    path: '/personnel-xlsx',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalexportStudentXlsxRoute =
+  PrivateLayoutVerticalexportStudentXlsxRouteImport.update({
+    id: '/(export)/student-xlsx',
+    path: '/student-xlsx',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualAverageRoute =
+  PrivateLayoutVerticalnoteAnnualAverageRouteImport.update({
+    id: '/(note)/annual-average',
+    path: '/annual-average',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualCompAverageRoute =
+  PrivateLayoutVerticalnoteAnnualCompAverageRouteImport.update({
+    id: '/(note)/annual-comp-average',
+    path: '/annual-comp-average',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualCompNoteRoute =
+  PrivateLayoutVerticalnoteAnnualCompNoteRouteImport.update({
+    id: '/(note)/annual-comp-note',
+    path: '/annual-comp-note',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualNoteRoute =
+  PrivateLayoutVerticalnoteAnnualNoteRouteImport.update({
+    id: '/(note)/annual-note',
+    path: '/annual-note',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualNotesRoute =
+  PrivateLayoutVerticalnoteAnnualNotesRouteImport.update({
+    id: '/(note)/annual-notes',
+    path: '/annual-notes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAnnualResultRoute =
+  PrivateLayoutVerticalnoteAnnualResultRouteImport.update({
+    id: '/(note)/annual-result',
+    path: '/annual-result',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteAverageCalculationRoute =
+  PrivateLayoutVerticalnoteAverageCalculationRouteImport.update({
+    id: '/(note)/average-calculation',
+    path: '/average-calculation',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteBulkAnnualResultRoute =
+  PrivateLayoutVerticalnoteBulkAnnualResultRouteImport.update({
+    id: '/(note)/bulk-annual-result',
+    path: '/bulk-annual-result',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteCompetencesRoute =
+  PrivateLayoutVerticalnoteCompetencesRouteImport.update({
+    id: '/(note)/competences',
+    path: '/competences',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteCouncilDecisionRoute =
+  PrivateLayoutVerticalnoteCouncilDecisionRouteImport.update({
+    id: '/(note)/council-decision',
+    path: '/council-decision',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteEvalCompetencesRoute =
+  PrivateLayoutVerticalnoteEvalCompetencesRouteImport.update({
+    id: '/(note)/eval-competences',
+    path: '/eval-competences',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute =
+  PrivateLayoutVerticalnoteEvalCompetencesSubjectRouteImport.update({
+    id: '/(note)/eval-competences-subject',
+    path: '/eval-competences-subject',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteNoteCalculationRoute =
+  PrivateLayoutVerticalnoteNoteCalculationRouteImport.update({
+    id: '/(note)/note-calculation',
+    path: '/note-calculation',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyAverageRoute =
+  PrivateLayoutVerticalnoteQuarterlyAverageRouteImport.update({
+    id: '/(note)/quarterly-average',
+    path: '/quarterly-average',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyCompNoteRoute =
+  PrivateLayoutVerticalnoteQuarterlyCompNoteRouteImport.update({
+    id: '/(note)/quarterly-comp-note',
+    path: '/quarterly-comp-note',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute =
+  PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRouteImport.update({
+    id: '/(note)/quarterly-comp-note-eval',
+    path: '/quarterly-comp-note-eval',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyNoteRoute =
+  PrivateLayoutVerticalnoteQuarterlyNoteRouteImport.update({
+    id: '/(note)/quarterly-note',
+    path: '/quarterly-note',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyNotesRoute =
+  PrivateLayoutVerticalnoteQuarterlyNotesRouteImport.update({
+    id: '/(note)/quarterly-notes',
+    path: '/quarterly-notes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteQuarterlyReportObservationRoute =
+  PrivateLayoutVerticalnoteQuarterlyReportObservationRouteImport.update({
+    id: '/(note)/quarterly-report-observation',
+    path: '/quarterly-report-observation',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialAverageRoute =
+  PrivateLayoutVerticalnoteSequentialAverageRouteImport.update({
+    id: '/(note)/sequential-average',
+    path: '/sequential-average',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNoteCopyRoute =
+  PrivateLayoutVerticalnoteSequentialNoteCopyRouteImport.update({
+    id: '/(note)/sequential-note-copy',
+    path: '/sequential-note-copy',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNoteDeleteRoute =
+  PrivateLayoutVerticalnoteSequentialNoteDeleteRouteImport.update({
+    id: '/(note)/sequential-note-delete',
+    path: '/sequential-note-delete',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute =
+  PrivateLayoutVerticalnoteSequentialNoteDowngradeRouteImport.update({
+    id: '/(note)/sequential-note-downgrade',
+    path: '/sequential-note-downgrade',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNoteImportRoute =
+  PrivateLayoutVerticalnoteSequentialNoteImportRouteImport.update({
+    id: '/(note)/sequential-note-import',
+    path: '/sequential-note-import',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNoteTemplateRoute =
+  PrivateLayoutVerticalnoteSequentialNoteTemplateRouteImport.update({
+    id: '/(note)/sequential-note-template',
+    path: '/sequential-note-template',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalnoteSequentialNotesRoute =
+  PrivateLayoutVerticalnoteSequentialNotesRouteImport.update({
+    id: '/(note)/sequential-notes',
+    path: '/sequential-notes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollDeductionCategoriesRoute =
+  PrivateLayoutVerticalpayrollDeductionCategoriesRouteImport.update({
+    id: '/(payroll)/deduction-categories',
+    path: '/deduction-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollDeductionsRoute =
+  PrivateLayoutVerticalpayrollDeductionsRouteImport.update({
+    id: '/(payroll)/deductions',
+    path: '/deductions',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollEarningCategoriesRoute =
+  PrivateLayoutVerticalpayrollEarningCategoriesRouteImport.update({
+    id: '/(payroll)/earning-categories',
+    path: '/earning-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollEarningsRoute =
+  PrivateLayoutVerticalpayrollEarningsRouteImport.update({
+    id: '/(payroll)/earnings',
+    path: '/earnings',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollEmployeesRoute =
+  PrivateLayoutVerticalpayrollEmployeesRouteImport.update({
+    id: '/(payroll)/employees',
+    path: '/employees',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollPayrollDepartmentsRoute =
+  PrivateLayoutVerticalpayrollPayrollDepartmentsRouteImport.update({
+    id: '/(payroll)/payroll-departments',
+    path: '/payroll-departments',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollPayrollPeriodsRoute =
+  PrivateLayoutVerticalpayrollPayrollPeriodsRouteImport.update({
+    id: '/(payroll)/payroll-periods',
+    path: '/payroll-periods',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollPayrollPositionsRoute =
+  PrivateLayoutVerticalpayrollPayrollPositionsRouteImport.update({
+    id: '/(payroll)/payroll-positions',
+    path: '/payroll-positions',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpayrollPayrollsRoute =
+  PrivateLayoutVerticalpayrollPayrollsRouteImport.update({
+    id: '/(payroll)/payrolls',
+    path: '/payrolls',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalpersonnelPersonnelRoute =
+  PrivateLayoutVerticalpersonnelPersonnelRouteImport.update({
+    id: '/(personnel)/personnel',
+    path: '/personnel',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalplanningDayOfClassesRoute =
+  PrivateLayoutVerticalplanningDayOfClassesRouteImport.update({
+    id: '/(planning)/day-of-classes',
+    path: '/day-of-classes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalplanningDistributionRoute =
+  PrivateLayoutVerticalplanningDistributionRouteImport.update({
+    id: '/(planning)/distribution',
+    path: '/distribution',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalplanningTimeSlotsRoute =
+  PrivateLayoutVerticalplanningTimeSlotsRouteImport.update({
+    id: '/(planning)/time-slots',
+    path: '/time-slots',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalplanningTimeTablesRoute =
+  PrivateLayoutVerticalplanningTimeTablesRouteImport.update({
+    id: '/(planning)/time-tables',
+    path: '/time-tables',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimaryEvalTypesRoute =
+  PrivateLayoutVerticalprimaryEvalTypesRouteImport.update({
+    id: '/(primary)/eval-types',
+    path: '/eval-types',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute =
+  PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRouteImport.update({
+    id: '/(primary)/free-primary-sequential-notes',
+    path: '/free-primary-sequential-notes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimaryPrimaryCompetencesRoute =
+  PrivateLayoutVerticalprimaryPrimaryCompetencesRouteImport.update({
+    id: '/(primary)/primary-competences',
+    path: '/primary-competences',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute =
+  PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRouteImport.update({
+    id: '/(primary)/primary-competences-level',
+    path: '/primary-competences-level',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute =
+  PrivateLayoutVerticalprimaryPrimarySequentialNotesRouteImport.update({
+    id: '/(primary)/primary-sequential-notes',
+    path: '/primary-sequential-notes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalprimarySubCompetencesRoute =
+  PrivateLayoutVerticalprimarySubCompetencesRouteImport.update({
+    id: '/(primary)/sub-competences',
+    path: '/sub-competences',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleCustomerCategoriesRoute =
+  PrivateLayoutVerticalsaleCustomerCategoriesRouteImport.update({
+    id: '/(sale)/customer-categories',
+    path: '/customer-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleCustomersRoute =
+  PrivateLayoutVerticalsaleCustomersRouteImport.update({
+    id: '/(sale)/customers',
+    path: '/customers',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleDiscountsRoute =
+  PrivateLayoutVerticalsaleDiscountsRouteImport.update({
+    id: '/(sale)/discounts',
+    path: '/discounts',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleFeeGroupsRoute =
+  PrivateLayoutVerticalsaleFeeGroupsRouteImport.update({
+    id: '/(sale)/fee-groups',
+    path: '/fee-groups',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleFeeStructuresRoute =
+  PrivateLayoutVerticalsaleFeeStructuresRouteImport.update({
+    id: '/(sale)/fee-structures',
+    path: '/fee-structures',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleInstallmentsRoute =
+  PrivateLayoutVerticalsaleInstallmentsRouteImport.update({
+    id: '/(sale)/installments',
+    path: '/installments',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsalePaymentConditionsRoute =
+  PrivateLayoutVerticalsalePaymentConditionsRouteImport.update({
+    id: '/(sale)/payment-conditions',
+    path: '/payment-conditions',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleProductCategoriesRoute =
+  PrivateLayoutVerticalsaleProductCategoriesRouteImport.update({
+    id: '/(sale)/product-categories',
+    path: '/product-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleProductsRoute =
+  PrivateLayoutVerticalsaleProductsRouteImport.update({
+    id: '/(sale)/products',
+    path: '/products',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleSupplierCategoriesRoute =
+  PrivateLayoutVerticalsaleSupplierCategoriesRouteImport.update({
+    id: '/(sale)/supplier-categories',
+    path: '/supplier-categories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleSuppliersRoute =
+  PrivateLayoutVerticalsaleSuppliersRouteImport.update({
+    id: '/(sale)/suppliers',
+    path: '/suppliers',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolBranchesRoute =
+  PrivateLayoutVerticalschoolBranchesRouteImport.update({
+    id: '/(school)/branches',
+    path: '/branches',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolClassesRoute =
+  PrivateLayoutVerticalschoolClassesRouteImport.update({
+    id: '/(school)/classes',
+    path: '/classes',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolCopyOfParametersRoute =
+  PrivateLayoutVerticalschoolCopyOfParametersRouteImport.update({
+    id: '/(school)/copyOfParameters',
+    path: '/copyOfParameters',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolCyclesRoute =
+  PrivateLayoutVerticalschoolCyclesRouteImport.update({
+    id: '/(school)/cycles',
+    path: '/cycles',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolDatabaseBackupRoute =
+  PrivateLayoutVerticalschoolDatabaseBackupRouteImport.update({
+    id: '/(school)/database-backup',
+    path: '/database-backup',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolDepartmentsRoute =
+  PrivateLayoutVerticalschoolDepartmentsRouteImport.update({
+    id: '/(school)/departments',
+    path: '/departments',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolGuidedSetupRoute =
+  PrivateLayoutVerticalschoolGuidedSetupRouteImport.update({
+    id: '/(school)/guided-setup',
+    path: '/guided-setup',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolHeadDepartmentsRoute =
+  PrivateLayoutVerticalschoolHeadDepartmentsRouteImport.update({
+    id: '/(school)/head-departments',
+    path: '/head-departments',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolLevelsRoute =
+  PrivateLayoutVerticalschoolLevelsRouteImport.update({
+    id: '/(school)/levels',
+    path: '/levels',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolLiableTypeRoute =
+  PrivateLayoutVerticalschoolLiableTypeRouteImport.update({
+    id: '/(school)/liable-type',
+    path: '/liable-type',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolPeriodsRoute =
+  PrivateLayoutVerticalschoolPeriodsRouteImport.update({
+    id: '/(school)/periods',
+    path: '/periods',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
 const PrivateLayoutVerticalschoolSchoolRoute =
   PrivateLayoutVerticalschoolSchoolRouteImport.update({
     id: '/(school)/school',
     path: '/school',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolSchoolLiableRoute =
+  PrivateLayoutVerticalschoolSchoolLiableRouteImport.update({
+    id: '/(school)/school-liable',
+    path: '/school-liable',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolSchoolSectionsRoute =
+  PrivateLayoutVerticalschoolSchoolSectionsRouteImport.update({
+    id: '/(school)/school-sections',
+    path: '/school-sections',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
 const PrivateLayoutVerticalschoolSchoolYearsRoute =
@@ -85,28 +1181,480 @@ const PrivateLayoutVerticalschoolSchoolYearsRoute =
     path: '/school-years',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
+const PrivateLayoutVerticalschoolSubPeriodsRoute =
+  PrivateLayoutVerticalschoolSubPeriodsRouteImport.update({
+    id: '/(school)/sub-periods',
+    path: '/sub-periods',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolSubjectGroupsRoute =
+  PrivateLayoutVerticalschoolSubjectGroupsRouteImport.update({
+    id: '/(school)/subject-groups',
+    path: '/subject-groups',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalschoolSubjectsRoute =
+  PrivateLayoutVerticalschoolSubjectsRouteImport.update({
+    id: '/(school)/subjects',
+    path: '/subjects',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentBatchPicturesRoute =
+  PrivateLayoutVerticalstudentBatchPicturesRouteImport.update({
+    id: '/(student)/batch-pictures',
+    path: '/batch-pictures',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentGuardiansRoute =
+  PrivateLayoutVerticalstudentGuardiansRouteImport.update({
+    id: '/(student)/guardians',
+    path: '/guardians',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentOldSchoolsRoute =
+  PrivateLayoutVerticalstudentOldSchoolsRouteImport.update({
+    id: '/(student)/old-schools',
+    path: '/old-schools',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentStudentProgressionRoute =
+  PrivateLayoutVerticalstudentStudentProgressionRouteImport.update({
+    id: '/(student)/student-progression',
+    path: '/student-progression',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentStudentUpdateByClassRoute =
+  PrivateLayoutVerticalstudentStudentUpdateByClassRouteImport.update({
+    id: '/(student)/student-update-by-class',
+    path: '/student-update-by-class',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentStudentsRoute =
+  PrivateLayoutVerticalstudentStudentsRouteImport.update({
+    id: '/(student)/students',
+    path: '/students',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaluserLoginHistoriesRoute =
+  PrivateLayoutVerticaluserLoginHistoriesRouteImport.update({
+    id: '/(user)/login-histories',
+    path: '/login-histories',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaluserPermissionsRoute =
+  PrivateLayoutVerticaluserPermissionsRouteImport.update({
+    id: '/(user)/permissions',
+    path: '/permissions',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaluserProfileRoute =
+  PrivateLayoutVerticaluserProfileRouteImport.update({
+    id: '/(user)/profile',
+    path: '/profile',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaluserRolesRoute =
+  PrivateLayoutVerticaluserRolesRouteImport.update({
+    id: '/(user)/roles',
+    path: '/roles',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaluserUsersRoute =
+  PrivateLayoutVerticaluserUsersRouteImport.update({
+    id: '/(user)/users',
+    path: '/users',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleOperationsIndexRoute =
+  PrivateLayoutVerticalsaleOperationsIndexRouteImport.update({
+    id: '/(sale)/operations/',
+    path: '/operations/',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalsaleOperationsMobileOperationsRoute =
+  PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport.update({
+    id: '/(sale)/operations/mobile-operations',
+    path: '/operations/mobile-operations',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentFrequentsIndexRoute =
+  PrivateLayoutVerticalstudentFrequentsIndexRouteImport.update({
+    id: '/(student)/frequents/',
+    path: '/frequents/',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticalstudentFrequentsIdRoute =
+  PrivateLayoutVerticalstudentFrequentsIdRouteImport.update({
+    id: '/(student)/frequents/$id',
+    path: '/frequents/$id',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/init-school': typeof InitSchoolRoute
   '/login': typeof LoginRoute
   '/not-authorized': typeof NotAuthorizedRoute
+  '/qrcode': typeof QrcodeRoute
+  '/verify': typeof VerifyRoute
+  '/payment-status/$reference': typeof PaymentStatusReferenceRoute
+  '/tuition/$identifier': typeof TuitionIdentifierRoute
   '/account_list': typeof PrivateLayoutCleanLayoutAccount_listRoute
+  '/annual_best': typeof PrivateLayoutCleanLayoutAnnual_bestRoute
+  '/annual_comp_report_card': typeof PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute
+  '/annual_mark_sheet': typeof PrivateLayoutCleanLayoutAnnual_mark_sheetRoute
+  '/annual_note_book': typeof PrivateLayoutCleanLayoutAnnual_note_bookRoute
+  '/annual_nth_first': typeof PrivateLayoutCleanLayoutAnnual_nth_firstRoute
+  '/annual_report_card_exam': typeof PrivateLayoutCleanLayoutAnnual_report_card_examRoute
+  '/annual_report_summary': typeof PrivateLayoutCleanLayoutAnnual_report_summaryRoute
+  '/annual_school_book': typeof PrivateLayoutCleanLayoutAnnual_school_bookRoute
+  '/annual_statistics': typeof PrivateLayoutCleanLayoutAnnual_statisticsRoute
+  '/applied_coefficients': typeof PrivateLayoutCleanLayoutApplied_coefficientsRoute
+  '/blank_note_book': typeof PrivateLayoutCleanLayoutBlank_note_bookRoute
+  '/class_summary': typeof PrivateLayoutCleanLayoutClass_summaryRoute
+  '/competence_input_progress': typeof PrivateLayoutCleanLayoutCompetence_input_progressRoute
+  '/evaluated_competences': typeof PrivateLayoutCleanLayoutEvaluated_competencesRoute
+  '/excluded_students': typeof PrivateLayoutCleanLayoutExcluded_studentsRoute
+  '/expense_report': typeof PrivateLayoutCleanLayoutExpense_reportRoute
+  '/expense_report_summary': typeof PrivateLayoutCleanLayoutExpense_report_summaryRoute
+  '/input_progress': typeof PrivateLayoutCleanLayoutInput_progressRoute
+  '/invoice_report': typeof PrivateLayoutCleanLayoutInvoice_reportRoute
+  '/login_history': typeof PrivateLayoutCleanLayoutLogin_historyRoute
+  '/mark_sheet': typeof PrivateLayoutCleanLayoutMark_sheetRoute
+  '/multi_column_student': typeof PrivateLayoutCleanLayoutMulti_column_studentRoute
+  '/payment_group_report': typeof PrivateLayoutCleanLayoutPayment_group_reportRoute
+  '/payment_report': typeof PrivateLayoutCleanLayoutPayment_reportRoute
+  '/personnel_list': typeof PrivateLayoutCleanLayoutPersonnel_listRoute
+  '/quarterly_comp_report_card': typeof PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute
+  '/quarterly_discipline': typeof PrivateLayoutCleanLayoutQuarterly_disciplineRoute
+  '/quarterly_honor_roll': typeof PrivateLayoutCleanLayoutQuarterly_honor_rollRoute
+  '/quarterly_mark_sheet': typeof PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute
+  '/quarterly_note_book': typeof PrivateLayoutCleanLayoutQuarterly_note_bookRoute
+  '/quarterly_nth_first': typeof PrivateLayoutCleanLayoutQuarterly_nth_firstRoute
+  '/quarterly_report_card': typeof PrivateLayoutCleanLayoutQuarterly_report_cardRoute
+  '/quarterly_report_summary': typeof PrivateLayoutCleanLayoutQuarterly_report_summaryRoute
+  '/school_fee_report': typeof PrivateLayoutCleanLayoutSchool_fee_reportRoute
+  '/sequential_discipline': typeof PrivateLayoutCleanLayoutSequential_disciplineRoute
+  '/sequential_note_book': typeof PrivateLayoutCleanLayoutSequential_note_bookRoute
+  '/sequential_nth_fist': typeof PrivateLayoutCleanLayoutSequential_nth_fistRoute
+  '/sequential_report_card': typeof PrivateLayoutCleanLayoutSequential_report_cardRoute
+  '/sequential_report_summary': typeof PrivateLayoutCleanLayoutSequential_report_summaryRoute
+  '/single_column_student': typeof PrivateLayoutCleanLayoutSingle_column_studentRoute
+  '/student_card': typeof PrivateLayoutCleanLayoutStudent_cardRoute
+  '/student_payment_detail': typeof PrivateLayoutCleanLayoutStudent_payment_detailRoute
+  '/student_payment_detail_by_date': typeof PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute
+  '/student_payment_slice_summary': typeof PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute
+  '/student_payment_summary': typeof PrivateLayoutCleanLayoutStudent_payment_summaryRoute
+  '/teacher_distribution_level': typeof PrivateLayoutCleanLayoutTeacher_distribution_levelRoute
+  '/teacher_time_table': typeof PrivateLayoutCleanLayoutTeacher_time_tableRoute
+  '/time_table': typeof PrivateLayoutCleanLayoutTime_tableRoute
+  '/weekly_discipline': typeof PrivateLayoutCleanLayoutWeekly_disciplineRoute
   '/configuration': typeof PrivateLayoutVerticalConfigurationRoute
   '/dashboard': typeof PrivateLayoutVerticalDashboardRoute
+  '/reports': typeof PrivateLayoutVerticalReportsRoute
+  '/fee_payment_dashbard': typeof PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute
+  '/fee_payment_detail': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute
+  '/fee_payment_detail_by_date': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute
+  '/fee_payment_product_class_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute
+  '/fee_payment_product_student_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute
+  '/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
+  '/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
+  '/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
+  '/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
+  '/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
+  '/chartOfAccounts': typeof PrivateLayoutVerticalaccountingChartOfAccountsRoute
+  '/journal': typeof PrivateLayoutVerticalaccountingJournalRoute
+  '/log-codes': typeof PrivateLayoutVerticalaccountingLogCodesRoute
+  '/models': typeof PrivateLayoutVerticalaccountingModelsRoute
+  '/special-accounts': typeof PrivateLayoutVerticalaccountingSpecialAccountsRoute
+  '/bank-accounts': typeof PrivateLayoutVerticalbankBankAccountsRoute
+  '/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
+  '/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
+  '/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
+  '/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
+  '/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
+  '/expenses': typeof PrivateLayoutVerticalexpenseExpensesRoute
+  '/operation-classes': typeof PrivateLayoutVerticalexpenseOperationClassesRoute
+  '/vouchers': typeof PrivateLayoutVerticalexpenseVouchersRoute
+  '/annual-school-book-xlsx': typeof PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute
+  '/data-export': typeof PrivateLayoutVerticalexportDataExportRoute
+  '/personnel-xlsx': typeof PrivateLayoutVerticalexportPersonnelXlsxRoute
+  '/student-xlsx': typeof PrivateLayoutVerticalexportStudentXlsxRoute
+  '/annual-average': typeof PrivateLayoutVerticalnoteAnnualAverageRoute
+  '/annual-comp-average': typeof PrivateLayoutVerticalnoteAnnualCompAverageRoute
+  '/annual-comp-note': typeof PrivateLayoutVerticalnoteAnnualCompNoteRoute
+  '/annual-note': typeof PrivateLayoutVerticalnoteAnnualNoteRoute
+  '/annual-notes': typeof PrivateLayoutVerticalnoteAnnualNotesRoute
+  '/annual-result': typeof PrivateLayoutVerticalnoteAnnualResultRoute
+  '/average-calculation': typeof PrivateLayoutVerticalnoteAverageCalculationRoute
+  '/bulk-annual-result': typeof PrivateLayoutVerticalnoteBulkAnnualResultRoute
+  '/competences': typeof PrivateLayoutVerticalnoteCompetencesRoute
+  '/council-decision': typeof PrivateLayoutVerticalnoteCouncilDecisionRoute
+  '/eval-competences': typeof PrivateLayoutVerticalnoteEvalCompetencesRoute
+  '/eval-competences-subject': typeof PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute
+  '/note-calculation': typeof PrivateLayoutVerticalnoteNoteCalculationRoute
+  '/quarterly-average': typeof PrivateLayoutVerticalnoteQuarterlyAverageRoute
+  '/quarterly-comp-note': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteRoute
+  '/quarterly-comp-note-eval': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute
+  '/quarterly-note': typeof PrivateLayoutVerticalnoteQuarterlyNoteRoute
+  '/quarterly-notes': typeof PrivateLayoutVerticalnoteQuarterlyNotesRoute
+  '/quarterly-report-observation': typeof PrivateLayoutVerticalnoteQuarterlyReportObservationRoute
+  '/sequential-average': typeof PrivateLayoutVerticalnoteSequentialAverageRoute
+  '/sequential-note-copy': typeof PrivateLayoutVerticalnoteSequentialNoteCopyRoute
+  '/sequential-note-delete': typeof PrivateLayoutVerticalnoteSequentialNoteDeleteRoute
+  '/sequential-note-downgrade': typeof PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute
+  '/sequential-note-import': typeof PrivateLayoutVerticalnoteSequentialNoteImportRoute
+  '/sequential-note-template': typeof PrivateLayoutVerticalnoteSequentialNoteTemplateRoute
+  '/sequential-notes': typeof PrivateLayoutVerticalnoteSequentialNotesRoute
+  '/deduction-categories': typeof PrivateLayoutVerticalpayrollDeductionCategoriesRoute
+  '/deductions': typeof PrivateLayoutVerticalpayrollDeductionsRoute
+  '/earning-categories': typeof PrivateLayoutVerticalpayrollEarningCategoriesRoute
+  '/earnings': typeof PrivateLayoutVerticalpayrollEarningsRoute
+  '/employees': typeof PrivateLayoutVerticalpayrollEmployeesRoute
+  '/payroll-departments': typeof PrivateLayoutVerticalpayrollPayrollDepartmentsRoute
+  '/payroll-periods': typeof PrivateLayoutVerticalpayrollPayrollPeriodsRoute
+  '/payroll-positions': typeof PrivateLayoutVerticalpayrollPayrollPositionsRoute
+  '/payrolls': typeof PrivateLayoutVerticalpayrollPayrollsRoute
+  '/personnel': typeof PrivateLayoutVerticalpersonnelPersonnelRoute
+  '/day-of-classes': typeof PrivateLayoutVerticalplanningDayOfClassesRoute
+  '/distribution': typeof PrivateLayoutVerticalplanningDistributionRoute
+  '/time-slots': typeof PrivateLayoutVerticalplanningTimeSlotsRoute
+  '/time-tables': typeof PrivateLayoutVerticalplanningTimeTablesRoute
+  '/eval-types': typeof PrivateLayoutVerticalprimaryEvalTypesRoute
+  '/free-primary-sequential-notes': typeof PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute
+  '/primary-competences': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesRoute
+  '/primary-competences-level': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute
+  '/primary-sequential-notes': typeof PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute
+  '/sub-competences': typeof PrivateLayoutVerticalprimarySubCompetencesRoute
+  '/customer-categories': typeof PrivateLayoutVerticalsaleCustomerCategoriesRoute
+  '/customers': typeof PrivateLayoutVerticalsaleCustomersRoute
+  '/discounts': typeof PrivateLayoutVerticalsaleDiscountsRoute
+  '/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
+  '/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
+  '/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
+  '/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
+  '/products': typeof PrivateLayoutVerticalsaleProductsRoute
+  '/supplier-categories': typeof PrivateLayoutVerticalsaleSupplierCategoriesRoute
+  '/suppliers': typeof PrivateLayoutVerticalsaleSuppliersRoute
+  '/branches': typeof PrivateLayoutVerticalschoolBranchesRoute
+  '/classes': typeof PrivateLayoutVerticalschoolClassesRoute
+  '/copyOfParameters': typeof PrivateLayoutVerticalschoolCopyOfParametersRoute
+  '/cycles': typeof PrivateLayoutVerticalschoolCyclesRoute
+  '/database-backup': typeof PrivateLayoutVerticalschoolDatabaseBackupRoute
+  '/departments': typeof PrivateLayoutVerticalschoolDepartmentsRoute
+  '/guided-setup': typeof PrivateLayoutVerticalschoolGuidedSetupRoute
+  '/head-departments': typeof PrivateLayoutVerticalschoolHeadDepartmentsRoute
+  '/levels': typeof PrivateLayoutVerticalschoolLevelsRoute
+  '/liable-type': typeof PrivateLayoutVerticalschoolLiableTypeRoute
+  '/periods': typeof PrivateLayoutVerticalschoolPeriodsRoute
   '/school': typeof PrivateLayoutVerticalschoolSchoolRoute
+  '/school-liable': typeof PrivateLayoutVerticalschoolSchoolLiableRoute
+  '/school-sections': typeof PrivateLayoutVerticalschoolSchoolSectionsRoute
   '/school-years': typeof PrivateLayoutVerticalschoolSchoolYearsRoute
+  '/sub-periods': typeof PrivateLayoutVerticalschoolSubPeriodsRoute
+  '/subject-groups': typeof PrivateLayoutVerticalschoolSubjectGroupsRoute
+  '/subjects': typeof PrivateLayoutVerticalschoolSubjectsRoute
+  '/batch-pictures': typeof PrivateLayoutVerticalstudentBatchPicturesRoute
+  '/guardians': typeof PrivateLayoutVerticalstudentGuardiansRoute
+  '/old-schools': typeof PrivateLayoutVerticalstudentOldSchoolsRoute
+  '/student-progression': typeof PrivateLayoutVerticalstudentStudentProgressionRoute
+  '/student-update-by-class': typeof PrivateLayoutVerticalstudentStudentUpdateByClassRoute
+  '/students': typeof PrivateLayoutVerticalstudentStudentsRoute
+  '/login-histories': typeof PrivateLayoutVerticaluserLoginHistoriesRoute
+  '/permissions': typeof PrivateLayoutVerticaluserPermissionsRoute
+  '/profile': typeof PrivateLayoutVerticaluserProfileRoute
+  '/roles': typeof PrivateLayoutVerticaluserRolesRoute
+  '/users': typeof PrivateLayoutVerticaluserUsersRoute
+  '/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
+  '/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
+  '/operations/': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/frequents/': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/init-school': typeof InitSchoolRoute
   '/login': typeof LoginRoute
   '/not-authorized': typeof NotAuthorizedRoute
+  '/qrcode': typeof QrcodeRoute
+  '/verify': typeof VerifyRoute
+  '/payment-status/$reference': typeof PaymentStatusReferenceRoute
+  '/tuition/$identifier': typeof TuitionIdentifierRoute
   '/account_list': typeof PrivateLayoutCleanLayoutAccount_listRoute
+  '/annual_best': typeof PrivateLayoutCleanLayoutAnnual_bestRoute
+  '/annual_comp_report_card': typeof PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute
+  '/annual_mark_sheet': typeof PrivateLayoutCleanLayoutAnnual_mark_sheetRoute
+  '/annual_note_book': typeof PrivateLayoutCleanLayoutAnnual_note_bookRoute
+  '/annual_nth_first': typeof PrivateLayoutCleanLayoutAnnual_nth_firstRoute
+  '/annual_report_card_exam': typeof PrivateLayoutCleanLayoutAnnual_report_card_examRoute
+  '/annual_report_summary': typeof PrivateLayoutCleanLayoutAnnual_report_summaryRoute
+  '/annual_school_book': typeof PrivateLayoutCleanLayoutAnnual_school_bookRoute
+  '/annual_statistics': typeof PrivateLayoutCleanLayoutAnnual_statisticsRoute
+  '/applied_coefficients': typeof PrivateLayoutCleanLayoutApplied_coefficientsRoute
+  '/blank_note_book': typeof PrivateLayoutCleanLayoutBlank_note_bookRoute
+  '/class_summary': typeof PrivateLayoutCleanLayoutClass_summaryRoute
+  '/competence_input_progress': typeof PrivateLayoutCleanLayoutCompetence_input_progressRoute
+  '/evaluated_competences': typeof PrivateLayoutCleanLayoutEvaluated_competencesRoute
+  '/excluded_students': typeof PrivateLayoutCleanLayoutExcluded_studentsRoute
+  '/expense_report': typeof PrivateLayoutCleanLayoutExpense_reportRoute
+  '/expense_report_summary': typeof PrivateLayoutCleanLayoutExpense_report_summaryRoute
+  '/input_progress': typeof PrivateLayoutCleanLayoutInput_progressRoute
+  '/invoice_report': typeof PrivateLayoutCleanLayoutInvoice_reportRoute
+  '/login_history': typeof PrivateLayoutCleanLayoutLogin_historyRoute
+  '/mark_sheet': typeof PrivateLayoutCleanLayoutMark_sheetRoute
+  '/multi_column_student': typeof PrivateLayoutCleanLayoutMulti_column_studentRoute
+  '/payment_group_report': typeof PrivateLayoutCleanLayoutPayment_group_reportRoute
+  '/payment_report': typeof PrivateLayoutCleanLayoutPayment_reportRoute
+  '/personnel_list': typeof PrivateLayoutCleanLayoutPersonnel_listRoute
+  '/quarterly_comp_report_card': typeof PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute
+  '/quarterly_discipline': typeof PrivateLayoutCleanLayoutQuarterly_disciplineRoute
+  '/quarterly_honor_roll': typeof PrivateLayoutCleanLayoutQuarterly_honor_rollRoute
+  '/quarterly_mark_sheet': typeof PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute
+  '/quarterly_note_book': typeof PrivateLayoutCleanLayoutQuarterly_note_bookRoute
+  '/quarterly_nth_first': typeof PrivateLayoutCleanLayoutQuarterly_nth_firstRoute
+  '/quarterly_report_card': typeof PrivateLayoutCleanLayoutQuarterly_report_cardRoute
+  '/quarterly_report_summary': typeof PrivateLayoutCleanLayoutQuarterly_report_summaryRoute
+  '/school_fee_report': typeof PrivateLayoutCleanLayoutSchool_fee_reportRoute
+  '/sequential_discipline': typeof PrivateLayoutCleanLayoutSequential_disciplineRoute
+  '/sequential_note_book': typeof PrivateLayoutCleanLayoutSequential_note_bookRoute
+  '/sequential_nth_fist': typeof PrivateLayoutCleanLayoutSequential_nth_fistRoute
+  '/sequential_report_card': typeof PrivateLayoutCleanLayoutSequential_report_cardRoute
+  '/sequential_report_summary': typeof PrivateLayoutCleanLayoutSequential_report_summaryRoute
+  '/single_column_student': typeof PrivateLayoutCleanLayoutSingle_column_studentRoute
+  '/student_card': typeof PrivateLayoutCleanLayoutStudent_cardRoute
+  '/student_payment_detail': typeof PrivateLayoutCleanLayoutStudent_payment_detailRoute
+  '/student_payment_detail_by_date': typeof PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute
+  '/student_payment_slice_summary': typeof PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute
+  '/student_payment_summary': typeof PrivateLayoutCleanLayoutStudent_payment_summaryRoute
+  '/teacher_distribution_level': typeof PrivateLayoutCleanLayoutTeacher_distribution_levelRoute
+  '/teacher_time_table': typeof PrivateLayoutCleanLayoutTeacher_time_tableRoute
+  '/time_table': typeof PrivateLayoutCleanLayoutTime_tableRoute
+  '/weekly_discipline': typeof PrivateLayoutCleanLayoutWeekly_disciplineRoute
   '/configuration': typeof PrivateLayoutVerticalConfigurationRoute
   '/dashboard': typeof PrivateLayoutVerticalDashboardRoute
+  '/reports': typeof PrivateLayoutVerticalReportsRoute
+  '/fee_payment_dashbard': typeof PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute
+  '/fee_payment_detail': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute
+  '/fee_payment_detail_by_date': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute
+  '/fee_payment_product_class_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute
+  '/fee_payment_product_student_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute
+  '/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
+  '/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
+  '/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
+  '/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
+  '/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
+  '/chartOfAccounts': typeof PrivateLayoutVerticalaccountingChartOfAccountsRoute
+  '/journal': typeof PrivateLayoutVerticalaccountingJournalRoute
+  '/log-codes': typeof PrivateLayoutVerticalaccountingLogCodesRoute
+  '/models': typeof PrivateLayoutVerticalaccountingModelsRoute
+  '/special-accounts': typeof PrivateLayoutVerticalaccountingSpecialAccountsRoute
+  '/bank-accounts': typeof PrivateLayoutVerticalbankBankAccountsRoute
+  '/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
+  '/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
+  '/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
+  '/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
+  '/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
+  '/expenses': typeof PrivateLayoutVerticalexpenseExpensesRoute
+  '/operation-classes': typeof PrivateLayoutVerticalexpenseOperationClassesRoute
+  '/vouchers': typeof PrivateLayoutVerticalexpenseVouchersRoute
+  '/annual-school-book-xlsx': typeof PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute
+  '/data-export': typeof PrivateLayoutVerticalexportDataExportRoute
+  '/personnel-xlsx': typeof PrivateLayoutVerticalexportPersonnelXlsxRoute
+  '/student-xlsx': typeof PrivateLayoutVerticalexportStudentXlsxRoute
+  '/annual-average': typeof PrivateLayoutVerticalnoteAnnualAverageRoute
+  '/annual-comp-average': typeof PrivateLayoutVerticalnoteAnnualCompAverageRoute
+  '/annual-comp-note': typeof PrivateLayoutVerticalnoteAnnualCompNoteRoute
+  '/annual-note': typeof PrivateLayoutVerticalnoteAnnualNoteRoute
+  '/annual-notes': typeof PrivateLayoutVerticalnoteAnnualNotesRoute
+  '/annual-result': typeof PrivateLayoutVerticalnoteAnnualResultRoute
+  '/average-calculation': typeof PrivateLayoutVerticalnoteAverageCalculationRoute
+  '/bulk-annual-result': typeof PrivateLayoutVerticalnoteBulkAnnualResultRoute
+  '/competences': typeof PrivateLayoutVerticalnoteCompetencesRoute
+  '/council-decision': typeof PrivateLayoutVerticalnoteCouncilDecisionRoute
+  '/eval-competences': typeof PrivateLayoutVerticalnoteEvalCompetencesRoute
+  '/eval-competences-subject': typeof PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute
+  '/note-calculation': typeof PrivateLayoutVerticalnoteNoteCalculationRoute
+  '/quarterly-average': typeof PrivateLayoutVerticalnoteQuarterlyAverageRoute
+  '/quarterly-comp-note': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteRoute
+  '/quarterly-comp-note-eval': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute
+  '/quarterly-note': typeof PrivateLayoutVerticalnoteQuarterlyNoteRoute
+  '/quarterly-notes': typeof PrivateLayoutVerticalnoteQuarterlyNotesRoute
+  '/quarterly-report-observation': typeof PrivateLayoutVerticalnoteQuarterlyReportObservationRoute
+  '/sequential-average': typeof PrivateLayoutVerticalnoteSequentialAverageRoute
+  '/sequential-note-copy': typeof PrivateLayoutVerticalnoteSequentialNoteCopyRoute
+  '/sequential-note-delete': typeof PrivateLayoutVerticalnoteSequentialNoteDeleteRoute
+  '/sequential-note-downgrade': typeof PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute
+  '/sequential-note-import': typeof PrivateLayoutVerticalnoteSequentialNoteImportRoute
+  '/sequential-note-template': typeof PrivateLayoutVerticalnoteSequentialNoteTemplateRoute
+  '/sequential-notes': typeof PrivateLayoutVerticalnoteSequentialNotesRoute
+  '/deduction-categories': typeof PrivateLayoutVerticalpayrollDeductionCategoriesRoute
+  '/deductions': typeof PrivateLayoutVerticalpayrollDeductionsRoute
+  '/earning-categories': typeof PrivateLayoutVerticalpayrollEarningCategoriesRoute
+  '/earnings': typeof PrivateLayoutVerticalpayrollEarningsRoute
+  '/employees': typeof PrivateLayoutVerticalpayrollEmployeesRoute
+  '/payroll-departments': typeof PrivateLayoutVerticalpayrollPayrollDepartmentsRoute
+  '/payroll-periods': typeof PrivateLayoutVerticalpayrollPayrollPeriodsRoute
+  '/payroll-positions': typeof PrivateLayoutVerticalpayrollPayrollPositionsRoute
+  '/payrolls': typeof PrivateLayoutVerticalpayrollPayrollsRoute
+  '/personnel': typeof PrivateLayoutVerticalpersonnelPersonnelRoute
+  '/day-of-classes': typeof PrivateLayoutVerticalplanningDayOfClassesRoute
+  '/distribution': typeof PrivateLayoutVerticalplanningDistributionRoute
+  '/time-slots': typeof PrivateLayoutVerticalplanningTimeSlotsRoute
+  '/time-tables': typeof PrivateLayoutVerticalplanningTimeTablesRoute
+  '/eval-types': typeof PrivateLayoutVerticalprimaryEvalTypesRoute
+  '/free-primary-sequential-notes': typeof PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute
+  '/primary-competences': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesRoute
+  '/primary-competences-level': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute
+  '/primary-sequential-notes': typeof PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute
+  '/sub-competences': typeof PrivateLayoutVerticalprimarySubCompetencesRoute
+  '/customer-categories': typeof PrivateLayoutVerticalsaleCustomerCategoriesRoute
+  '/customers': typeof PrivateLayoutVerticalsaleCustomersRoute
+  '/discounts': typeof PrivateLayoutVerticalsaleDiscountsRoute
+  '/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
+  '/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
+  '/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
+  '/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
+  '/products': typeof PrivateLayoutVerticalsaleProductsRoute
+  '/supplier-categories': typeof PrivateLayoutVerticalsaleSupplierCategoriesRoute
+  '/suppliers': typeof PrivateLayoutVerticalsaleSuppliersRoute
+  '/branches': typeof PrivateLayoutVerticalschoolBranchesRoute
+  '/classes': typeof PrivateLayoutVerticalschoolClassesRoute
+  '/copyOfParameters': typeof PrivateLayoutVerticalschoolCopyOfParametersRoute
+  '/cycles': typeof PrivateLayoutVerticalschoolCyclesRoute
+  '/database-backup': typeof PrivateLayoutVerticalschoolDatabaseBackupRoute
+  '/departments': typeof PrivateLayoutVerticalschoolDepartmentsRoute
+  '/guided-setup': typeof PrivateLayoutVerticalschoolGuidedSetupRoute
+  '/head-departments': typeof PrivateLayoutVerticalschoolHeadDepartmentsRoute
+  '/levels': typeof PrivateLayoutVerticalschoolLevelsRoute
+  '/liable-type': typeof PrivateLayoutVerticalschoolLiableTypeRoute
+  '/periods': typeof PrivateLayoutVerticalschoolPeriodsRoute
   '/school': typeof PrivateLayoutVerticalschoolSchoolRoute
+  '/school-liable': typeof PrivateLayoutVerticalschoolSchoolLiableRoute
+  '/school-sections': typeof PrivateLayoutVerticalschoolSchoolSectionsRoute
   '/school-years': typeof PrivateLayoutVerticalschoolSchoolYearsRoute
+  '/sub-periods': typeof PrivateLayoutVerticalschoolSubPeriodsRoute
+  '/subject-groups': typeof PrivateLayoutVerticalschoolSubjectGroupsRoute
+  '/subjects': typeof PrivateLayoutVerticalschoolSubjectsRoute
+  '/batch-pictures': typeof PrivateLayoutVerticalstudentBatchPicturesRoute
+  '/guardians': typeof PrivateLayoutVerticalstudentGuardiansRoute
+  '/old-schools': typeof PrivateLayoutVerticalstudentOldSchoolsRoute
+  '/student-progression': typeof PrivateLayoutVerticalstudentStudentProgressionRoute
+  '/student-update-by-class': typeof PrivateLayoutVerticalstudentStudentUpdateByClassRoute
+  '/students': typeof PrivateLayoutVerticalstudentStudentsRoute
+  '/login-histories': typeof PrivateLayoutVerticaluserLoginHistoriesRoute
+  '/permissions': typeof PrivateLayoutVerticaluserPermissionsRoute
+  '/profile': typeof PrivateLayoutVerticaluserProfileRoute
+  '/roles': typeof PrivateLayoutVerticaluserRolesRoute
+  '/users': typeof PrivateLayoutVerticaluserUsersRoute
+  '/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
+  '/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
+  '/operations': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/frequents': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,13 +1663,185 @@ export interface FileRoutesById {
   '/init-school': typeof InitSchoolRoute
   '/login': typeof LoginRoute
   '/not-authorized': typeof NotAuthorizedRoute
+  '/qrcode': typeof QrcodeRoute
+  '/verify': typeof VerifyRoute
   '/_privateLayout/_cleanLayout': typeof PrivateLayoutCleanLayoutRouteWithChildren
   '/_privateLayout/_vertical': typeof PrivateLayoutVerticalRouteWithChildren
+  '/payment-status/$reference': typeof PaymentStatusReferenceRoute
+  '/tuition/$identifier': typeof TuitionIdentifierRoute
   '/_privateLayout/_cleanLayout/account_list': typeof PrivateLayoutCleanLayoutAccount_listRoute
+  '/_privateLayout/_cleanLayout/annual_best': typeof PrivateLayoutCleanLayoutAnnual_bestRoute
+  '/_privateLayout/_cleanLayout/annual_comp_report_card': typeof PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute
+  '/_privateLayout/_cleanLayout/annual_mark_sheet': typeof PrivateLayoutCleanLayoutAnnual_mark_sheetRoute
+  '/_privateLayout/_cleanLayout/annual_note_book': typeof PrivateLayoutCleanLayoutAnnual_note_bookRoute
+  '/_privateLayout/_cleanLayout/annual_nth_first': typeof PrivateLayoutCleanLayoutAnnual_nth_firstRoute
+  '/_privateLayout/_cleanLayout/annual_report_card_exam': typeof PrivateLayoutCleanLayoutAnnual_report_card_examRoute
+  '/_privateLayout/_cleanLayout/annual_report_summary': typeof PrivateLayoutCleanLayoutAnnual_report_summaryRoute
+  '/_privateLayout/_cleanLayout/annual_school_book': typeof PrivateLayoutCleanLayoutAnnual_school_bookRoute
+  '/_privateLayout/_cleanLayout/annual_statistics': typeof PrivateLayoutCleanLayoutAnnual_statisticsRoute
+  '/_privateLayout/_cleanLayout/applied_coefficients': typeof PrivateLayoutCleanLayoutApplied_coefficientsRoute
+  '/_privateLayout/_cleanLayout/blank_note_book': typeof PrivateLayoutCleanLayoutBlank_note_bookRoute
+  '/_privateLayout/_cleanLayout/class_summary': typeof PrivateLayoutCleanLayoutClass_summaryRoute
+  '/_privateLayout/_cleanLayout/competence_input_progress': typeof PrivateLayoutCleanLayoutCompetence_input_progressRoute
+  '/_privateLayout/_cleanLayout/evaluated_competences': typeof PrivateLayoutCleanLayoutEvaluated_competencesRoute
+  '/_privateLayout/_cleanLayout/excluded_students': typeof PrivateLayoutCleanLayoutExcluded_studentsRoute
+  '/_privateLayout/_cleanLayout/expense_report': typeof PrivateLayoutCleanLayoutExpense_reportRoute
+  '/_privateLayout/_cleanLayout/expense_report_summary': typeof PrivateLayoutCleanLayoutExpense_report_summaryRoute
+  '/_privateLayout/_cleanLayout/input_progress': typeof PrivateLayoutCleanLayoutInput_progressRoute
+  '/_privateLayout/_cleanLayout/invoice_report': typeof PrivateLayoutCleanLayoutInvoice_reportRoute
+  '/_privateLayout/_cleanLayout/login_history': typeof PrivateLayoutCleanLayoutLogin_historyRoute
+  '/_privateLayout/_cleanLayout/mark_sheet': typeof PrivateLayoutCleanLayoutMark_sheetRoute
+  '/_privateLayout/_cleanLayout/multi_column_student': typeof PrivateLayoutCleanLayoutMulti_column_studentRoute
+  '/_privateLayout/_cleanLayout/payment_group_report': typeof PrivateLayoutCleanLayoutPayment_group_reportRoute
+  '/_privateLayout/_cleanLayout/payment_report': typeof PrivateLayoutCleanLayoutPayment_reportRoute
+  '/_privateLayout/_cleanLayout/personnel_list': typeof PrivateLayoutCleanLayoutPersonnel_listRoute
+  '/_privateLayout/_cleanLayout/quarterly_comp_report_card': typeof PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute
+  '/_privateLayout/_cleanLayout/quarterly_discipline': typeof PrivateLayoutCleanLayoutQuarterly_disciplineRoute
+  '/_privateLayout/_cleanLayout/quarterly_honor_roll': typeof PrivateLayoutCleanLayoutQuarterly_honor_rollRoute
+  '/_privateLayout/_cleanLayout/quarterly_mark_sheet': typeof PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute
+  '/_privateLayout/_cleanLayout/quarterly_note_book': typeof PrivateLayoutCleanLayoutQuarterly_note_bookRoute
+  '/_privateLayout/_cleanLayout/quarterly_nth_first': typeof PrivateLayoutCleanLayoutQuarterly_nth_firstRoute
+  '/_privateLayout/_cleanLayout/quarterly_report_card': typeof PrivateLayoutCleanLayoutQuarterly_report_cardRoute
+  '/_privateLayout/_cleanLayout/quarterly_report_summary': typeof PrivateLayoutCleanLayoutQuarterly_report_summaryRoute
+  '/_privateLayout/_cleanLayout/school_fee_report': typeof PrivateLayoutCleanLayoutSchool_fee_reportRoute
+  '/_privateLayout/_cleanLayout/sequential_discipline': typeof PrivateLayoutCleanLayoutSequential_disciplineRoute
+  '/_privateLayout/_cleanLayout/sequential_note_book': typeof PrivateLayoutCleanLayoutSequential_note_bookRoute
+  '/_privateLayout/_cleanLayout/sequential_nth_fist': typeof PrivateLayoutCleanLayoutSequential_nth_fistRoute
+  '/_privateLayout/_cleanLayout/sequential_report_card': typeof PrivateLayoutCleanLayoutSequential_report_cardRoute
+  '/_privateLayout/_cleanLayout/sequential_report_summary': typeof PrivateLayoutCleanLayoutSequential_report_summaryRoute
+  '/_privateLayout/_cleanLayout/single_column_student': typeof PrivateLayoutCleanLayoutSingle_column_studentRoute
+  '/_privateLayout/_cleanLayout/student_card': typeof PrivateLayoutCleanLayoutStudent_cardRoute
+  '/_privateLayout/_cleanLayout/student_payment_detail': typeof PrivateLayoutCleanLayoutStudent_payment_detailRoute
+  '/_privateLayout/_cleanLayout/student_payment_detail_by_date': typeof PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute
+  '/_privateLayout/_cleanLayout/student_payment_slice_summary': typeof PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute
+  '/_privateLayout/_cleanLayout/student_payment_summary': typeof PrivateLayoutCleanLayoutStudent_payment_summaryRoute
+  '/_privateLayout/_cleanLayout/teacher_distribution_level': typeof PrivateLayoutCleanLayoutTeacher_distribution_levelRoute
+  '/_privateLayout/_cleanLayout/teacher_time_table': typeof PrivateLayoutCleanLayoutTeacher_time_tableRoute
+  '/_privateLayout/_cleanLayout/time_table': typeof PrivateLayoutCleanLayoutTime_tableRoute
+  '/_privateLayout/_cleanLayout/weekly_discipline': typeof PrivateLayoutCleanLayoutWeekly_disciplineRoute
   '/_privateLayout/_vertical/configuration': typeof PrivateLayoutVerticalConfigurationRoute
   '/_privateLayout/_vertical/dashboard': typeof PrivateLayoutVerticalDashboardRoute
+  '/_privateLayout/_vertical/reports': typeof PrivateLayoutVerticalReportsRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_dashbard': typeof PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail_by_date': typeof PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_class_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_student_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
+  '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/_privateLayout/_vertical/(accounting)/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
+  '/_privateLayout/_vertical/(accounting)/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
+  '/_privateLayout/_vertical/(accounting)/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
+  '/_privateLayout/_vertical/(accounting)/chartOfAccounts': typeof PrivateLayoutVerticalaccountingChartOfAccountsRoute
+  '/_privateLayout/_vertical/(accounting)/journal': typeof PrivateLayoutVerticalaccountingJournalRoute
+  '/_privateLayout/_vertical/(accounting)/log-codes': typeof PrivateLayoutVerticalaccountingLogCodesRoute
+  '/_privateLayout/_vertical/(accounting)/models': typeof PrivateLayoutVerticalaccountingModelsRoute
+  '/_privateLayout/_vertical/(accounting)/special-accounts': typeof PrivateLayoutVerticalaccountingSpecialAccountsRoute
+  '/_privateLayout/_vertical/(bank)/bank-accounts': typeof PrivateLayoutVerticalbankBankAccountsRoute
+  '/_privateLayout/_vertical/(bank)/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
+  '/_privateLayout/_vertical/(discipline)/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
+  '/_privateLayout/_vertical/(discipline)/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/_privateLayout/_vertical/(discipline)/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
+  '/_privateLayout/_vertical/(discipline)/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
+  '/_privateLayout/_vertical/(expense)/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
+  '/_privateLayout/_vertical/(expense)/expenses': typeof PrivateLayoutVerticalexpenseExpensesRoute
+  '/_privateLayout/_vertical/(expense)/operation-classes': typeof PrivateLayoutVerticalexpenseOperationClassesRoute
+  '/_privateLayout/_vertical/(expense)/vouchers': typeof PrivateLayoutVerticalexpenseVouchersRoute
+  '/_privateLayout/_vertical/(export)/annual-school-book-xlsx': typeof PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute
+  '/_privateLayout/_vertical/(export)/data-export': typeof PrivateLayoutVerticalexportDataExportRoute
+  '/_privateLayout/_vertical/(export)/personnel-xlsx': typeof PrivateLayoutVerticalexportPersonnelXlsxRoute
+  '/_privateLayout/_vertical/(export)/student-xlsx': typeof PrivateLayoutVerticalexportStudentXlsxRoute
+  '/_privateLayout/_vertical/(note)/annual-average': typeof PrivateLayoutVerticalnoteAnnualAverageRoute
+  '/_privateLayout/_vertical/(note)/annual-comp-average': typeof PrivateLayoutVerticalnoteAnnualCompAverageRoute
+  '/_privateLayout/_vertical/(note)/annual-comp-note': typeof PrivateLayoutVerticalnoteAnnualCompNoteRoute
+  '/_privateLayout/_vertical/(note)/annual-note': typeof PrivateLayoutVerticalnoteAnnualNoteRoute
+  '/_privateLayout/_vertical/(note)/annual-notes': typeof PrivateLayoutVerticalnoteAnnualNotesRoute
+  '/_privateLayout/_vertical/(note)/annual-result': typeof PrivateLayoutVerticalnoteAnnualResultRoute
+  '/_privateLayout/_vertical/(note)/average-calculation': typeof PrivateLayoutVerticalnoteAverageCalculationRoute
+  '/_privateLayout/_vertical/(note)/bulk-annual-result': typeof PrivateLayoutVerticalnoteBulkAnnualResultRoute
+  '/_privateLayout/_vertical/(note)/competences': typeof PrivateLayoutVerticalnoteCompetencesRoute
+  '/_privateLayout/_vertical/(note)/council-decision': typeof PrivateLayoutVerticalnoteCouncilDecisionRoute
+  '/_privateLayout/_vertical/(note)/eval-competences': typeof PrivateLayoutVerticalnoteEvalCompetencesRoute
+  '/_privateLayout/_vertical/(note)/eval-competences-subject': typeof PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute
+  '/_privateLayout/_vertical/(note)/note-calculation': typeof PrivateLayoutVerticalnoteNoteCalculationRoute
+  '/_privateLayout/_vertical/(note)/quarterly-average': typeof PrivateLayoutVerticalnoteQuarterlyAverageRoute
+  '/_privateLayout/_vertical/(note)/quarterly-comp-note': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteRoute
+  '/_privateLayout/_vertical/(note)/quarterly-comp-note-eval': typeof PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute
+  '/_privateLayout/_vertical/(note)/quarterly-note': typeof PrivateLayoutVerticalnoteQuarterlyNoteRoute
+  '/_privateLayout/_vertical/(note)/quarterly-notes': typeof PrivateLayoutVerticalnoteQuarterlyNotesRoute
+  '/_privateLayout/_vertical/(note)/quarterly-report-observation': typeof PrivateLayoutVerticalnoteQuarterlyReportObservationRoute
+  '/_privateLayout/_vertical/(note)/sequential-average': typeof PrivateLayoutVerticalnoteSequentialAverageRoute
+  '/_privateLayout/_vertical/(note)/sequential-note-copy': typeof PrivateLayoutVerticalnoteSequentialNoteCopyRoute
+  '/_privateLayout/_vertical/(note)/sequential-note-delete': typeof PrivateLayoutVerticalnoteSequentialNoteDeleteRoute
+  '/_privateLayout/_vertical/(note)/sequential-note-downgrade': typeof PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute
+  '/_privateLayout/_vertical/(note)/sequential-note-import': typeof PrivateLayoutVerticalnoteSequentialNoteImportRoute
+  '/_privateLayout/_vertical/(note)/sequential-note-template': typeof PrivateLayoutVerticalnoteSequentialNoteTemplateRoute
+  '/_privateLayout/_vertical/(note)/sequential-notes': typeof PrivateLayoutVerticalnoteSequentialNotesRoute
+  '/_privateLayout/_vertical/(payroll)/deduction-categories': typeof PrivateLayoutVerticalpayrollDeductionCategoriesRoute
+  '/_privateLayout/_vertical/(payroll)/deductions': typeof PrivateLayoutVerticalpayrollDeductionsRoute
+  '/_privateLayout/_vertical/(payroll)/earning-categories': typeof PrivateLayoutVerticalpayrollEarningCategoriesRoute
+  '/_privateLayout/_vertical/(payroll)/earnings': typeof PrivateLayoutVerticalpayrollEarningsRoute
+  '/_privateLayout/_vertical/(payroll)/employees': typeof PrivateLayoutVerticalpayrollEmployeesRoute
+  '/_privateLayout/_vertical/(payroll)/payroll-departments': typeof PrivateLayoutVerticalpayrollPayrollDepartmentsRoute
+  '/_privateLayout/_vertical/(payroll)/payroll-periods': typeof PrivateLayoutVerticalpayrollPayrollPeriodsRoute
+  '/_privateLayout/_vertical/(payroll)/payroll-positions': typeof PrivateLayoutVerticalpayrollPayrollPositionsRoute
+  '/_privateLayout/_vertical/(payroll)/payrolls': typeof PrivateLayoutVerticalpayrollPayrollsRoute
+  '/_privateLayout/_vertical/(personnel)/personnel': typeof PrivateLayoutVerticalpersonnelPersonnelRoute
+  '/_privateLayout/_vertical/(planning)/day-of-classes': typeof PrivateLayoutVerticalplanningDayOfClassesRoute
+  '/_privateLayout/_vertical/(planning)/distribution': typeof PrivateLayoutVerticalplanningDistributionRoute
+  '/_privateLayout/_vertical/(planning)/time-slots': typeof PrivateLayoutVerticalplanningTimeSlotsRoute
+  '/_privateLayout/_vertical/(planning)/time-tables': typeof PrivateLayoutVerticalplanningTimeTablesRoute
+  '/_privateLayout/_vertical/(primary)/eval-types': typeof PrivateLayoutVerticalprimaryEvalTypesRoute
+  '/_privateLayout/_vertical/(primary)/free-primary-sequential-notes': typeof PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute
+  '/_privateLayout/_vertical/(primary)/primary-competences': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesRoute
+  '/_privateLayout/_vertical/(primary)/primary-competences-level': typeof PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute
+  '/_privateLayout/_vertical/(primary)/primary-sequential-notes': typeof PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute
+  '/_privateLayout/_vertical/(primary)/sub-competences': typeof PrivateLayoutVerticalprimarySubCompetencesRoute
+  '/_privateLayout/_vertical/(sale)/customer-categories': typeof PrivateLayoutVerticalsaleCustomerCategoriesRoute
+  '/_privateLayout/_vertical/(sale)/customers': typeof PrivateLayoutVerticalsaleCustomersRoute
+  '/_privateLayout/_vertical/(sale)/discounts': typeof PrivateLayoutVerticalsaleDiscountsRoute
+  '/_privateLayout/_vertical/(sale)/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
+  '/_privateLayout/_vertical/(sale)/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
+  '/_privateLayout/_vertical/(sale)/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/_privateLayout/_vertical/(sale)/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
+  '/_privateLayout/_vertical/(sale)/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
+  '/_privateLayout/_vertical/(sale)/products': typeof PrivateLayoutVerticalsaleProductsRoute
+  '/_privateLayout/_vertical/(sale)/supplier-categories': typeof PrivateLayoutVerticalsaleSupplierCategoriesRoute
+  '/_privateLayout/_vertical/(sale)/suppliers': typeof PrivateLayoutVerticalsaleSuppliersRoute
+  '/_privateLayout/_vertical/(school)/branches': typeof PrivateLayoutVerticalschoolBranchesRoute
+  '/_privateLayout/_vertical/(school)/classes': typeof PrivateLayoutVerticalschoolClassesRoute
+  '/_privateLayout/_vertical/(school)/copyOfParameters': typeof PrivateLayoutVerticalschoolCopyOfParametersRoute
+  '/_privateLayout/_vertical/(school)/cycles': typeof PrivateLayoutVerticalschoolCyclesRoute
+  '/_privateLayout/_vertical/(school)/database-backup': typeof PrivateLayoutVerticalschoolDatabaseBackupRoute
+  '/_privateLayout/_vertical/(school)/departments': typeof PrivateLayoutVerticalschoolDepartmentsRoute
+  '/_privateLayout/_vertical/(school)/guided-setup': typeof PrivateLayoutVerticalschoolGuidedSetupRoute
+  '/_privateLayout/_vertical/(school)/head-departments': typeof PrivateLayoutVerticalschoolHeadDepartmentsRoute
+  '/_privateLayout/_vertical/(school)/levels': typeof PrivateLayoutVerticalschoolLevelsRoute
+  '/_privateLayout/_vertical/(school)/liable-type': typeof PrivateLayoutVerticalschoolLiableTypeRoute
+  '/_privateLayout/_vertical/(school)/periods': typeof PrivateLayoutVerticalschoolPeriodsRoute
   '/_privateLayout/_vertical/(school)/school': typeof PrivateLayoutVerticalschoolSchoolRoute
+  '/_privateLayout/_vertical/(school)/school-liable': typeof PrivateLayoutVerticalschoolSchoolLiableRoute
+  '/_privateLayout/_vertical/(school)/school-sections': typeof PrivateLayoutVerticalschoolSchoolSectionsRoute
   '/_privateLayout/_vertical/(school)/school-years': typeof PrivateLayoutVerticalschoolSchoolYearsRoute
+  '/_privateLayout/_vertical/(school)/sub-periods': typeof PrivateLayoutVerticalschoolSubPeriodsRoute
+  '/_privateLayout/_vertical/(school)/subject-groups': typeof PrivateLayoutVerticalschoolSubjectGroupsRoute
+  '/_privateLayout/_vertical/(school)/subjects': typeof PrivateLayoutVerticalschoolSubjectsRoute
+  '/_privateLayout/_vertical/(student)/batch-pictures': typeof PrivateLayoutVerticalstudentBatchPicturesRoute
+  '/_privateLayout/_vertical/(student)/guardians': typeof PrivateLayoutVerticalstudentGuardiansRoute
+  '/_privateLayout/_vertical/(student)/old-schools': typeof PrivateLayoutVerticalstudentOldSchoolsRoute
+  '/_privateLayout/_vertical/(student)/student-progression': typeof PrivateLayoutVerticalstudentStudentProgressionRoute
+  '/_privateLayout/_vertical/(student)/student-update-by-class': typeof PrivateLayoutVerticalstudentStudentUpdateByClassRoute
+  '/_privateLayout/_vertical/(student)/students': typeof PrivateLayoutVerticalstudentStudentsRoute
+  '/_privateLayout/_vertical/(user)/login-histories': typeof PrivateLayoutVerticaluserLoginHistoriesRoute
+  '/_privateLayout/_vertical/(user)/permissions': typeof PrivateLayoutVerticaluserPermissionsRoute
+  '/_privateLayout/_vertical/(user)/profile': typeof PrivateLayoutVerticaluserProfileRoute
+  '/_privateLayout/_vertical/(user)/roles': typeof PrivateLayoutVerticaluserRolesRoute
+  '/_privateLayout/_vertical/(user)/users': typeof PrivateLayoutVerticaluserUsersRoute
+  '/_privateLayout/_vertical/(sale)/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
+  '/_privateLayout/_vertical/(student)/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
+  '/_privateLayout/_vertical/(sale)/operations/': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/_privateLayout/_vertical/(student)/frequents/': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -130,22 +1850,366 @@ export interface FileRouteTypes {
     | '/init-school'
     | '/login'
     | '/not-authorized'
+    | '/qrcode'
+    | '/verify'
+    | '/payment-status/$reference'
+    | '/tuition/$identifier'
     | '/account_list'
+    | '/annual_best'
+    | '/annual_comp_report_card'
+    | '/annual_mark_sheet'
+    | '/annual_note_book'
+    | '/annual_nth_first'
+    | '/annual_report_card_exam'
+    | '/annual_report_summary'
+    | '/annual_school_book'
+    | '/annual_statistics'
+    | '/applied_coefficients'
+    | '/blank_note_book'
+    | '/class_summary'
+    | '/competence_input_progress'
+    | '/evaluated_competences'
+    | '/excluded_students'
+    | '/expense_report'
+    | '/expense_report_summary'
+    | '/input_progress'
+    | '/invoice_report'
+    | '/login_history'
+    | '/mark_sheet'
+    | '/multi_column_student'
+    | '/payment_group_report'
+    | '/payment_report'
+    | '/personnel_list'
+    | '/quarterly_comp_report_card'
+    | '/quarterly_discipline'
+    | '/quarterly_honor_roll'
+    | '/quarterly_mark_sheet'
+    | '/quarterly_note_book'
+    | '/quarterly_nth_first'
+    | '/quarterly_report_card'
+    | '/quarterly_report_summary'
+    | '/school_fee_report'
+    | '/sequential_discipline'
+    | '/sequential_note_book'
+    | '/sequential_nth_fist'
+    | '/sequential_report_card'
+    | '/sequential_report_summary'
+    | '/single_column_student'
+    | '/student_card'
+    | '/student_payment_detail'
+    | '/student_payment_detail_by_date'
+    | '/student_payment_slice_summary'
+    | '/student_payment_summary'
+    | '/teacher_distribution_level'
+    | '/teacher_time_table'
+    | '/time_table'
+    | '/weekly_discipline'
     | '/configuration'
     | '/dashboard'
+    | '/reports'
+    | '/fee_payment_dashbard'
+    | '/fee_payment_detail'
+    | '/fee_payment_detail_by_date'
+    | '/fee_payment_product_class_summary'
+    | '/fee_payment_product_student_summary'
+    | '/fee_payment_product_summary'
+    | '/fee_payment_slice_summary'
+    | '/fee_payment_summary'
+    | '/account-categories'
+    | '/account-groups'
+    | '/accounts'
+    | '/chartOfAccounts'
+    | '/journal'
+    | '/log-codes'
+    | '/models'
+    | '/special-accounts'
+    | '/bank-accounts'
+    | '/bank-transactions'
+    | '/annual-discipline'
+    | '/discipline-calculation'
+    | '/quarterly-discipline'
+    | '/sequential-discipline'
+    | '/expense-categories'
+    | '/expenses'
+    | '/operation-classes'
+    | '/vouchers'
+    | '/annual-school-book-xlsx'
+    | '/data-export'
+    | '/personnel-xlsx'
+    | '/student-xlsx'
+    | '/annual-average'
+    | '/annual-comp-average'
+    | '/annual-comp-note'
+    | '/annual-note'
+    | '/annual-notes'
+    | '/annual-result'
+    | '/average-calculation'
+    | '/bulk-annual-result'
+    | '/competences'
+    | '/council-decision'
+    | '/eval-competences'
+    | '/eval-competences-subject'
+    | '/note-calculation'
+    | '/quarterly-average'
+    | '/quarterly-comp-note'
+    | '/quarterly-comp-note-eval'
+    | '/quarterly-note'
+    | '/quarterly-notes'
+    | '/quarterly-report-observation'
+    | '/sequential-average'
+    | '/sequential-note-copy'
+    | '/sequential-note-delete'
+    | '/sequential-note-downgrade'
+    | '/sequential-note-import'
+    | '/sequential-note-template'
+    | '/sequential-notes'
+    | '/deduction-categories'
+    | '/deductions'
+    | '/earning-categories'
+    | '/earnings'
+    | '/employees'
+    | '/payroll-departments'
+    | '/payroll-periods'
+    | '/payroll-positions'
+    | '/payrolls'
+    | '/personnel'
+    | '/day-of-classes'
+    | '/distribution'
+    | '/time-slots'
+    | '/time-tables'
+    | '/eval-types'
+    | '/free-primary-sequential-notes'
+    | '/primary-competences'
+    | '/primary-competences-level'
+    | '/primary-sequential-notes'
+    | '/sub-competences'
+    | '/customer-categories'
+    | '/customers'
+    | '/discounts'
+    | '/fee-groups'
+    | '/fee-structures'
+    | '/installments'
+    | '/payment-conditions'
+    | '/product-categories'
+    | '/products'
+    | '/supplier-categories'
+    | '/suppliers'
+    | '/branches'
+    | '/classes'
+    | '/copyOfParameters'
+    | '/cycles'
+    | '/database-backup'
+    | '/departments'
+    | '/guided-setup'
+    | '/head-departments'
+    | '/levels'
+    | '/liable-type'
+    | '/periods'
     | '/school'
+    | '/school-liable'
+    | '/school-sections'
     | '/school-years'
+    | '/sub-periods'
+    | '/subject-groups'
+    | '/subjects'
+    | '/batch-pictures'
+    | '/guardians'
+    | '/old-schools'
+    | '/student-progression'
+    | '/student-update-by-class'
+    | '/students'
+    | '/login-histories'
+    | '/permissions'
+    | '/profile'
+    | '/roles'
+    | '/users'
+    | '/operations/mobile-operations'
+    | '/frequents/$id'
+    | '/operations/'
+    | '/frequents/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/init-school'
     | '/login'
     | '/not-authorized'
+    | '/qrcode'
+    | '/verify'
+    | '/payment-status/$reference'
+    | '/tuition/$identifier'
     | '/account_list'
+    | '/annual_best'
+    | '/annual_comp_report_card'
+    | '/annual_mark_sheet'
+    | '/annual_note_book'
+    | '/annual_nth_first'
+    | '/annual_report_card_exam'
+    | '/annual_report_summary'
+    | '/annual_school_book'
+    | '/annual_statistics'
+    | '/applied_coefficients'
+    | '/blank_note_book'
+    | '/class_summary'
+    | '/competence_input_progress'
+    | '/evaluated_competences'
+    | '/excluded_students'
+    | '/expense_report'
+    | '/expense_report_summary'
+    | '/input_progress'
+    | '/invoice_report'
+    | '/login_history'
+    | '/mark_sheet'
+    | '/multi_column_student'
+    | '/payment_group_report'
+    | '/payment_report'
+    | '/personnel_list'
+    | '/quarterly_comp_report_card'
+    | '/quarterly_discipline'
+    | '/quarterly_honor_roll'
+    | '/quarterly_mark_sheet'
+    | '/quarterly_note_book'
+    | '/quarterly_nth_first'
+    | '/quarterly_report_card'
+    | '/quarterly_report_summary'
+    | '/school_fee_report'
+    | '/sequential_discipline'
+    | '/sequential_note_book'
+    | '/sequential_nth_fist'
+    | '/sequential_report_card'
+    | '/sequential_report_summary'
+    | '/single_column_student'
+    | '/student_card'
+    | '/student_payment_detail'
+    | '/student_payment_detail_by_date'
+    | '/student_payment_slice_summary'
+    | '/student_payment_summary'
+    | '/teacher_distribution_level'
+    | '/teacher_time_table'
+    | '/time_table'
+    | '/weekly_discipline'
     | '/configuration'
     | '/dashboard'
+    | '/reports'
+    | '/fee_payment_dashbard'
+    | '/fee_payment_detail'
+    | '/fee_payment_detail_by_date'
+    | '/fee_payment_product_class_summary'
+    | '/fee_payment_product_student_summary'
+    | '/fee_payment_product_summary'
+    | '/fee_payment_slice_summary'
+    | '/fee_payment_summary'
+    | '/account-categories'
+    | '/account-groups'
+    | '/accounts'
+    | '/chartOfAccounts'
+    | '/journal'
+    | '/log-codes'
+    | '/models'
+    | '/special-accounts'
+    | '/bank-accounts'
+    | '/bank-transactions'
+    | '/annual-discipline'
+    | '/discipline-calculation'
+    | '/quarterly-discipline'
+    | '/sequential-discipline'
+    | '/expense-categories'
+    | '/expenses'
+    | '/operation-classes'
+    | '/vouchers'
+    | '/annual-school-book-xlsx'
+    | '/data-export'
+    | '/personnel-xlsx'
+    | '/student-xlsx'
+    | '/annual-average'
+    | '/annual-comp-average'
+    | '/annual-comp-note'
+    | '/annual-note'
+    | '/annual-notes'
+    | '/annual-result'
+    | '/average-calculation'
+    | '/bulk-annual-result'
+    | '/competences'
+    | '/council-decision'
+    | '/eval-competences'
+    | '/eval-competences-subject'
+    | '/note-calculation'
+    | '/quarterly-average'
+    | '/quarterly-comp-note'
+    | '/quarterly-comp-note-eval'
+    | '/quarterly-note'
+    | '/quarterly-notes'
+    | '/quarterly-report-observation'
+    | '/sequential-average'
+    | '/sequential-note-copy'
+    | '/sequential-note-delete'
+    | '/sequential-note-downgrade'
+    | '/sequential-note-import'
+    | '/sequential-note-template'
+    | '/sequential-notes'
+    | '/deduction-categories'
+    | '/deductions'
+    | '/earning-categories'
+    | '/earnings'
+    | '/employees'
+    | '/payroll-departments'
+    | '/payroll-periods'
+    | '/payroll-positions'
+    | '/payrolls'
+    | '/personnel'
+    | '/day-of-classes'
+    | '/distribution'
+    | '/time-slots'
+    | '/time-tables'
+    | '/eval-types'
+    | '/free-primary-sequential-notes'
+    | '/primary-competences'
+    | '/primary-competences-level'
+    | '/primary-sequential-notes'
+    | '/sub-competences'
+    | '/customer-categories'
+    | '/customers'
+    | '/discounts'
+    | '/fee-groups'
+    | '/fee-structures'
+    | '/installments'
+    | '/payment-conditions'
+    | '/product-categories'
+    | '/products'
+    | '/supplier-categories'
+    | '/suppliers'
+    | '/branches'
+    | '/classes'
+    | '/copyOfParameters'
+    | '/cycles'
+    | '/database-backup'
+    | '/departments'
+    | '/guided-setup'
+    | '/head-departments'
+    | '/levels'
+    | '/liable-type'
+    | '/periods'
     | '/school'
+    | '/school-liable'
+    | '/school-sections'
     | '/school-years'
+    | '/sub-periods'
+    | '/subject-groups'
+    | '/subjects'
+    | '/batch-pictures'
+    | '/guardians'
+    | '/old-schools'
+    | '/student-progression'
+    | '/student-update-by-class'
+    | '/students'
+    | '/login-histories'
+    | '/permissions'
+    | '/profile'
+    | '/roles'
+    | '/users'
+    | '/operations/mobile-operations'
+    | '/frequents/$id'
+    | '/operations'
+    | '/frequents'
   id:
     | '__root__'
     | '/'
@@ -153,13 +2217,185 @@ export interface FileRouteTypes {
     | '/init-school'
     | '/login'
     | '/not-authorized'
+    | '/qrcode'
+    | '/verify'
     | '/_privateLayout/_cleanLayout'
     | '/_privateLayout/_vertical'
+    | '/payment-status/$reference'
+    | '/tuition/$identifier'
     | '/_privateLayout/_cleanLayout/account_list'
+    | '/_privateLayout/_cleanLayout/annual_best'
+    | '/_privateLayout/_cleanLayout/annual_comp_report_card'
+    | '/_privateLayout/_cleanLayout/annual_mark_sheet'
+    | '/_privateLayout/_cleanLayout/annual_note_book'
+    | '/_privateLayout/_cleanLayout/annual_nth_first'
+    | '/_privateLayout/_cleanLayout/annual_report_card_exam'
+    | '/_privateLayout/_cleanLayout/annual_report_summary'
+    | '/_privateLayout/_cleanLayout/annual_school_book'
+    | '/_privateLayout/_cleanLayout/annual_statistics'
+    | '/_privateLayout/_cleanLayout/applied_coefficients'
+    | '/_privateLayout/_cleanLayout/blank_note_book'
+    | '/_privateLayout/_cleanLayout/class_summary'
+    | '/_privateLayout/_cleanLayout/competence_input_progress'
+    | '/_privateLayout/_cleanLayout/evaluated_competences'
+    | '/_privateLayout/_cleanLayout/excluded_students'
+    | '/_privateLayout/_cleanLayout/expense_report'
+    | '/_privateLayout/_cleanLayout/expense_report_summary'
+    | '/_privateLayout/_cleanLayout/input_progress'
+    | '/_privateLayout/_cleanLayout/invoice_report'
+    | '/_privateLayout/_cleanLayout/login_history'
+    | '/_privateLayout/_cleanLayout/mark_sheet'
+    | '/_privateLayout/_cleanLayout/multi_column_student'
+    | '/_privateLayout/_cleanLayout/payment_group_report'
+    | '/_privateLayout/_cleanLayout/payment_report'
+    | '/_privateLayout/_cleanLayout/personnel_list'
+    | '/_privateLayout/_cleanLayout/quarterly_comp_report_card'
+    | '/_privateLayout/_cleanLayout/quarterly_discipline'
+    | '/_privateLayout/_cleanLayout/quarterly_honor_roll'
+    | '/_privateLayout/_cleanLayout/quarterly_mark_sheet'
+    | '/_privateLayout/_cleanLayout/quarterly_note_book'
+    | '/_privateLayout/_cleanLayout/quarterly_nth_first'
+    | '/_privateLayout/_cleanLayout/quarterly_report_card'
+    | '/_privateLayout/_cleanLayout/quarterly_report_summary'
+    | '/_privateLayout/_cleanLayout/school_fee_report'
+    | '/_privateLayout/_cleanLayout/sequential_discipline'
+    | '/_privateLayout/_cleanLayout/sequential_note_book'
+    | '/_privateLayout/_cleanLayout/sequential_nth_fist'
+    | '/_privateLayout/_cleanLayout/sequential_report_card'
+    | '/_privateLayout/_cleanLayout/sequential_report_summary'
+    | '/_privateLayout/_cleanLayout/single_column_student'
+    | '/_privateLayout/_cleanLayout/student_card'
+    | '/_privateLayout/_cleanLayout/student_payment_detail'
+    | '/_privateLayout/_cleanLayout/student_payment_detail_by_date'
+    | '/_privateLayout/_cleanLayout/student_payment_slice_summary'
+    | '/_privateLayout/_cleanLayout/student_payment_summary'
+    | '/_privateLayout/_cleanLayout/teacher_distribution_level'
+    | '/_privateLayout/_cleanLayout/teacher_time_table'
+    | '/_privateLayout/_cleanLayout/time_table'
+    | '/_privateLayout/_cleanLayout/weekly_discipline'
     | '/_privateLayout/_vertical/configuration'
     | '/_privateLayout/_vertical/dashboard'
+    | '/_privateLayout/_vertical/reports'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_dashbard'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail_by_date'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_class_summary'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_student_summary'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary'
+    | '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary'
+    | '/_privateLayout/_vertical/(accounting)/account-categories'
+    | '/_privateLayout/_vertical/(accounting)/account-groups'
+    | '/_privateLayout/_vertical/(accounting)/accounts'
+    | '/_privateLayout/_vertical/(accounting)/chartOfAccounts'
+    | '/_privateLayout/_vertical/(accounting)/journal'
+    | '/_privateLayout/_vertical/(accounting)/log-codes'
+    | '/_privateLayout/_vertical/(accounting)/models'
+    | '/_privateLayout/_vertical/(accounting)/special-accounts'
+    | '/_privateLayout/_vertical/(bank)/bank-accounts'
+    | '/_privateLayout/_vertical/(bank)/bank-transactions'
+    | '/_privateLayout/_vertical/(discipline)/annual-discipline'
+    | '/_privateLayout/_vertical/(discipline)/discipline-calculation'
+    | '/_privateLayout/_vertical/(discipline)/quarterly-discipline'
+    | '/_privateLayout/_vertical/(discipline)/sequential-discipline'
+    | '/_privateLayout/_vertical/(expense)/expense-categories'
+    | '/_privateLayout/_vertical/(expense)/expenses'
+    | '/_privateLayout/_vertical/(expense)/operation-classes'
+    | '/_privateLayout/_vertical/(expense)/vouchers'
+    | '/_privateLayout/_vertical/(export)/annual-school-book-xlsx'
+    | '/_privateLayout/_vertical/(export)/data-export'
+    | '/_privateLayout/_vertical/(export)/personnel-xlsx'
+    | '/_privateLayout/_vertical/(export)/student-xlsx'
+    | '/_privateLayout/_vertical/(note)/annual-average'
+    | '/_privateLayout/_vertical/(note)/annual-comp-average'
+    | '/_privateLayout/_vertical/(note)/annual-comp-note'
+    | '/_privateLayout/_vertical/(note)/annual-note'
+    | '/_privateLayout/_vertical/(note)/annual-notes'
+    | '/_privateLayout/_vertical/(note)/annual-result'
+    | '/_privateLayout/_vertical/(note)/average-calculation'
+    | '/_privateLayout/_vertical/(note)/bulk-annual-result'
+    | '/_privateLayout/_vertical/(note)/competences'
+    | '/_privateLayout/_vertical/(note)/council-decision'
+    | '/_privateLayout/_vertical/(note)/eval-competences'
+    | '/_privateLayout/_vertical/(note)/eval-competences-subject'
+    | '/_privateLayout/_vertical/(note)/note-calculation'
+    | '/_privateLayout/_vertical/(note)/quarterly-average'
+    | '/_privateLayout/_vertical/(note)/quarterly-comp-note'
+    | '/_privateLayout/_vertical/(note)/quarterly-comp-note-eval'
+    | '/_privateLayout/_vertical/(note)/quarterly-note'
+    | '/_privateLayout/_vertical/(note)/quarterly-notes'
+    | '/_privateLayout/_vertical/(note)/quarterly-report-observation'
+    | '/_privateLayout/_vertical/(note)/sequential-average'
+    | '/_privateLayout/_vertical/(note)/sequential-note-copy'
+    | '/_privateLayout/_vertical/(note)/sequential-note-delete'
+    | '/_privateLayout/_vertical/(note)/sequential-note-downgrade'
+    | '/_privateLayout/_vertical/(note)/sequential-note-import'
+    | '/_privateLayout/_vertical/(note)/sequential-note-template'
+    | '/_privateLayout/_vertical/(note)/sequential-notes'
+    | '/_privateLayout/_vertical/(payroll)/deduction-categories'
+    | '/_privateLayout/_vertical/(payroll)/deductions'
+    | '/_privateLayout/_vertical/(payroll)/earning-categories'
+    | '/_privateLayout/_vertical/(payroll)/earnings'
+    | '/_privateLayout/_vertical/(payroll)/employees'
+    | '/_privateLayout/_vertical/(payroll)/payroll-departments'
+    | '/_privateLayout/_vertical/(payroll)/payroll-periods'
+    | '/_privateLayout/_vertical/(payroll)/payroll-positions'
+    | '/_privateLayout/_vertical/(payroll)/payrolls'
+    | '/_privateLayout/_vertical/(personnel)/personnel'
+    | '/_privateLayout/_vertical/(planning)/day-of-classes'
+    | '/_privateLayout/_vertical/(planning)/distribution'
+    | '/_privateLayout/_vertical/(planning)/time-slots'
+    | '/_privateLayout/_vertical/(planning)/time-tables'
+    | '/_privateLayout/_vertical/(primary)/eval-types'
+    | '/_privateLayout/_vertical/(primary)/free-primary-sequential-notes'
+    | '/_privateLayout/_vertical/(primary)/primary-competences'
+    | '/_privateLayout/_vertical/(primary)/primary-competences-level'
+    | '/_privateLayout/_vertical/(primary)/primary-sequential-notes'
+    | '/_privateLayout/_vertical/(primary)/sub-competences'
+    | '/_privateLayout/_vertical/(sale)/customer-categories'
+    | '/_privateLayout/_vertical/(sale)/customers'
+    | '/_privateLayout/_vertical/(sale)/discounts'
+    | '/_privateLayout/_vertical/(sale)/fee-groups'
+    | '/_privateLayout/_vertical/(sale)/fee-structures'
+    | '/_privateLayout/_vertical/(sale)/installments'
+    | '/_privateLayout/_vertical/(sale)/payment-conditions'
+    | '/_privateLayout/_vertical/(sale)/product-categories'
+    | '/_privateLayout/_vertical/(sale)/products'
+    | '/_privateLayout/_vertical/(sale)/supplier-categories'
+    | '/_privateLayout/_vertical/(sale)/suppliers'
+    | '/_privateLayout/_vertical/(school)/branches'
+    | '/_privateLayout/_vertical/(school)/classes'
+    | '/_privateLayout/_vertical/(school)/copyOfParameters'
+    | '/_privateLayout/_vertical/(school)/cycles'
+    | '/_privateLayout/_vertical/(school)/database-backup'
+    | '/_privateLayout/_vertical/(school)/departments'
+    | '/_privateLayout/_vertical/(school)/guided-setup'
+    | '/_privateLayout/_vertical/(school)/head-departments'
+    | '/_privateLayout/_vertical/(school)/levels'
+    | '/_privateLayout/_vertical/(school)/liable-type'
+    | '/_privateLayout/_vertical/(school)/periods'
     | '/_privateLayout/_vertical/(school)/school'
+    | '/_privateLayout/_vertical/(school)/school-liable'
+    | '/_privateLayout/_vertical/(school)/school-sections'
     | '/_privateLayout/_vertical/(school)/school-years'
+    | '/_privateLayout/_vertical/(school)/sub-periods'
+    | '/_privateLayout/_vertical/(school)/subject-groups'
+    | '/_privateLayout/_vertical/(school)/subjects'
+    | '/_privateLayout/_vertical/(student)/batch-pictures'
+    | '/_privateLayout/_vertical/(student)/guardians'
+    | '/_privateLayout/_vertical/(student)/old-schools'
+    | '/_privateLayout/_vertical/(student)/student-progression'
+    | '/_privateLayout/_vertical/(student)/student-update-by-class'
+    | '/_privateLayout/_vertical/(student)/students'
+    | '/_privateLayout/_vertical/(user)/login-histories'
+    | '/_privateLayout/_vertical/(user)/permissions'
+    | '/_privateLayout/_vertical/(user)/profile'
+    | '/_privateLayout/_vertical/(user)/roles'
+    | '/_privateLayout/_vertical/(user)/users'
+    | '/_privateLayout/_vertical/(sale)/operations/mobile-operations'
+    | '/_privateLayout/_vertical/(student)/frequents/$id'
+    | '/_privateLayout/_vertical/(sale)/operations/'
+    | '/_privateLayout/_vertical/(student)/frequents/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -168,6 +2404,10 @@ export interface RootRouteChildren {
   InitSchoolRoute: typeof InitSchoolRoute
   LoginRoute: typeof LoginRoute
   NotAuthorizedRoute: typeof NotAuthorizedRoute
+  QrcodeRoute: typeof QrcodeRoute
+  VerifyRoute: typeof VerifyRoute
+  PaymentStatusReferenceRoute: typeof PaymentStatusReferenceRoute
+  TuitionIdentifierRoute: typeof TuitionIdentifierRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -207,6 +2447,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotAuthorizedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/qrcode': {
+      id: '/qrcode'
+      path: '/qrcode'
+      fullPath: '/qrcode'
+      preLoaderRoute: typeof QrcodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify': {
+      id: '/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_privateLayout/_cleanLayout': {
       id: '/_privateLayout/_cleanLayout'
       path: ''
@@ -221,11 +2475,368 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateLayoutVerticalRouteImport
       parentRoute: typeof PrivateLayoutRoute
     }
+    '/payment-status/$reference': {
+      id: '/payment-status/$reference'
+      path: '/payment-status/$reference'
+      fullPath: '/payment-status/$reference'
+      preLoaderRoute: typeof PaymentStatusReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tuition/$identifier': {
+      id: '/tuition/$identifier'
+      path: '/tuition/$identifier'
+      fullPath: '/tuition/$identifier'
+      preLoaderRoute: typeof TuitionIdentifierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_privateLayout/_cleanLayout/account_list': {
       id: '/_privateLayout/_cleanLayout/account_list'
       path: '/account_list'
       fullPath: '/account_list'
       preLoaderRoute: typeof PrivateLayoutCleanLayoutAccount_listRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_best': {
+      id: '/_privateLayout/_cleanLayout/annual_best'
+      path: '/annual_best'
+      fullPath: '/annual_best'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_bestRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_comp_report_card': {
+      id: '/_privateLayout/_cleanLayout/annual_comp_report_card'
+      path: '/annual_comp_report_card'
+      fullPath: '/annual_comp_report_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_comp_report_cardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_mark_sheet': {
+      id: '/_privateLayout/_cleanLayout/annual_mark_sheet'
+      path: '/annual_mark_sheet'
+      fullPath: '/annual_mark_sheet'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_mark_sheetRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_note_book': {
+      id: '/_privateLayout/_cleanLayout/annual_note_book'
+      path: '/annual_note_book'
+      fullPath: '/annual_note_book'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_note_bookRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_nth_first': {
+      id: '/_privateLayout/_cleanLayout/annual_nth_first'
+      path: '/annual_nth_first'
+      fullPath: '/annual_nth_first'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_nth_firstRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_report_card_exam': {
+      id: '/_privateLayout/_cleanLayout/annual_report_card_exam'
+      path: '/annual_report_card_exam'
+      fullPath: '/annual_report_card_exam'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_report_card_examRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_report_summary': {
+      id: '/_privateLayout/_cleanLayout/annual_report_summary'
+      path: '/annual_report_summary'
+      fullPath: '/annual_report_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_report_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_school_book': {
+      id: '/_privateLayout/_cleanLayout/annual_school_book'
+      path: '/annual_school_book'
+      fullPath: '/annual_school_book'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_school_bookRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/annual_statistics': {
+      id: '/_privateLayout/_cleanLayout/annual_statistics'
+      path: '/annual_statistics'
+      fullPath: '/annual_statistics'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutAnnual_statisticsRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/applied_coefficients': {
+      id: '/_privateLayout/_cleanLayout/applied_coefficients'
+      path: '/applied_coefficients'
+      fullPath: '/applied_coefficients'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutApplied_coefficientsRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/blank_note_book': {
+      id: '/_privateLayout/_cleanLayout/blank_note_book'
+      path: '/blank_note_book'
+      fullPath: '/blank_note_book'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutBlank_note_bookRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/class_summary': {
+      id: '/_privateLayout/_cleanLayout/class_summary'
+      path: '/class_summary'
+      fullPath: '/class_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutClass_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/competence_input_progress': {
+      id: '/_privateLayout/_cleanLayout/competence_input_progress'
+      path: '/competence_input_progress'
+      fullPath: '/competence_input_progress'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutCompetence_input_progressRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/evaluated_competences': {
+      id: '/_privateLayout/_cleanLayout/evaluated_competences'
+      path: '/evaluated_competences'
+      fullPath: '/evaluated_competences'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutEvaluated_competencesRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/excluded_students': {
+      id: '/_privateLayout/_cleanLayout/excluded_students'
+      path: '/excluded_students'
+      fullPath: '/excluded_students'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutExcluded_studentsRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/expense_report': {
+      id: '/_privateLayout/_cleanLayout/expense_report'
+      path: '/expense_report'
+      fullPath: '/expense_report'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutExpense_reportRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/expense_report_summary': {
+      id: '/_privateLayout/_cleanLayout/expense_report_summary'
+      path: '/expense_report_summary'
+      fullPath: '/expense_report_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutExpense_report_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/input_progress': {
+      id: '/_privateLayout/_cleanLayout/input_progress'
+      path: '/input_progress'
+      fullPath: '/input_progress'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutInput_progressRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/invoice_report': {
+      id: '/_privateLayout/_cleanLayout/invoice_report'
+      path: '/invoice_report'
+      fullPath: '/invoice_report'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutInvoice_reportRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/login_history': {
+      id: '/_privateLayout/_cleanLayout/login_history'
+      path: '/login_history'
+      fullPath: '/login_history'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutLogin_historyRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/mark_sheet': {
+      id: '/_privateLayout/_cleanLayout/mark_sheet'
+      path: '/mark_sheet'
+      fullPath: '/mark_sheet'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutMark_sheetRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/multi_column_student': {
+      id: '/_privateLayout/_cleanLayout/multi_column_student'
+      path: '/multi_column_student'
+      fullPath: '/multi_column_student'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutMulti_column_studentRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/payment_group_report': {
+      id: '/_privateLayout/_cleanLayout/payment_group_report'
+      path: '/payment_group_report'
+      fullPath: '/payment_group_report'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutPayment_group_reportRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/payment_report': {
+      id: '/_privateLayout/_cleanLayout/payment_report'
+      path: '/payment_report'
+      fullPath: '/payment_report'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutPayment_reportRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/personnel_list': {
+      id: '/_privateLayout/_cleanLayout/personnel_list'
+      path: '/personnel_list'
+      fullPath: '/personnel_list'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutPersonnel_listRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_comp_report_card': {
+      id: '/_privateLayout/_cleanLayout/quarterly_comp_report_card'
+      path: '/quarterly_comp_report_card'
+      fullPath: '/quarterly_comp_report_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_comp_report_cardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_discipline': {
+      id: '/_privateLayout/_cleanLayout/quarterly_discipline'
+      path: '/quarterly_discipline'
+      fullPath: '/quarterly_discipline'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_disciplineRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_honor_roll': {
+      id: '/_privateLayout/_cleanLayout/quarterly_honor_roll'
+      path: '/quarterly_honor_roll'
+      fullPath: '/quarterly_honor_roll'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_honor_rollRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_mark_sheet': {
+      id: '/_privateLayout/_cleanLayout/quarterly_mark_sheet'
+      path: '/quarterly_mark_sheet'
+      fullPath: '/quarterly_mark_sheet'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_mark_sheetRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_note_book': {
+      id: '/_privateLayout/_cleanLayout/quarterly_note_book'
+      path: '/quarterly_note_book'
+      fullPath: '/quarterly_note_book'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_note_bookRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_nth_first': {
+      id: '/_privateLayout/_cleanLayout/quarterly_nth_first'
+      path: '/quarterly_nth_first'
+      fullPath: '/quarterly_nth_first'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_nth_firstRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_report_card': {
+      id: '/_privateLayout/_cleanLayout/quarterly_report_card'
+      path: '/quarterly_report_card'
+      fullPath: '/quarterly_report_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_report_cardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/quarterly_report_summary': {
+      id: '/_privateLayout/_cleanLayout/quarterly_report_summary'
+      path: '/quarterly_report_summary'
+      fullPath: '/quarterly_report_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutQuarterly_report_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/school_fee_report': {
+      id: '/_privateLayout/_cleanLayout/school_fee_report'
+      path: '/school_fee_report'
+      fullPath: '/school_fee_report'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSchool_fee_reportRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/sequential_discipline': {
+      id: '/_privateLayout/_cleanLayout/sequential_discipline'
+      path: '/sequential_discipline'
+      fullPath: '/sequential_discipline'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSequential_disciplineRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/sequential_note_book': {
+      id: '/_privateLayout/_cleanLayout/sequential_note_book'
+      path: '/sequential_note_book'
+      fullPath: '/sequential_note_book'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSequential_note_bookRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/sequential_nth_fist': {
+      id: '/_privateLayout/_cleanLayout/sequential_nth_fist'
+      path: '/sequential_nth_fist'
+      fullPath: '/sequential_nth_fist'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSequential_nth_fistRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/sequential_report_card': {
+      id: '/_privateLayout/_cleanLayout/sequential_report_card'
+      path: '/sequential_report_card'
+      fullPath: '/sequential_report_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSequential_report_cardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/sequential_report_summary': {
+      id: '/_privateLayout/_cleanLayout/sequential_report_summary'
+      path: '/sequential_report_summary'
+      fullPath: '/sequential_report_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSequential_report_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/single_column_student': {
+      id: '/_privateLayout/_cleanLayout/single_column_student'
+      path: '/single_column_student'
+      fullPath: '/single_column_student'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutSingle_column_studentRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/student_card': {
+      id: '/_privateLayout/_cleanLayout/student_card'
+      path: '/student_card'
+      fullPath: '/student_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutStudent_cardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/student_payment_detail': {
+      id: '/_privateLayout/_cleanLayout/student_payment_detail'
+      path: '/student_payment_detail'
+      fullPath: '/student_payment_detail'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutStudent_payment_detailRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/student_payment_detail_by_date': {
+      id: '/_privateLayout/_cleanLayout/student_payment_detail_by_date'
+      path: '/student_payment_detail_by_date'
+      fullPath: '/student_payment_detail_by_date'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/student_payment_slice_summary': {
+      id: '/_privateLayout/_cleanLayout/student_payment_slice_summary'
+      path: '/student_payment_slice_summary'
+      fullPath: '/student_payment_slice_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutStudent_payment_slice_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/student_payment_summary': {
+      id: '/_privateLayout/_cleanLayout/student_payment_summary'
+      path: '/student_payment_summary'
+      fullPath: '/student_payment_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutStudent_payment_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/teacher_distribution_level': {
+      id: '/_privateLayout/_cleanLayout/teacher_distribution_level'
+      path: '/teacher_distribution_level'
+      fullPath: '/teacher_distribution_level'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutTeacher_distribution_levelRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/teacher_time_table': {
+      id: '/_privateLayout/_cleanLayout/teacher_time_table'
+      path: '/teacher_time_table'
+      fullPath: '/teacher_time_table'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutTeacher_time_tableRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/time_table': {
+      id: '/_privateLayout/_cleanLayout/time_table'
+      path: '/time_table'
+      fullPath: '/time_table'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutTime_tableRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/weekly_discipline': {
+      id: '/_privateLayout/_cleanLayout/weekly_discipline'
+      path: '/weekly_discipline'
+      fullPath: '/weekly_discipline'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutWeekly_disciplineRouteImport
       parentRoute: typeof PrivateLayoutCleanLayoutRoute
     }
     '/_privateLayout/_vertical/configuration': {
@@ -242,11 +2853,718 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateLayoutVerticalDashboardRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
+    '/_privateLayout/_vertical/reports': {
+      id: '/_privateLayout/_vertical/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof PrivateLayoutVerticalReportsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_dashbard': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_dashbard'
+      path: '/fee_payment_dashbard'
+      fullPath: '/fee_payment_dashbard'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail'
+      path: '/fee_payment_detail'
+      fullPath: '/fee_payment_detail'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_detailRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail_by_date': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_detail_by_date'
+      path: '/fee_payment_detail_by_date'
+      fullPath: '/fee_payment_detail_by_date'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_class_summary': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_class_summary'
+      path: '/fee_payment_product_class_summary'
+      fullPath: '/fee_payment_product_class_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_student_summary': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_student_summary'
+      path: '/fee_payment_product_student_summary'
+      fullPath: '/fee_payment_product_student_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary'
+      path: '/fee_payment_product_summary'
+      fullPath: '/fee_payment_product_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary'
+      path: '/fee_payment_slice_summary'
+      fullPath: '/fee_payment_slice_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary': {
+      id: '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary'
+      path: '/fee_payment_summary'
+      fullPath: '/fee_payment_summary'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/account-categories': {
+      id: '/_privateLayout/_vertical/(accounting)/account-categories'
+      path: '/account-categories'
+      fullPath: '/account-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingAccountCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/account-groups': {
+      id: '/_privateLayout/_vertical/(accounting)/account-groups'
+      path: '/account-groups'
+      fullPath: '/account-groups'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingAccountGroupsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/accounts': {
+      id: '/_privateLayout/_vertical/(accounting)/accounts'
+      path: '/accounts'
+      fullPath: '/accounts'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingAccountsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/chartOfAccounts': {
+      id: '/_privateLayout/_vertical/(accounting)/chartOfAccounts'
+      path: '/chartOfAccounts'
+      fullPath: '/chartOfAccounts'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingChartOfAccountsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/journal': {
+      id: '/_privateLayout/_vertical/(accounting)/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingJournalRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/log-codes': {
+      id: '/_privateLayout/_vertical/(accounting)/log-codes'
+      path: '/log-codes'
+      fullPath: '/log-codes'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingLogCodesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/models': {
+      id: '/_privateLayout/_vertical/(accounting)/models'
+      path: '/models'
+      fullPath: '/models'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingModelsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(accounting)/special-accounts': {
+      id: '/_privateLayout/_vertical/(accounting)/special-accounts'
+      path: '/special-accounts'
+      fullPath: '/special-accounts'
+      preLoaderRoute: typeof PrivateLayoutVerticalaccountingSpecialAccountsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(bank)/bank-accounts': {
+      id: '/_privateLayout/_vertical/(bank)/bank-accounts'
+      path: '/bank-accounts'
+      fullPath: '/bank-accounts'
+      preLoaderRoute: typeof PrivateLayoutVerticalbankBankAccountsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(bank)/bank-transactions': {
+      id: '/_privateLayout/_vertical/(bank)/bank-transactions'
+      path: '/bank-transactions'
+      fullPath: '/bank-transactions'
+      preLoaderRoute: typeof PrivateLayoutVerticalbankBankTransactionsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(discipline)/annual-discipline': {
+      id: '/_privateLayout/_vertical/(discipline)/annual-discipline'
+      path: '/annual-discipline'
+      fullPath: '/annual-discipline'
+      preLoaderRoute: typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(discipline)/discipline-calculation': {
+      id: '/_privateLayout/_vertical/(discipline)/discipline-calculation'
+      path: '/discipline-calculation'
+      fullPath: '/discipline-calculation'
+      preLoaderRoute: typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(discipline)/quarterly-discipline': {
+      id: '/_privateLayout/_vertical/(discipline)/quarterly-discipline'
+      path: '/quarterly-discipline'
+      fullPath: '/quarterly-discipline'
+      preLoaderRoute: typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(discipline)/sequential-discipline': {
+      id: '/_privateLayout/_vertical/(discipline)/sequential-discipline'
+      path: '/sequential-discipline'
+      fullPath: '/sequential-discipline'
+      preLoaderRoute: typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(expense)/expense-categories': {
+      id: '/_privateLayout/_vertical/(expense)/expense-categories'
+      path: '/expense-categories'
+      fullPath: '/expense-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalexpenseExpenseCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(expense)/expenses': {
+      id: '/_privateLayout/_vertical/(expense)/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof PrivateLayoutVerticalexpenseExpensesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(expense)/operation-classes': {
+      id: '/_privateLayout/_vertical/(expense)/operation-classes'
+      path: '/operation-classes'
+      fullPath: '/operation-classes'
+      preLoaderRoute: typeof PrivateLayoutVerticalexpenseOperationClassesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(expense)/vouchers': {
+      id: '/_privateLayout/_vertical/(expense)/vouchers'
+      path: '/vouchers'
+      fullPath: '/vouchers'
+      preLoaderRoute: typeof PrivateLayoutVerticalexpenseVouchersRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(export)/annual-school-book-xlsx': {
+      id: '/_privateLayout/_vertical/(export)/annual-school-book-xlsx'
+      path: '/annual-school-book-xlsx'
+      fullPath: '/annual-school-book-xlsx'
+      preLoaderRoute: typeof PrivateLayoutVerticalexportAnnualSchoolBookXlsxRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(export)/data-export': {
+      id: '/_privateLayout/_vertical/(export)/data-export'
+      path: '/data-export'
+      fullPath: '/data-export'
+      preLoaderRoute: typeof PrivateLayoutVerticalexportDataExportRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(export)/personnel-xlsx': {
+      id: '/_privateLayout/_vertical/(export)/personnel-xlsx'
+      path: '/personnel-xlsx'
+      fullPath: '/personnel-xlsx'
+      preLoaderRoute: typeof PrivateLayoutVerticalexportPersonnelXlsxRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(export)/student-xlsx': {
+      id: '/_privateLayout/_vertical/(export)/student-xlsx'
+      path: '/student-xlsx'
+      fullPath: '/student-xlsx'
+      preLoaderRoute: typeof PrivateLayoutVerticalexportStudentXlsxRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-average': {
+      id: '/_privateLayout/_vertical/(note)/annual-average'
+      path: '/annual-average'
+      fullPath: '/annual-average'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualAverageRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-comp-average': {
+      id: '/_privateLayout/_vertical/(note)/annual-comp-average'
+      path: '/annual-comp-average'
+      fullPath: '/annual-comp-average'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualCompAverageRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-comp-note': {
+      id: '/_privateLayout/_vertical/(note)/annual-comp-note'
+      path: '/annual-comp-note'
+      fullPath: '/annual-comp-note'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualCompNoteRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-note': {
+      id: '/_privateLayout/_vertical/(note)/annual-note'
+      path: '/annual-note'
+      fullPath: '/annual-note'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualNoteRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-notes': {
+      id: '/_privateLayout/_vertical/(note)/annual-notes'
+      path: '/annual-notes'
+      fullPath: '/annual-notes'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualNotesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/annual-result': {
+      id: '/_privateLayout/_vertical/(note)/annual-result'
+      path: '/annual-result'
+      fullPath: '/annual-result'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAnnualResultRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/average-calculation': {
+      id: '/_privateLayout/_vertical/(note)/average-calculation'
+      path: '/average-calculation'
+      fullPath: '/average-calculation'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteAverageCalculationRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/bulk-annual-result': {
+      id: '/_privateLayout/_vertical/(note)/bulk-annual-result'
+      path: '/bulk-annual-result'
+      fullPath: '/bulk-annual-result'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteBulkAnnualResultRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/competences': {
+      id: '/_privateLayout/_vertical/(note)/competences'
+      path: '/competences'
+      fullPath: '/competences'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteCompetencesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/council-decision': {
+      id: '/_privateLayout/_vertical/(note)/council-decision'
+      path: '/council-decision'
+      fullPath: '/council-decision'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteCouncilDecisionRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/eval-competences': {
+      id: '/_privateLayout/_vertical/(note)/eval-competences'
+      path: '/eval-competences'
+      fullPath: '/eval-competences'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteEvalCompetencesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/eval-competences-subject': {
+      id: '/_privateLayout/_vertical/(note)/eval-competences-subject'
+      path: '/eval-competences-subject'
+      fullPath: '/eval-competences-subject'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteEvalCompetencesSubjectRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/note-calculation': {
+      id: '/_privateLayout/_vertical/(note)/note-calculation'
+      path: '/note-calculation'
+      fullPath: '/note-calculation'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteNoteCalculationRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-average': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-average'
+      path: '/quarterly-average'
+      fullPath: '/quarterly-average'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyAverageRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-comp-note': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-comp-note'
+      path: '/quarterly-comp-note'
+      fullPath: '/quarterly-comp-note'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyCompNoteRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-comp-note-eval': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-comp-note-eval'
+      path: '/quarterly-comp-note-eval'
+      fullPath: '/quarterly-comp-note-eval'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-note': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-note'
+      path: '/quarterly-note'
+      fullPath: '/quarterly-note'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyNoteRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-notes': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-notes'
+      path: '/quarterly-notes'
+      fullPath: '/quarterly-notes'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyNotesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/quarterly-report-observation': {
+      id: '/_privateLayout/_vertical/(note)/quarterly-report-observation'
+      path: '/quarterly-report-observation'
+      fullPath: '/quarterly-report-observation'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteQuarterlyReportObservationRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-average': {
+      id: '/_privateLayout/_vertical/(note)/sequential-average'
+      path: '/sequential-average'
+      fullPath: '/sequential-average'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialAverageRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-note-copy': {
+      id: '/_privateLayout/_vertical/(note)/sequential-note-copy'
+      path: '/sequential-note-copy'
+      fullPath: '/sequential-note-copy'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNoteCopyRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-note-delete': {
+      id: '/_privateLayout/_vertical/(note)/sequential-note-delete'
+      path: '/sequential-note-delete'
+      fullPath: '/sequential-note-delete'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNoteDeleteRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-note-downgrade': {
+      id: '/_privateLayout/_vertical/(note)/sequential-note-downgrade'
+      path: '/sequential-note-downgrade'
+      fullPath: '/sequential-note-downgrade'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNoteDowngradeRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-note-import': {
+      id: '/_privateLayout/_vertical/(note)/sequential-note-import'
+      path: '/sequential-note-import'
+      fullPath: '/sequential-note-import'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNoteImportRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-note-template': {
+      id: '/_privateLayout/_vertical/(note)/sequential-note-template'
+      path: '/sequential-note-template'
+      fullPath: '/sequential-note-template'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNoteTemplateRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(note)/sequential-notes': {
+      id: '/_privateLayout/_vertical/(note)/sequential-notes'
+      path: '/sequential-notes'
+      fullPath: '/sequential-notes'
+      preLoaderRoute: typeof PrivateLayoutVerticalnoteSequentialNotesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/deduction-categories': {
+      id: '/_privateLayout/_vertical/(payroll)/deduction-categories'
+      path: '/deduction-categories'
+      fullPath: '/deduction-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollDeductionCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/deductions': {
+      id: '/_privateLayout/_vertical/(payroll)/deductions'
+      path: '/deductions'
+      fullPath: '/deductions'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollDeductionsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/earning-categories': {
+      id: '/_privateLayout/_vertical/(payroll)/earning-categories'
+      path: '/earning-categories'
+      fullPath: '/earning-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollEarningCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/earnings': {
+      id: '/_privateLayout/_vertical/(payroll)/earnings'
+      path: '/earnings'
+      fullPath: '/earnings'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollEarningsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/employees': {
+      id: '/_privateLayout/_vertical/(payroll)/employees'
+      path: '/employees'
+      fullPath: '/employees'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollEmployeesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/payroll-departments': {
+      id: '/_privateLayout/_vertical/(payroll)/payroll-departments'
+      path: '/payroll-departments'
+      fullPath: '/payroll-departments'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollPayrollDepartmentsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/payroll-periods': {
+      id: '/_privateLayout/_vertical/(payroll)/payroll-periods'
+      path: '/payroll-periods'
+      fullPath: '/payroll-periods'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollPayrollPeriodsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/payroll-positions': {
+      id: '/_privateLayout/_vertical/(payroll)/payroll-positions'
+      path: '/payroll-positions'
+      fullPath: '/payroll-positions'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollPayrollPositionsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(payroll)/payrolls': {
+      id: '/_privateLayout/_vertical/(payroll)/payrolls'
+      path: '/payrolls'
+      fullPath: '/payrolls'
+      preLoaderRoute: typeof PrivateLayoutVerticalpayrollPayrollsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(personnel)/personnel': {
+      id: '/_privateLayout/_vertical/(personnel)/personnel'
+      path: '/personnel'
+      fullPath: '/personnel'
+      preLoaderRoute: typeof PrivateLayoutVerticalpersonnelPersonnelRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(planning)/day-of-classes': {
+      id: '/_privateLayout/_vertical/(planning)/day-of-classes'
+      path: '/day-of-classes'
+      fullPath: '/day-of-classes'
+      preLoaderRoute: typeof PrivateLayoutVerticalplanningDayOfClassesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(planning)/distribution': {
+      id: '/_privateLayout/_vertical/(planning)/distribution'
+      path: '/distribution'
+      fullPath: '/distribution'
+      preLoaderRoute: typeof PrivateLayoutVerticalplanningDistributionRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(planning)/time-slots': {
+      id: '/_privateLayout/_vertical/(planning)/time-slots'
+      path: '/time-slots'
+      fullPath: '/time-slots'
+      preLoaderRoute: typeof PrivateLayoutVerticalplanningTimeSlotsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(planning)/time-tables': {
+      id: '/_privateLayout/_vertical/(planning)/time-tables'
+      path: '/time-tables'
+      fullPath: '/time-tables'
+      preLoaderRoute: typeof PrivateLayoutVerticalplanningTimeTablesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/eval-types': {
+      id: '/_privateLayout/_vertical/(primary)/eval-types'
+      path: '/eval-types'
+      fullPath: '/eval-types'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimaryEvalTypesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/free-primary-sequential-notes': {
+      id: '/_privateLayout/_vertical/(primary)/free-primary-sequential-notes'
+      path: '/free-primary-sequential-notes'
+      fullPath: '/free-primary-sequential-notes'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/primary-competences': {
+      id: '/_privateLayout/_vertical/(primary)/primary-competences'
+      path: '/primary-competences'
+      fullPath: '/primary-competences'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimaryPrimaryCompetencesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/primary-competences-level': {
+      id: '/_privateLayout/_vertical/(primary)/primary-competences-level'
+      path: '/primary-competences-level'
+      fullPath: '/primary-competences-level'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/primary-sequential-notes': {
+      id: '/_privateLayout/_vertical/(primary)/primary-sequential-notes'
+      path: '/primary-sequential-notes'
+      fullPath: '/primary-sequential-notes'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimaryPrimarySequentialNotesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(primary)/sub-competences': {
+      id: '/_privateLayout/_vertical/(primary)/sub-competences'
+      path: '/sub-competences'
+      fullPath: '/sub-competences'
+      preLoaderRoute: typeof PrivateLayoutVerticalprimarySubCompetencesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/customer-categories': {
+      id: '/_privateLayout/_vertical/(sale)/customer-categories'
+      path: '/customer-categories'
+      fullPath: '/customer-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleCustomerCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/customers': {
+      id: '/_privateLayout/_vertical/(sale)/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleCustomersRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/discounts': {
+      id: '/_privateLayout/_vertical/(sale)/discounts'
+      path: '/discounts'
+      fullPath: '/discounts'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleDiscountsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/fee-groups': {
+      id: '/_privateLayout/_vertical/(sale)/fee-groups'
+      path: '/fee-groups'
+      fullPath: '/fee-groups'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleFeeGroupsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/fee-structures': {
+      id: '/_privateLayout/_vertical/(sale)/fee-structures'
+      path: '/fee-structures'
+      fullPath: '/fee-structures'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleFeeStructuresRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/installments': {
+      id: '/_privateLayout/_vertical/(sale)/installments'
+      path: '/installments'
+      fullPath: '/installments'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleInstallmentsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/payment-conditions': {
+      id: '/_privateLayout/_vertical/(sale)/payment-conditions'
+      path: '/payment-conditions'
+      fullPath: '/payment-conditions'
+      preLoaderRoute: typeof PrivateLayoutVerticalsalePaymentConditionsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/product-categories': {
+      id: '/_privateLayout/_vertical/(sale)/product-categories'
+      path: '/product-categories'
+      fullPath: '/product-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleProductCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/products': {
+      id: '/_privateLayout/_vertical/(sale)/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleProductsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/supplier-categories': {
+      id: '/_privateLayout/_vertical/(sale)/supplier-categories'
+      path: '/supplier-categories'
+      fullPath: '/supplier-categories'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleSupplierCategoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/suppliers': {
+      id: '/_privateLayout/_vertical/(sale)/suppliers'
+      path: '/suppliers'
+      fullPath: '/suppliers'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleSuppliersRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/branches': {
+      id: '/_privateLayout/_vertical/(school)/branches'
+      path: '/branches'
+      fullPath: '/branches'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolBranchesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/classes': {
+      id: '/_privateLayout/_vertical/(school)/classes'
+      path: '/classes'
+      fullPath: '/classes'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolClassesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/copyOfParameters': {
+      id: '/_privateLayout/_vertical/(school)/copyOfParameters'
+      path: '/copyOfParameters'
+      fullPath: '/copyOfParameters'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolCopyOfParametersRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/cycles': {
+      id: '/_privateLayout/_vertical/(school)/cycles'
+      path: '/cycles'
+      fullPath: '/cycles'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolCyclesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/database-backup': {
+      id: '/_privateLayout/_vertical/(school)/database-backup'
+      path: '/database-backup'
+      fullPath: '/database-backup'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolDatabaseBackupRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/departments': {
+      id: '/_privateLayout/_vertical/(school)/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolDepartmentsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/guided-setup': {
+      id: '/_privateLayout/_vertical/(school)/guided-setup'
+      path: '/guided-setup'
+      fullPath: '/guided-setup'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolGuidedSetupRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/head-departments': {
+      id: '/_privateLayout/_vertical/(school)/head-departments'
+      path: '/head-departments'
+      fullPath: '/head-departments'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolHeadDepartmentsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/levels': {
+      id: '/_privateLayout/_vertical/(school)/levels'
+      path: '/levels'
+      fullPath: '/levels'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolLevelsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/liable-type': {
+      id: '/_privateLayout/_vertical/(school)/liable-type'
+      path: '/liable-type'
+      fullPath: '/liable-type'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolLiableTypeRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/periods': {
+      id: '/_privateLayout/_vertical/(school)/periods'
+      path: '/periods'
+      fullPath: '/periods'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolPeriodsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
     '/_privateLayout/_vertical/(school)/school': {
       id: '/_privateLayout/_vertical/(school)/school'
       path: '/school'
       fullPath: '/school'
       preLoaderRoute: typeof PrivateLayoutVerticalschoolSchoolRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/school-liable': {
+      id: '/_privateLayout/_vertical/(school)/school-liable'
+      path: '/school-liable'
+      fullPath: '/school-liable'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolSchoolLiableRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/school-sections': {
+      id: '/_privateLayout/_vertical/(school)/school-sections'
+      path: '/school-sections'
+      fullPath: '/school-sections'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolSchoolSectionsRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
     '/_privateLayout/_vertical/(school)/school-years': {
@@ -256,17 +3574,314 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateLayoutVerticalschoolSchoolYearsRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
+    '/_privateLayout/_vertical/(school)/sub-periods': {
+      id: '/_privateLayout/_vertical/(school)/sub-periods'
+      path: '/sub-periods'
+      fullPath: '/sub-periods'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolSubPeriodsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/subject-groups': {
+      id: '/_privateLayout/_vertical/(school)/subject-groups'
+      path: '/subject-groups'
+      fullPath: '/subject-groups'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolSubjectGroupsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(school)/subjects': {
+      id: '/_privateLayout/_vertical/(school)/subjects'
+      path: '/subjects'
+      fullPath: '/subjects'
+      preLoaderRoute: typeof PrivateLayoutVerticalschoolSubjectsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/batch-pictures': {
+      id: '/_privateLayout/_vertical/(student)/batch-pictures'
+      path: '/batch-pictures'
+      fullPath: '/batch-pictures'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentBatchPicturesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/guardians': {
+      id: '/_privateLayout/_vertical/(student)/guardians'
+      path: '/guardians'
+      fullPath: '/guardians'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentGuardiansRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/old-schools': {
+      id: '/_privateLayout/_vertical/(student)/old-schools'
+      path: '/old-schools'
+      fullPath: '/old-schools'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentOldSchoolsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/student-progression': {
+      id: '/_privateLayout/_vertical/(student)/student-progression'
+      path: '/student-progression'
+      fullPath: '/student-progression'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentStudentProgressionRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/student-update-by-class': {
+      id: '/_privateLayout/_vertical/(student)/student-update-by-class'
+      path: '/student-update-by-class'
+      fullPath: '/student-update-by-class'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentStudentUpdateByClassRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/students': {
+      id: '/_privateLayout/_vertical/(student)/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentStudentsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(user)/login-histories': {
+      id: '/_privateLayout/_vertical/(user)/login-histories'
+      path: '/login-histories'
+      fullPath: '/login-histories'
+      preLoaderRoute: typeof PrivateLayoutVerticaluserLoginHistoriesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(user)/permissions': {
+      id: '/_privateLayout/_vertical/(user)/permissions'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof PrivateLayoutVerticaluserPermissionsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(user)/profile': {
+      id: '/_privateLayout/_vertical/(user)/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof PrivateLayoutVerticaluserProfileRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(user)/roles': {
+      id: '/_privateLayout/_vertical/(user)/roles'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof PrivateLayoutVerticaluserRolesRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(user)/users': {
+      id: '/_privateLayout/_vertical/(user)/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof PrivateLayoutVerticaluserUsersRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/operations/': {
+      id: '/_privateLayout/_vertical/(sale)/operations/'
+      path: '/operations'
+      fullPath: '/operations/'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleOperationsIndexRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(sale)/operations/mobile-operations': {
+      id: '/_privateLayout/_vertical/(sale)/operations/mobile-operations'
+      path: '/operations/mobile-operations'
+      fullPath: '/operations/mobile-operations'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/frequents/': {
+      id: '/_privateLayout/_vertical/(student)/frequents/'
+      path: '/frequents'
+      fullPath: '/frequents/'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentFrequentsIndexRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(student)/frequents/$id': {
+      id: '/_privateLayout/_vertical/(student)/frequents/$id'
+      path: '/frequents/$id'
+      fullPath: '/frequents/$id'
+      preLoaderRoute: typeof PrivateLayoutVerticalstudentFrequentsIdRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
   }
 }
 
 interface PrivateLayoutCleanLayoutRouteChildren {
   PrivateLayoutCleanLayoutAccount_listRoute: typeof PrivateLayoutCleanLayoutAccount_listRoute
+  PrivateLayoutCleanLayoutAnnual_bestRoute: typeof PrivateLayoutCleanLayoutAnnual_bestRoute
+  PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute: typeof PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute
+  PrivateLayoutCleanLayoutAnnual_mark_sheetRoute: typeof PrivateLayoutCleanLayoutAnnual_mark_sheetRoute
+  PrivateLayoutCleanLayoutAnnual_note_bookRoute: typeof PrivateLayoutCleanLayoutAnnual_note_bookRoute
+  PrivateLayoutCleanLayoutAnnual_nth_firstRoute: typeof PrivateLayoutCleanLayoutAnnual_nth_firstRoute
+  PrivateLayoutCleanLayoutAnnual_report_card_examRoute: typeof PrivateLayoutCleanLayoutAnnual_report_card_examRoute
+  PrivateLayoutCleanLayoutAnnual_report_summaryRoute: typeof PrivateLayoutCleanLayoutAnnual_report_summaryRoute
+  PrivateLayoutCleanLayoutAnnual_school_bookRoute: typeof PrivateLayoutCleanLayoutAnnual_school_bookRoute
+  PrivateLayoutCleanLayoutAnnual_statisticsRoute: typeof PrivateLayoutCleanLayoutAnnual_statisticsRoute
+  PrivateLayoutCleanLayoutApplied_coefficientsRoute: typeof PrivateLayoutCleanLayoutApplied_coefficientsRoute
+  PrivateLayoutCleanLayoutBlank_note_bookRoute: typeof PrivateLayoutCleanLayoutBlank_note_bookRoute
+  PrivateLayoutCleanLayoutClass_summaryRoute: typeof PrivateLayoutCleanLayoutClass_summaryRoute
+  PrivateLayoutCleanLayoutCompetence_input_progressRoute: typeof PrivateLayoutCleanLayoutCompetence_input_progressRoute
+  PrivateLayoutCleanLayoutEvaluated_competencesRoute: typeof PrivateLayoutCleanLayoutEvaluated_competencesRoute
+  PrivateLayoutCleanLayoutExcluded_studentsRoute: typeof PrivateLayoutCleanLayoutExcluded_studentsRoute
+  PrivateLayoutCleanLayoutExpense_reportRoute: typeof PrivateLayoutCleanLayoutExpense_reportRoute
+  PrivateLayoutCleanLayoutExpense_report_summaryRoute: typeof PrivateLayoutCleanLayoutExpense_report_summaryRoute
+  PrivateLayoutCleanLayoutInput_progressRoute: typeof PrivateLayoutCleanLayoutInput_progressRoute
+  PrivateLayoutCleanLayoutInvoice_reportRoute: typeof PrivateLayoutCleanLayoutInvoice_reportRoute
+  PrivateLayoutCleanLayoutLogin_historyRoute: typeof PrivateLayoutCleanLayoutLogin_historyRoute
+  PrivateLayoutCleanLayoutMark_sheetRoute: typeof PrivateLayoutCleanLayoutMark_sheetRoute
+  PrivateLayoutCleanLayoutMulti_column_studentRoute: typeof PrivateLayoutCleanLayoutMulti_column_studentRoute
+  PrivateLayoutCleanLayoutPayment_group_reportRoute: typeof PrivateLayoutCleanLayoutPayment_group_reportRoute
+  PrivateLayoutCleanLayoutPayment_reportRoute: typeof PrivateLayoutCleanLayoutPayment_reportRoute
+  PrivateLayoutCleanLayoutPersonnel_listRoute: typeof PrivateLayoutCleanLayoutPersonnel_listRoute
+  PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute: typeof PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute
+  PrivateLayoutCleanLayoutQuarterly_disciplineRoute: typeof PrivateLayoutCleanLayoutQuarterly_disciplineRoute
+  PrivateLayoutCleanLayoutQuarterly_honor_rollRoute: typeof PrivateLayoutCleanLayoutQuarterly_honor_rollRoute
+  PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute: typeof PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute
+  PrivateLayoutCleanLayoutQuarterly_note_bookRoute: typeof PrivateLayoutCleanLayoutQuarterly_note_bookRoute
+  PrivateLayoutCleanLayoutQuarterly_nth_firstRoute: typeof PrivateLayoutCleanLayoutQuarterly_nth_firstRoute
+  PrivateLayoutCleanLayoutQuarterly_report_cardRoute: typeof PrivateLayoutCleanLayoutQuarterly_report_cardRoute
+  PrivateLayoutCleanLayoutQuarterly_report_summaryRoute: typeof PrivateLayoutCleanLayoutQuarterly_report_summaryRoute
+  PrivateLayoutCleanLayoutSchool_fee_reportRoute: typeof PrivateLayoutCleanLayoutSchool_fee_reportRoute
+  PrivateLayoutCleanLayoutSequential_disciplineRoute: typeof PrivateLayoutCleanLayoutSequential_disciplineRoute
+  PrivateLayoutCleanLayoutSequential_note_bookRoute: typeof PrivateLayoutCleanLayoutSequential_note_bookRoute
+  PrivateLayoutCleanLayoutSequential_nth_fistRoute: typeof PrivateLayoutCleanLayoutSequential_nth_fistRoute
+  PrivateLayoutCleanLayoutSequential_report_cardRoute: typeof PrivateLayoutCleanLayoutSequential_report_cardRoute
+  PrivateLayoutCleanLayoutSequential_report_summaryRoute: typeof PrivateLayoutCleanLayoutSequential_report_summaryRoute
+  PrivateLayoutCleanLayoutSingle_column_studentRoute: typeof PrivateLayoutCleanLayoutSingle_column_studentRoute
+  PrivateLayoutCleanLayoutStudent_cardRoute: typeof PrivateLayoutCleanLayoutStudent_cardRoute
+  PrivateLayoutCleanLayoutStudent_payment_detailRoute: typeof PrivateLayoutCleanLayoutStudent_payment_detailRoute
+  PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute: typeof PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute
+  PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute: typeof PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute
+  PrivateLayoutCleanLayoutStudent_payment_summaryRoute: typeof PrivateLayoutCleanLayoutStudent_payment_summaryRoute
+  PrivateLayoutCleanLayoutTeacher_distribution_levelRoute: typeof PrivateLayoutCleanLayoutTeacher_distribution_levelRoute
+  PrivateLayoutCleanLayoutTeacher_time_tableRoute: typeof PrivateLayoutCleanLayoutTeacher_time_tableRoute
+  PrivateLayoutCleanLayoutTime_tableRoute: typeof PrivateLayoutCleanLayoutTime_tableRoute
+  PrivateLayoutCleanLayoutWeekly_disciplineRoute: typeof PrivateLayoutCleanLayoutWeekly_disciplineRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
+  PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
 }
 
 const PrivateLayoutCleanLayoutRouteChildren: PrivateLayoutCleanLayoutRouteChildren =
   {
     PrivateLayoutCleanLayoutAccount_listRoute:
       PrivateLayoutCleanLayoutAccount_listRoute,
+    PrivateLayoutCleanLayoutAnnual_bestRoute:
+      PrivateLayoutCleanLayoutAnnual_bestRoute,
+    PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute:
+      PrivateLayoutCleanLayoutAnnual_comp_report_cardRoute,
+    PrivateLayoutCleanLayoutAnnual_mark_sheetRoute:
+      PrivateLayoutCleanLayoutAnnual_mark_sheetRoute,
+    PrivateLayoutCleanLayoutAnnual_note_bookRoute:
+      PrivateLayoutCleanLayoutAnnual_note_bookRoute,
+    PrivateLayoutCleanLayoutAnnual_nth_firstRoute:
+      PrivateLayoutCleanLayoutAnnual_nth_firstRoute,
+    PrivateLayoutCleanLayoutAnnual_report_card_examRoute:
+      PrivateLayoutCleanLayoutAnnual_report_card_examRoute,
+    PrivateLayoutCleanLayoutAnnual_report_summaryRoute:
+      PrivateLayoutCleanLayoutAnnual_report_summaryRoute,
+    PrivateLayoutCleanLayoutAnnual_school_bookRoute:
+      PrivateLayoutCleanLayoutAnnual_school_bookRoute,
+    PrivateLayoutCleanLayoutAnnual_statisticsRoute:
+      PrivateLayoutCleanLayoutAnnual_statisticsRoute,
+    PrivateLayoutCleanLayoutApplied_coefficientsRoute:
+      PrivateLayoutCleanLayoutApplied_coefficientsRoute,
+    PrivateLayoutCleanLayoutBlank_note_bookRoute:
+      PrivateLayoutCleanLayoutBlank_note_bookRoute,
+    PrivateLayoutCleanLayoutClass_summaryRoute:
+      PrivateLayoutCleanLayoutClass_summaryRoute,
+    PrivateLayoutCleanLayoutCompetence_input_progressRoute:
+      PrivateLayoutCleanLayoutCompetence_input_progressRoute,
+    PrivateLayoutCleanLayoutEvaluated_competencesRoute:
+      PrivateLayoutCleanLayoutEvaluated_competencesRoute,
+    PrivateLayoutCleanLayoutExcluded_studentsRoute:
+      PrivateLayoutCleanLayoutExcluded_studentsRoute,
+    PrivateLayoutCleanLayoutExpense_reportRoute:
+      PrivateLayoutCleanLayoutExpense_reportRoute,
+    PrivateLayoutCleanLayoutExpense_report_summaryRoute:
+      PrivateLayoutCleanLayoutExpense_report_summaryRoute,
+    PrivateLayoutCleanLayoutInput_progressRoute:
+      PrivateLayoutCleanLayoutInput_progressRoute,
+    PrivateLayoutCleanLayoutInvoice_reportRoute:
+      PrivateLayoutCleanLayoutInvoice_reportRoute,
+    PrivateLayoutCleanLayoutLogin_historyRoute:
+      PrivateLayoutCleanLayoutLogin_historyRoute,
+    PrivateLayoutCleanLayoutMark_sheetRoute:
+      PrivateLayoutCleanLayoutMark_sheetRoute,
+    PrivateLayoutCleanLayoutMulti_column_studentRoute:
+      PrivateLayoutCleanLayoutMulti_column_studentRoute,
+    PrivateLayoutCleanLayoutPayment_group_reportRoute:
+      PrivateLayoutCleanLayoutPayment_group_reportRoute,
+    PrivateLayoutCleanLayoutPayment_reportRoute:
+      PrivateLayoutCleanLayoutPayment_reportRoute,
+    PrivateLayoutCleanLayoutPersonnel_listRoute:
+      PrivateLayoutCleanLayoutPersonnel_listRoute,
+    PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute:
+      PrivateLayoutCleanLayoutQuarterly_comp_report_cardRoute,
+    PrivateLayoutCleanLayoutQuarterly_disciplineRoute:
+      PrivateLayoutCleanLayoutQuarterly_disciplineRoute,
+    PrivateLayoutCleanLayoutQuarterly_honor_rollRoute:
+      PrivateLayoutCleanLayoutQuarterly_honor_rollRoute,
+    PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute:
+      PrivateLayoutCleanLayoutQuarterly_mark_sheetRoute,
+    PrivateLayoutCleanLayoutQuarterly_note_bookRoute:
+      PrivateLayoutCleanLayoutQuarterly_note_bookRoute,
+    PrivateLayoutCleanLayoutQuarterly_nth_firstRoute:
+      PrivateLayoutCleanLayoutQuarterly_nth_firstRoute,
+    PrivateLayoutCleanLayoutQuarterly_report_cardRoute:
+      PrivateLayoutCleanLayoutQuarterly_report_cardRoute,
+    PrivateLayoutCleanLayoutQuarterly_report_summaryRoute:
+      PrivateLayoutCleanLayoutQuarterly_report_summaryRoute,
+    PrivateLayoutCleanLayoutSchool_fee_reportRoute:
+      PrivateLayoutCleanLayoutSchool_fee_reportRoute,
+    PrivateLayoutCleanLayoutSequential_disciplineRoute:
+      PrivateLayoutCleanLayoutSequential_disciplineRoute,
+    PrivateLayoutCleanLayoutSequential_note_bookRoute:
+      PrivateLayoutCleanLayoutSequential_note_bookRoute,
+    PrivateLayoutCleanLayoutSequential_nth_fistRoute:
+      PrivateLayoutCleanLayoutSequential_nth_fistRoute,
+    PrivateLayoutCleanLayoutSequential_report_cardRoute:
+      PrivateLayoutCleanLayoutSequential_report_cardRoute,
+    PrivateLayoutCleanLayoutSequential_report_summaryRoute:
+      PrivateLayoutCleanLayoutSequential_report_summaryRoute,
+    PrivateLayoutCleanLayoutSingle_column_studentRoute:
+      PrivateLayoutCleanLayoutSingle_column_studentRoute,
+    PrivateLayoutCleanLayoutStudent_cardRoute:
+      PrivateLayoutCleanLayoutStudent_cardRoute,
+    PrivateLayoutCleanLayoutStudent_payment_detailRoute:
+      PrivateLayoutCleanLayoutStudent_payment_detailRoute,
+    PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute:
+      PrivateLayoutCleanLayoutStudent_payment_detail_by_dateRoute,
+    PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute:
+      PrivateLayoutCleanLayoutStudent_payment_slice_summaryRoute,
+    PrivateLayoutCleanLayoutStudent_payment_summaryRoute:
+      PrivateLayoutCleanLayoutStudent_payment_summaryRoute,
+    PrivateLayoutCleanLayoutTeacher_distribution_levelRoute:
+      PrivateLayoutCleanLayoutTeacher_distribution_levelRoute,
+    PrivateLayoutCleanLayoutTeacher_time_tableRoute:
+      PrivateLayoutCleanLayoutTeacher_time_tableRoute,
+    PrivateLayoutCleanLayoutTime_tableRoute:
+      PrivateLayoutCleanLayoutTime_tableRoute,
+    PrivateLayoutCleanLayoutWeekly_disciplineRoute:
+      PrivateLayoutCleanLayoutWeekly_disciplineRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_dashbardRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_detailRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_detail_by_dateRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_product_class_summaryRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_product_student_summaryRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute,
+    PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute:
+      PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute,
   }
 
 const PrivateLayoutCleanLayoutRouteWithChildren =
@@ -277,18 +3892,347 @@ const PrivateLayoutCleanLayoutRouteWithChildren =
 interface PrivateLayoutVerticalRouteChildren {
   PrivateLayoutVerticalConfigurationRoute: typeof PrivateLayoutVerticalConfigurationRoute
   PrivateLayoutVerticalDashboardRoute: typeof PrivateLayoutVerticalDashboardRoute
+  PrivateLayoutVerticalReportsRoute: typeof PrivateLayoutVerticalReportsRoute
+  PrivateLayoutVerticalaccountingAccountCategoriesRoute: typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
+  PrivateLayoutVerticalaccountingAccountGroupsRoute: typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
+  PrivateLayoutVerticalaccountingAccountsRoute: typeof PrivateLayoutVerticalaccountingAccountsRoute
+  PrivateLayoutVerticalaccountingChartOfAccountsRoute: typeof PrivateLayoutVerticalaccountingChartOfAccountsRoute
+  PrivateLayoutVerticalaccountingJournalRoute: typeof PrivateLayoutVerticalaccountingJournalRoute
+  PrivateLayoutVerticalaccountingLogCodesRoute: typeof PrivateLayoutVerticalaccountingLogCodesRoute
+  PrivateLayoutVerticalaccountingModelsRoute: typeof PrivateLayoutVerticalaccountingModelsRoute
+  PrivateLayoutVerticalaccountingSpecialAccountsRoute: typeof PrivateLayoutVerticalaccountingSpecialAccountsRoute
+  PrivateLayoutVerticalbankBankAccountsRoute: typeof PrivateLayoutVerticalbankBankAccountsRoute
+  PrivateLayoutVerticalbankBankTransactionsRoute: typeof PrivateLayoutVerticalbankBankTransactionsRoute
+  PrivateLayoutVerticaldisciplineAnnualDisciplineRoute: typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
+  PrivateLayoutVerticaldisciplineDisciplineCalculationRoute: typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute: typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
+  PrivateLayoutVerticaldisciplineSequentialDisciplineRoute: typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
+  PrivateLayoutVerticalexpenseExpenseCategoriesRoute: typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
+  PrivateLayoutVerticalexpenseExpensesRoute: typeof PrivateLayoutVerticalexpenseExpensesRoute
+  PrivateLayoutVerticalexpenseOperationClassesRoute: typeof PrivateLayoutVerticalexpenseOperationClassesRoute
+  PrivateLayoutVerticalexpenseVouchersRoute: typeof PrivateLayoutVerticalexpenseVouchersRoute
+  PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute: typeof PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute
+  PrivateLayoutVerticalexportDataExportRoute: typeof PrivateLayoutVerticalexportDataExportRoute
+  PrivateLayoutVerticalexportPersonnelXlsxRoute: typeof PrivateLayoutVerticalexportPersonnelXlsxRoute
+  PrivateLayoutVerticalexportStudentXlsxRoute: typeof PrivateLayoutVerticalexportStudentXlsxRoute
+  PrivateLayoutVerticalnoteAnnualAverageRoute: typeof PrivateLayoutVerticalnoteAnnualAverageRoute
+  PrivateLayoutVerticalnoteAnnualCompAverageRoute: typeof PrivateLayoutVerticalnoteAnnualCompAverageRoute
+  PrivateLayoutVerticalnoteAnnualCompNoteRoute: typeof PrivateLayoutVerticalnoteAnnualCompNoteRoute
+  PrivateLayoutVerticalnoteAnnualNoteRoute: typeof PrivateLayoutVerticalnoteAnnualNoteRoute
+  PrivateLayoutVerticalnoteAnnualNotesRoute: typeof PrivateLayoutVerticalnoteAnnualNotesRoute
+  PrivateLayoutVerticalnoteAnnualResultRoute: typeof PrivateLayoutVerticalnoteAnnualResultRoute
+  PrivateLayoutVerticalnoteAverageCalculationRoute: typeof PrivateLayoutVerticalnoteAverageCalculationRoute
+  PrivateLayoutVerticalnoteBulkAnnualResultRoute: typeof PrivateLayoutVerticalnoteBulkAnnualResultRoute
+  PrivateLayoutVerticalnoteCompetencesRoute: typeof PrivateLayoutVerticalnoteCompetencesRoute
+  PrivateLayoutVerticalnoteCouncilDecisionRoute: typeof PrivateLayoutVerticalnoteCouncilDecisionRoute
+  PrivateLayoutVerticalnoteEvalCompetencesRoute: typeof PrivateLayoutVerticalnoteEvalCompetencesRoute
+  PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute: typeof PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute
+  PrivateLayoutVerticalnoteNoteCalculationRoute: typeof PrivateLayoutVerticalnoteNoteCalculationRoute
+  PrivateLayoutVerticalnoteQuarterlyAverageRoute: typeof PrivateLayoutVerticalnoteQuarterlyAverageRoute
+  PrivateLayoutVerticalnoteQuarterlyCompNoteRoute: typeof PrivateLayoutVerticalnoteQuarterlyCompNoteRoute
+  PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute: typeof PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute
+  PrivateLayoutVerticalnoteQuarterlyNoteRoute: typeof PrivateLayoutVerticalnoteQuarterlyNoteRoute
+  PrivateLayoutVerticalnoteQuarterlyNotesRoute: typeof PrivateLayoutVerticalnoteQuarterlyNotesRoute
+  PrivateLayoutVerticalnoteQuarterlyReportObservationRoute: typeof PrivateLayoutVerticalnoteQuarterlyReportObservationRoute
+  PrivateLayoutVerticalnoteSequentialAverageRoute: typeof PrivateLayoutVerticalnoteSequentialAverageRoute
+  PrivateLayoutVerticalnoteSequentialNoteCopyRoute: typeof PrivateLayoutVerticalnoteSequentialNoteCopyRoute
+  PrivateLayoutVerticalnoteSequentialNoteDeleteRoute: typeof PrivateLayoutVerticalnoteSequentialNoteDeleteRoute
+  PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute: typeof PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute
+  PrivateLayoutVerticalnoteSequentialNoteImportRoute: typeof PrivateLayoutVerticalnoteSequentialNoteImportRoute
+  PrivateLayoutVerticalnoteSequentialNoteTemplateRoute: typeof PrivateLayoutVerticalnoteSequentialNoteTemplateRoute
+  PrivateLayoutVerticalnoteSequentialNotesRoute: typeof PrivateLayoutVerticalnoteSequentialNotesRoute
+  PrivateLayoutVerticalpayrollDeductionCategoriesRoute: typeof PrivateLayoutVerticalpayrollDeductionCategoriesRoute
+  PrivateLayoutVerticalpayrollDeductionsRoute: typeof PrivateLayoutVerticalpayrollDeductionsRoute
+  PrivateLayoutVerticalpayrollEarningCategoriesRoute: typeof PrivateLayoutVerticalpayrollEarningCategoriesRoute
+  PrivateLayoutVerticalpayrollEarningsRoute: typeof PrivateLayoutVerticalpayrollEarningsRoute
+  PrivateLayoutVerticalpayrollEmployeesRoute: typeof PrivateLayoutVerticalpayrollEmployeesRoute
+  PrivateLayoutVerticalpayrollPayrollDepartmentsRoute: typeof PrivateLayoutVerticalpayrollPayrollDepartmentsRoute
+  PrivateLayoutVerticalpayrollPayrollPeriodsRoute: typeof PrivateLayoutVerticalpayrollPayrollPeriodsRoute
+  PrivateLayoutVerticalpayrollPayrollPositionsRoute: typeof PrivateLayoutVerticalpayrollPayrollPositionsRoute
+  PrivateLayoutVerticalpayrollPayrollsRoute: typeof PrivateLayoutVerticalpayrollPayrollsRoute
+  PrivateLayoutVerticalpersonnelPersonnelRoute: typeof PrivateLayoutVerticalpersonnelPersonnelRoute
+  PrivateLayoutVerticalplanningDayOfClassesRoute: typeof PrivateLayoutVerticalplanningDayOfClassesRoute
+  PrivateLayoutVerticalplanningDistributionRoute: typeof PrivateLayoutVerticalplanningDistributionRoute
+  PrivateLayoutVerticalplanningTimeSlotsRoute: typeof PrivateLayoutVerticalplanningTimeSlotsRoute
+  PrivateLayoutVerticalplanningTimeTablesRoute: typeof PrivateLayoutVerticalplanningTimeTablesRoute
+  PrivateLayoutVerticalprimaryEvalTypesRoute: typeof PrivateLayoutVerticalprimaryEvalTypesRoute
+  PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute: typeof PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute
+  PrivateLayoutVerticalprimaryPrimaryCompetencesRoute: typeof PrivateLayoutVerticalprimaryPrimaryCompetencesRoute
+  PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute: typeof PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute
+  PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute: typeof PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute
+  PrivateLayoutVerticalprimarySubCompetencesRoute: typeof PrivateLayoutVerticalprimarySubCompetencesRoute
+  PrivateLayoutVerticalsaleCustomerCategoriesRoute: typeof PrivateLayoutVerticalsaleCustomerCategoriesRoute
+  PrivateLayoutVerticalsaleCustomersRoute: typeof PrivateLayoutVerticalsaleCustomersRoute
+  PrivateLayoutVerticalsaleDiscountsRoute: typeof PrivateLayoutVerticalsaleDiscountsRoute
+  PrivateLayoutVerticalsaleFeeGroupsRoute: typeof PrivateLayoutVerticalsaleFeeGroupsRoute
+  PrivateLayoutVerticalsaleFeeStructuresRoute: typeof PrivateLayoutVerticalsaleFeeStructuresRoute
+  PrivateLayoutVerticalsaleInstallmentsRoute: typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  PrivateLayoutVerticalsalePaymentConditionsRoute: typeof PrivateLayoutVerticalsalePaymentConditionsRoute
+  PrivateLayoutVerticalsaleProductCategoriesRoute: typeof PrivateLayoutVerticalsaleProductCategoriesRoute
+  PrivateLayoutVerticalsaleProductsRoute: typeof PrivateLayoutVerticalsaleProductsRoute
+  PrivateLayoutVerticalsaleSupplierCategoriesRoute: typeof PrivateLayoutVerticalsaleSupplierCategoriesRoute
+  PrivateLayoutVerticalsaleSuppliersRoute: typeof PrivateLayoutVerticalsaleSuppliersRoute
+  PrivateLayoutVerticalschoolBranchesRoute: typeof PrivateLayoutVerticalschoolBranchesRoute
+  PrivateLayoutVerticalschoolClassesRoute: typeof PrivateLayoutVerticalschoolClassesRoute
+  PrivateLayoutVerticalschoolCopyOfParametersRoute: typeof PrivateLayoutVerticalschoolCopyOfParametersRoute
+  PrivateLayoutVerticalschoolCyclesRoute: typeof PrivateLayoutVerticalschoolCyclesRoute
+  PrivateLayoutVerticalschoolDatabaseBackupRoute: typeof PrivateLayoutVerticalschoolDatabaseBackupRoute
+  PrivateLayoutVerticalschoolDepartmentsRoute: typeof PrivateLayoutVerticalschoolDepartmentsRoute
+  PrivateLayoutVerticalschoolGuidedSetupRoute: typeof PrivateLayoutVerticalschoolGuidedSetupRoute
+  PrivateLayoutVerticalschoolHeadDepartmentsRoute: typeof PrivateLayoutVerticalschoolHeadDepartmentsRoute
+  PrivateLayoutVerticalschoolLevelsRoute: typeof PrivateLayoutVerticalschoolLevelsRoute
+  PrivateLayoutVerticalschoolLiableTypeRoute: typeof PrivateLayoutVerticalschoolLiableTypeRoute
+  PrivateLayoutVerticalschoolPeriodsRoute: typeof PrivateLayoutVerticalschoolPeriodsRoute
   PrivateLayoutVerticalschoolSchoolRoute: typeof PrivateLayoutVerticalschoolSchoolRoute
+  PrivateLayoutVerticalschoolSchoolLiableRoute: typeof PrivateLayoutVerticalschoolSchoolLiableRoute
+  PrivateLayoutVerticalschoolSchoolSectionsRoute: typeof PrivateLayoutVerticalschoolSchoolSectionsRoute
   PrivateLayoutVerticalschoolSchoolYearsRoute: typeof PrivateLayoutVerticalschoolSchoolYearsRoute
+  PrivateLayoutVerticalschoolSubPeriodsRoute: typeof PrivateLayoutVerticalschoolSubPeriodsRoute
+  PrivateLayoutVerticalschoolSubjectGroupsRoute: typeof PrivateLayoutVerticalschoolSubjectGroupsRoute
+  PrivateLayoutVerticalschoolSubjectsRoute: typeof PrivateLayoutVerticalschoolSubjectsRoute
+  PrivateLayoutVerticalstudentBatchPicturesRoute: typeof PrivateLayoutVerticalstudentBatchPicturesRoute
+  PrivateLayoutVerticalstudentGuardiansRoute: typeof PrivateLayoutVerticalstudentGuardiansRoute
+  PrivateLayoutVerticalstudentOldSchoolsRoute: typeof PrivateLayoutVerticalstudentOldSchoolsRoute
+  PrivateLayoutVerticalstudentStudentProgressionRoute: typeof PrivateLayoutVerticalstudentStudentProgressionRoute
+  PrivateLayoutVerticalstudentStudentUpdateByClassRoute: typeof PrivateLayoutVerticalstudentStudentUpdateByClassRoute
+  PrivateLayoutVerticalstudentStudentsRoute: typeof PrivateLayoutVerticalstudentStudentsRoute
+  PrivateLayoutVerticaluserLoginHistoriesRoute: typeof PrivateLayoutVerticaluserLoginHistoriesRoute
+  PrivateLayoutVerticaluserPermissionsRoute: typeof PrivateLayoutVerticaluserPermissionsRoute
+  PrivateLayoutVerticaluserProfileRoute: typeof PrivateLayoutVerticaluserProfileRoute
+  PrivateLayoutVerticaluserRolesRoute: typeof PrivateLayoutVerticaluserRolesRoute
+  PrivateLayoutVerticaluserUsersRoute: typeof PrivateLayoutVerticaluserUsersRoute
+  PrivateLayoutVerticalsaleOperationsMobileOperationsRoute: typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
+  PrivateLayoutVerticalstudentFrequentsIdRoute: typeof PrivateLayoutVerticalstudentFrequentsIdRoute
+  PrivateLayoutVerticalsaleOperationsIndexRoute: typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  PrivateLayoutVerticalstudentFrequentsIndexRoute: typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 
 const PrivateLayoutVerticalRouteChildren: PrivateLayoutVerticalRouteChildren = {
   PrivateLayoutVerticalConfigurationRoute:
     PrivateLayoutVerticalConfigurationRoute,
   PrivateLayoutVerticalDashboardRoute: PrivateLayoutVerticalDashboardRoute,
+  PrivateLayoutVerticalReportsRoute: PrivateLayoutVerticalReportsRoute,
+  PrivateLayoutVerticalaccountingAccountCategoriesRoute:
+    PrivateLayoutVerticalaccountingAccountCategoriesRoute,
+  PrivateLayoutVerticalaccountingAccountGroupsRoute:
+    PrivateLayoutVerticalaccountingAccountGroupsRoute,
+  PrivateLayoutVerticalaccountingAccountsRoute:
+    PrivateLayoutVerticalaccountingAccountsRoute,
+  PrivateLayoutVerticalaccountingChartOfAccountsRoute:
+    PrivateLayoutVerticalaccountingChartOfAccountsRoute,
+  PrivateLayoutVerticalaccountingJournalRoute:
+    PrivateLayoutVerticalaccountingJournalRoute,
+  PrivateLayoutVerticalaccountingLogCodesRoute:
+    PrivateLayoutVerticalaccountingLogCodesRoute,
+  PrivateLayoutVerticalaccountingModelsRoute:
+    PrivateLayoutVerticalaccountingModelsRoute,
+  PrivateLayoutVerticalaccountingSpecialAccountsRoute:
+    PrivateLayoutVerticalaccountingSpecialAccountsRoute,
+  PrivateLayoutVerticalbankBankAccountsRoute:
+    PrivateLayoutVerticalbankBankAccountsRoute,
+  PrivateLayoutVerticalbankBankTransactionsRoute:
+    PrivateLayoutVerticalbankBankTransactionsRoute,
+  PrivateLayoutVerticaldisciplineAnnualDisciplineRoute:
+    PrivateLayoutVerticaldisciplineAnnualDisciplineRoute,
+  PrivateLayoutVerticaldisciplineDisciplineCalculationRoute:
+    PrivateLayoutVerticaldisciplineDisciplineCalculationRoute,
+  PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute:
+    PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute,
+  PrivateLayoutVerticaldisciplineSequentialDisciplineRoute:
+    PrivateLayoutVerticaldisciplineSequentialDisciplineRoute,
+  PrivateLayoutVerticalexpenseExpenseCategoriesRoute:
+    PrivateLayoutVerticalexpenseExpenseCategoriesRoute,
+  PrivateLayoutVerticalexpenseExpensesRoute:
+    PrivateLayoutVerticalexpenseExpensesRoute,
+  PrivateLayoutVerticalexpenseOperationClassesRoute:
+    PrivateLayoutVerticalexpenseOperationClassesRoute,
+  PrivateLayoutVerticalexpenseVouchersRoute:
+    PrivateLayoutVerticalexpenseVouchersRoute,
+  PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute:
+    PrivateLayoutVerticalexportAnnualSchoolBookXlsxRoute,
+  PrivateLayoutVerticalexportDataExportRoute:
+    PrivateLayoutVerticalexportDataExportRoute,
+  PrivateLayoutVerticalexportPersonnelXlsxRoute:
+    PrivateLayoutVerticalexportPersonnelXlsxRoute,
+  PrivateLayoutVerticalexportStudentXlsxRoute:
+    PrivateLayoutVerticalexportStudentXlsxRoute,
+  PrivateLayoutVerticalnoteAnnualAverageRoute:
+    PrivateLayoutVerticalnoteAnnualAverageRoute,
+  PrivateLayoutVerticalnoteAnnualCompAverageRoute:
+    PrivateLayoutVerticalnoteAnnualCompAverageRoute,
+  PrivateLayoutVerticalnoteAnnualCompNoteRoute:
+    PrivateLayoutVerticalnoteAnnualCompNoteRoute,
+  PrivateLayoutVerticalnoteAnnualNoteRoute:
+    PrivateLayoutVerticalnoteAnnualNoteRoute,
+  PrivateLayoutVerticalnoteAnnualNotesRoute:
+    PrivateLayoutVerticalnoteAnnualNotesRoute,
+  PrivateLayoutVerticalnoteAnnualResultRoute:
+    PrivateLayoutVerticalnoteAnnualResultRoute,
+  PrivateLayoutVerticalnoteAverageCalculationRoute:
+    PrivateLayoutVerticalnoteAverageCalculationRoute,
+  PrivateLayoutVerticalnoteBulkAnnualResultRoute:
+    PrivateLayoutVerticalnoteBulkAnnualResultRoute,
+  PrivateLayoutVerticalnoteCompetencesRoute:
+    PrivateLayoutVerticalnoteCompetencesRoute,
+  PrivateLayoutVerticalnoteCouncilDecisionRoute:
+    PrivateLayoutVerticalnoteCouncilDecisionRoute,
+  PrivateLayoutVerticalnoteEvalCompetencesRoute:
+    PrivateLayoutVerticalnoteEvalCompetencesRoute,
+  PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute:
+    PrivateLayoutVerticalnoteEvalCompetencesSubjectRoute,
+  PrivateLayoutVerticalnoteNoteCalculationRoute:
+    PrivateLayoutVerticalnoteNoteCalculationRoute,
+  PrivateLayoutVerticalnoteQuarterlyAverageRoute:
+    PrivateLayoutVerticalnoteQuarterlyAverageRoute,
+  PrivateLayoutVerticalnoteQuarterlyCompNoteRoute:
+    PrivateLayoutVerticalnoteQuarterlyCompNoteRoute,
+  PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute:
+    PrivateLayoutVerticalnoteQuarterlyCompNoteEvalRoute,
+  PrivateLayoutVerticalnoteQuarterlyNoteRoute:
+    PrivateLayoutVerticalnoteQuarterlyNoteRoute,
+  PrivateLayoutVerticalnoteQuarterlyNotesRoute:
+    PrivateLayoutVerticalnoteQuarterlyNotesRoute,
+  PrivateLayoutVerticalnoteQuarterlyReportObservationRoute:
+    PrivateLayoutVerticalnoteQuarterlyReportObservationRoute,
+  PrivateLayoutVerticalnoteSequentialAverageRoute:
+    PrivateLayoutVerticalnoteSequentialAverageRoute,
+  PrivateLayoutVerticalnoteSequentialNoteCopyRoute:
+    PrivateLayoutVerticalnoteSequentialNoteCopyRoute,
+  PrivateLayoutVerticalnoteSequentialNoteDeleteRoute:
+    PrivateLayoutVerticalnoteSequentialNoteDeleteRoute,
+  PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute:
+    PrivateLayoutVerticalnoteSequentialNoteDowngradeRoute,
+  PrivateLayoutVerticalnoteSequentialNoteImportRoute:
+    PrivateLayoutVerticalnoteSequentialNoteImportRoute,
+  PrivateLayoutVerticalnoteSequentialNoteTemplateRoute:
+    PrivateLayoutVerticalnoteSequentialNoteTemplateRoute,
+  PrivateLayoutVerticalnoteSequentialNotesRoute:
+    PrivateLayoutVerticalnoteSequentialNotesRoute,
+  PrivateLayoutVerticalpayrollDeductionCategoriesRoute:
+    PrivateLayoutVerticalpayrollDeductionCategoriesRoute,
+  PrivateLayoutVerticalpayrollDeductionsRoute:
+    PrivateLayoutVerticalpayrollDeductionsRoute,
+  PrivateLayoutVerticalpayrollEarningCategoriesRoute:
+    PrivateLayoutVerticalpayrollEarningCategoriesRoute,
+  PrivateLayoutVerticalpayrollEarningsRoute:
+    PrivateLayoutVerticalpayrollEarningsRoute,
+  PrivateLayoutVerticalpayrollEmployeesRoute:
+    PrivateLayoutVerticalpayrollEmployeesRoute,
+  PrivateLayoutVerticalpayrollPayrollDepartmentsRoute:
+    PrivateLayoutVerticalpayrollPayrollDepartmentsRoute,
+  PrivateLayoutVerticalpayrollPayrollPeriodsRoute:
+    PrivateLayoutVerticalpayrollPayrollPeriodsRoute,
+  PrivateLayoutVerticalpayrollPayrollPositionsRoute:
+    PrivateLayoutVerticalpayrollPayrollPositionsRoute,
+  PrivateLayoutVerticalpayrollPayrollsRoute:
+    PrivateLayoutVerticalpayrollPayrollsRoute,
+  PrivateLayoutVerticalpersonnelPersonnelRoute:
+    PrivateLayoutVerticalpersonnelPersonnelRoute,
+  PrivateLayoutVerticalplanningDayOfClassesRoute:
+    PrivateLayoutVerticalplanningDayOfClassesRoute,
+  PrivateLayoutVerticalplanningDistributionRoute:
+    PrivateLayoutVerticalplanningDistributionRoute,
+  PrivateLayoutVerticalplanningTimeSlotsRoute:
+    PrivateLayoutVerticalplanningTimeSlotsRoute,
+  PrivateLayoutVerticalplanningTimeTablesRoute:
+    PrivateLayoutVerticalplanningTimeTablesRoute,
+  PrivateLayoutVerticalprimaryEvalTypesRoute:
+    PrivateLayoutVerticalprimaryEvalTypesRoute,
+  PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute:
+    PrivateLayoutVerticalprimaryFreePrimarySequentialNotesRoute,
+  PrivateLayoutVerticalprimaryPrimaryCompetencesRoute:
+    PrivateLayoutVerticalprimaryPrimaryCompetencesRoute,
+  PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute:
+    PrivateLayoutVerticalprimaryPrimaryCompetencesLevelRoute,
+  PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute:
+    PrivateLayoutVerticalprimaryPrimarySequentialNotesRoute,
+  PrivateLayoutVerticalprimarySubCompetencesRoute:
+    PrivateLayoutVerticalprimarySubCompetencesRoute,
+  PrivateLayoutVerticalsaleCustomerCategoriesRoute:
+    PrivateLayoutVerticalsaleCustomerCategoriesRoute,
+  PrivateLayoutVerticalsaleCustomersRoute:
+    PrivateLayoutVerticalsaleCustomersRoute,
+  PrivateLayoutVerticalsaleDiscountsRoute:
+    PrivateLayoutVerticalsaleDiscountsRoute,
+  PrivateLayoutVerticalsaleFeeGroupsRoute:
+    PrivateLayoutVerticalsaleFeeGroupsRoute,
+  PrivateLayoutVerticalsaleFeeStructuresRoute:
+    PrivateLayoutVerticalsaleFeeStructuresRoute,
+  PrivateLayoutVerticalsaleInstallmentsRoute:
+    PrivateLayoutVerticalsaleInstallmentsRoute,
+  PrivateLayoutVerticalsalePaymentConditionsRoute:
+    PrivateLayoutVerticalsalePaymentConditionsRoute,
+  PrivateLayoutVerticalsaleProductCategoriesRoute:
+    PrivateLayoutVerticalsaleProductCategoriesRoute,
+  PrivateLayoutVerticalsaleProductsRoute:
+    PrivateLayoutVerticalsaleProductsRoute,
+  PrivateLayoutVerticalsaleSupplierCategoriesRoute:
+    PrivateLayoutVerticalsaleSupplierCategoriesRoute,
+  PrivateLayoutVerticalsaleSuppliersRoute:
+    PrivateLayoutVerticalsaleSuppliersRoute,
+  PrivateLayoutVerticalschoolBranchesRoute:
+    PrivateLayoutVerticalschoolBranchesRoute,
+  PrivateLayoutVerticalschoolClassesRoute:
+    PrivateLayoutVerticalschoolClassesRoute,
+  PrivateLayoutVerticalschoolCopyOfParametersRoute:
+    PrivateLayoutVerticalschoolCopyOfParametersRoute,
+  PrivateLayoutVerticalschoolCyclesRoute:
+    PrivateLayoutVerticalschoolCyclesRoute,
+  PrivateLayoutVerticalschoolDatabaseBackupRoute:
+    PrivateLayoutVerticalschoolDatabaseBackupRoute,
+  PrivateLayoutVerticalschoolDepartmentsRoute:
+    PrivateLayoutVerticalschoolDepartmentsRoute,
+  PrivateLayoutVerticalschoolGuidedSetupRoute:
+    PrivateLayoutVerticalschoolGuidedSetupRoute,
+  PrivateLayoutVerticalschoolHeadDepartmentsRoute:
+    PrivateLayoutVerticalschoolHeadDepartmentsRoute,
+  PrivateLayoutVerticalschoolLevelsRoute:
+    PrivateLayoutVerticalschoolLevelsRoute,
+  PrivateLayoutVerticalschoolLiableTypeRoute:
+    PrivateLayoutVerticalschoolLiableTypeRoute,
+  PrivateLayoutVerticalschoolPeriodsRoute:
+    PrivateLayoutVerticalschoolPeriodsRoute,
   PrivateLayoutVerticalschoolSchoolRoute:
     PrivateLayoutVerticalschoolSchoolRoute,
+  PrivateLayoutVerticalschoolSchoolLiableRoute:
+    PrivateLayoutVerticalschoolSchoolLiableRoute,
+  PrivateLayoutVerticalschoolSchoolSectionsRoute:
+    PrivateLayoutVerticalschoolSchoolSectionsRoute,
   PrivateLayoutVerticalschoolSchoolYearsRoute:
     PrivateLayoutVerticalschoolSchoolYearsRoute,
+  PrivateLayoutVerticalschoolSubPeriodsRoute:
+    PrivateLayoutVerticalschoolSubPeriodsRoute,
+  PrivateLayoutVerticalschoolSubjectGroupsRoute:
+    PrivateLayoutVerticalschoolSubjectGroupsRoute,
+  PrivateLayoutVerticalschoolSubjectsRoute:
+    PrivateLayoutVerticalschoolSubjectsRoute,
+  PrivateLayoutVerticalstudentBatchPicturesRoute:
+    PrivateLayoutVerticalstudentBatchPicturesRoute,
+  PrivateLayoutVerticalstudentGuardiansRoute:
+    PrivateLayoutVerticalstudentGuardiansRoute,
+  PrivateLayoutVerticalstudentOldSchoolsRoute:
+    PrivateLayoutVerticalstudentOldSchoolsRoute,
+  PrivateLayoutVerticalstudentStudentProgressionRoute:
+    PrivateLayoutVerticalstudentStudentProgressionRoute,
+  PrivateLayoutVerticalstudentStudentUpdateByClassRoute:
+    PrivateLayoutVerticalstudentStudentUpdateByClassRoute,
+  PrivateLayoutVerticalstudentStudentsRoute:
+    PrivateLayoutVerticalstudentStudentsRoute,
+  PrivateLayoutVerticaluserLoginHistoriesRoute:
+    PrivateLayoutVerticaluserLoginHistoriesRoute,
+  PrivateLayoutVerticaluserPermissionsRoute:
+    PrivateLayoutVerticaluserPermissionsRoute,
+  PrivateLayoutVerticaluserProfileRoute: PrivateLayoutVerticaluserProfileRoute,
+  PrivateLayoutVerticaluserRolesRoute: PrivateLayoutVerticaluserRolesRoute,
+  PrivateLayoutVerticaluserUsersRoute: PrivateLayoutVerticaluserUsersRoute,
+  PrivateLayoutVerticalsaleOperationsMobileOperationsRoute:
+    PrivateLayoutVerticalsaleOperationsMobileOperationsRoute,
+  PrivateLayoutVerticalstudentFrequentsIdRoute:
+    PrivateLayoutVerticalstudentFrequentsIdRoute,
+  PrivateLayoutVerticalsaleOperationsIndexRoute:
+    PrivateLayoutVerticalsaleOperationsIndexRoute,
+  PrivateLayoutVerticalstudentFrequentsIndexRoute:
+    PrivateLayoutVerticalstudentFrequentsIndexRoute,
 }
 
 const PrivateLayoutVerticalRouteWithChildren =
@@ -316,6 +4260,10 @@ const rootRouteChildren: RootRouteChildren = {
   InitSchoolRoute: InitSchoolRoute,
   LoginRoute: LoginRoute,
   NotAuthorizedRoute: NotAuthorizedRoute,
+  QrcodeRoute: QrcodeRoute,
+  VerifyRoute: VerifyRoute,
+  PaymentStatusReferenceRoute: PaymentStatusReferenceRoute,
+  TuitionIdentifierRoute: TuitionIdentifierRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

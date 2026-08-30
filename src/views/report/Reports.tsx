@@ -423,7 +423,7 @@ const Reports = () => {
             placeholder={t('label-reportSearchPlaceholder')}
             onSelect={(option) => {
               if (option && option.link) {
-                navigate(`/${option.link}`)
+                navigate({ to: `/${option.link}` })
               }
             }}
             getOptionLabel={(option) => option.title}

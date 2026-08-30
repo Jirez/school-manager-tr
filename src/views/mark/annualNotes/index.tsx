@@ -19,7 +19,7 @@ import {
   useSubjectsForNotesQuery,
 } from '@/gql/graphql'
 
-const QuarterlyNotes = () => {
+const AnnualNotes = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any }>()
   const [subject, setSubject] = useState<{ [key: string]: any } | null>()
   //const [schoolYear, setSchoolYear] = useState<{ [key: string]: any }>();
@@ -198,4 +198,4 @@ const QuarterlyNotes = () => {
   )
 }
 
-export default QuarterlyNotes
+export default AnnualNotes
