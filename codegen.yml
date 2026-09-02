@@ -4,10 +4,10 @@ documents: 'src/graphql/**/*.graphql'
 emitLegacyCommonJSImports: true
 generates:
   './src/gql/graphql.ts':
-    #src/gql/:
-    #preset: "client"
-    plugins: ['typescript-operations', 'typescript-react-apollo']
-#"typescript-compatibility",
-config:
-  addDocBlocks: false
-  reactApolloVersion: 3
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      addDocBlocks: false
+      reactApolloVersion: 3

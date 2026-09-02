@@ -1,1878 +1,8414 @@
-/** Internal type. DO NOT USE DIRECTLY. */
-type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-/** Internal type. DO NOT USE DIRECTLY. */
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  BigDecimal: { input: any; output: any; }
+  Byte: { input: any; output: any; }
+  Date: { input: any; output: any; }
+  DateTime: { input: any; output: any; }
+  Long: { input: any; output: any; }
+  PositiveFloat: { input: any; output: any; }
+  Short: { input: any; output: any; }
+};
+
+export type Account = {
+  __typename?: 'Account';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  balance?: Maybe<Scalars['Float']['output']>;
+  balanceType?: Maybe<BalanceType>;
+  chartOfAccount?: Maybe<ChartOfAccount>;
+  chartOfAccountId: Scalars['Int']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  number: Scalars['String']['output'];
+  parent?: Maybe<Account>;
+  parentId?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AccountCategory = {
+  __typename?: 'AccountCategory';
+  accountType: AccountType;
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type AccountCategoryInput = {
   accountType: AccountType;
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  id?: number | null | undefined;
-  name: string;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type AccountGroup = {
+  __typename?: 'AccountGroup';
+  accountModel?: Maybe<AccountModel>;
+  accountModelId: Scalars['Int']['output'];
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  level?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  parent?: Maybe<AccountGroup>;
+  parentId?: Maybe<Scalars['Int']['output']>;
+  sectionType: SectionType;
 };
 
 export type AccountGroupInput = {
-  accountModelId?: number | null | undefined;
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id?: number | null | undefined;
-  level?: number | null | undefined;
-  name: string;
-  parentId?: number | null | undefined;
+  accountModelId?: InputMaybe<Scalars['Int']['input']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  level?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
   sectionType: SectionType;
 };
 
 export type AccountInput = {
-  active?: boolean | null | undefined;
-  balance?: number | null | undefined;
-  balanceType?: BalanceType | null | undefined;
-  chartOfAccountId: number;
-  description?: string | null | undefined;
-  displayName?: string | null | undefined;
-  enterpriseId: number;
-  id?: number | null | undefined;
-  name: string;
-  number: string;
-  parentId?: number | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  balance?: InputMaybe<Scalars['Float']['input']>;
+  balanceType?: InputMaybe<BalanceType>;
+  chartOfAccountId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  number: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type AccountJson = {
+  __typename?: 'AccountJson';
+  KEY: Scalars['String']['output'];
+  modelId: Scalars['Int']['output'];
+  modelName: Scalars['String']['output'];
+};
+
+export type AccountJsonInput = {
+  KEY: Scalars['String']['input'];
+  modelId: Scalars['Int']['input'];
+  modelName: Scalars['String']['input'];
+};
+
+export type AccountModel = {
+  __typename?: 'AccountModel';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  current?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  languageType: LanguageType;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
 };
 
 export type AccountModelInput = {
-  active?: boolean | null | undefined;
-  code?: string | null | undefined;
-  country?: string | null | undefined;
-  current?: boolean | null | undefined;
-  id?: number | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  current?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   languageType: LanguageType;
-  name: string;
-  note?: string | null | undefined;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type AccountType =
-  | 'ACCOUNTS_PAYABLE'
-  | 'ACCOUNTS_RECEIVABLE'
-  | 'COST_OF_GOODS_SOLD'
-  | 'CREDIT_CARD'
-  | 'EQUITY_CAPITAL'
-  | 'EXPENSES'
-  | 'FIXED_ASSETS'
-  | 'INCOMES'
-  | 'LONG_TERM_ASSETS'
-  | 'LONG_TERM_LIABILITIES'
-  | 'OTHER_EXPENSES'
-  | 'OTHER_INCOMES'
-  | 'SHORT_TERM_ASSETS'
-  | 'SHORT_TERM_LIABILITIES'
-  | 'TREASURY';
+export enum AccountType {
+  AccountsPayable = 'ACCOUNTS_PAYABLE',
+  AccountsReceivable = 'ACCOUNTS_RECEIVABLE',
+  CostOfGoodsSold = 'COST_OF_GOODS_SOLD',
+  CreditCard = 'CREDIT_CARD',
+  EquityCapital = 'EQUITY_CAPITAL',
+  Expenses = 'EXPENSES',
+  FixedAssets = 'FIXED_ASSETS',
+  Incomes = 'INCOMES',
+  LongTermAssets = 'LONG_TERM_ASSETS',
+  LongTermLiabilities = 'LONG_TERM_LIABILITIES',
+  OtherExpenses = 'OTHER_EXPENSES',
+  OtherIncomes = 'OTHER_INCOMES',
+  ShortTermAssets = 'SHORT_TERM_ASSETS',
+  ShortTermLiabilities = 'SHORT_TERM_LIABILITIES',
+  Treasury = 'TREASURY'
+}
+
+export type AccountingEntry = Operation & {
+  __typename?: 'AccountingEntry';
+  /** Entry Fields */
+  amount?: Maybe<Scalars['Float']['output']>;
+  /** @dateFormat */
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number?: Maybe<Scalars['String']['output']>;
+  operationDate?: Maybe<Scalars['String']['output']>;
+  /** @dateFormat */
+  recordDate?: Maybe<Scalars['String']['output']>;
+};
 
 export type AccountingEntryInput = {
-  accountingEntryItemCollection?: Array<AccountingEntryItemInput> | null | undefined;
+  accountingEntryItemCollection?: InputMaybe<Array<AccountingEntryItemInput>>;
   /** Invoice Fields */
-  amount?: number | null | undefined;
-  enterpriseId: number;
-  id?: unknown;
-  note?: string | null | undefined;
-  number?: string | null | undefined;
-  operationDate?: unknown;
-  recordDate?: string | null | undefined;
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate?: InputMaybe<Scalars['Date']['input']>;
+  recordDate?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AccountingEntryItem = {
+  __typename?: 'AccountingEntryItem';
+  account: Account;
+  amount: Scalars['Float']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  directionType?: Maybe<DirectionType>;
+  id: Scalars['ID']['output'];
+  logCode: LogCode;
+  person?: Maybe<Person>;
 };
 
 export type AccountingEntryItemInput = {
-  accountId: number;
-  amount: number;
-  description?: string | null | undefined;
-  directionType?: DirectionType | null | undefined;
-  id?: unknown;
-  logCodeId: number;
-  personId?: unknown;
+  accountId: Scalars['Int']['input'];
+  amount: Scalars['Float']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  directionType?: InputMaybe<DirectionType>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  logCodeId: Scalars['Int']['input'];
+  personId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type Address = {
+  __typename?: 'Address';
+  country?: Maybe<Scalars['String']['output']>;
+  state?: Maybe<Scalars['String']['output']>;
+  street?: Maybe<Scalars['String']['output']>;
+  town?: Maybe<Scalars['String']['output']>;
+  zipCode?: Maybe<Scalars['String']['output']>;
 };
 
 export type AddressInput = {
-  country?: string | null | undefined;
-  state?: string | null | undefined;
-  street?: string | null | undefined;
-  town?: string | null | undefined;
-  zipCode?: string | null | undefined;
+  country?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+  town?: InputMaybe<Scalars['String']['input']>;
+  zipCode?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Administrator = Person & {
+  __typename?: 'Administrator';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  contactInfo?: Maybe<ContactInfo>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  /** administrator field */
+  number: Scalars['String']['output'];
+  occupation?: Maybe<Scalars['String']['output']>;
+};
+
+export type AdministratorInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  contactInfo?: InputMaybe<ContactInput>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  occupation?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AnnualNote = {
-  note1?: number | null | undefined;
-  note2?: number | null | undefined;
-  note3?: number | null | undefined;
-  note4?: number | null | undefined;
-  note5?: number | null | undefined;
-  note6?: number | null | undefined;
-  studentFullName: string;
-  studentId: unknown;
+  note1?: InputMaybe<Scalars['Float']['input']>;
+  note2?: InputMaybe<Scalars['Float']['input']>;
+  note3?: InputMaybe<Scalars['Float']['input']>;
+  note4?: InputMaybe<Scalars['Float']['input']>;
+  note5?: InputMaybe<Scalars['Float']['input']>;
+  note6?: InputMaybe<Scalars['Float']['input']>;
+  studentFullName: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type AnnualNoteInput = {
+  __typename?: 'AnnualNoteInput';
+  note1?: Maybe<Scalars['Float']['output']>;
+  note2?: Maybe<Scalars['Float']['output']>;
+  note3?: Maybe<Scalars['Float']['output']>;
+  note4?: Maybe<Scalars['Float']['output']>;
+  note5?: Maybe<Scalars['Float']['output']>;
+  note6?: Maybe<Scalars['Float']['output']>;
+  student?: Maybe<Student>;
+  studentFullName?: Maybe<Scalars['String']['output']>;
+};
+
+export type AnnualReport = {
+  __typename?: 'AnnualReport';
+  average?: Maybe<Scalars['Float']['output']>;
+  exAequo?: Maybe<Scalars['Boolean']['output']>;
+  rank?: Maybe<Scalars['Short']['output']>;
+  ranked?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type AnnualReportPk = {
+  __typename?: 'AnnualReportPK';
+  schoolYearId: Scalars['Int']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type AnnualReportPkInput = {
-  schoolYearId: number;
-  studentId: unknown;
+  schoolYearId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type AnnualReportSummary = {
+  __typename?: 'AnnualReportSummary';
+  average?: Maybe<Scalars['Float']['output']>;
+  birthDate?: Maybe<Scalars['String']['output']>;
+  branchName?: Maybe<Scalars['String']['output']>;
+  className?: Maybe<Scalars['String']['output']>;
+  decision?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
+  levelName?: Maybe<Scalars['String']['output']>;
+  newBranch?: Maybe<Scalars['String']['output']>;
+  newClass?: Maybe<Scalars['String']['output']>;
+  numberOrder?: Maybe<Scalars['Int']['output']>;
+  studentId?: Maybe<Scalars['Long']['output']>;
+  studentName?: Maybe<Scalars['String']['output']>;
+};
+
+export type AnnualResult = {
+  __typename?: 'AnnualResult';
+  annualReport?: Maybe<AnnualReport>;
+  annualReportPK: AnnualReportPk;
+  branch?: Maybe<Branch>;
+  clazz?: Maybe<Clazz>;
+  councilDecision?: Maybe<CouncilDecision>;
+  observation?: Maybe<Scalars['String']['output']>;
+  schoolYear?: Maybe<SchoolYear>;
+  student?: Maybe<Student>;
 };
 
 export type AnnualResultFormInput = {
-  councilDecisionId?: number | null | undefined;
-  currentSchoolYearId?: number | null | undefined;
-  items?: Array<AnnualResultFormItemInput> | null | undefined;
-  nextBranchId?: number | null | undefined;
-  nextClassId?: number | null | undefined;
-  nextSchoolYearId?: number | null | undefined;
-  observation?: string | null | undefined;
+  councilDecisionId?: InputMaybe<Scalars['Int']['input']>;
+  currentSchoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  items?: InputMaybe<Array<AnnualResultFormItemInput>>;
+  nextBranchId?: InputMaybe<Scalars['Int']['input']>;
+  nextClassId?: InputMaybe<Scalars['Int']['input']>;
+  nextSchoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  observation?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AnnualResultFormItemInput = {
-  observation?: string | null | undefined;
-  studentId?: unknown;
+  observation?: InputMaybe<Scalars['String']['input']>;
+  studentId?: InputMaybe<Scalars['Long']['input']>;
 };
 
 export type AnnualResultInput = {
   annualReportPK: AnnualReportPkInput;
-  branchId?: number | null | undefined;
-  classId?: number | null | undefined;
-  councilDecisionId?: number | null | undefined;
-  observation?: string | null | undefined;
+  branchId?: InputMaybe<Scalars['Int']['input']>;
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  councilDecisionId?: InputMaybe<Scalars['Int']['input']>;
+  observation?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ApprovalStatus =
-  | 'APPROVED'
-  | 'PENDING'
-  | 'REJECTED';
+export type AnnualResultSummary = {
+  __typename?: 'AnnualResultSummary';
+  boysCount: Scalars['Int']['output'];
+  className: Scalars['String']['output'];
+  girlsCount: Scalars['Int']['output'];
+  repeaterCount: Scalars['Int']['output'];
+  totalCount: Scalars['Int']['output'];
+};
+
+export type ApplicationMap = {
+  __typename?: 'ApplicationMap';
+  action: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  languageType: LanguageType;
+  link: Scalars['String']['output'];
+  longDescription?: Maybe<Scalars['String']['output']>;
+  menu?: Maybe<Scalars['String']['output']>;
+  shortDescription?: Maybe<Scalars['String']['output']>;
+};
+
+export enum ApprovalStatus {
+  Approved = 'APPROVED',
+  Pending = 'PENDING',
+  Rejected = 'REJECTED'
+}
+
+export type Article = {
+  __typename?: 'Article';
+  barcode?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  product?: Maybe<Product>;
+  productId: Scalars['Long']['output'];
+  quantity?: Maybe<Scalars['Float']['output']>;
+};
 
 export type ArticleCreateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   /**
    * preferredVendorId: Int
    * unitId: Int
    *  Article fields
    */
-  barcode?: string | null | undefined;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
-  minSalePrice?: unknown;
-  name: string;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  quantity?: number | null | undefined;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  barcode?: InputMaybe<Scalars['String']['input']>;
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  quantity?: InputMaybe<Scalars['Float']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ArticleUnion = {
+  __typename?: 'ArticleUnion';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  articleId?: Maybe<Scalars['Int']['output']>;
+  cost?: Maybe<Scalars['BigDecimal']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  minSalePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  name: Scalars['String']['output'];
+  picture?: Maybe<Scalars['String']['output']>;
+  productCategory?: Maybe<ProductCategory>;
+  productId: Scalars['Long']['output'];
+  purchaseAccount?: Maybe<Account>;
+  purchaseDescription?: Maybe<Scalars['String']['output']>;
+  purchasePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  /**  discount: Discount */
+  saleAccount?: Maybe<Account>;
+  saleDescription?: Maybe<Scalars['String']['output']>;
+  salePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  sku?: Maybe<Scalars['String']['output']>;
 };
 
 export type ArticleUpdateInput = {
-  active?: boolean | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * preferredVendorId: Int
    *  Article fields
    */
-  barcode?: string | null | undefined;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
-  id: number;
-  minSalePrice?: unknown;
-  name: string;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  quantity?: number | null | undefined;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  barcode?: InputMaybe<Scalars['String']['input']>;
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  quantity?: InputMaybe<Scalars['Float']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Attendance = {
+  __typename?: 'Attendance';
+  approvedBy?: Maybe<Scalars['String']['output']>;
+  approvedDate?: Maybe<Scalars['String']['output']>;
+  arrivalTime?: Maybe<Scalars['String']['output']>;
+  breakEndTime?: Maybe<Scalars['String']['output']>;
+  breakStartTime?: Maybe<Scalars['String']['output']>;
+  departureTime?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  personnel?: Maybe<Personnel>;
+  personnelId: Scalars['Long']['output'];
+  status: ApprovalStatus;
+  totalBreakHours: Scalars['Float']['output'];
+  totalWorkedHours: Scalars['Float']['output'];
+  type: AttendanceType;
+  workDate: Scalars['String']['output'];
 };
 
 export type AttendanceCreateInput = {
-  arrivalTime?: string | null | undefined;
-  breakEndTime?: string | null | undefined;
-  breakStartTime?: string | null | undefined;
-  departureTime?: string | null | undefined;
-  enterpriseId: number;
+  arrivalTime?: InputMaybe<Scalars['String']['input']>;
+  breakEndTime?: InputMaybe<Scalars['String']['input']>;
+  breakStartTime?: InputMaybe<Scalars['String']['input']>;
+  departureTime?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
   /**  approvedBy: String */
-  note?: string | null | undefined;
-  personnelId: unknown;
+  note?: InputMaybe<Scalars['String']['input']>;
+  personnelId: Scalars['Long']['input'];
   status: ApprovalStatus;
   type: AttendanceType;
-  workDate: unknown;
+  workDate: Scalars['Date']['input'];
 };
 
-export type AttendanceType =
-  | 'OVERTIME'
-  | 'REGULAR';
+export enum AttendanceType {
+  Overtime = 'OVERTIME',
+  Regular = 'REGULAR'
+}
 
 export type AttendanceUpdateInput = {
-  arrivalTime?: string | null | undefined;
-  breakEndTime?: string | null | undefined;
-  breakStartTime?: string | null | undefined;
-  departureTime?: string | null | undefined;
-  enterpriseId: number;
-  id: unknown;
+  arrivalTime?: InputMaybe<Scalars['String']['input']>;
+  breakEndTime?: InputMaybe<Scalars['String']['input']>;
+  breakStartTime?: InputMaybe<Scalars['String']['input']>;
+  departureTime?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
   /**  approvedBy: String */
-  note?: string | null | undefined;
-  personnelId: unknown;
+  note?: InputMaybe<Scalars['String']['input']>;
+  personnelId: Scalars['Long']['input'];
   status: ApprovalStatus;
   type: AttendanceType;
-  workDate: unknown;
+  workDate: Scalars['Date']['input'];
+};
+
+export type AuthRequest = {
+  __typename?: 'AuthRequest';
+  mfa?: Maybe<Scalars['Boolean']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<JwtUser>;
 };
 
 export type AuthRequestInput = {
-  browserInfo?: BrowserInfoInput | null | undefined;
-  password: string;
-  username: string;
+  browserInfo?: InputMaybe<BrowserInfoInput>;
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
-export type BalanceType =
-  | 'CREDIT_BALANCE'
-  | 'DEBIT_BALANCE'
-  | 'NULL_BALANCE';
+export enum BalanceType {
+  CreditBalance = 'CREDIT_BALANCE',
+  DebitBalance = 'DEBIT_BALANCE',
+  NullBalance = 'NULL_BALANCE'
+}
+
+export type Bank = {
+  __typename?: 'Bank';
+  accountNumber?: Maybe<Scalars['String']['output']>;
+  agency?: Maybe<Scalars['String']['output']>;
+  bankAccount?: Maybe<Account>;
+  bankAddress?: Maybe<Address>;
+  bankCode?: Maybe<Scalars['String']['output']>;
+  bankContactInfo?: Maybe<ContactInfo>;
+  bankLegalInfo?: Maybe<LegalInfo>;
+  bic?: Maybe<Scalars['String']['output']>;
+  defaultBank?: Maybe<Scalars['Boolean']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  holder?: Maybe<Scalars['String']['output']>;
+  iban?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  referrer?: Maybe<Scalars['String']['output']>;
+  ribKey?: Maybe<Scalars['String']['output']>;
+  tellerCode?: Maybe<Scalars['String']['output']>;
+};
+
+export type BankAccount = {
+  __typename?: 'BankAccount';
+  account?: Maybe<Account>;
+  balance: Scalars['Float']['output'];
+  closedDate?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  interestRate?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
+  number: Scalars['String']['output'];
+  openedDate?: Maybe<Scalars['String']['output']>;
+  openingBalance: Scalars['Float']['output'];
+  overdraftLimit?: Maybe<Scalars['Float']['output']>;
+  status: BankAccountStatus;
+  type: BankAccountType;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
 
 export type BankAccountCreateInput = {
-  accountId: number;
-  closedDate?: unknown;
-  enterpriseId: number;
-  interestRate?: number | null | undefined;
-  name: string;
-  number: string;
-  openedDate?: unknown;
-  openingBalance?: unknown;
-  overdraftLimit?: unknown;
+  accountId: Scalars['Int']['input'];
+  closedDate?: InputMaybe<Scalars['Date']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  interestRate?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
+  number: Scalars['String']['input'];
+  openedDate?: InputMaybe<Scalars['Date']['input']>;
+  openingBalance?: InputMaybe<Scalars['BigDecimal']['input']>;
+  overdraftLimit?: InputMaybe<Scalars['BigDecimal']['input']>;
   status: BankAccountStatus;
   type: BankAccountType;
 };
 
-export type BankAccountStatus =
-  | 'ACTIVE'
-  | 'CLOSED'
-  | 'FROZEN'
-  | 'INACTIVE';
+export enum BankAccountStatus {
+  Active = 'ACTIVE',
+  Closed = 'CLOSED',
+  Frozen = 'FROZEN',
+  Inactive = 'INACTIVE'
+}
 
-export type BankAccountType =
-  | 'CURRENT'
-  | 'SAVINGS';
+export enum BankAccountType {
+  Current = 'CURRENT',
+  Savings = 'SAVINGS'
+}
 
 export type BankAccountUpdateInput = {
-  accountId: number;
-  closedDate?: unknown;
-  enterpriseId: number;
-  id: number;
-  interestRate?: number | null | undefined;
-  name: string;
-  number: string;
-  openedDate?: unknown;
-  openingBalance?: unknown;
-  overdraftLimit?: unknown;
+  accountId: Scalars['Int']['input'];
+  closedDate?: InputMaybe<Scalars['Date']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  interestRate?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
+  number: Scalars['String']['input'];
+  openedDate?: InputMaybe<Scalars['Date']['input']>;
+  openingBalance?: InputMaybe<Scalars['BigDecimal']['input']>;
+  overdraftLimit?: InputMaybe<Scalars['BigDecimal']['input']>;
   status: BankAccountStatus;
   type: BankAccountType;
+};
+
+export type BankAgency = {
+  __typename?: 'BankAgency';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  /** legalInfo: LegalInfo */
+  bank?: Maybe<Bank>;
+  contactInfo?: Maybe<ContactInfo>;
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+};
+
+export type BankAgencyInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  /** legalInfo: LegalInfo */
+  bankId: Scalars['Int']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BankInput = {
+  accountNumber?: InputMaybe<Scalars['String']['input']>;
+  agency?: InputMaybe<Scalars['String']['input']>;
+  bankAccountId?: InputMaybe<Scalars['Int']['input']>;
+  bankAddress?: InputMaybe<AddressInput>;
+  bankCode?: InputMaybe<Scalars['String']['input']>;
+  bankContactInfo?: InputMaybe<ContactInput>;
+  bankLegalInfo?: InputMaybe<LegalInput>;
+  bic?: InputMaybe<Scalars['String']['input']>;
+  defaultBank?: InputMaybe<Scalars['Boolean']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  holder?: InputMaybe<Scalars['String']['input']>;
+  iban?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  referrer?: InputMaybe<Scalars['String']['input']>;
+  ribKey?: InputMaybe<Scalars['String']['input']>;
+  tellerCode?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BankOperation = {
+  __typename?: 'BankOperation';
+  administrator?: Maybe<Scalars['String']['output']>;
+  agency?: Maybe<Scalars['String']['output']>;
+  amount: Scalars['Float']['output'];
+  /** recipient: String */
+  bank?: Maybe<Bank>;
+  bankAgency?: Maybe<BankAgency>;
+  bankOperationType?: Maybe<BankOperationType>;
+  cashier?: Maybe<Scalars['String']['output']>;
+  currency?: Maybe<Currency>;
+  /** @dateFormat */
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate?: Maybe<Scalars['String']['output']>;
+  person?: Maybe<Person>;
+  /** @dateFormat */
+  recordDate?: Maybe<Scalars['String']['output']>;
+  representative?: Maybe<Scalars['String']['output']>;
+  teller?: Maybe<Scalars['String']['output']>;
+};
+
+export type BankOperationForm = {
+  bankOperationType?: InputMaybe<BankOperationType>;
+  /** bankAgencyId: ID! */
+  currencyId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  items?: InputMaybe<Array<BankOperationFormItem>>;
+  operationDate: Scalars['String']['input'];
+  recordDate: Scalars['String']['input'];
+};
+
+export type BankOperationFormItem = {
+  administrator?: InputMaybe<Scalars['String']['input']>;
+  amount?: InputMaybe<Scalars['Float']['input']>;
+  /** agency: String */
+  bankAgencyId: Scalars['Int']['input'];
+  cashier?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  /** representative: String */
+  personId: Scalars['Int']['input'];
+  teller?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BankOperationInput = {
+  administrator?: InputMaybe<Scalars['String']['input']>;
+  agency?: InputMaybe<Scalars['String']['input']>;
+  amount: Scalars['Float']['input'];
+  bankAgencyId: Scalars['Int']['input'];
+  /** recipient: String */
+  bankId?: InputMaybe<Scalars['Int']['input']>;
+  bankOperationType?: InputMaybe<BankOperationType>;
+  cashier?: InputMaybe<Scalars['String']['input']>;
+  currencyId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['ID']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  operationDate?: InputMaybe<Scalars['String']['input']>;
+  personId: Scalars['Int']['input'];
+  recordDate?: InputMaybe<Scalars['String']['input']>;
+  representative?: InputMaybe<Scalars['String']['input']>;
+  teller?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum BankOperationType {
+  Deposit = 'DEPOSIT',
+  Withdrawal = 'WITHDRAWAL'
+}
+
+export type BankTransaction = {
+  __typename?: 'BankTransaction';
+  account?: Maybe<Account>;
+  amount: Scalars['Float']['output'];
+  bankAccount?: Maybe<BankAccount>;
+  createdAt: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  postedDate?: Maybe<Scalars['String']['output']>;
+  referenceNumber: Scalars['String']['output'];
+  status: BankTransactionStatus;
+  transactionDate: Scalars['String']['output'];
+  type: BankTransactionType;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type BankTransactionCreateInput = {
-  accountId: number;
-  amount: unknown;
-  bankAccountId: number;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  referenceNumber?: string | null | undefined;
+  accountId: Scalars['Int']['input'];
+  amount: Scalars['BigDecimal']['input'];
+  bankAccountId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  referenceNumber?: InputMaybe<Scalars['String']['input']>;
   status: BankTransactionStatus;
-  transactionDate: unknown;
+  transactionDate: Scalars['Date']['input'];
   type: BankTransactionType;
 };
 
-export type BankTransactionStatus =
-  | 'CANCELLED'
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'PENDING'
-  | 'REVERSED';
+export enum BankTransactionStatus {
+  Cancelled = 'CANCELLED',
+  Completed = 'COMPLETED',
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Reversed = 'REVERSED'
+}
 
-export type BankTransactionType =
-  | 'DEPOSIT'
-  | 'WITHDRAWAL';
+export enum BankTransactionType {
+  Deposit = 'DEPOSIT',
+  Withdrawal = 'WITHDRAWAL'
+}
 
 export type BankTransactionUpdateInput = {
-  accountId: number;
-  amount: unknown;
-  bankAccountId: number;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: unknown;
-  referenceNumber: string;
+  accountId: Scalars['Int']['input'];
+  amount: Scalars['BigDecimal']['input'];
+  bankAccountId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
+  referenceNumber: Scalars['String']['input'];
   status: BankTransactionStatus;
-  transactionDate: unknown;
+  transactionDate: Scalars['Date']['input'];
   type: BankTransactionType;
+};
+
+export type Bill = {
+  __typename?: 'Bill';
+  address?: Maybe<Scalars['String']['output']>;
+  amount?: Maybe<Scalars['Float']['output']>;
+  balance?: Maybe<Scalars['Float']['output']>;
+  condition?: Maybe<PaymentCondition>;
+  deadline?: Maybe<Scalars['String']['output']>;
+  department?: Maybe<Department>;
+  discount?: Maybe<Scalars['Float']['output']>;
+  distinctProduct?: Maybe<Scalars['Int']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  originalNumber?: Maybe<Scalars['String']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  recordDate: Scalars['String']['output'];
+  schoolYearId: Scalars['Int']['output'];
+  supplier?: Maybe<Supplier>;
+  taxAmount?: Maybe<Scalars['Float']['output']>;
+  voucher?: Maybe<CashVoucher>;
 };
 
 export type BillCreateInput = {
-  address?: string | null | undefined;
+  address?: InputMaybe<Scalars['String']['input']>;
   /**  updateStock: Boolean */
-  conditionId?: number | null | undefined;
-  deadline?: unknown;
-  departmentId?: number | null | undefined;
-  discount?: number | null | undefined;
-  enterpriseId: number;
+  conditionId?: InputMaybe<Scalars['Int']['input']>;
+  deadline?: InputMaybe<Scalars['Date']['input']>;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  enterpriseId: Scalars['Int']['input'];
   /**  operationClassId: Int */
-  items?: Array<BillItemInput | null | undefined> | null | undefined;
-  note?: string | null | undefined;
+  items?: InputMaybe<Array<InputMaybe<BillItemInput>>>;
+  note?: InputMaybe<Scalars['String']['input']>;
   /**  id: Long # ignored field when converting from purchase */
-  number?: string | null | undefined;
-  operationDate: unknown;
-  originalNumber?: string | null | undefined;
-  supplierId: number;
-  voucherId?: unknown;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate: Scalars['Date']['input'];
+  originalNumber?: InputMaybe<Scalars['String']['input']>;
+  supplierId: Scalars['Int']['input'];
+  voucherId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type BillForPayment = {
+  __typename?: 'BillForPayment';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  deadline: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Long']['output'];
+  number: Scalars['String']['output'];
+};
+
+export type BillItem = {
+  __typename?: 'BillItem';
+  description?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['Long']['output'];
+  operationClass?: Maybe<OperationClass>;
+  /** # bill: Bill */
+  product?: Maybe<Product>;
+  quantity: Scalars['Float']['output'];
+  total: Scalars['BigDecimal']['output'];
+  unitPrice: Scalars['BigDecimal']['output'];
 };
 
 export type BillItemInput = {
-  billId?: unknown;
-  description?: string | null | undefined;
-  discount?: number | null | undefined;
-  id?: unknown;
-  operationClassId?: number | null | undefined;
-  productId: unknown;
-  quantity: number;
-  unitPrice: unknown;
+  billId?: InputMaybe<Scalars['Long']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  operationClassId?: InputMaybe<Scalars['Int']['input']>;
+  productId: Scalars['Long']['input'];
+  quantity: Scalars['Float']['input'];
+  unitPrice: Scalars['BigDecimal']['input'];
+};
+
+export type BillPayment = {
+  __typename?: 'BillPayment';
+  amount: Scalars['BigDecimal']['output'];
+  balance: Scalars['BigDecimal']['output'];
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  paymentAccount?: Maybe<Account>;
+  paymentMode?: Maybe<PaymentMode>;
+  recordDate: Scalars['String']['output'];
+  supplier?: Maybe<Supplier>;
 };
 
 export type BillPaymentInput = {
-  amount: unknown;
-  enterpriseId: number;
-  id?: unknown;
-  items?: Array<BillPaymentItemInput> | null | undefined;
-  note?: string | null | undefined;
-  number?: string | null | undefined;
-  operationDate: unknown;
-  operator?: string | null | undefined;
-  paymentAccountId: number;
-  paymentModeId?: number | null | undefined;
-  supplierId: unknown;
+  amount: Scalars['BigDecimal']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  items?: InputMaybe<Array<BillPaymentItemInput>>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate: Scalars['Date']['input'];
+  operator?: InputMaybe<Scalars['String']['input']>;
+  paymentAccountId: Scalars['Int']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  supplierId: Scalars['Long']['input'];
+};
+
+export type BillPaymentItem = {
+  __typename?: 'BillPaymentItem';
+  amount: Scalars['Float']['output'];
+  billId?: Maybe<Scalars['Long']['output']>;
+  id: Scalars['Long']['output'];
+  paymentId?: Maybe<Scalars['Long']['output']>;
 };
 
 export type BillPaymentItemInput = {
-  amount: unknown;
-  billId: unknown;
-  id?: unknown;
-  paymentId?: unknown;
+  amount: Scalars['BigDecimal']['input'];
+  billId: Scalars['Long']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  paymentId?: InputMaybe<Scalars['Long']['input']>;
 };
 
 export type BillUpdateInput = {
-  address?: string | null | undefined;
+  address?: InputMaybe<Scalars['String']['input']>;
   /**  updateStock: Boolean */
-  conditionId?: number | null | undefined;
-  deadline?: unknown;
-  departmentId?: number | null | undefined;
-  discount?: number | null | undefined;
-  enterpriseId: number;
-  id: unknown;
+  conditionId?: InputMaybe<Scalars['Int']['input']>;
+  deadline?: InputMaybe<Scalars['Date']['input']>;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
   /**  operationClassId: Int */
-  items?: Array<BillItemInput | null | undefined> | null | undefined;
-  note?: string | null | undefined;
-  number: string;
-  operationDate: unknown;
-  originalNumber?: string | null | undefined;
-  supplierId: number;
-  voucherId?: number | null | undefined;
+  items?: InputMaybe<Array<InputMaybe<BillItemInput>>>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  operationDate: Scalars['Date']['input'];
+  originalNumber?: InputMaybe<Scalars['String']['input']>;
+  supplierId: Scalars['Int']['input'];
+  voucherId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Branch = {
+  __typename?: 'Branch';
+  branchType?: Maybe<Scalars['String']['output']>;
+  /** other fields */
+  classCount?: Maybe<Scalars['Int']['output']>;
+  groupComplete?: Maybe<Scalars['Boolean']['output']>;
+  groupCount?: Maybe<Scalars['Int']['output']>;
+  hoursCount?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  level?: Maybe<Level>;
+  maxStudent?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  realClassCount?: Maybe<Scalars['Int']['output']>;
+  realSubjectCount?: Maybe<Scalars['Int']['output']>;
+  realTotalCoefficient?: Maybe<Scalars['Int']['output']>;
+  subjectBranchCollection?: Maybe<Array<SubjectBranch>>;
+  subjectCount?: Maybe<Scalars['Int']['output']>;
+  totalCoefficient?: Maybe<Scalars['Int']['output']>;
 };
 
 export type BranchCreateInput = {
-  classCount?: unknown;
-  id?: number | null | undefined;
-  levelId: number;
-  maxStudent?: number | null | undefined;
-  name: string;
-  subjectBranchCollection?: Array<SubjectBranchInput> | null | undefined;
-  subjectCount?: unknown;
-  totalCoefficient?: number | null | undefined;
+  classCount?: InputMaybe<Scalars['Byte']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  levelId: Scalars['Int']['input'];
+  maxStudent?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  subjectBranchCollection?: InputMaybe<Array<SubjectBranchInput>>;
+  subjectCount?: InputMaybe<Scalars['Byte']['input']>;
+  totalCoefficient?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type BranchUpdateInput = {
-  classCount?: unknown;
-  id: number;
-  levelId: number;
-  maxStudent?: number | null | undefined;
-  name: string;
-  subjectBranchCollection?: Array<SubjectBranchInput> | null | undefined;
-  subjectCount?: unknown;
-  totalCoefficient?: number | null | undefined;
+  classCount?: InputMaybe<Scalars['Byte']['input']>;
+  id: Scalars['Int']['input'];
+  levelId: Scalars['Int']['input'];
+  maxStudent?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  subjectBranchCollection?: InputMaybe<Array<SubjectBranchInput>>;
+  subjectCount?: InputMaybe<Scalars['Byte']['input']>;
+  totalCoefficient?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type BrowserInfo = {
+  __typename?: 'BrowserInfo';
+  mobile?: Maybe<Scalars['Boolean']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  os?: Maybe<Scalars['String']['output']>;
+  version?: Maybe<Scalars['String']['output']>;
+  versionNumber?: Maybe<Scalars['String']['output']>;
 };
 
 export type BrowserInfoInput = {
-  mobile?: boolean | null | undefined;
-  name?: string | null | undefined;
-  os?: string | null | undefined;
-  version?: string | null | undefined;
-  versionNumber?: string | null | undefined;
+  mobile?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  os?: InputMaybe<Scalars['String']['input']>;
+  version?: InputMaybe<Scalars['String']['input']>;
+  versionNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type CalculationType =
-  | 'AMOUNT'
-  | 'PERCENTAGE';
+export enum CalculationType {
+  Amount = 'AMOUNT',
+  Percentage = 'PERCENTAGE'
+}
+
+export type CashVoucher = {
+  __typename?: 'CashVoucher';
+  active: Scalars['Boolean']['output'];
+  amount: Scalars['Float']['output'];
+  approvedBy?: Maybe<Scalars['String']['output']>;
+  approvedDate?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<ExpenseCategory>;
+  createdAt: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  department?: Maybe<Department>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  number: Scalars['String']['output'];
+  operator?: Maybe<Scalars['String']['output']>;
+  person?: Maybe<Person>;
+  personType: PersonType;
+  reason: Scalars['String']['output'];
+  status: CashVoucherStatus;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  usedAmount: Scalars['Float']['output'];
+};
 
 export type CashVoucherCreateInput = {
-  amount: number;
-  categoryId: number;
-  date: unknown;
+  amount: Scalars['Float']['input'];
+  categoryId: Scalars['Int']['input'];
+  date: Scalars['Date']['input'];
   /** personType: PersonType! */
-  departmentId?: number | null | undefined;
-  enterpriseId: number;
-  number?: string | null | undefined;
-  operator: string;
-  personId: unknown;
-  reason: string;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  number?: InputMaybe<Scalars['String']['input']>;
+  operator: Scalars['String']['input'];
+  personId: Scalars['Long']['input'];
+  reason: Scalars['String']['input'];
 };
 
-export type CashVoucherStatus =
-  | 'APPROVED'
-  | 'CANCELLED'
-  | 'REJECTED'
-  | 'WAITING';
+export enum CashVoucherStatus {
+  Approved = 'APPROVED',
+  Cancelled = 'CANCELLED',
+  Rejected = 'REJECTED',
+  Waiting = 'WAITING'
+}
 
 export type CashVoucherUpdateInput = {
-  amount: number;
-  categoryId: number;
-  date: unknown;
+  amount: Scalars['Float']['input'];
+  categoryId: Scalars['Int']['input'];
+  date: Scalars['Date']['input'];
   /**  personType: PersonType! */
-  departmentId?: number | null | undefined;
-  enterpriseId: number;
-  id: unknown;
-  number: string;
-  operator: string;
-  personId: unknown;
-  reason: string;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
+  number: Scalars['String']['input'];
+  operator: Scalars['String']['input'];
+  personId: Scalars['Long']['input'];
+  reason: Scalars['String']['input'];
+};
+
+export type ChartOfAccount = {
+  __typename?: 'ChartOfAccount';
+  accountCategory?: Maybe<AccountCategory>;
+  accountCategoryId?: Maybe<Scalars['Int']['output']>;
+  /** accountModel: AccountModel */
+  accountGroup?: Maybe<AccountGroup>;
+  accountGroupId?: Maybe<Scalars['Int']['output']>;
+  active?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  logCodes?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  parent?: Maybe<ChartOfAccount>;
+  parentId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChartOfAccountInput = {
-  accountCategoryId?: number | null | undefined;
+  accountCategoryId?: InputMaybe<Scalars['Int']['input']>;
   /** accountModel: AccountModel */
-  accountGroupId?: number | null | undefined;
-  active?: boolean | null | undefined;
-  id: number;
-  logCode?: string | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  number: string;
-  parentId?: number | null | undefined;
+  accountGroupId?: InputMaybe<Scalars['Int']['input']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  logCode?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Civility =
-  | 'MADAM'
-  | 'MISS'
-  | 'SIR';
+export enum Civility {
+  Madam = 'MADAM',
+  Miss = 'MISS',
+  Sir = 'SIR'
+}
+
+export type Clazz = {
+  __typename?: 'Clazz';
+  autoTimeTable?: Maybe<Scalars['Boolean']['output']>;
+  branch?: Maybe<Branch>;
+  classDelegate?: Maybe<Student>;
+  classPrefect?: Maybe<Student>;
+  classPrefectAssistant?: Maybe<Student>;
+  code?: Maybe<Scalars['String']['output']>;
+  competenceClass?: Maybe<Scalars['Boolean']['output']>;
+  examClass?: Maybe<Scalars['Boolean']['output']>;
+  headTeacher?: Maybe<Teacher>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
 
 export type ClazzInput = {
-  autoTimeTable?: boolean | null | undefined;
-  branchId?: number | null | undefined;
-  classDelegateId?: unknown;
-  classPrefectAssistantId?: unknown;
-  classPrefectId?: unknown;
-  code?: string | null | undefined;
-  competenceClass: boolean;
-  examClass?: boolean | null | undefined;
-  headTeacherId?: unknown;
-  id?: number | null | undefined;
-  name: string;
+  autoTimeTable?: InputMaybe<Scalars['Boolean']['input']>;
+  branchId?: InputMaybe<Scalars['Int']['input']>;
+  classDelegateId?: InputMaybe<Scalars['Long']['input']>;
+  classPrefectAssistantId?: InputMaybe<Scalars['Long']['input']>;
+  classPrefectId?: InputMaybe<Scalars['Long']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  competenceClass: Scalars['Boolean']['input'];
+  examClass?: InputMaybe<Scalars['Boolean']['input']>;
+  headTeacherId?: InputMaybe<Scalars['Long']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type Competence = {
+  __typename?: 'Competence';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  level?: Maybe<Level>;
+  levelId: Scalars['Int']['output'];
+  marks: Scalars['Short']['output'];
+  name: Scalars['String']['output'];
+  numberOrder: Scalars['Short']['output'];
+  school?: Maybe<School>;
+  schoolId: Scalars['Int']['output'];
 };
 
 export type CompetenceCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  levelId: number;
-  marks: unknown;
-  name: string;
-  numberOrder: unknown;
-  schoolId: number;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  levelId: Scalars['Int']['input'];
+  marks: Scalars['Short']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type CompetenceLevel = {
+  __typename?: 'CompetenceLevel';
+  items: Array<CompetenceLevelItem>;
+  levelId: Scalars['Int']['output'];
+  levelName: Scalars['String']['output'];
+  schoolId: Scalars['Int']['output'];
 };
 
 export type CompetenceLevelInput = {
   items: Array<CompetenceLevelItemInput>;
-  levelId: number;
-  levelName: string;
-  schoolId: number;
+  levelId: Scalars['Int']['input'];
+  levelName: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type CompetenceLevelItem = {
+  __typename?: 'CompetenceLevelItem';
+  active: Scalars['Boolean']['output'];
+  competenceId: Scalars['Int']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  marks: Scalars['Short']['output'];
+  name: Scalars['String']['output'];
+  numberOrder: Scalars['Short']['output'];
 };
 
 export type CompetenceLevelItemInput = {
-  active: boolean;
-  competenceId?: number | null | undefined;
-  description?: string | null | undefined;
-  marks: unknown;
-  name: string;
-  numberOrder: unknown;
+  active: Scalars['Boolean']['input'];
+  competenceId?: InputMaybe<Scalars['Int']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  marks: Scalars['Short']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
 };
 
 export type CompetenceUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  id: number;
-  levelId: number;
-  marks: unknown;
-  name: string;
-  numberOrder: unknown;
-  schoolId: number;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  levelId: Scalars['Int']['input'];
+  marks: Scalars['Short']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type Configuration = {
+  __typename?: 'Configuration';
+  configData?: Maybe<Scalars['String']['output']>;
+  configurationPK: ConfigurationPk;
+  createdBy?: Maybe<Scalars['String']['output']>;
+  createdDate?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['String']['output'];
+  lastModifiedBy?: Maybe<Scalars['String']['output']>;
+  lastModifiedDate?: Maybe<Scalars['String']['output']>;
 };
 
 export type ConfigurationInput = {
-  configData?: string | null | undefined;
+  configData?: InputMaybe<Scalars['String']['input']>;
   configurationPK: ConfigurationPkInput;
 };
 
+export type ConfigurationPk = {
+  __typename?: 'ConfigurationPK';
+  enterpriseId: Scalars['Int']['output'];
+  key: Scalars['String']['output'];
+};
+
 export type ConfigurationPkInput = {
-  enterpriseId: number;
-  key: string;
+  enterpriseId: Scalars['Int']['input'];
+  key: Scalars['String']['input'];
+};
+
+export type ContactInfo = {
+  __typename?: 'ContactInfo';
+  email?: Maybe<Scalars['String']['output']>;
+  fax?: Maybe<Scalars['String']['output']>;
+  mobile?: Maybe<Scalars['String']['output']>;
+  postOfficeBox?: Maybe<Scalars['String']['output']>;
+  skype?: Maybe<Scalars['String']['output']>;
+  telephone?: Maybe<Scalars['String']['output']>;
+  telephone2?: Maybe<Scalars['String']['output']>;
 };
 
 export type ContactInput = {
-  email?: string | null | undefined;
-  fax?: string | null | undefined;
-  mobile?: string | null | undefined;
-  postOfficeBox?: string | null | undefined;
-  skype?: string | null | undefined;
-  telephone?: string | null | undefined;
-  telephone2?: string | null | undefined;
+  email?: InputMaybe<Scalars['String']['input']>;
+  fax?: InputMaybe<Scalars['String']['input']>;
+  mobile?: InputMaybe<Scalars['String']['input']>;
+  postOfficeBox?: InputMaybe<Scalars['String']['input']>;
+  skype?: InputMaybe<Scalars['String']['input']>;
+  telephone?: InputMaybe<Scalars['String']['input']>;
+  telephone2?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CouncilDecision = {
+  __typename?: 'CouncilDecision';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code: Scalars['String']['output'];
+  decisionType: DecisionType;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
 };
 
 export type CouncilDecisionInput = {
-  active?: boolean | null | undefined;
-  code: string;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code: Scalars['String']['input'];
   decisionType: DecisionType;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  schoolId: number;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
+};
+
+export type Currency = {
+  __typename?: 'Currency';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code: Scalars['String']['output'];
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type CurrencyInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code: Scalars['String']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type Customer = Person & {
+  __typename?: 'Customer';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  birthDate?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<CustomerCategory>;
+  contactInfo?: Maybe<ContactInfo>;
+  customerAccount?: Maybe<Account>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  id: Scalars['Long']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  paymentCondition?: Maybe<PaymentCondition>;
+  paymentMode?: Maybe<PaymentMode>;
+  /** Customer fields */
+  prefix?: Maybe<Scalars['String']['output']>;
+  taxNumber?: Maybe<Scalars['String']['output']>;
+  tradeRegister?: Maybe<Scalars['String']['output']>;
+  webSite?: Maybe<Scalars['String']['output']>;
+};
+
+export type CustomerCategory = {
+  __typename?: 'CustomerCategory';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<CustomerCategory>;
 };
 
 export type CustomerCategoryCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CustomerCategoryUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type CustomerCreateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
   /** Supplier fields */
-  birthDate?: unknown;
-  categoryId: number;
-  contactInfo?: ContactInput | null | undefined;
-  customerAccountId: number;
-  displayName: string;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  lastName?: string | null | undefined;
-  note?: string | null | undefined;
-  paymentConditionId?: number | null | undefined;
-  paymentModeId?: number | null | undefined;
-  prefix?: string | null | undefined;
-  taxNumber?: string | null | undefined;
-  tradeRegister?: string | null | undefined;
-  webSite?: string | null | undefined;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  categoryId: Scalars['Int']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  customerAccountId: Scalars['Int']['input'];
+  displayName: Scalars['String']['input'];
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  paymentConditionId?: InputMaybe<Scalars['Int']['input']>;
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  prefix?: InputMaybe<Scalars['String']['input']>;
+  taxNumber?: InputMaybe<Scalars['String']['input']>;
+  tradeRegister?: InputMaybe<Scalars['String']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type CustomerOperationType =
-  | 'INVOICE'
-  | 'PAYMENT'
-  | 'SCHOOL_FEES';
+export type CustomerOperation = {
+  __typename?: 'CustomerOperation';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  className?: Maybe<Scalars['String']['output']>;
+  customer: Scalars['String']['output'];
+  customerOperationType: CustomerOperationType;
+  discount?: Maybe<Scalars['Float']['output']>;
+  distinctProduct?: Maybe<Scalars['Int']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  operationId: Scalars['Long']['output'];
+  quantity?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CustomerOperationResult = {
+  __typename?: 'CustomerOperationResult';
+  operations?: Maybe<Array<CustomerOperation>>;
+  paymentInfo?: Maybe<PaymentInfo>;
+};
+
+export enum CustomerOperationType {
+  Invoice = 'INVOICE',
+  Payment = 'PAYMENT',
+  SchoolFees = 'SCHOOL_FEES'
+}
 
 export type CustomerUpdateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
   /** Supplier fields */
-  birthDate?: unknown;
-  categoryId: number;
-  contactInfo?: ContactInput | null | undefined;
-  customerAccountId: number;
-  displayName: string;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  id: unknown;
-  lastName?: string | null | undefined;
-  note?: string | null | undefined;
-  paymentConditionId?: number | null | undefined;
-  paymentModeId?: number | null | undefined;
-  prefix?: string | null | undefined;
-  taxNumber?: string | null | undefined;
-  tradeRegister?: string | null | undefined;
-  webSite?: string | null | undefined;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  categoryId: Scalars['Int']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  customerAccountId: Scalars['Int']['input'];
+  displayName: Scalars['String']['input'];
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  id: Scalars['Long']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  paymentConditionId?: InputMaybe<Scalars['Int']['input']>;
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  prefix?: InputMaybe<Scalars['String']['input']>;
+  taxNumber?: InputMaybe<Scalars['String']['input']>;
+  tradeRegister?: InputMaybe<Scalars['String']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Cycle = {
+  __typename?: 'Cycle';
+  id: Scalars['Int']['output'];
+  levelCount?: Maybe<Scalars['Byte']['output']>;
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  schoolSection?: Maybe<SchoolSection>;
+  schoolYear?: Maybe<SchoolYear>;
 };
 
 export type CycleInput = {
-  id?: number | null | undefined;
-  levelCount?: unknown;
-  name: string;
-  name2?: string | null | undefined;
-  numberOrder: number;
-  schoolSectionId: number;
-  schoolYearId: number;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  levelCount?: InputMaybe<Scalars['Byte']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  schoolSectionId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+export type CycleSetup = {
+  __typename?: 'CycleSetup';
+  levelCount?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  name2: Scalars['String']['output'];
+  numberOrder: Scalars['Int']['output'];
+  schoolSection?: Maybe<SchoolSection>;
+  schoolSectionId: Scalars['Int']['output'];
 };
 
 export type CycleSetupInput = {
-  levelCount: number;
-  name: string;
-  name2: string;
-  numberOrder: number;
-  schoolSectionId: number;
+  levelCount: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  name2: Scalars['String']['input'];
+  numberOrder: Scalars['Int']['input'];
+  schoolSectionId: Scalars['Int']['input'];
+};
+
+export type Dashboard = {
+  __typename?: 'Dashboard';
+  branches?: Maybe<Scalars['Int']['output']>;
+  classes?: Maybe<Scalars['Int']['output']>;
+  cycles?: Maybe<Scalars['Int']['output']>;
+  levels?: Maybe<Scalars['Int']['output']>;
+  personnel?: Maybe<Scalars['Int']['output']>;
+  sections?: Maybe<Scalars['Int']['output']>;
+  students?: Maybe<Scalars['Int']['output']>;
+  users?: Maybe<Scalars['Int']['output']>;
+};
+
+export type DayOfClass = {
+  __typename?: 'DayOfClass';
+  active: Scalars['Boolean']['output'];
+  closingTime?: Maybe<TimeSlot>;
+  dayOfWeek: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  openingTime?: Maybe<TimeSlot>;
 };
 
 export type DayOfClassCreateInput = {
-  active: boolean;
-  closingTimeId: number;
-  dayOfWeek: string;
-  openingTimeId: number;
-  schoolId: number;
+  active: Scalars['Boolean']['input'];
+  closingTimeId: Scalars['Int']['input'];
+  dayOfWeek: Scalars['String']['input'];
+  openingTimeId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 };
 
 export type DayOfClassUpdateInput = {
-  active: boolean;
-  closingTimeId: number;
-  dayOfWeek: string;
-  id: number;
-  openingTimeId: number;
-  schoolId: number;
+  active: Scalars['Boolean']['input'];
+  closingTimeId: Scalars['Int']['input'];
+  dayOfWeek: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
+  openingTimeId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 };
 
-export type DecisionType =
-  | 'ADMISSIBLE'
-  | 'EXCLUDED'
-  | 'REPEAT';
+export enum DecisionType {
+  Admissible = 'ADMISSIBLE',
+  Excluded = 'EXCLUDED',
+  Repeat = 'REPEAT'
+}
+
+export type Deduction = {
+  __typename?: 'Deduction';
+  active: Scalars['Boolean']['output'];
+  calculationType: CalculationType;
+  category?: Maybe<DeductionCategory>;
+  categoryId: Scalars['Int']['output'];
+  code?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type DeductionCategory = {
+  __typename?: 'DeductionCategory';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  mandatory: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  numberOrder: Scalars['Short']['output'];
+};
 
 export type DeductionCategoryCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  mandatory: boolean;
-  name: string;
-  numberOrder: unknown;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  mandatory: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
 };
 
 export type DeductionCategoryUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  mandatory: boolean;
-  name: string;
-  numberOrder: unknown;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  mandatory: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
 };
 
 export type DeductionCreateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   calculationType: CalculationType;
-  categoryId: number;
-  code?: string | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
+  categoryId: Scalars['Int']['input'];
+  code?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type DeductionUpdateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   calculationType: CalculationType;
-  categoryId: number;
-  code?: string | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
+  categoryId: Scalars['Int']['input'];
+  code?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type Department = {
+  __typename?: 'Department';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  manager?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type DepartmentCreateInput = {
-  active?: boolean | null | undefined;
-  enterpriseId: number;
-  manager?: string | null | undefined;
-  name: string;
-  note?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  manager?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DepartmentUpdateInput = {
-  active?: boolean | null | undefined;
-  enterpriseId: number;
-  id: number;
-  manager?: string | null | undefined;
-  name: string;
-  note?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  manager?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DirectionType =
-  | 'CREDIT'
-  | 'DEBIT';
+export enum DirectionType {
+  Credit = 'CREDIT',
+  Debit = 'DEBIT'
+}
+
+export type DisciplineJson = {
+  __typename?: 'DisciplineJson';
+  blame?: Maybe<Scalars['String']['output']>;
+  definitiveExclusion?: Maybe<Scalars['String']['output']>;
+  exclusion3?: Maybe<Scalars['String']['output']>;
+  exclusion5?: Maybe<Scalars['String']['output']>;
+  exclusion8?: Maybe<Scalars['String']['output']>;
+  warning?: Maybe<Scalars['String']['output']>;
+};
 
 export type DisciplineJsonInput = {
-  blame?: string | null | undefined;
-  definitiveExclusion?: string | null | undefined;
-  exclusion3?: string | null | undefined;
-  exclusion5?: string | null | undefined;
-  exclusion8?: string | null | undefined;
-  warning?: string | null | undefined;
+  blame?: InputMaybe<Scalars['String']['input']>;
+  definitiveExclusion?: InputMaybe<Scalars['String']['input']>;
+  exclusion3?: InputMaybe<Scalars['String']['input']>;
+  exclusion5?: InputMaybe<Scalars['String']['input']>;
+  exclusion8?: InputMaybe<Scalars['String']['input']>;
+  warning?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Discount = {
+  __typename?: 'Discount';
+  active: Scalars['Boolean']['output'];
+  discountType: DiscountType;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  value: Scalars['Float']['output'];
 };
 
 export type DiscountCreateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   discountType: DiscountType;
-  enterpriseId: number;
-  name: string;
-  note?: string | null | undefined;
-  value: number;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  value: Scalars['Float']['input'];
 };
 
-export type DiscountType =
-  | 'AMOUNT'
-  | 'PERCENT';
+export enum DiscountType {
+  Amount = 'AMOUNT',
+  Percent = 'PERCENT'
+}
 
 export type DiscountUpdateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   discountType: DiscountType;
-  enterpriseId: number;
-  id: number;
-  name: string;
-  note?: string | null | undefined;
-  value: number;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  value: Scalars['Float']['input'];
+};
+
+export type Distribution = {
+  __typename?: 'Distribution';
+  clazz?: Maybe<Clazz>;
+  coTeacher?: Maybe<Teacher>;
+  distributionPK?: Maybe<DistributionPk>;
+  headerTeacher?: Maybe<Scalars['Boolean']['output']>;
+  subject?: Maybe<Subject>;
+  teacher?: Maybe<Teacher>;
+  weekHoursCount?: Maybe<Scalars['Int']['output']>;
 };
 
 export type DistributionInput = {
-  coTeacherId?: unknown;
-  distributionPK?: DistributionPkInput | null | undefined;
-  headerTeacher?: boolean | null | undefined;
-  teacherId?: unknown;
-  weekHoursCount?: unknown;
+  coTeacherId?: InputMaybe<Scalars['Long']['input']>;
+  distributionPK?: InputMaybe<DistributionPkInput>;
+  headerTeacher?: InputMaybe<Scalars['Boolean']['input']>;
+  teacherId?: InputMaybe<Scalars['Long']['input']>;
+  weekHoursCount?: InputMaybe<Scalars['Byte']['input']>;
+};
+
+export type DistributionPk = {
+  __typename?: 'DistributionPK';
+  classId: Scalars['Int']['output'];
+  schoolYearId: Scalars['Int']['output'];
+  subjectId: Scalars['Int']['output'];
 };
 
 export type DistributionPkInput = {
-  classId?: number | null | undefined;
-  schoolYearId?: number | null | undefined;
-  subjectId?: number | null | undefined;
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type DocumentHeaderJson = {
+  __typename?: 'DocumentHeaderJson';
+  departmentalDelegation?: Maybe<Scalars['String']['output']>;
+  leftHeader?: Maybe<Scalars['String']['output']>;
+  regionalDelegation?: Maybe<Scalars['String']['output']>;
+  rightHeader?: Maybe<Scalars['String']['output']>;
 };
 
 export type DocumentHeaderJsonInput = {
-  departmentalDelegation?: string | null | undefined;
-  leftHeader?: string | null | undefined;
-  regionalDelegation?: string | null | undefined;
-  rightHeader?: string | null | undefined;
+  departmentalDelegation?: InputMaybe<Scalars['String']['input']>;
+  leftHeader?: InputMaybe<Scalars['String']['input']>;
+  regionalDelegation?: InputMaybe<Scalars['String']['input']>;
+  rightHeader?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DuplicatedStudent = {
+  __typename?: 'DuplicatedStudent';
+  birthDate?: Maybe<Scalars['String']['output']>;
+  birthplace?: Maybe<Scalars['String']['output']>;
+  clazz?: Maybe<Scalars['String']['output']>;
+  clazzId?: Maybe<Scalars['Int']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  /** student id */
+  lastName?: Maybe<Scalars['String']['output']>;
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  repeater?: Maybe<Scalars['Boolean']['output']>;
+  schoolYearId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type DuplicatedStudentCriteria = {
-  birthDate?: boolean | null | undefined;
-  birthplace?: boolean | null | undefined;
-  firstName?: boolean | null | undefined;
-  gender?: boolean | null | undefined;
-  lastName?: boolean | null | undefined;
-  search?: string | null | undefined;
+  birthDate?: InputMaybe<Scalars['Boolean']['input']>;
+  birthplace?: InputMaybe<Scalars['Boolean']['input']>;
+  firstName?: InputMaybe<Scalars['Boolean']['input']>;
+  gender?: InputMaybe<Scalars['Boolean']['input']>;
+  lastName?: InputMaybe<Scalars['Boolean']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DuplicatedStudentJson = {
+  __typename?: 'DuplicatedStudentJson';
+  includeBirthDate: Scalars['Boolean']['output'];
+  includeBirthplace: Scalars['Boolean']['output'];
+  includeFirstName: Scalars['Boolean']['output'];
+  includeGender: Scalars['Boolean']['output'];
+  includeLastName: Scalars['Boolean']['output'];
+  verifyDuplicatedStudent: Scalars['Boolean']['output'];
 };
 
 export type DuplicatedStudentJsonInput = {
-  includeBirthDate: boolean;
-  includeBirthplace: boolean;
-  includeFirstName: boolean;
-  includeGender: boolean;
-  includeLastName: boolean;
-  verifyDuplicatedStudent: boolean;
+  includeBirthDate: Scalars['Boolean']['input'];
+  includeBirthplace: Scalars['Boolean']['input'];
+  includeFirstName: Scalars['Boolean']['input'];
+  includeGender: Scalars['Boolean']['input'];
+  includeLastName: Scalars['Boolean']['input'];
+  verifyDuplicatedStudent: Scalars['Boolean']['input'];
+};
+
+export type Earning = {
+  __typename?: 'Earning';
+  active: Scalars['Boolean']['output'];
+  calculationType: CalculationType;
+  category?: Maybe<EarningCategory>;
+  categoryId: Scalars['Int']['output'];
+  code?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  isOvertime: Scalars['Boolean']['output'];
+  isTaxable: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type EarningCategory = {
+  __typename?: 'EarningCategory';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  numberOrder: Scalars['Short']['output'];
 };
 
 export type EarningCategoryCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
-  numberOrder: unknown;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
 };
 
 export type EarningCategoryUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
-  numberOrder: unknown;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Short']['input'];
 };
 
 export type EarningCreateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   calculationType: CalculationType;
-  categoryId: number;
-  code?: string | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  isOvertime: boolean;
-  isTaxable: boolean;
-  name: string;
+  categoryId: Scalars['Int']['input'];
+  code?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  isOvertime: Scalars['Boolean']['input'];
+  isTaxable: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type EarningUpdateInput = {
-  active: boolean;
+  active: Scalars['Boolean']['input'];
   calculationType: CalculationType;
-  categoryId: number;
-  code?: string | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  isOvertime: boolean;
-  isTaxable: boolean;
-  name: string;
+  categoryId: Scalars['Int']['input'];
+  code?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  isOvertime: Scalars['Boolean']['input'];
+  isTaxable: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type Employee = {
+  __typename?: 'Employee';
+  baseSalary?: Maybe<Scalars['BigDecimal']['output']>;
+  createdAt: Scalars['String']['output'];
+  department?: Maybe<Department>;
+  employmentStatus?: Maybe<EmploymentStatus>;
+  employmentType?: Maybe<EmploymentType>;
+  enterpriseId: Scalars['Int']['output'];
+  /**  National Social Insurance Fund */
+  hireDate?: Maybe<Scalars['String']['output']>;
+  hourlySalary?: Maybe<Scalars['BigDecimal']['output']>;
+  id: Scalars['Int']['output'];
+  nsifNumber?: Maybe<Scalars['String']['output']>;
+  payType?: Maybe<PayType>;
+  personnel?: Maybe<Personnel>;
+  position?: Maybe<Position>;
+  terminationDate?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type EmployeeCreateInput = {
-  baseSalary?: unknown;
-  departmentId?: number | null | undefined;
-  employmentStatus?: EmploymentStatus | null | undefined;
-  employmentType?: EmploymentType | null | undefined;
-  enterpriseId: number;
-  hireDate?: unknown;
-  hourlySalary?: unknown;
-  nsifNumber?: string | null | undefined;
+  baseSalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  employmentStatus?: InputMaybe<EmploymentStatus>;
+  employmentType?: InputMaybe<EmploymentType>;
+  enterpriseId: Scalars['Int']['input'];
+  hireDate?: InputMaybe<Scalars['Date']['input']>;
+  hourlySalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  nsifNumber?: InputMaybe<Scalars['String']['input']>;
   payType: PayType;
-  personnelId: unknown;
-  positionId?: number | null | undefined;
-  terminationDate?: unknown;
+  personnelId: Scalars['Long']['input'];
+  positionId?: InputMaybe<Scalars['Int']['input']>;
+  terminationDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type EmployeeDeduction = {
+  __typename?: 'EmployeeDeduction';
+  base: Scalars['BigDecimal']['output'];
+  deduction?: Maybe<Deduction>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  payrollId: Scalars['Long']['output'];
+  rate: Scalars['BigDecimal']['output'];
 };
 
 export type EmployeeDeductionInput = {
-  base: unknown;
-  deductionId: number;
-  description?: string | null | undefined;
-  id?: unknown;
-  payrollId?: unknown;
-  rate: unknown;
+  base: Scalars['BigDecimal']['input'];
+  deductionId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  payrollId?: InputMaybe<Scalars['Long']['input']>;
+  rate: Scalars['BigDecimal']['input'];
+};
+
+export type EmployeeEarning = {
+  __typename?: 'EmployeeEarning';
+  base: Scalars['BigDecimal']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  earning?: Maybe<Earning>;
+  id: Scalars['Long']['output'];
+  isTaxable?: Maybe<Scalars['Boolean']['output']>;
+  payrollId: Scalars['Long']['output'];
+  rate: Scalars['BigDecimal']['output'];
 };
 
 export type EmployeeEarningInput = {
-  base: unknown;
-  description?: string | null | undefined;
-  earningId: number;
-  id?: unknown;
-  isTaxable: boolean;
-  payrollId?: unknown;
-  rate: unknown;
+  base: Scalars['BigDecimal']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  earningId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  isTaxable: Scalars['Boolean']['input'];
+  payrollId?: InputMaybe<Scalars['Long']['input']>;
+  rate: Scalars['BigDecimal']['input'];
 };
 
 export type EmployeeUpdateInput = {
-  baseSalary?: unknown;
-  departmentId?: number | null | undefined;
-  employmentStatus?: EmploymentStatus | null | undefined;
-  employmentType?: EmploymentType | null | undefined;
-  enterpriseId: number;
-  hireDate?: unknown;
-  hourlySalary?: unknown;
-  id: number;
-  nsifNumber?: string | null | undefined;
+  baseSalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  employmentStatus?: InputMaybe<EmploymentStatus>;
+  employmentType?: InputMaybe<EmploymentType>;
+  enterpriseId: Scalars['Int']['input'];
+  hireDate?: InputMaybe<Scalars['Date']['input']>;
+  hourlySalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  id: Scalars['Int']['input'];
+  nsifNumber?: InputMaybe<Scalars['String']['input']>;
   payType: PayType;
-  personnelId: unknown;
-  positionId?: number | null | undefined;
-  terminationDate?: unknown;
+  personnelId: Scalars['Long']['input'];
+  positionId?: InputMaybe<Scalars['Int']['input']>;
+  terminationDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type EmployerDeduction = {
+  __typename?: 'EmployerDeduction';
+  base: Scalars['BigDecimal']['output'];
+  deduction?: Maybe<Deduction>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  payrollId: Scalars['Long']['output'];
+  rate: Scalars['BigDecimal']['output'];
 };
 
 export type EmployerDeductionInput = {
-  base: unknown;
-  deductionId: number;
-  description?: string | null | undefined;
-  id?: unknown;
-  payrollId?: unknown;
-  rate: unknown;
+  base: Scalars['BigDecimal']['input'];
+  deductionId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  payrollId?: InputMaybe<Scalars['Long']['input']>;
+  rate: Scalars['BigDecimal']['input'];
 };
 
-export type EmploymentStatus =
-  | 'ACTIVE'
-  | 'ON_LEAVE'
-  | 'RETIRED'
-  | 'SUSPENDED'
-  | 'TERMINATED';
+export enum EmploymentStatus {
+  Active = 'ACTIVE',
+  OnLeave = 'ON_LEAVE',
+  Retired = 'RETIRED',
+  Suspended = 'SUSPENDED',
+  Terminated = 'TERMINATED'
+}
 
-export type EmploymentType =
-  | 'CONTRACT'
-  | 'FULL_TIME'
-  | 'PART_TIME'
-  | 'TEMPORARY';
+export enum EmploymentType {
+  Contract = 'CONTRACT',
+  FullTime = 'FULL_TIME',
+  PartTime = 'PART_TIME',
+  Temporary = 'TEMPORARY'
+}
+
+export type EnrollmentHistory = {
+  __typename?: 'EnrollmentHistory';
+  classId?: Maybe<Scalars['Int']['output']>;
+  className?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  schoolYearId?: Maybe<Scalars['Int']['output']>;
+  schoolYearLabel?: Maybe<Scalars['String']['output']>;
+  studentId?: Maybe<Scalars['Long']['output']>;
+};
+
+export type Enterprise = {
+  __typename?: 'Enterprise';
+  /**  parent: Enterprise */
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  contactInfo?: Maybe<ContactInfo>;
+  id: Scalars['Int']['output'];
+  legalInfo?: Maybe<LegalInfo>;
+  logo?: Maybe<Scalars['String']['output']>;
+  motto?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  webSite?: Maybe<Scalars['String']['output']>;
+};
 
 export type EnterpriseId = {
-  id?: number | null | undefined;
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type EnterpriseInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  contactInfo?: InputMaybe<ContactInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  legalInfo?: InputMaybe<LegalInput>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  motto?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EnterpriseReport = {
+  __typename?: 'EnterpriseReport';
+  enterprise?: Maybe<Enterprise>;
+  enterpriseReportPK: EnterpriseReportPk;
+  favorite?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type EnterpriseReportPk = {
+  __typename?: 'EnterpriseReportPK';
+  enterpriseId?: Maybe<Scalars['Int']['output']>;
+  reportItemId?: Maybe<Scalars['Int']['output']>;
+};
+
+export type EvalComp = {
+  __typename?: 'EvalComp';
+  active: Scalars['Boolean']['output'];
+  clazz?: Maybe<Clazz>;
+  competence: Scalars['String']['output'];
+  id?: Maybe<Scalars['Int']['output']>;
+  period?: Maybe<Period>;
+  subject?: Maybe<Subject>;
 };
 
 export type EvalCompInput = {
-  classId: number;
+  classId: Scalars['Int']['input'];
   items: Array<EvalCompItemInput>;
-  periodId: number;
-  subjectId: number;
-  subjectName: string;
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  subjectName: Scalars['String']['input'];
+};
+
+export type EvalCompItem = {
+  __typename?: 'EvalCompItem';
+  active: Scalars['Boolean']['output'];
+  competence: Scalars['String']['output'];
+  id?: Maybe<Scalars['Int']['output']>;
+  numberOrder: Scalars['Int']['output'];
 };
 
 export type EvalCompItemInput = {
-  active: boolean;
-  competence: string;
-  id?: number | null | undefined;
-  numberOrder: number;
+  active: Scalars['Boolean']['input'];
+  competence: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  numberOrder: Scalars['Int']['input'];
+};
+
+export type EvalCompResult = {
+  __typename?: 'EvalCompResult';
+  classId: Scalars['Int']['output'];
+  items: Array<EvalCompItem>;
+  periodId: Scalars['Int']['output'];
+  subjectId: Scalars['Int']['output'];
+  subjectName: Scalars['String']['output'];
+};
+
+export type EvalType = {
+  __typename?: 'EvalType';
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  school?: Maybe<School>;
+  schoolId: Scalars['Int']['output'];
 };
 
 export type EvalTypeInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  id?: number | null | undefined;
-  name: string;
-  schoolId: number;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type EvaluationType = {
+  __typename?: 'EvaluationType';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  school?: Maybe<School>;
+  unit: Scalars['String']['output'];
+};
+
+export type EvaluationTypeInput = {
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+  unit: Scalars['String']['input'];
+};
+
+export type ExpectedCompetence = {
+  __typename?: 'ExpectedCompetence';
+  clazz?: Maybe<Clazz>;
+  competence?: Maybe<Scalars['String']['output']>;
+  expectedCompetencePK?: Maybe<ExpectedCompetencePk>;
+  period?: Maybe<Period>;
+  subject?: Maybe<Subject>;
 };
 
 export type ExpectedCompetenceInput = {
-  competence: string;
-  expectedCompetencePK?: ExpectedCompetencePkInput | null | undefined;
-  subjectName?: string | null | undefined;
+  competence: Scalars['String']['input'];
+  expectedCompetencePK?: InputMaybe<ExpectedCompetencePkInput>;
+  subjectName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ExpectedCompetencePk = {
+  __typename?: 'ExpectedCompetencePK';
+  classId: Scalars['Int']['output'];
+  periodId: Scalars['Int']['output'];
+  subjectId: Scalars['Int']['output'];
 };
 
 export type ExpectedCompetencePkInput = {
-  classId: number;
-  periodId: number;
-  subjectId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+export type Expense = {
+  __typename?: 'Expense';
+  amount?: Maybe<Scalars['Float']['output']>;
+  department?: Maybe<Department>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  paymentAccount?: Maybe<Account>;
+  paymentMode?: Maybe<PaymentMode>;
+  quantity: Scalars['Float']['output'];
+  recordDate: Scalars['String']['output'];
+  taxAmount?: Maybe<Scalars['Float']['output']>;
+  voucher?: Maybe<CashVoucher>;
+};
+
+export type ExpenseCategory = {
+  __typename?: 'ExpenseCategory';
+  account?: Maybe<Account>;
+  active: Scalars['Boolean']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  maxAllowedAmount?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
 };
 
 export type ExpenseCategoryCreateInput = {
-  accountId: number;
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  maxAllowedAmount?: number | null | undefined;
-  name: string;
+  accountId: Scalars['Int']['input'];
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  maxAllowedAmount?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type ExpenseCategoryUpdateInput = {
-  accountId: number;
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  maxAllowedAmount?: number | null | undefined;
-  name: string;
+  accountId: Scalars['Int']['input'];
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  maxAllowedAmount?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type ExpenseCreateInput = {
-  departmentId?: number | null | undefined;
-  enterpriseId: number;
-  items?: Array<ExpenseItemInput> | null | undefined;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  items?: InputMaybe<Array<ExpenseItemInput>>;
   /** expense Fields */
-  note?: string | null | undefined;
-  number?: string | null | undefined;
-  operationDate?: unknown;
-  paymentAccountId: number;
-  paymentModeId?: number | null | undefined;
-  username?: string | null | undefined;
-  voucherId?: unknown;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate?: InputMaybe<Scalars['Date']['input']>;
+  paymentAccountId: Scalars['Int']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+  voucherId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type ExpenseItem = {
+  __typename?: 'ExpenseItem';
+  category?: Maybe<ExpenseCategory>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  /** expense: Expense */
+  operationClass?: Maybe<OperationClass>;
+  person?: Maybe<Person>;
+  quantity: Scalars['Float']['output'];
+  unitPrice: Scalars['Float']['output'];
 };
 
 export type ExpenseItemInput = {
-  categoryId: number;
-  description?: string | null | undefined;
-  expenseId?: unknown;
-  id?: unknown;
-  operationClassId?: number | null | undefined;
-  personId?: unknown;
-  quantity: number;
-  unitPrice: unknown;
+  categoryId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  expenseId?: InputMaybe<Scalars['Long']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  operationClassId?: InputMaybe<Scalars['Int']['input']>;
+  personId?: InputMaybe<Scalars['Long']['input']>;
+  quantity: Scalars['Float']['input'];
+  unitPrice: Scalars['BigDecimal']['input'];
+};
+
+export type ExpenseJson = {
+  __typename?: 'ExpenseJson';
+  voucherCompulsory: Scalars['Boolean']['output'];
 };
 
 export type ExpenseJsonInput = {
-  voucherCompulsory: boolean;
+  voucherCompulsory: Scalars['Boolean']['input'];
 };
 
 export type ExpenseUpdateInput = {
-  departmentId?: number | null | undefined;
-  enterpriseId: number;
-  id: unknown;
-  items?: Array<ExpenseItemInput> | null | undefined;
+  departmentId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
+  items?: InputMaybe<Array<ExpenseItemInput>>;
   /** expense Fields */
-  note?: string | null | undefined;
-  number: string;
-  operationDate?: unknown;
-  paymentAccountId: number;
-  paymentModeId?: number | null | undefined;
-  username?: string | null | undefined;
-  voucherId?: unknown;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  operationDate?: InputMaybe<Scalars['Date']['input']>;
+  paymentAccountId: Scalars['Int']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+  voucherId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type FeeGroup = {
+  __typename?: 'FeeGroup';
+  birthDateAfter?: Maybe<Scalars['String']['output']>;
+  birthDateBefore?: Maybe<Scalars['String']['output']>;
+  familyOfXAndAboveChildren?: Maybe<Scalars['Int']['output']>;
+  gender?: Maybe<Gender>;
+  hasScholarship: Scalars['Boolean']['output'];
+  id: Scalars['Int']['output'];
+  isActive: Scalars['Boolean']['output'];
+  isAlumni: Scalars['Boolean']['output'];
+  /**  former student */
+  isExternalStudent: Scalars['Boolean']['output'];
+  isSocialCase: Scalars['Boolean']['output'];
+  isStaffStudent: Scalars['Boolean']['output'];
+  levelId?: Maybe<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  oneTimePayment: Scalars['Boolean']['output'];
+  registrationDateAfter?: Maybe<Scalars['String']['output']>;
+  registrationDateBefore?: Maybe<Scalars['String']['output']>;
+  useAsFallback: Scalars['Boolean']['output'];
 };
 
 export type FeeGroupCreateInput = {
-  birthDateAfter?: unknown;
-  birthDateBefore?: unknown;
-  familyOfXAndAboveChildren?: number | null | undefined;
-  gender?: Gender | null | undefined;
-  hasScholarship: boolean;
-  isActive: boolean;
-  isAlumni: boolean;
+  birthDateAfter?: InputMaybe<Scalars['Date']['input']>;
+  birthDateBefore?: InputMaybe<Scalars['Date']['input']>;
+  familyOfXAndAboveChildren?: InputMaybe<Scalars['Int']['input']>;
+  gender?: InputMaybe<Gender>;
+  hasScholarship: Scalars['Boolean']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isAlumni: Scalars['Boolean']['input'];
   /**  former student */
-  isExternalStudent: boolean;
-  isSocialCase: boolean;
-  isStaffStudent: boolean;
-  levelId?: number | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  oneTimePayment: boolean;
-  registrationDateAfter?: unknown;
-  registrationDateBefore?: unknown;
-  schoolId: number;
-  useAsFallback: boolean;
+  isExternalStudent: Scalars['Boolean']['input'];
+  isSocialCase: Scalars['Boolean']['input'];
+  isStaffStudent: Scalars['Boolean']['input'];
+  levelId?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  oneTimePayment: Scalars['Boolean']['input'];
+  registrationDateAfter?: InputMaybe<Scalars['Date']['input']>;
+  registrationDateBefore?: InputMaybe<Scalars['Date']['input']>;
+  schoolId: Scalars['Int']['input'];
+  useAsFallback: Scalars['Boolean']['input'];
 };
 
 export type FeeGroupUpdateInput = {
-  birthDateAfter?: unknown;
-  birthDateBefore?: unknown;
-  familyOfXAndAboveChildren?: number | null | undefined;
-  gender?: Gender | null | undefined;
-  hasScholarship: boolean;
-  id: number;
-  isActive: boolean;
-  isAlumni: boolean;
+  birthDateAfter?: InputMaybe<Scalars['Date']['input']>;
+  birthDateBefore?: InputMaybe<Scalars['Date']['input']>;
+  familyOfXAndAboveChildren?: InputMaybe<Scalars['Int']['input']>;
+  gender?: InputMaybe<Gender>;
+  hasScholarship: Scalars['Boolean']['input'];
+  id: Scalars['Int']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isAlumni: Scalars['Boolean']['input'];
   /**  former student */
-  isExternalStudent: boolean;
-  isSocialCase: boolean;
-  isStaffStudent: boolean;
-  levelId?: number | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  oneTimePayment: boolean;
-  registrationDateAfter?: unknown;
-  registrationDateBefore?: unknown;
-  schoolId: number;
-  useAsFallback: boolean;
+  isExternalStudent: Scalars['Boolean']['input'];
+  isSocialCase: Scalars['Boolean']['input'];
+  isStaffStudent: Scalars['Boolean']['input'];
+  levelId?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  oneTimePayment: Scalars['Boolean']['input'];
+  registrationDateAfter?: InputMaybe<Scalars['Date']['input']>;
+  registrationDateBefore?: InputMaybe<Scalars['Date']['input']>;
+  schoolId: Scalars['Int']['input'];
+  useAsFallback: Scalars['Boolean']['input'];
+};
+
+export type FeePayment = {
+  __typename?: 'FeePayment';
+  id: Scalars['Long']['output'];
+  inKindValue: Scalars['BigDecimal']['output'];
+  invoice?: Maybe<Invoice>;
+  note?: Maybe<Scalars['String']['output']>;
+  paymentDate: Scalars['String']['output'];
+  paymentMode?: Maybe<PaymentMode>;
+  reference: Scalars['String']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  student?: Maybe<Student>;
+  totalAmountPaid: Scalars['BigDecimal']['output'];
+};
+
+export type FeePaymentItem = {
+  __typename?: 'FeePaymentItem';
+  amountPaid: Scalars['BigDecimal']['output'];
+  feePayment?: Maybe<FeePayment>;
+  feePaymentItemPK?: Maybe<FeePaymentItemPk>;
+  inKindPayment: Scalars['Boolean']['output'];
+  installment?: Maybe<Installment>;
+  tuition?: Maybe<Tuition>;
+};
+
+export type FeePaymentItemInput = {
+  amountPaid: Scalars['BigDecimal']['input'];
+  feePaymentItemPK?: InputMaybe<FeePaymentItemPkInput>;
+  inKindPayment: Scalars['Boolean']['input'];
+};
+
+export type FeePaymentItemPk = {
+  __typename?: 'FeePaymentItemPK';
+  feePaymentId: Scalars['Long']['output'];
+  installmentId: Scalars['Int']['output'];
+  tuitionId: Scalars['Int']['output'];
+};
+
+export type FeePaymentItemPkInput = {
+  feePaymentId: Scalars['Long']['input'];
+  installmentId: Scalars['Int']['input'];
+  tuitionId: Scalars['Int']['input'];
+};
+
+export type FeeStructure = {
+  __typename?: 'FeeStructure';
+  createdAt: Scalars['String']['output'];
+  dueDate: Scalars['String']['output'];
+  feeGroup?: Maybe<FeeGroup>;
+  gracePeriodDays: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  installment?: Maybe<Installment>;
+  lateFee: Scalars['Float']['output'];
+  level?: Maybe<Level>;
+  requiredAmount: Scalars['Float']['output'];
+  tuition?: Maybe<Tuition>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type FeeStructureInput = {
+  __typename?: 'FeeStructureInput';
+  feeGroupId: Scalars['Int']['output'];
+  feeGroupName: Scalars['String']['output'];
+  items: Array<FeeStructureItem>;
 };
 
 export type FeeStructureInputI = {
-  feeGroupId: number;
-  feeGroupName: string;
+  feeGroupId: Scalars['Int']['input'];
+  feeGroupName: Scalars['String']['input'];
   items: Array<FeeStructureItemInput>;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
+};
+
+export type FeeStructureItem = {
+  __typename?: 'FeeStructureItem';
+  installmentId: Scalars['Int']['output'];
+  installmentName: Scalars['String']['output'];
+  items: Array<FeeStructureItemItem>;
 };
 
 export type FeeStructureItemInput = {
-  installmentId: number;
-  installmentName: string;
+  installmentId: Scalars['Int']['input'];
+  installmentName: Scalars['String']['input'];
   items: Array<FeeStructureItemItemInput>;
 };
 
+export type FeeStructureItemItem = {
+  __typename?: 'FeeStructureItemItem';
+  dueDate: Scalars['String']['output'];
+  gracePeriodDays: Scalars['Int']['output'];
+  lateFee: Scalars['Float']['output'];
+  requiredAmount: Scalars['Float']['output'];
+  tuitionId: Scalars['Int']['output'];
+  tuitionName: Scalars['String']['output'];
+};
+
 export type FeeStructureItemItemInput = {
-  dueDate?: unknown;
-  gracePeriodDays?: number | null | undefined;
-  lateFee?: number | null | undefined;
-  requiredAmount: number;
-  tuitionId: number;
-  tuitionName: string;
+  dueDate?: InputMaybe<Scalars['Date']['input']>;
+  gracePeriodDays?: InputMaybe<Scalars['Int']['input']>;
+  lateFee?: InputMaybe<Scalars['Float']['input']>;
+  requiredAmount: Scalars['Float']['input'];
+  tuitionId: Scalars['Int']['input'];
+  tuitionName: Scalars['String']['input'];
+};
+
+export type Frequent = {
+  __typename?: 'Frequent';
+  admissionDate?: Maybe<Scalars['String']['output']>;
+  apt?: Maybe<Scalars['Boolean']['output']>;
+  clazz?: Maybe<Clazz>;
+  excluded?: Maybe<Scalars['Boolean']['output']>;
+  exclusionDate?: Maybe<Scalars['String']['output']>;
+  exclusionReason?: Maybe<Scalars['String']['output']>;
+  external?: Maybe<Scalars['Boolean']['output']>;
+  feeGroup?: Maybe<FeeGroup>;
+  formerStudent?: Maybe<Scalars['Boolean']['output']>;
+  frequentPK?: Maybe<FrequentPk>;
+  id: Scalars['ID']['output'];
+  lastPaymentDate?: Maybe<Scalars['String']['output']>;
+  mailTo?: Maybe<Relation>;
+  numberOrder?: Maybe<Scalars['Int']['output']>;
+  oldSchool?: Maybe<OldSchool>;
+  paymentGroup?: Maybe<PaymentGroup>;
+  repeater?: Maybe<Scalars['Boolean']['output']>;
+  scNature?: Maybe<Scalars['String']['output']>;
+  scObservation?: Maybe<Scalars['String']['output']>;
+  schoolYear?: Maybe<SchoolYear>;
+  smsTo?: Maybe<Relation>;
+  socialCase?: Maybe<Scalars['Boolean']['output']>;
+  student?: Maybe<Student>;
+  /** fake id */
+  totalPaidAmount?: Maybe<Scalars['Float']['output']>;
+  totalRequiredAmount?: Maybe<Scalars['Float']['output']>;
+};
+
+export type FrequentBulkUpdate = {
+  __typename?: 'FrequentBulkUpdate';
+  birthDate: Scalars['Date']['output'];
+  birthplace: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  registrationNumber: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type FrequentBulkUpdateInput = {
-  birthDate: unknown;
-  birthplace: string;
-  firstName?: string | null | undefined;
-  lastName: string;
-  registrationNumber: string;
-  studentId: unknown;
+  birthDate: Scalars['Date']['input'];
+  birthplace: Scalars['String']['input'];
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  registrationNumber: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type FrequentConnection = {
+  __typename?: 'FrequentConnection';
+  edges?: Maybe<Array<FrequentEdge>>;
+  nodes?: Maybe<Array<Frequent>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type FrequentEdge = {
+  __typename?: 'FrequentEdge';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Frequent>;
 };
 
 export type FrequentExcludeInput = {
-  classId: number;
-  excluded: boolean;
-  exclusionDate: unknown;
-  exclusionReason: string;
-  schoolYearId: number;
-  studentId: unknown;
+  classId: Scalars['Int']['input'];
+  excluded: Scalars['Boolean']['input'];
+  exclusionDate: Scalars['Date']['input'];
+  exclusionReason: Scalars['String']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
 };
 
 export type FrequentInput = {
-  admissionDate?: unknown;
-  apt?: boolean | null | undefined;
-  excluded?: boolean | null | undefined;
-  exclusionDate?: string | null | undefined;
-  exclusionReason?: string | null | undefined;
-  external?: boolean | null | undefined;
-  feeGroupId?: number | null | undefined;
-  formerStudent?: boolean | null | undefined;
-  frequentPK?: FrequentPkInput | null | undefined;
-  mailTo?: Relation | null | undefined;
-  numberOrder?: unknown;
-  oldSchoolId?: number | null | undefined;
-  paymentGroupId?: number | null | undefined;
-  repeater?: boolean | null | undefined;
-  scNature?: string | null | undefined;
-  scObservation?: string | null | undefined;
-  schoolId: number;
-  smsTo?: Relation | null | undefined;
-  socialCase?: boolean | null | undefined;
+  admissionDate?: InputMaybe<Scalars['Date']['input']>;
+  apt?: InputMaybe<Scalars['Boolean']['input']>;
+  excluded?: InputMaybe<Scalars['Boolean']['input']>;
+  exclusionDate?: InputMaybe<Scalars['String']['input']>;
+  exclusionReason?: InputMaybe<Scalars['String']['input']>;
+  external?: InputMaybe<Scalars['Boolean']['input']>;
+  feeGroupId?: InputMaybe<Scalars['Int']['input']>;
+  formerStudent?: InputMaybe<Scalars['Boolean']['input']>;
+  frequentPK?: InputMaybe<FrequentPkInput>;
+  mailTo?: InputMaybe<Relation>;
+  numberOrder?: InputMaybe<Scalars['Short']['input']>;
+  oldSchoolId?: InputMaybe<Scalars['Int']['input']>;
+  paymentGroupId?: InputMaybe<Scalars['Int']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  scNature?: InputMaybe<Scalars['String']['input']>;
+  scObservation?: InputMaybe<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
+  smsTo?: InputMaybe<Relation>;
+  socialCase?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type FrequentOrder = {
-  direction?: OrderDirection | null | undefined;
-  field?: FrequentOrderField | null | undefined;
+  direction?: InputMaybe<OrderDirection>;
+  field?: InputMaybe<FrequentOrderField>;
 };
 
-export type FrequentOrderField =
-  | 'BIRTHPLACE'
-  | 'BIRTH_DATE'
-  | 'CLASS_NAME'
-  | 'FIRST_NAME'
-  | 'GENDER'
-  | 'LAST_NAME'
-  | 'REPEATER';
+export enum FrequentOrderField {
+  Birthplace = 'BIRTHPLACE',
+  BirthDate = 'BIRTH_DATE',
+  ClassName = 'CLASS_NAME',
+  FirstName = 'FIRST_NAME',
+  Gender = 'GENDER',
+  LastName = 'LAST_NAME',
+  Repeater = 'REPEATER'
+}
+
+export type FrequentPk = {
+  __typename?: 'FrequentPK';
+  classId: Scalars['Int']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
+  schoolYearId: Scalars['Int']['output'];
+  studentId: Scalars['Long']['output'];
+};
 
 export type FrequentPkInput = {
-  classId?: number | null | undefined;
-  schoolYearId?: number | null | undefined;
-  studentId?: unknown;
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  studentId?: InputMaybe<Scalars['Long']['input']>;
 };
 
-export type Gender =
-  | 'FEMALE'
-  | 'MALE';
+export type FrequentUnion = {
+  __typename?: 'FrequentUnion';
+  admissionDate?: Maybe<Scalars['String']['output']>;
+  birthDate: Scalars['String']['output'];
+  birthplace: Scalars['String']['output'];
+  className: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  frequentPK: FrequentPk;
+  fullName: Scalars['String']['output'];
+  gender: Gender;
+  id: Scalars['ID']['output'];
+  lastName: Scalars['String']['output'];
+  lastPaymentDate?: Maybe<Scalars['String']['output']>;
+  registrationNumber: Scalars['String']['output'];
+  repeater: Scalars['Boolean']['output'];
+  sex?: Maybe<Scalars['String']['output']>;
+  socialCase?: Maybe<Scalars['Boolean']['output']>;
+  totalPaidAmount?: Maybe<Scalars['Float']['output']>;
+  totalRequiredAmount?: Maybe<Scalars['Float']['output']>;
+};
 
-export type GiselPayObject =
-  | 'SALARY'
-  | 'TUITION';
+export enum Gender {
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
+export enum GiselPayObject {
+  Salary = 'SALARY',
+  Tuition = 'TUITION'
+}
 
 export type GiselPayRequestedInput = {
-  amount: number;
-  identifier: string;
+  amount: Scalars['Float']['input'];
+  identifier: Scalars['String']['input'];
   /**  of enterprise */
   payObject: GiselPayObject;
-  personId: unknown;
+  personId: Scalars['Long']['input'];
   personType: PersonType;
   /** description: String */
-  phone: string;
+  phone: Scalars['String']['input'];
 };
 
 export type GiselPaymentCheckInput = {
-  reference: string;
+  reference: Scalars['String']['input'];
+};
+
+export type GiselPaymentCheckResult = {
+  __typename?: 'GiselPaymentCheckResult';
+  code: Scalars['Int']['output'];
+  description: Scalars['String']['output'];
+  reference?: Maybe<Scalars['String']['output']>;
+  result?: Maybe<GiselPaymentCheckSubResult>;
+  statut: Scalars['String']['output'];
+};
+
+export type GiselPaymentCheckSubResult = {
+  __typename?: 'GiselPaymentCheckSubResult';
+  amount: Scalars['Int']['output'];
+  back_url?: Maybe<Scalars['String']['output']>;
+  callback?: Maybe<Scalars['String']['output']>;
+  dateInit?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['Int']['output'];
+  reference: Scalars['String']['output'];
+  reference_order: Scalars['String']['output'];
+  statut: Scalars['String']['output'];
+  user_name?: Maybe<Scalars['String']['output']>;
+};
+
+export type GiselPaymentInput = {
+  amount: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+  reference_order: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+  user_name: Scalars['String']['input'];
+};
+
+export type GiselPaymentResult = {
+  __typename?: 'GiselPaymentResult';
+  code: Scalars['Int']['output'];
+  description: Scalars['String']['output'];
+  link_paiement?: Maybe<Scalars['String']['output']>;
+  reference: Scalars['String']['output'];
+  result?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  statut: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
+export type Guardian = Person & {
+  __typename?: 'Guardian';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  contactInfo?: Maybe<ContactInfo>;
+  departmentOrigin?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  districtOrigin?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId?: Maybe<Scalars['ID']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  id: Scalars['Long']['output'];
+  job?: Maybe<Scalars['String']['output']>;
+  language?: Maybe<Language>;
+  lastName: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  /** Guardian fields */
+  profession?: Maybe<Scalars['String']['output']>;
+  regionOrigin?: Maybe<Scalars['String']['output']>;
+  religion?: Maybe<Scalars['String']['output']>;
 };
 
 export type GuardianCreateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  departmentOrigin?: string | null | undefined;
-  displayName?: string | null | undefined;
-  districtOrigin?: string | null | undefined;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  job?: string | null | undefined;
-  languageId?: number | null | undefined;
-  lastName: string;
-  note?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  contactInfo?: InputMaybe<ContactInput>;
+  departmentOrigin?: InputMaybe<Scalars['String']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  districtOrigin?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  job?: InputMaybe<Scalars['String']['input']>;
+  languageId?: InputMaybe<Scalars['Int']['input']>;
+  lastName: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
   /** Guardian fields */
-  profession?: string | null | undefined;
-  regionOrigin?: string | null | undefined;
-  religion?: string | null | undefined;
-  schoolId: number;
+  profession?: InputMaybe<Scalars['String']['input']>;
+  regionOrigin?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
 };
 
 export type GuardianUpdateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  departmentOrigin?: string | null | undefined;
-  displayName?: string | null | undefined;
-  districtOrigin?: string | null | undefined;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  id: unknown;
-  job?: string | null | undefined;
-  languageId?: number | null | undefined;
-  lastName: string;
-  note?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  contactInfo?: InputMaybe<ContactInput>;
+  departmentOrigin?: InputMaybe<Scalars['String']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  districtOrigin?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  id: Scalars['Long']['input'];
+  job?: InputMaybe<Scalars['String']['input']>;
+  languageId?: InputMaybe<Scalars['Int']['input']>;
+  lastName: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
   /** Guardian fields */
-  profession?: string | null | undefined;
-  regionOrigin?: string | null | undefined;
-  religion?: string | null | undefined;
-  schoolId: number;
+  profession?: InputMaybe<Scalars['String']['input']>;
+  regionOrigin?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
+};
+
+export type GuidedSetup = {
+  __typename?: 'GuidedSetup';
+  completed: Scalars['Boolean']['output'];
+  schoolId: Scalars['Int']['output'];
+  step: SetupStep;
+};
+
+export type HeadDepartment = {
+  __typename?: 'HeadDepartment';
+  department?: Maybe<SubjectDepartment>;
+  headDepartmentPK?: Maybe<HeadDepartmentPk>;
+  teacher?: Maybe<Teacher>;
 };
 
 export type HeadDepartmentInput = {
-  headDepartmentPK?: HeadDepartmentPkInput | null | undefined;
-  teacherId: unknown;
+  headDepartmentPK?: InputMaybe<HeadDepartmentPkInput>;
+  teacherId: Scalars['Long']['input'];
+};
+
+export type HeadDepartmentPk = {
+  __typename?: 'HeadDepartmentPK';
+  departmentId: Scalars['Int']['output'];
+  schoolYearId: Scalars['Int']['output'];
 };
 
 export type HeadDepartmentPkInput = {
-  departmentId: number;
-  schoolYearId: number;
+  departmentId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 };
 
-export type InscriptionMode =
-  | 'COMPETITION'
-  | 'RECRUITMENT';
+export enum InscriptionMode {
+  Competition = 'COMPETITION',
+  Recruitment = 'RECRUITMENT'
+}
+
+export type Installment = {
+  __typename?: 'Installment';
+  dueDate?: Maybe<Scalars['String']['output']>;
+  gracePeriodDays: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  isActive: Scalars['Boolean']['output'];
+  isRefundable: Scalars['Boolean']['output'];
+  lateFeePercentage: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  schoolYearId: Scalars['Int']['output'];
+};
 
 export type InstallmentCreateInput = {
-  dueDate: unknown;
-  gracePeriodDays: number;
-  isActive: boolean;
-  isRefundable: boolean;
-  lateFeePercentage: number;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  numberOrder: number;
-  schoolId: number;
+  dueDate: Scalars['Date']['input'];
+  gracePeriodDays: Scalars['Int']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isRefundable: Scalars['Boolean']['input'];
+  lateFeePercentage: Scalars['Float']['input'];
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 };
 
 export type InstallmentUpdateInput = {
-  dueDate: unknown;
-  gracePeriodDays: number;
-  id: number;
-  isActive: boolean;
-  isRefundable: boolean;
-  lateFeePercentage: number;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  numberOrder: number;
-  schoolId: number;
+  dueDate: Scalars['Date']['input'];
+  gracePeriodDays: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isRefundable: Scalars['Boolean']['input'];
+  lateFeePercentage: Scalars['Float']['input'];
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type Invoice = {
+  __typename?: 'Invoice';
+  address?: Maybe<Scalars['String']['output']>;
+  amount: Scalars['BigDecimal']['output'];
+  balance: Scalars['BigDecimal']['output'];
+  condition?: Maybe<PaymentCondition>;
+  deadline?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['Float']['output']>;
+  distinctProduct: Scalars['Int']['output'];
+  enterprise?: Maybe<Enterprise>;
+  /** items: [InvoiceItem!]! */
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Long']['output'];
+  internalComment?: Maybe<Scalars['String']['output']>;
+  invoiceType: InvoiceType;
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  operator?: Maybe<Scalars['String']['output']>;
+  person?: Maybe<Person>;
+  personType: PersonType;
+  quantity: Scalars['Float']['output'];
+  recordDate: Scalars['String']['output'];
 };
 
 export type InvoiceCreateInput = {
-  address?: string | null | undefined;
-  conditionId?: number | null | undefined;
-  deadline?: unknown;
-  discount?: number | null | undefined;
-  enterpriseId: number;
+  address?: InputMaybe<Scalars['String']['input']>;
+  conditionId?: InputMaybe<Scalars['Int']['input']>;
+  deadline?: InputMaybe<Scalars['Date']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  enterpriseId: Scalars['Int']['input'];
   invoiceType: InvoiceType;
-  items?: Array<InvoiceItemInput> | null | undefined;
-  note?: string | null | undefined;
-  number?: string | null | undefined;
-  operationDate?: unknown;
-  operator: string;
-  personId: unknown;
+  items?: InputMaybe<Array<InvoiceItemInput>>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate?: InputMaybe<Scalars['Date']['input']>;
+  operator: Scalars['String']['input'];
+  personId: Scalars['Long']['input'];
   personType: PersonType;
 };
 
-export type InvoiceItemInput = {
-  description?: string | null | undefined;
-  discount?: number | null | undefined;
-  dueDate?: unknown;
-  id?: unknown;
-  installmentId?: number | null | undefined;
-  invoiceId?: unknown;
-  paidAmount: number;
-  paymentInKind?: boolean | null | undefined;
-  productId: unknown;
-  quantity: number;
-  tuitionId?: number | null | undefined;
-  unitPrice: unknown;
+export type InvoiceForPayment = {
+  __typename?: 'InvoiceForPayment';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  deadline: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Long']['output'];
+  number: Scalars['String']['output'];
 };
 
-export type InvoiceRadicalType =
-  | 'FULL_YEAR'
-  | 'FULL_YEAR_MONTH_DAY'
-  | 'SHORT_YEAR'
-  | 'SHORT_YEAR_MONTH_DAY';
+export type InvoiceItem = {
+  __typename?: 'InvoiceItem';
+  description?: Maybe<Scalars['String']['output']>;
+  discount?: Maybe<Scalars['Float']['output']>;
+  dueDate?: Maybe<Scalars['Date']['output']>;
+  id: Scalars['Long']['output'];
+  installment?: Maybe<Installment>;
+  invoice?: Maybe<Invoice>;
+  paidAmount: Scalars['Float']['output'];
+  paymentInKind?: Maybe<Scalars['Boolean']['output']>;
+  product?: Maybe<Product>;
+  quantity: Scalars['Float']['output'];
+  total: Scalars['BigDecimal']['output'];
+  tuition?: Maybe<Tuition>;
+  unitPrice: Scalars['BigDecimal']['output'];
+};
 
-export type InvoiceType =
-  | 'OTHER'
-  | 'SCHOOL_FEES';
+export type InvoiceItemInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  dueDate?: InputMaybe<Scalars['Date']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  installmentId?: InputMaybe<Scalars['Int']['input']>;
+  invoiceId?: InputMaybe<Scalars['Long']['input']>;
+  paidAmount: Scalars['Float']['input'];
+  paymentInKind?: InputMaybe<Scalars['Boolean']['input']>;
+  productId: Scalars['Long']['input'];
+  quantity: Scalars['Float']['input'];
+  tuitionId?: InputMaybe<Scalars['Int']['input']>;
+  unitPrice: Scalars['BigDecimal']['input'];
+};
+
+export enum InvoiceRadicalType {
+  FullYear = 'FULL_YEAR',
+  FullYearMonthDay = 'FULL_YEAR_MONTH_DAY',
+  ShortYear = 'SHORT_YEAR',
+  ShortYearMonthDay = 'SHORT_YEAR_MONTH_DAY'
+}
+
+export enum InvoiceType {
+  Other = 'OTHER',
+  SchoolFees = 'SCHOOL_FEES'
+}
 
 export type InvoiceUpdateInput = {
-  address?: string | null | undefined;
-  conditionId?: number | null | undefined;
-  deadline?: unknown;
-  discount?: number | null | undefined;
-  enterpriseId: number;
-  id: unknown;
+  address?: InputMaybe<Scalars['String']['input']>;
+  conditionId?: InputMaybe<Scalars['Int']['input']>;
+  deadline?: InputMaybe<Scalars['Date']['input']>;
+  discount?: InputMaybe<Scalars['Float']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
   invoiceType: InvoiceType;
-  items?: Array<InvoiceItemInput> | null | undefined;
-  note?: string | null | undefined;
-  number: string;
-  operationDate?: unknown;
-  operator?: string | null | undefined;
-  personId: unknown;
-  personType?: PersonType | null | undefined;
+  items?: InputMaybe<Array<InvoiceItemInput>>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  operationDate?: InputMaybe<Scalars['Date']['input']>;
+  operator?: InputMaybe<Scalars['String']['input']>;
+  personId: Scalars['Long']['input'];
+  personType?: InputMaybe<PersonType>;
+};
+
+export type JwtUser = {
+  __typename?: 'JwtUser';
+  authorities?: Maybe<Array<Scalars['String']['output']>>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  enterprise: Enterprise;
+  id?: Maybe<Scalars['Int']['output']>;
+  mfa?: Maybe<Scalars['Boolean']['output']>;
+  /**
+   *  userId
+   * email: String
+   */
+  person?: Maybe<Person>;
+  schoolCategory?: Maybe<SchoolCategory>;
+  schoolFeeCompulsory?: Maybe<Scalars['Boolean']['output']>;
+  username: Scalars['String']['output'];
+};
+
+export type Language = {
+  __typename?: 'Language';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code: LanguageType;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type LanguageInput = {
-  active?: boolean | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
   code: LanguageType;
-  description?: string | null | undefined;
-  id?: number | null | undefined;
-  name: string;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
 };
 
-export type LanguageType =
-  | 'EN'
-  | 'FR';
+export enum LanguageType {
+  En = 'EN',
+  Fr = 'FR'
+}
+
+export type LedgerJson = {
+  __typename?: 'LedgerJson';
+  autoLedger: Scalars['Boolean']['output'];
+  debtMist: Scalars['Boolean']['output'];
+};
+
+export type LedgerJsonInput = {
+  autoLedger: Scalars['Boolean']['input'];
+  debtMist: Scalars['Boolean']['input'];
+};
+
+export type LegalInfo = {
+  __typename?: 'LegalInfo';
+  legalForm?: Maybe<Scalars['String']['output']>;
+  registrationCertificate?: Maybe<Scalars['String']['output']>;
+  shareCapital?: Maybe<Scalars['Float']['output']>;
+  taxpayerNumber?: Maybe<Scalars['String']['output']>;
+  tradeRegister?: Maybe<Scalars['String']['output']>;
+};
 
 export type LegalInput = {
-  legalForm?: string | null | undefined;
-  registrationCertificate?: string | null | undefined;
-  shareCapital?: number | null | undefined;
-  taxpayerNumber?: string | null | undefined;
-  tradeRegister?: string | null | undefined;
+  legalForm?: InputMaybe<Scalars['String']['input']>;
+  registrationCertificate?: InputMaybe<Scalars['String']['input']>;
+  shareCapital?: InputMaybe<Scalars['Float']['input']>;
+  taxpayerNumber?: InputMaybe<Scalars['String']['input']>;
+  tradeRegister?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Lesson = {
+  __typename?: 'Lesson';
+  /**  subjectId: ID */
+  dayOfClass?: Maybe<DayOfClass>;
+  subject?: Maybe<Subject>;
+};
+
+export type Level = {
+  __typename?: 'Level';
+  branchCount?: Maybe<Scalars['Int']['output']>;
+  cycle?: Maybe<Cycle>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
 };
 
 export type LevelInput = {
-  branchCount?: unknown;
-  cycleId: number;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  numberOrder: number;
+  branchCount?: InputMaybe<Scalars['Byte']['input']>;
+  cycleId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+};
+
+export type LevelSetup = {
+  __typename?: 'LevelSetup';
+  branchCount?: Maybe<Scalars['Int']['output']>;
+  classCount?: Maybe<Scalars['Int']['output']>;
+  cycle?: Maybe<Cycle>;
+  name: Scalars['String']['output'];
+  numberOrder: Scalars['Int']['output'];
 };
 
 export type LevelSetupInput = {
-  branchCount: number;
-  classCount: number;
-  cycleId: number;
-  name: string;
-  numberOrder: number;
+  branchCount: Scalars['Int']['input'];
+  classCount: Scalars['Int']['input'];
+  cycleId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  numberOrder: Scalars['Int']['input'];
+};
+
+export type LiableType = {
+  __typename?: 'LiableType';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  prefix: Scalars['String']['output'];
 };
 
 export type LiableTypeInput = {
-  active?: boolean | null | undefined;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  prefix: string;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  prefix: Scalars['String']['input'];
+};
+
+export type LicenseJson = {
+  __typename?: 'LicenseJson';
+  enterpriseId: Scalars['Int']['output'];
+  enterpriseName: Scalars['String']['output'];
+  expiryDate: Scalars['String']['output'];
+  licenseKey: Scalars['String']['output'];
+  schoolYearId?: Maybe<Scalars['Int']['output']>;
+  studentCount?: Maybe<Scalars['Int']['output']>;
+  subPeriods?: Maybe<Scalars['Int']['output']>;
 };
 
 export type LicenseJsonInput = {
-  enterpriseId?: number | null | undefined;
-  enterpriseName?: string | null | undefined;
-  expiryDate?: string | null | undefined;
-  licenseKey: string;
-  schoolYearId?: number | null | undefined;
-  studentCount?: number | null | undefined;
-  subPeriods?: number | null | undefined;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseName?: InputMaybe<Scalars['String']['input']>;
+  expiryDate?: InputMaybe<Scalars['String']['input']>;
+  licenseKey: Scalars['String']['input'];
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  studentCount?: InputMaybe<Scalars['Int']['input']>;
+  subPeriods?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type LogCode = {
+  __typename?: 'LogCode';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  logType: LogType;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
 };
 
 export type LogCodeInput = {
-  active?: boolean | null | undefined;
-  enterpriseId: number;
-  id?: number | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
   logType: LogType;
-  name: string;
-  note?: string | null | undefined;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type LogType =
-  | 'BANK'
-  | 'EXPENSES'
-  | 'OTHERS'
-  | 'POSTPONEMENT'
-  | 'REMUNERATION'
-  | 'SALES'
-  | 'SPECIAL'
-  | 'TREASURY';
+export enum LogType {
+  Bank = 'BANK',
+  Expenses = 'EXPENSES',
+  Others = 'OTHERS',
+  Postponement = 'POSTPONEMENT',
+  Remuneration = 'REMUNERATION',
+  Sales = 'SALES',
+  Special = 'SPECIAL',
+  Treasury = 'TREASURY'
+}
 
-export type LoginSecurityType =
-  | 'HIGH'
-  | 'MEDIUM'
-  | 'NORMAL'
-  | 'WEAK';
+export type LoginHistory = {
+  __typename?: 'LoginHistory';
+  browserInfo?: Maybe<BrowserInfo>;
+  id: Scalars['Int']['output'];
+  loginDate: Scalars['String']['output'];
+  logoutDate?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<User>;
+};
 
-export type MaritalStatus =
-  | 'DIVORCED'
-  | 'MARRIED'
-  | 'SINGLE'
-  | 'WIDOWER';
+export enum LoginSecurityType {
+  High = 'HIGH',
+  Medium = 'MEDIUM',
+  Normal = 'NORMAL',
+  Weak = 'WEAK'
+}
+
+/**
+ * type Mail {
+ *     mailFrom: String
+ *     mailTo: String
+ *     mailSubject: String
+ *     mailContent: String
+ *     urlAttachment: String
+ * }
+ */
+export type MailInput = {
+  mailContent?: InputMaybe<Scalars['String']['input']>;
+  mailFrom?: InputMaybe<Scalars['String']['input']>;
+  mailSubject?: InputMaybe<Scalars['String']['input']>;
+  mailTo?: InputMaybe<Scalars['String']['input']>;
+  urlAttachment?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum MaritalStatus {
+  Divorced = 'DIVORCED',
+  Married = 'MARRIED',
+  Single = 'SINGLE',
+  Widower = 'WIDOWER'
+}
+
+export type MarkAppreciation = {
+  __typename?: 'MarkAppreciation';
+  appreciation: Scalars['String']['output'];
+  code: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  max: Scalars['Float']['output'];
+  min: Scalars['Float']['output'];
+};
+
+export type MarkAppreciationInput = {
+  appreciation: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  languageId: Scalars['Int']['input'];
+  max: Scalars['Float']['input'];
+  min: Scalars['Float']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type Message = {
+  __typename?: 'Message';
+  from?: Maybe<Scalars['String']['output']>;
+  text: Scalars['String']['output'];
+  to: Scalars['String']['output'];
+};
+
+export type MobileOperation = {
+  __typename?: 'MobileOperation';
+  amount?: Maybe<Scalars['Float']['output']>;
+  description: Scalars['String']['output'];
+  enterpriseId: Scalars['Int']['output'];
+  fee?: Maybe<Scalars['Float']['output']>;
+  id: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  operationId: Scalars['Long']['output'];
+  payObject?: Maybe<Scalars['String']['output']>;
+  paymentNumber?: Maybe<Scalars['String']['output']>;
+  person?: Maybe<Scalars['String']['output']>;
+  personType?: Maybe<Scalars['String']['output']>;
+  reference?: Maybe<Scalars['String']['output']>;
+  referenceOrder?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  type: Scalars['String']['output'];
+};
+
+export type MobileRestToPay = {
+  __typename?: 'MobileRestToPay';
+  amount: Scalars['BigDecimal']['output'];
+  studentClass: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
+  studentName: Scalars['String']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  articleDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  articleSave?: Maybe<ProductUnion>;
+  articleUpdate?: Maybe<ProductUnion>;
+  attendanceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  attendanceSave?: Maybe<Attendance>;
+  attendanceUpdate?: Maybe<Attendance>;
+  bankAccountDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  bankAccountSave?: Maybe<BankAccount>;
+  bankAccountUpdate?: Maybe<BankAccount>;
+  bankTransactionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  bankTransactionSave?: Maybe<BankTransaction>;
+  bankTransactionUpdate?: Maybe<BankTransaction>;
+  billDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  billPaymentDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  billPaymentSave?: Maybe<Scalars['Boolean']['output']>;
+  billSave?: Maybe<Bill>;
+  billUpdate?: Maybe<Bill>;
+  branchUpdate?: Maybe<Branch>;
+  buildAccountingEntryLedgers?: Maybe<Scalars['Boolean']['output']>;
+  /** by classId */
+  buildAllFrequentNumberOrder?: Maybe<Scalars['Boolean']['output']>;
+  buildFrequentNumberOrder?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllAnnualAverage?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllAnnualCompNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllAnnualDiscipline?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllAnnualNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllQuarterlyAverage?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllQuarterlyDiscipline?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllQuarterlyNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateAllSequentialAverage?: Maybe<Scalars['Boolean']['output']>;
+  calculateAnnualAverage?: Maybe<Scalars['Boolean']['output']>;
+  /**  Comp notes */
+  calculateAnnualCompNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateAnnualDiscipline?: Maybe<Scalars['Boolean']['output']>;
+  calculateAnnualNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateQuarterlyAverage?: Maybe<Scalars['Boolean']['output']>;
+  calculateQuarterlyDiscipline?: Maybe<Scalars['Boolean']['output']>;
+  /** Notes */
+  calculateQuarterlyNote?: Maybe<Scalars['Boolean']['output']>;
+  calculateSequentialAverage?: Maybe<Scalars['Boolean']['output']>;
+  cashVoucherApprove?: Maybe<Scalars['Boolean']['output']>;
+  cashVoucherDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  cashVoucherSave?: Maybe<CashVoucher>;
+  cashVoucherUpdate?: Maybe<CashVoucher>;
+  checkPaymentAndConfirm?: Maybe<GiselPaymentCheckResult>;
+  cloneConfig?: Maybe<Scalars['Boolean']['output']>;
+  competenceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  competenceLevelSave?: Maybe<Scalars['Boolean']['output']>;
+  competenceSave?: Maybe<Competence>;
+  competenceUpdate?: Maybe<Competence>;
+  createPost?: Maybe<Post>;
+  customerCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  customerCategorySave?: Maybe<CustomerCategory>;
+  customerCategoryUpdate?: Maybe<CustomerCategory>;
+  customerDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  customerSave?: Maybe<Customer>;
+  customerUpdate?: Maybe<Customer>;
+  cyclesSave?: Maybe<Array<Cycle>>;
+  dayOfClassSave?: Maybe<DayOfClass>;
+  dayOfClassUpdate?: Maybe<DayOfClass>;
+  deductionCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  deductionCategorySave?: Maybe<DeductionCategory>;
+  deductionCategoryUpdate?: Maybe<DeductionCategory>;
+  deductionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  deductionSave?: Maybe<Deduction>;
+  deductionUpdate?: Maybe<Deduction>;
+  deleteAccountById?: Maybe<Scalars['Boolean']['output']>;
+  deleteAccountCategoryById?: Maybe<Scalars['Boolean']['output']>;
+  deleteAccountGroupById?: Maybe<Scalars['Boolean']['output']>;
+  deleteAccountModelById?: Maybe<Scalars['Boolean']['output']>;
+  deleteAdministratorById?: Maybe<Scalars['Boolean']['output']>;
+  deleteAllLedgers?: Maybe<Scalars['Boolean']['output']>;
+  deleteBankAgencyById?: Maybe<Scalars['Boolean']['output']>;
+  deleteBankById?: Maybe<Scalars['Boolean']['output']>;
+  deleteBankOperationById?: Maybe<Scalars['Boolean']['output']>;
+  deleteBranchById?: Maybe<Scalars['Boolean']['output']>;
+  deleteChartOfAccountById?: Maybe<Scalars['Boolean']['output']>;
+  deleteClassById?: Maybe<Scalars['Boolean']['output']>;
+  deleteCouncilDecisionById?: Maybe<Scalars['Boolean']['output']>;
+  deleteCurrencyById?: Maybe<Scalars['Boolean']['output']>;
+  deleteCycleById?: Maybe<Scalars['Boolean']['output']>;
+  deleteDayOfClassById?: Maybe<Scalars['Boolean']['output']>;
+  deleteEvaluationTypeById?: Maybe<Scalars['Boolean']['output']>;
+  deleteFrequentById?: Maybe<Scalars['Boolean']['output']>;
+  deleteFrequentByIds?: Maybe<Scalars['Boolean']['output']>;
+  deleteGuardianById?: Maybe<Scalars['Boolean']['output']>;
+  deleteLevelById?: Maybe<Scalars['Boolean']['output']>;
+  deleteLiableTypeById?: Maybe<Scalars['Boolean']['output']>;
+  deleteLogCodeById?: Maybe<Scalars['Boolean']['output']>;
+  deleteMarkAppreciationById?: Maybe<Scalars['Boolean']['output']>;
+  deleteOldSchoolById?: Maybe<Scalars['Boolean']['output']>;
+  deleteOperationClassById?: Maybe<Scalars['Boolean']['output']>;
+  deletePaymentGroupById?: Maybe<Scalars['Boolean']['output']>;
+  deletePaymentModeById?: Maybe<Scalars['Boolean']['output']>;
+  deletePaymentSliceById?: Maybe<Scalars['Boolean']['output']>;
+  deletePeriodById?: Maybe<Scalars['Boolean']['output']>;
+  deleteReportAppreciationById?: Maybe<Scalars['Boolean']['output']>;
+  deleteRoleById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSchoolById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSchoolFeeById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSchoolLiableById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSchoolSectionById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSchoolYearById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSequentialNote?: Maybe<Scalars['Boolean']['output']>;
+  deleteSpecialAccountById?: Maybe<Scalars['Boolean']['output']>;
+  deleteStudentById?: Maybe<Scalars['Boolean']['output']>;
+  deleteStudentPaymentById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSubPeriodById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSubjectById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSubjectDepartmentById?: Maybe<Scalars['Boolean']['output']>;
+  deleteSubjectGroupByBranch?: Maybe<Scalars['Boolean']['output']>;
+  deleteSubjectGroupById?: Maybe<Scalars['Boolean']['output']>;
+  deleteTeacherById?: Maybe<Scalars['Boolean']['output']>;
+  deleteTimeSlotById?: Maybe<Scalars['Boolean']['output']>;
+  deleteUserById?: Maybe<Scalars['Boolean']['output']>;
+  deleteUserByIds?: Maybe<Scalars['Boolean']['output']>;
+  deleteUserGroupById?: Maybe<Scalars['Boolean']['output']>;
+  departmentDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  departmentSave?: Maybe<Department>;
+  departmentUpdate?: Maybe<Department>;
+  disableAccountGroup?: Maybe<AccountGroup>;
+  disableAccountModel?: Maybe<AccountModel>;
+  disableLogCode?: Maybe<LogCode>;
+  disableSchool?: Maybe<School>;
+  disableSchoolSection?: Maybe<SchoolSection>;
+  disableSubject?: Maybe<Subject>;
+  disableSubjectDepartment?: Maybe<SubjectDepartment>;
+  discountDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  discountSave?: Maybe<Discount>;
+  discountUpdate?: Maybe<Discount>;
+  earningCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  earningCategorySave?: Maybe<EarningCategory>;
+  earningCategoryUpdate?: Maybe<EarningCategory>;
+  earningDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  earningSave?: Maybe<Earning>;
+  earningUpdate?: Maybe<Earning>;
+  employeeDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  employeeSave?: Maybe<Employee>;
+  employeeUpdate?: Maybe<Employee>;
+  enableAccountGroup?: Maybe<AccountGroup>;
+  enableAccountModel?: Maybe<AccountModel>;
+  enableLogCode?: Maybe<LogCode>;
+  enableSchool?: Maybe<School>;
+  enableSchoolSection?: Maybe<SchoolSection>;
+  enableSubject?: Maybe<Subject>;
+  enableSubjectDepartment?: Maybe<SubjectDepartment>;
+  evalCompSave?: Maybe<Scalars['Boolean']['output']>;
+  /** evalTypeUpdate(type: EvalTypeInput!): Boolean */
+  evalTypeDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  evalTypeSave?: Maybe<EvalType>;
+  expenseCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  expenseCategorySave?: Maybe<ExpenseCategory>;
+  expenseCategoryUpdate?: Maybe<ExpenseCategory>;
+  expenseDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  expenseSave?: Maybe<Expense>;
+  expenseUpdate?: Maybe<Expense>;
+  feeGroupDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  feeGroupSave?: Maybe<FeeGroup>;
+  feeGroupUpdate?: Maybe<FeeGroup>;
+  feeStructureSave?: Maybe<Scalars['Boolean']['output']>;
+  frequentBulkUpdate?: Maybe<Scalars['Boolean']['output']>;
+  frequentExclude?: Maybe<Scalars['Boolean']['output']>;
+  frequentSave?: Maybe<Scalars['Boolean']['output']>;
+  frequentUpdate?: Maybe<Scalars['Boolean']['output']>;
+  generateTimeTable?: Maybe<Scalars['Boolean']['output']>;
+  headDepartmentsSave?: Maybe<Scalars['Boolean']['output']>;
+  initAccounting?: Maybe<Scalars['Boolean']['output']>;
+  initAccounts?: Maybe<Scalars['Boolean']['output']>;
+  initAnglophoneCompetences?: Maybe<Scalars['Boolean']['output']>;
+  initChartOfAccounts?: Maybe<Scalars['Boolean']['output']>;
+  initEvalTypes?: Maybe<Scalars['Boolean']['output']>;
+  initFrancophoneCompetences?: Maybe<Scalars['Boolean']['output']>;
+  initPermissions?: Maybe<Scalars['Boolean']['output']>;
+  initRoles?: Maybe<Scalars['Boolean']['output']>;
+  initSchool?: Maybe<Scalars['Boolean']['output']>;
+  initSubjects?: Maybe<Scalars['Boolean']['output']>;
+  initiatePayment?: Maybe<Scalars['String']['output']>;
+  installmentDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  installmentSave?: Maybe<Installment>;
+  installmentUpdate?: Maybe<Installment>;
+  invoiceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  invoiceSave?: Maybe<Invoice>;
+  invoiceUpdate?: Maybe<Invoice>;
+  levelsSave?: Maybe<Array<Level>>;
+  loginHistoryDeleteByIds?: Maybe<Scalars['Boolean']['output']>;
+  loginUser?: Maybe<AuthRequest>;
+  makeGiselPayment?: Maybe<GiselPaymentResult>;
+  makeStudentProgression?: Maybe<Scalars['Boolean']['output']>;
+  pFreeSequentialNoteSave?: Maybe<Scalars['Boolean']['output']>;
+  pSequentialNoteSave?: Maybe<Scalars['Boolean']['output']>;
+  paymentConditionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  paymentConditionSave?: Maybe<PaymentCondition>;
+  paymentConditionUpdate?: Maybe<PaymentCondition>;
+  paymentDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  paymentOfStudentSave?: Maybe<Scalars['Boolean']['output']>;
+  paymentSave?: Maybe<Payment>;
+  payrollDeleteById: Scalars['Boolean']['output'];
+  payrollMarkAsPaid: Scalars['Boolean']['output'];
+  payrollPeriodDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  payrollPeriodSave?: Maybe<PayrollPeriod>;
+  payrollPeriodUpdate?: Maybe<PayrollPeriod>;
+  payrollSave?: Maybe<Payroll>;
+  payrollUpdate?: Maybe<Payroll>;
+  permissionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  permissionSave?: Maybe<Permission>;
+  permissionSaveNew?: Maybe<Scalars['Boolean']['output']>;
+  permissionUpdate?: Maybe<Permission>;
+  positionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  positionSave?: Maybe<Position>;
+  positionUpdate?: Maybe<Position>;
+  productCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  productCategorySave?: Maybe<ProductCategory>;
+  productCategoryUpdate?: Maybe<ProductCategory>;
+  productToggleStatus?: Maybe<ProductUnion>;
+  quarterlyCompNoteSave?: Maybe<Scalars['Boolean']['output']>;
+  resetBalances?: Maybe<Scalars['Boolean']['output']>;
+  roleNewDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  roleNewSave?: Maybe<RoleNew>;
+  roleNewUpdate?: Maybe<RoleNew>;
+  roleUpdate?: Maybe<Role>;
+  schoolFeeLevelSave?: Maybe<Scalars['Boolean']['output']>;
+  schoolUpdate?: Maybe<School>;
+  schoolYearCurrentTrue?: Maybe<SchoolYear>;
+  schoolYearSave?: Maybe<SchoolYear>;
+  /** by schoolId */
+  sendGlobalSMS?: Maybe<Scalars['Boolean']['output']>;
+  /**
+   *  savePerson(displayName: String!): Person
+   *  testUpload(file: Upload): Boolean
+   */
+  sendSMS?: Maybe<Scalars['String']['output']>;
+  sendSequentialSMSForClass?: Maybe<Scalars['String']['output']>;
+  serviceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  serviceSave?: Maybe<ProductUnion>;
+  serviceUpdate?: Maybe<ProductUnion>;
+  storeAccount?: Maybe<Account>;
+  storeAccountCategory?: Maybe<AccountCategory>;
+  storeAccountGroup?: Maybe<AccountGroup>;
+  storeAccountModel?: Maybe<AccountModel>;
+  storeAccountingEntry?: Maybe<Operation>;
+  storeAdministrator?: Maybe<Administrator>;
+  storeAnnualNote?: Maybe<Scalars['Boolean']['output']>;
+  storeAnnualResult?: Maybe<Array<AnnualResult>>;
+  storeBank?: Maybe<Bank>;
+  storeBankAgency?: Maybe<BankAgency>;
+  storeBankOperation?: Maybe<BankOperation>;
+  storeBatchSubject?: Maybe<Array<Subject>>;
+  storeBranch?: Maybe<Branch>;
+  storeBranchSubjectGroup?: Maybe<SubjectGroups>;
+  storeBulkAnnualResult?: Maybe<Scalars['Boolean']['output']>;
+  storeBulkBankOperation?: Maybe<Array<BankOperation>>;
+  storeChartOfAccount?: Maybe<ChartOfAccount>;
+  storeClass?: Maybe<Clazz>;
+  storeClassDistribution?: Maybe<Array<Maybe<Distribution>>>;
+  storeConfiguration?: Maybe<Configuration>;
+  storeCouncilDecision?: Maybe<CouncilDecision>;
+  storeCurrency?: Maybe<Currency>;
+  storeCycle?: Maybe<Cycle>;
+  storeEnterprise?: Maybe<Enterprise>;
+  storeEnterpriseReport?: Maybe<EnterpriseReport>;
+  storeEvaluationType?: Maybe<EvaluationType>;
+  storeExpectedCompetence?: Maybe<Array<ExpectedCompetence>>;
+  storeFrequent?: Maybe<Frequent>;
+  storeFromRegistrationNumbers?: Maybe<Scalars['Boolean']['output']>;
+  storeGuardian?: Maybe<Guardian>;
+  storeLanguage?: Maybe<Language>;
+  storeLevel?: Maybe<Level>;
+  storeLiableType?: Maybe<LiableType>;
+  storeLogCode?: Maybe<LogCode>;
+  storeMarkAppreciation?: Maybe<MarkAppreciation>;
+  storeOldSchool?: Maybe<OldSchool>;
+  storeOperationClass?: Maybe<OperationClass>;
+  storePaymentGroup?: Maybe<PaymentGroup>;
+  storePaymentMode?: Maybe<PaymentMode>;
+  storePaymentSlice?: Maybe<PaymentSlice>;
+  storePeriod?: Maybe<Period>;
+  storePrimarySequentialNote?: Maybe<Array<PrimarySequentialNote>>;
+  storeQuarterlyNote?: Maybe<Scalars['Boolean']['output']>;
+  storeQuarterlyReportObservation?: Maybe<Array<QuarterlyReportObservation>>;
+  storeReportAppreciation?: Maybe<ReportAppreciation>;
+  storeRole?: Maybe<Role>;
+  storeSchool?: Maybe<School>;
+  storeSchoolFee?: Maybe<SchoolFee>;
+  storeSchoolFeeLevel?: Maybe<Scalars['Boolean']['output']>;
+  storeSchoolLiable?: Maybe<SchoolLiable>;
+  storeSchoolSection?: Maybe<SchoolSection>;
+  storeSchoolYear?: Maybe<Array<SchoolYear>>;
+  storeSequentialDiscipline?: Maybe<Array<SequentialDiscipline>>;
+  storeSequentialNote?: Maybe<Array<SequentialNote>>;
+  storeSpecialAccount?: Maybe<SpecialAccount>;
+  storeStudent?: Maybe<Student>;
+  storeStudentPayment?: Maybe<StudentPayment>;
+  storeSubPeriod?: Maybe<SubPeriod>;
+  storeSubject?: Maybe<Subject>;
+  storeSubjectBranchEvaluationType?: Maybe<Array<Maybe<SubjectBranchEvaluationType>>>;
+  storeSubjectBranchEvaluationTypeForm?: Maybe<Array<Maybe<SubjectBranchEvaluationType>>>;
+  storeSubjectDepartment?: Maybe<SubjectDepartment>;
+  storeSubjectGroup?: Maybe<SubjectGroup>;
+  storeTeacher?: Maybe<Teacher>;
+  storeUser?: Maybe<User>;
+  storeUserGroup?: Maybe<UserGroup>;
+  studentDeleteByIds?: Maybe<Scalars['Boolean']['output']>;
+  studentImport?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceCreate?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceDeleteByIds?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceSave?: Maybe<StudentInvoice>;
+  /**  Sync when the fee structure is updated */
+  studentInvoiceSync?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceUpdate?: Maybe<Scalars['Boolean']['output']>;
+  studentPaymentDeleteByIds?: Maybe<Scalars['Boolean']['output']>;
+  studentPaymentUpdate?: Maybe<Scalars['Boolean']['output']>;
+  studentPicturesImportCancel?: Maybe<Scalars['Boolean']['output']>;
+  studentPicturesSave?: Maybe<Scalars['Boolean']['output']>;
+  /** subCompetenceUpdate(competence: SubCompetenceInput!): Boolean */
+  subCompetenceDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  subCompetenceSave?: Maybe<Scalars['Boolean']['output']>;
+  supplierCategoryDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  supplierCategorySave?: Maybe<SupplierCategory>;
+  supplierCategoryUpdate?: Maybe<SupplierCategory>;
+  supplierDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  supplierSave?: Maybe<Supplier>;
+  supplierUpdate?: Maybe<Supplier>;
+  teacherDeleteByIds?: Maybe<Scalars['Boolean']['output']>;
+  teacherUpdate?: Maybe<Teacher>;
+  timeSlotSave?: Maybe<TimeSlot>;
+  timeSlotUpdate?: Maybe<TimeSlot>;
+  timeTableSave?: Maybe<Scalars['Boolean']['output']>;
+  tuitionDeleteById?: Maybe<Scalars['Boolean']['output']>;
+  tuitionSave?: Maybe<ProductUnion>;
+  tuitionUpdate?: Maybe<ProductUnion>;
+  updateBranchSubjectGroup?: Maybe<SubjectGroups>;
+  updateFrequent?: Maybe<Frequent>;
+  updateGuardian?: Maybe<Guardian>;
+  updateMfa?: Maybe<User>;
+  updateStudent?: Maybe<Student>;
+  updateUserPassword?: Maybe<User>;
+  userToggleStatus?: Maybe<User>;
+  userUpdate?: Maybe<User>;
+  usersChangeStatus?: Maybe<Scalars['Boolean']['output']>;
+  verify?: Maybe<AuthRequest>;
+};
+
+
+export type MutationArticleDeleteByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type MutationArticleSaveArgs = {
+  article: ArticleCreateInput;
+};
+
+
+export type MutationArticleUpdateArgs = {
+  article: ArticleUpdateInput;
+};
+
+
+export type MutationAttendanceDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationAttendanceSaveArgs = {
+  attendance: AttendanceCreateInput;
+};
+
+
+export type MutationAttendanceUpdateArgs = {
+  attendance: AttendanceUpdateInput;
+};
+
+
+export type MutationBankAccountDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationBankAccountSaveArgs = {
+  account: BankAccountCreateInput;
+};
+
+
+export type MutationBankAccountUpdateArgs = {
+  account: BankAccountUpdateInput;
+};
+
+
+export type MutationBankTransactionDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationBankTransactionSaveArgs = {
+  transaction: BankTransactionCreateInput;
+};
+
+
+export type MutationBankTransactionUpdateArgs = {
+  transaction: BankTransactionUpdateInput;
+};
+
+
+export type MutationBillDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationBillPaymentDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationBillPaymentSaveArgs = {
+  payment: BillPaymentInput;
+};
+
+
+export type MutationBillSaveArgs = {
+  bill: BillCreateInput;
+};
+
+
+export type MutationBillUpdateArgs = {
+  bill: BillUpdateInput;
+};
+
+
+export type MutationBranchUpdateArgs = {
+  branch: BranchUpdateInput;
+};
+
+
+export type MutationBuildAccountingEntryLedgersArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationBuildAllFrequentNumberOrderArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationBuildFrequentNumberOrderArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllAnnualAverageArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllAnnualCompNoteArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllAnnualDisciplineArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllAnnualNoteArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllQuarterlyAverageArgs = {
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllQuarterlyDisciplineArgs = {
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllQuarterlyNoteArgs = {
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAllSequentialAverageArgs = {
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAnnualAverageArgs = {
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAnnualCompNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAnnualDisciplineArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateAnnualNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateQuarterlyAverageArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateQuarterlyDisciplineArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateQuarterlyNoteArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type MutationCalculateSequentialAverageArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type MutationCashVoucherApproveArgs = {
+  id: Scalars['Long']['input'];
+  operator: Scalars['String']['input'];
+};
+
+
+export type MutationCashVoucherDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationCashVoucherSaveArgs = {
+  cashVoucher: CashVoucherCreateInput;
+};
+
+
+export type MutationCashVoucherUpdateArgs = {
+  cashVoucher: CashVoucherUpdateInput;
+};
+
+
+export type MutationCheckPaymentAndConfirmArgs = {
+  input: GiselPaymentCheckInput;
+};
+
+
+export type MutationCloneConfigArgs = {
+  destSchoolYearId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationCompetenceDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationCompetenceLevelSaveArgs = {
+  competences: Array<CompetenceLevelInput>;
+};
+
+
+export type MutationCompetenceSaveArgs = {
+  competence: CompetenceCreateInput;
+};
+
+
+export type MutationCompetenceUpdateArgs = {
+  competence: CompetenceUpdateInput;
+};
+
+
+export type MutationCreatePostArgs = {
+  body: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  userId: Scalars['Int']['input'];
+};
+
+
+export type MutationCustomerCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationCustomerCategorySaveArgs = {
+  category: CustomerCategoryCreateInput;
+};
+
+
+export type MutationCustomerCategoryUpdateArgs = {
+  category: CustomerCategoryUpdateInput;
+};
+
+
+export type MutationCustomerDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationCustomerSaveArgs = {
+  customer: CustomerCreateInput;
+};
+
+
+export type MutationCustomerUpdateArgs = {
+  customer: CustomerUpdateInput;
+};
+
+
+export type MutationCyclesSaveArgs = {
+  items: Array<CycleSetupInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationDayOfClassSaveArgs = {
+  dayOfClass: DayOfClassCreateInput;
+};
+
+
+export type MutationDayOfClassUpdateArgs = {
+  dayOfClass: DayOfClassUpdateInput;
+};
+
+
+export type MutationDeductionCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeductionCategorySaveArgs = {
+  category: DeductionCategoryCreateInput;
+};
+
+
+export type MutationDeductionCategoryUpdateArgs = {
+  category: DeductionCategoryUpdateInput;
+};
+
+
+export type MutationDeductionDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeductionSaveArgs = {
+  deduction: DeductionCreateInput;
+};
+
+
+export type MutationDeductionUpdateArgs = {
+  deduction: DeductionUpdateInput;
+};
+
+
+export type MutationDeleteAccountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteAccountCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteAccountGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteAccountModelByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteAdministratorByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationDeleteAllLedgersArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteBankAgencyByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteBankByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteBankOperationByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationDeleteBranchByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteChartOfAccountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteClassByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteCouncilDecisionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteCurrencyByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteCycleByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteDayOfClassByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteEvaluationTypeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteFrequentByIdArgs = {
+  id?: InputMaybe<FrequentPkInput>;
+};
+
+
+export type MutationDeleteFrequentByIdsArgs = {
+  ids: Array<FrequentPkInput>;
+};
+
+
+export type MutationDeleteGuardianByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationDeleteLevelByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteLiableTypeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteLogCodeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteMarkAppreciationByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteOldSchoolByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteOperationClassByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePaymentGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePaymentModeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePaymentSliceByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeletePeriodByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteReportAppreciationByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteRoleByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSchoolByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSchoolFeeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSchoolLiableByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSchoolSectionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSchoolYearByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSpecialAccountByIdArgs = {
+  id?: InputMaybe<SpecialAccountPkInput>;
+};
+
+
+export type MutationDeleteStudentByIdArgs = {
+  id?: InputMaybe<Scalars['Long']['input']>;
+};
+
+
+export type MutationDeleteStudentPaymentByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationDeleteSubPeriodByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSubjectByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSubjectDepartmentByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSubjectGroupByBranchArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteSubjectGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteTeacherByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationDeleteTimeSlotByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteUserByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteUserByIdsArgs = {
+  ids: Array<Scalars['Int']['input']>;
+};
+
+
+export type MutationDeleteUserGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDepartmentDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDepartmentSaveArgs = {
+  department: DepartmentCreateInput;
+};
+
+
+export type MutationDepartmentUpdateArgs = {
+  department: DepartmentUpdateInput;
+};
+
+
+export type MutationDisableAccountGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableAccountModelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableLogCodeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableSchoolArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableSchoolSectionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableSubjectArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisableSubjectDepartmentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDiscountDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDiscountSaveArgs = {
+  discount: DiscountCreateInput;
+};
+
+
+export type MutationDiscountUpdateArgs = {
+  discount: DiscountUpdateInput;
+};
+
+
+export type MutationEarningCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEarningCategorySaveArgs = {
+  category: EarningCategoryCreateInput;
+};
+
+
+export type MutationEarningCategoryUpdateArgs = {
+  category: EarningCategoryUpdateInput;
+};
+
+
+export type MutationEarningDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEarningSaveArgs = {
+  earning: EarningCreateInput;
+};
+
+
+export type MutationEarningUpdateArgs = {
+  earning: EarningUpdateInput;
+};
+
+
+export type MutationEmployeeDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEmployeeSaveArgs = {
+  employee: EmployeeCreateInput;
+};
+
+
+export type MutationEmployeeUpdateArgs = {
+  employee: EmployeeUpdateInput;
+};
+
+
+export type MutationEnableAccountGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableAccountModelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableLogCodeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableSchoolArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableSchoolSectionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableSubjectArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEnableSubjectDepartmentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEvalCompSaveArgs = {
+  competences: Array<EvalCompInput>;
+};
+
+
+export type MutationEvalTypeDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationEvalTypeSaveArgs = {
+  type: EvalTypeInput;
+};
+
+
+export type MutationExpenseCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationExpenseCategorySaveArgs = {
+  category: ExpenseCategoryCreateInput;
+};
+
+
+export type MutationExpenseCategoryUpdateArgs = {
+  category: ExpenseCategoryUpdateInput;
+};
+
+
+export type MutationExpenseDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationExpenseSaveArgs = {
+  expense: ExpenseCreateInput;
+};
+
+
+export type MutationExpenseUpdateArgs = {
+  expense: ExpenseUpdateInput;
+};
+
+
+export type MutationFeeGroupDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationFeeGroupSaveArgs = {
+  group: FeeGroupCreateInput;
+};
+
+
+export type MutationFeeGroupUpdateArgs = {
+  group: FeeGroupUpdateInput;
+};
+
+
+export type MutationFeeStructureSaveArgs = {
+  form: Array<FeeStructureInputI>;
+  levelId: Scalars['Int']['input'];
+};
+
+
+export type MutationFrequentBulkUpdateArgs = {
+  frequents: Array<FrequentBulkUpdateInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationFrequentExcludeArgs = {
+  input: FrequentExcludeInput;
+};
+
+
+export type MutationFrequentSaveArgs = {
+  frequent: FrequentInput;
+};
+
+
+export type MutationFrequentUpdateArgs = {
+  frequent: FrequentInput;
+  student: StudentUpdateInput;
+};
+
+
+export type MutationGenerateTimeTableArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationHeadDepartmentsSaveArgs = {
+  headDepartments: Array<HeadDepartmentInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitAccountingArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitAccountsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitAnglophoneCompetencesArgs = {
+  cycleId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitEvalTypesArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitFrancophoneCompetencesArgs = {
+  cycleId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitSchoolArgs = {
+  input: SchoolInitInput;
+};
+
+
+export type MutationInitSubjectsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationInitiatePaymentArgs = {
+  input: GiselPayRequestedInput;
+};
+
+
+export type MutationInstallmentDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationInstallmentSaveArgs = {
+  installment: InstallmentCreateInput;
+};
+
+
+export type MutationInstallmentUpdateArgs = {
+  installment: InstallmentUpdateInput;
+};
+
+
+export type MutationInvoiceDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationInvoiceSaveArgs = {
+  invoice: InvoiceCreateInput;
+};
+
+
+export type MutationInvoiceUpdateArgs = {
+  invoice: InvoiceUpdateInput;
+};
+
+
+export type MutationLevelsSaveArgs = {
+  items: Array<LevelSetupInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationLoginHistoryDeleteByIdsArgs = {
+  ids: Array<Scalars['Long']['input']>;
+};
+
+
+export type MutationLoginUserArgs = {
+  authRequest?: InputMaybe<AuthRequestInput>;
+};
+
+
+export type MutationMakeGiselPaymentArgs = {
+  input: GiselPaymentInput;
+};
+
+
+export type MutationMakeStudentProgressionArgs = {
+  currentSchoolYearId: Scalars['Int']['input'];
+  nextSchoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationPFreeSequentialNoteSaveArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<PFreeSequentialNoteInput>;
+  schoolId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+};
+
+
+export type MutationPSequentialNoteSaveArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<PSequentialNoteInput>;
+  schoolId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type MutationPaymentConditionDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationPaymentConditionSaveArgs = {
+  condition: PaymentConditionCreateInput;
+};
+
+
+export type MutationPaymentConditionUpdateArgs = {
+  condition: PaymentConditionUpdateInput;
+};
+
+
+export type MutationPaymentDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationPaymentOfStudentSaveArgs = {
+  payment: PaymentOfStudentInput;
+};
+
+
+export type MutationPaymentSaveArgs = {
+  payment: PaymentInput;
+};
+
+
+export type MutationPayrollDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationPayrollMarkAsPaidArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationPayrollPeriodDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationPayrollPeriodSaveArgs = {
+  period: PayrollPeriodCreateInput;
+};
+
+
+export type MutationPayrollPeriodUpdateArgs = {
+  period: PayrollPeriodUpdateInput;
+};
+
+
+export type MutationPayrollSaveArgs = {
+  payroll: PayrollCreateInput;
+};
+
+
+export type MutationPayrollUpdateArgs = {
+  payroll: PayrollUpdateInput;
+};
+
+
+export type MutationPermissionDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationPermissionSaveArgs = {
+  permission: PermissionCreateInput;
+};
+
+
+export type MutationPermissionUpdateArgs = {
+  permission: PermissionUpdateInput;
+};
+
+
+export type MutationPositionDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationPositionSaveArgs = {
+  position: PositionCreateInput;
+};
+
+
+export type MutationPositionUpdateArgs = {
+  position: PositionUpdateInput;
+};
+
+
+export type MutationProductCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationProductCategorySaveArgs = {
+  category: ProductCategoryCreateInput;
+};
+
+
+export type MutationProductCategoryUpdateArgs = {
+  category: ProductCategoryUpdateInput;
+};
+
+
+export type MutationProductToggleStatusArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type MutationQuarterlyCompNoteSaveArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<QuarterlyCompNote>;
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationResetBalancesArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationRoleNewDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationRoleNewSaveArgs = {
+  role: RoleNewCreateInput;
+};
+
+
+export type MutationRoleNewUpdateArgs = {
+  role: RoleNewUpdateInput;
+};
+
+
+export type MutationRoleUpdateArgs = {
+  role?: InputMaybe<RoleUpdateInput>;
+};
+
+
+export type MutationSchoolFeeLevelSaveArgs = {
+  form: Array<SchoolFeeLevelInputI>;
+  levelId: Scalars['Int']['input'];
+};
+
+
+export type MutationSchoolUpdateArgs = {
+  school: SchoolUpdateInput;
+};
+
+
+export type MutationSchoolYearCurrentTrueArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationSchoolYearSaveArgs = {
+  schoolYear: SchoolYearInput;
+};
+
+
+export type MutationSendGlobalSmsArgs = {
+  message: Scalars['String']['input'];
+  search: Scalars['String']['input'];
+};
+
+
+export type MutationSendSmsArgs = {
+  message: Scalars['String']['input'];
+  receiver: Scalars['String']['input'];
+  sender: Scalars['String']['input'];
+};
+
+
+export type MutationSendSequentialSmsForClassArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type MutationServiceDeleteByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type MutationServiceSaveArgs = {
+  service: ServiceCreateInput;
+};
+
+
+export type MutationServiceUpdateArgs = {
+  service: ServiceUpdateInput;
+};
+
+
+export type MutationStoreAccountArgs = {
+  account?: InputMaybe<AccountInput>;
+};
+
+
+export type MutationStoreAccountCategoryArgs = {
+  category?: InputMaybe<AccountCategoryInput>;
+};
+
+
+export type MutationStoreAccountGroupArgs = {
+  accountGroup?: InputMaybe<AccountGroupInput>;
+};
+
+
+export type MutationStoreAccountModelArgs = {
+  accountModel?: InputMaybe<AccountModelInput>;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreAccountingEntryArgs = {
+  entry?: InputMaybe<AccountingEntryInput>;
+};
+
+
+export type MutationStoreAdministratorArgs = {
+  administrator?: InputMaybe<AdministratorInput>;
+};
+
+
+export type MutationStoreAnnualNoteArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<AnnualNote>;
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreAnnualResultArgs = {
+  classId: Scalars['Int']['input'];
+  results: Array<AnnualResultInput>;
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreBankArgs = {
+  bank?: InputMaybe<BankInput>;
+};
+
+
+export type MutationStoreBankAgencyArgs = {
+  agency?: InputMaybe<BankAgencyInput>;
+};
+
+
+export type MutationStoreBankOperationArgs = {
+  operation?: InputMaybe<BankOperationInput>;
+};
+
+
+export type MutationStoreBatchSubjectArgs = {
+  subjects?: InputMaybe<Array<SubjectInput>>;
+};
+
+
+export type MutationStoreBranchArgs = {
+  branch: BranchCreateInput;
+};
+
+
+export type MutationStoreBranchSubjectGroupArgs = {
+  group: SubjectGroupsInput;
+};
+
+
+export type MutationStoreBulkAnnualResultArgs = {
+  form?: InputMaybe<AnnualResultFormInput>;
+};
+
+
+export type MutationStoreBulkBankOperationArgs = {
+  operation?: InputMaybe<BankOperationForm>;
+};
+
+
+export type MutationStoreChartOfAccountArgs = {
+  account?: InputMaybe<ChartOfAccountInput>;
+};
+
+
+export type MutationStoreClassArgs = {
+  clazz?: InputMaybe<ClazzInput>;
+};
+
+
+export type MutationStoreClassDistributionArgs = {
+  classId: Scalars['Int']['input'];
+  distributions: Array<DistributionInput>;
+};
+
+
+export type MutationStoreConfigurationArgs = {
+  config?: InputMaybe<ConfigurationInput>;
+};
+
+
+export type MutationStoreCouncilDecisionArgs = {
+  decision?: InputMaybe<CouncilDecisionInput>;
+};
+
+
+export type MutationStoreCurrencyArgs = {
+  currency?: InputMaybe<CurrencyInput>;
+};
+
+
+export type MutationStoreCycleArgs = {
+  cycle?: InputMaybe<CycleInput>;
+};
+
+
+export type MutationStoreEnterpriseArgs = {
+  enterprise?: InputMaybe<EnterpriseInput>;
+};
+
+
+export type MutationStoreEnterpriseReportArgs = {
+  enterpriseId: Scalars['Int']['input'];
+  favorite: Scalars['Boolean']['input'];
+  reportItemId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreEvaluationTypeArgs = {
+  evaluationType?: InputMaybe<EvaluationTypeInput>;
+};
+
+
+export type MutationStoreExpectedCompetenceArgs = {
+  competences: Array<ExpectedCompetenceInput>;
+};
+
+
+export type MutationStoreFrequentArgs = {
+  frequent?: InputMaybe<FrequentInput>;
+};
+
+
+export type MutationStoreFromRegistrationNumbersArgs = {
+  folderName: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreGuardianArgs = {
+  guardian: GuardianCreateInput;
+};
+
+
+export type MutationStoreLanguageArgs = {
+  language?: InputMaybe<LanguageInput>;
+};
+
+
+export type MutationStoreLevelArgs = {
+  level?: InputMaybe<LevelInput>;
+};
+
+
+export type MutationStoreLiableTypeArgs = {
+  liableType?: InputMaybe<LiableTypeInput>;
+};
+
+
+export type MutationStoreLogCodeArgs = {
+  logCode?: InputMaybe<LogCodeInput>;
+};
+
+
+export type MutationStoreMarkAppreciationArgs = {
+  appreciation?: InputMaybe<MarkAppreciationInput>;
+};
+
+
+export type MutationStoreOldSchoolArgs = {
+  oldSchool?: InputMaybe<OldSchoolInput>;
+};
+
+
+export type MutationStoreOperationClassArgs = {
+  operationClass?: InputMaybe<OperationClassInput>;
+};
+
+
+export type MutationStorePaymentGroupArgs = {
+  group?: InputMaybe<PaymentGroupInput>;
+};
+
+
+export type MutationStorePaymentModeArgs = {
+  mode?: InputMaybe<PaymentModeInput>;
+};
+
+
+export type MutationStorePaymentSliceArgs = {
+  slice?: InputMaybe<PaymentSliceInput>;
+};
+
+
+export type MutationStorePeriodArgs = {
+  period?: InputMaybe<PeriodInput>;
+};
+
+
+export type MutationStorePrimarySequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<PrimarySequentialNoteFormInput>;
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreQuarterlyNoteArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<QuarterlyNote>;
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreQuarterlyReportObservationArgs = {
+  classId: Scalars['Int']['input'];
+  observations: Array<QuarterlyReportObservationInput>;
+  period: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreReportAppreciationArgs = {
+  appreciation?: InputMaybe<ReportAppreciationInput>;
+};
+
+
+export type MutationStoreRoleArgs = {
+  role?: InputMaybe<RoleInput>;
+};
+
+
+export type MutationStoreSchoolArgs = {
+  school?: InputMaybe<SchoolInput>;
+};
+
+
+export type MutationStoreSchoolFeeArgs = {
+  schoolFee?: InputMaybe<SchoolFeeInput>;
+};
+
+
+export type MutationStoreSchoolFeeLevelArgs = {
+  form?: InputMaybe<SchoolFeeLevelForm>;
+};
+
+
+export type MutationStoreSchoolLiableArgs = {
+  schoolLiable?: InputMaybe<SchoolLiableInput>;
+};
+
+
+export type MutationStoreSchoolSectionArgs = {
+  section?: InputMaybe<SchoolSectionInput>;
+};
+
+
+export type MutationStoreSchoolYearArgs = {
+  schoolYear?: InputMaybe<SchoolYearInput>;
+};
+
+
+export type MutationStoreSequentialDisciplineArgs = {
+  classId: Scalars['Int']['input'];
+  discplines?: InputMaybe<Array<InputMaybe<SequentialDisciplineInput>>>;
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreSequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  notes: Array<SequentialNoteInput>;
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type MutationStoreSpecialAccountArgs = {
+  account?: InputMaybe<SpecialAccountInput>;
+};
+
+
+export type MutationStoreStudentArgs = {
+  student: StudentCreateInput;
+};
+
+
+export type MutationStoreStudentPaymentArgs = {
+  payment?: InputMaybe<StudentPaymentInput>;
+};
+
+
+export type MutationStoreSubPeriodArgs = {
+  subPeriod?: InputMaybe<SubPeriodInput>;
+};
+
+
+export type MutationStoreSubjectArgs = {
+  subject?: InputMaybe<SubjectInput>;
+};
+
+
+export type MutationStoreSubjectBranchEvaluationTypeArgs = {
+  sbets?: InputMaybe<Array<InputMaybe<SubjectBranchEvaluationTypeInput>>>;
+};
+
+
+export type MutationStoreSubjectBranchEvaluationTypeFormArgs = {
+  sbets?: InputMaybe<Array<InputMaybe<SubjectBranchEvaluationTypeFormInput>>>;
+};
+
+
+export type MutationStoreSubjectDepartmentArgs = {
+  department?: InputMaybe<SubjectDepartmentInput>;
+};
+
+
+export type MutationStoreSubjectGroupArgs = {
+  group: SubjectGroupInput;
+};
+
+
+export type MutationStoreTeacherArgs = {
+  teacher: TeacherCreateInput;
+};
+
+
+export type MutationStoreUserArgs = {
+  user: UserCreateInput;
+};
+
+
+export type MutationStoreUserGroupArgs = {
+  userGroup?: InputMaybe<UserGroupInput>;
+};
+
+
+export type MutationStudentDeleteByIdsArgs = {
+  ids: Array<Scalars['Long']['input']>;
+};
+
+
+export type MutationStudentImportArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  students: Array<StudentImportInput>;
+};
+
+
+export type MutationStudentInvoiceCreateArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type MutationStudentInvoiceDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationStudentInvoiceDeleteByIdsArgs = {
+  ids: Array<Scalars['Long']['input']>;
+};
+
+
+export type MutationStudentInvoiceSaveArgs = {
+  invoice?: InputMaybe<StudentInvoiceInput>;
+};
+
+
+export type MutationStudentInvoiceSyncArgs = {
+  schoolId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type MutationStudentInvoiceUpdateArgs = {
+  invoice: StudentInvoiceUpdateInput;
+};
+
+
+export type MutationStudentPaymentDeleteByIdsArgs = {
+  ids: Array<Scalars['Long']['input']>;
+};
+
+
+export type MutationStudentPaymentUpdateArgs = {
+  payment: StudentPaymentUpdateInput;
+};
+
+
+export type MutationStudentPicturesImportCancelArgs = {
+  pictures: Array<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationStudentPicturesSaveArgs = {
+  pictures: Array<StudentPictureInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationSubCompetenceDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationSubCompetenceSaveArgs = {
+  competences: Array<SubCompetenceInputI>;
+  levelId: Scalars['Int']['input'];
+};
+
+
+export type MutationSupplierCategoryDeleteByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationSupplierCategorySaveArgs = {
+  category?: InputMaybe<SupplierCategoryCreateInput>;
+};
+
+
+export type MutationSupplierCategoryUpdateArgs = {
+  category?: InputMaybe<SupplierCategoryUpdateInput>;
+};
+
+
+export type MutationSupplierDeleteByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type MutationSupplierSaveArgs = {
+  supplier: SupplierCreateInput;
+};
+
+
+export type MutationSupplierUpdateArgs = {
+  supplier: SupplierUpdateInput;
+};
+
+
+export type MutationTeacherDeleteByIdsArgs = {
+  ids: Array<Scalars['Long']['input']>;
+};
+
+
+export type MutationTeacherUpdateArgs = {
+  teacher: TeacherUpdateInput;
+};
+
+
+export type MutationTimeSlotSaveArgs = {
+  timeSlot: TimeSlotCreateInput;
+};
+
+
+export type MutationTimeSlotUpdateArgs = {
+  timeSlot: TimeSlotUpdateInput;
+};
+
+
+export type MutationTimeTableSaveArgs = {
+  classId: Scalars['Int']['input'];
+  items: Array<TimeTableFormInput>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type MutationTuitionDeleteByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type MutationTuitionSaveArgs = {
+  tuition: TuitionCreateInput;
+};
+
+
+export type MutationTuitionUpdateArgs = {
+  tuition: TuitionUpdateInput;
+};
+
+
+export type MutationUpdateBranchSubjectGroupArgs = {
+  group: SubjectGroupsUpdateInput;
+};
+
+
+export type MutationUpdateFrequentArgs = {
+  frequent?: InputMaybe<FrequentInput>;
+  student: StudentUpdateInput;
+};
+
+
+export type MutationUpdateGuardianArgs = {
+  guardian: GuardianUpdateInput;
+};
+
+
+export type MutationUpdateMfaArgs = {
+  mfa: Scalars['Boolean']['input'];
+  username: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateStudentArgs = {
+  student: StudentUpdateInput;
+};
+
+
+export type MutationUpdateUserPasswordArgs = {
+  updatePasswordInput: UpdatePasswordInput;
+  username: Scalars['String']['input'];
+};
+
+
+export type MutationUserToggleStatusArgs = {
+  userId: Scalars['Int']['input'];
+};
+
+
+export type MutationUserUpdateArgs = {
+  user: UserUpdateInput;
+};
+
+
+export type MutationUsersChangeStatusArgs = {
+  ids: Array<Scalars['Int']['input']>;
+  status: Scalars['Boolean']['input'];
+};
+
+
+export type MutationVerifyArgs = {
+  code: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
+export type OldSchool = {
+  __typename?: 'OldSchool';
+  address?: Maybe<Address>;
+  contactInfo?: Maybe<ContactInfo>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  school?: Maybe<School>;
+};
 
 export type OldSchoolInput = {
-  address?: AddressInput | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  id?: number | null | undefined;
-  name: string;
-  schoolId: number;
+  address?: InputMaybe<AddressInput>;
+  contactInfo?: InputMaybe<ContactInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type Operation = {
+  /** @dateFormat */
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  number?: Maybe<Scalars['String']['output']>;
+  operationDate?: Maybe<Scalars['String']['output']>;
+  /** @dateFormat */
+  recordDate?: Maybe<Scalars['String']['output']>;
+};
+
+export type OperationClass = {
+  __typename?: 'OperationClass';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type OperationClassInput = {
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id?: number | null | undefined;
-  name: string;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type OptaTimeslot = {
+  __typename?: 'OptaTimeslot';
+  dayOfWeek?: Maybe<Scalars['String']['output']>;
+  endTime?: Maybe<Scalars['String']['output']>;
+  startTime?: Maybe<Scalars['String']['output']>;
 };
 
 /**
  * 
  * Possible directions in which to order a list of items when provided an `orderBy` argument.
  */
-export type OrderDirection =
+export enum OrderDirection {
   /** Specifies an ascending order for a given `orderBy` argument. */
-  | 'ASC'
+  Asc = 'ASC',
   /** Specifies a descending order for a given `orderBy` argument. */
-  | 'DESC';
+  Desc = 'DESC'
+}
+
+export type Origin = {
+  __typename?: 'Origin';
+  countryOrigin?: Maybe<Scalars['String']['output']>;
+  departmentOrigin?: Maybe<Scalars['String']['output']>;
+  districtOrigin?: Maybe<Scalars['String']['output']>;
+  regionOrigin?: Maybe<Scalars['String']['output']>;
+};
 
 export type OriginInput = {
-  countryOrigin?: string | null | undefined;
-  departmentOrigin?: string | null | undefined;
-  districtOrigin?: string | null | undefined;
-  regionOrigin?: string | null | undefined;
+  countryOrigin?: InputMaybe<Scalars['String']['input']>;
+  departmentOrigin?: InputMaybe<Scalars['String']['input']>;
+  districtOrigin?: InputMaybe<Scalars['String']['input']>;
+  regionOrigin?: InputMaybe<Scalars['String']['input']>;
+};
+
+/**  Free sequential note */
+export type PFreeSequentialNote = {
+  __typename?: 'PFreeSequentialNote';
+  items?: Maybe<Array<PFreeSequentialNoteItem>>;
+  registrationNumber: Scalars['String']['output'];
+  studentFullName: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type PFreeSequentialNoteInput = {
-  items?: Array<PFreeSequentialNoteItemInput> | null | undefined;
-  registrationNumber: string;
-  studentFullName: string;
-  studentId: unknown;
+  items?: InputMaybe<Array<PFreeSequentialNoteItemInput>>;
+  registrationNumber: Scalars['String']['input'];
+  studentFullName: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type PFreeSequentialNoteItem = {
+  __typename?: 'PFreeSequentialNoteItem';
+  items?: Maybe<Array<PFreeSequentialNoteItemItem>>;
+  subPeriodId: Scalars['Int']['output'];
+  subPeriodName: Scalars['String']['output'];
 };
 
 export type PFreeSequentialNoteItemInput = {
-  items?: Array<PFreeSequentialNoteItemItemInput> | null | undefined;
-  subPeriodId: number;
-  subPeriodName: string;
+  items?: InputMaybe<Array<PFreeSequentialNoteItemItemInput>>;
+  subPeriodId: Scalars['Int']['input'];
+  subPeriodName: Scalars['String']['input'];
+};
+
+export type PFreeSequentialNoteItemItem = {
+  __typename?: 'PFreeSequentialNoteItemItem';
+  evalTypeId: Scalars['Int']['output'];
+  evalTypeName: Scalars['String']['output'];
+  marks: Scalars['Short']['output'];
+  note?: Maybe<Scalars['Float']['output']>;
 };
 
 export type PFreeSequentialNoteItemItemInput = {
-  evalTypeId: number;
-  evalTypeName: string;
-  marks: unknown;
-  note?: number | null | undefined;
+  evalTypeId: Scalars['Int']['input'];
+  evalTypeName: Scalars['String']['input'];
+  marks: Scalars['Short']['input'];
+  note?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type PSequentialNote = {
+  __typename?: 'PSequentialNote';
+  items?: Maybe<Array<PSequentialNoteItem>>;
+  registrationNumber: Scalars['String']['output'];
+  studentFullName: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type PSequentialNoteInput = {
-  items?: Array<PSequentialNoteItemInput> | null | undefined;
-  registrationNumber: string;
-  studentFullName: string;
-  studentId: unknown;
+  items?: InputMaybe<Array<PSequentialNoteItemInput>>;
+  registrationNumber: Scalars['String']['input'];
+  studentFullName: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type PSequentialNoteItem = {
+  __typename?: 'PSequentialNoteItem';
+  evalTypeId: Scalars['Int']['output'];
+  evalTypeName: Scalars['String']['output'];
+  marks: Scalars['Short']['output'];
+  note?: Maybe<Scalars['Float']['output']>;
 };
 
 export type PSequentialNoteItemInput = {
-  evalTypeId: number;
-  evalTypeName: string;
-  marks: unknown;
-  note: number;
+  evalTypeId: Scalars['Int']['input'];
+  evalTypeName: Scalars['String']['input'];
+  marks: Scalars['Short']['input'];
+  note: Scalars['Float']['input'];
 };
 
-export type PayType =
-  | 'COMMISSION'
-  | 'HOURLY'
-  | 'SALARY';
+/** Information about pagination in a connection. */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export enum PayType {
+  Commission = 'COMMISSION',
+  Hourly = 'HOURLY',
+  Salary = 'SALARY'
+}
+
+export type Payment = {
+  __typename?: 'Payment';
+  amount: Scalars['BigDecimal']['output'];
+  balance: Scalars['BigDecimal']['output'];
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  paymentAccount?: Maybe<Account>;
+  paymentMode?: Maybe<PaymentMode>;
+  person?: Maybe<Person>;
+  recordDate: Scalars['String']['output'];
+};
+
+export type PaymentCondition = {
+  __typename?: 'PaymentCondition';
+  active: Scalars['Boolean']['output'];
+  days: Scalars['Int']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
 
 export type PaymentConditionCreateInput = {
-  active: boolean;
-  days: unknown;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
+  active: Scalars['Boolean']['input'];
+  days: Scalars['Byte']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
 };
 
 export type PaymentConditionUpdateInput = {
-  active: boolean;
-  days: unknown;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
+  active: Scalars['Boolean']['input'];
+  days: Scalars['Byte']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type PaymentGroup = {
+  __typename?: 'PaymentGroup';
+  autoInclusion?: Maybe<Scalars['Boolean']['output']>;
+  external?: Maybe<Scalars['Boolean']['output']>;
+  fallback?: Maybe<Scalars['Boolean']['output']>;
+  formerStudent?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  schoolYear?: Maybe<SchoolYear>;
 };
 
 export type PaymentGroupInput = {
-  autoInclusion: boolean;
-  external: boolean;
-  fallback: boolean;
-  formerStudent: boolean;
-  id?: number | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  schoolYearId: number;
+  autoInclusion: Scalars['Boolean']['input'];
+  external: Scalars['Boolean']['input'];
+  fallback: Scalars['Boolean']['input'];
+  formerStudent: Scalars['Boolean']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  schoolYearId: Scalars['Int']['input'];
+};
+
+export type PaymentInfo = {
+  __typename?: 'PaymentInfo';
+  openInvoice?: Maybe<Scalars['Float']['output']>;
+  openInvoiceCount?: Maybe<Scalars['Int']['output']>;
+  overdue?: Maybe<Scalars['Float']['output']>;
+  overdueCount?: Maybe<Scalars['Int']['output']>;
+  paid?: Maybe<Scalars['Float']['output']>;
+  paidCount?: Maybe<Scalars['Int']['output']>;
+  schoolFee?: Maybe<Scalars['Float']['output']>;
+  schoolFeeCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type PaymentInput = {
+  amount: Scalars['BigDecimal']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  items?: InputMaybe<Array<PaymentItemInput>>;
+  /** Payment Fields */
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate: Scalars['Date']['input'];
+  paymentAccountId: Scalars['Int']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  personId: Scalars['Long']['input'];
+};
+
+export type PaymentItem = {
+  __typename?: 'PaymentItem';
+  amountPaid: Scalars['BigDecimal']['output'];
+  id: Scalars['Long']['output'];
+  inKindPayment: Scalars['Boolean']['output'];
+};
+
+export type PaymentItemInput = {
+  amount: Scalars['BigDecimal']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  invoiceId: Scalars['Long']['input'];
+};
+
+export type PaymentMode = {
+  __typename?: 'PaymentMode';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  school: School;
 };
 
 export type PaymentModeInput = {
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  id?: number | null | undefined;
-  name: string;
-  schoolId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type PaymentOfStudent = {
+  __typename?: 'PaymentOfStudent';
+  items: Array<PaymentOfStudentItem>;
+  /**  the full name */
+  registrationNumber: Scalars['String']['output'];
+  student: Scalars['String']['output'];
+  studentClass: Scalars['String']['output'];
 };
 
 export type PaymentOfStudentInput = {
-  enterpriseId: number;
-  invoiceId: unknown;
+  enterpriseId: Scalars['Int']['input'];
+  invoiceId: Scalars['Long']['input'];
   items: Array<PaymentOfStudentItemInput>;
-  note?: string | null | undefined;
-  operationDate: unknown;
-  operator: string;
-  paymentAccountId: number;
-  paymentModeId?: number | null | undefined;
+  note?: InputMaybe<Scalars['String']['input']>;
+  operationDate: Scalars['Date']['input'];
+  operator: Scalars['String']['input'];
+  paymentAccountId: Scalars['Int']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type PaymentOfStudentItem = {
+  __typename?: 'PaymentOfStudentItem';
+  amountPaid?: Maybe<Scalars['BigDecimal']['output']>;
+  dueDate?: Maybe<Scalars['String']['output']>;
+  feePaymentId?: Maybe<Scalars['Long']['output']>;
+  inKindPayment: Scalars['Boolean']['output'];
+  installmentId: Scalars['Int']['output'];
+  installmentName: Scalars['String']['output'];
+  invoiceItemId: Scalars['Long']['output'];
+  requiredAmount: Scalars['BigDecimal']['output'];
+  tuitionId: Scalars['Int']['output'];
+  tuitionName: Scalars['String']['output'];
 };
 
 export type PaymentOfStudentItemInput = {
-  amountPaid?: unknown;
-  dueDate?: string | null | undefined;
-  feePaymentId?: unknown;
-  inKindPayment: boolean;
-  installmentId: number;
-  installmentName: string;
-  invoiceItemId: unknown;
-  requiredAmount: unknown;
-  tuitionId: number;
-  tuitionName: string;
+  amountPaid?: InputMaybe<Scalars['BigDecimal']['input']>;
+  dueDate?: InputMaybe<Scalars['String']['input']>;
+  feePaymentId?: InputMaybe<Scalars['Long']['input']>;
+  inKindPayment: Scalars['Boolean']['input'];
+  installmentId: Scalars['Int']['input'];
+  installmentName: Scalars['String']['input'];
+  invoiceItemId: Scalars['Long']['input'];
+  requiredAmount: Scalars['BigDecimal']['input'];
+  tuitionId: Scalars['Int']['input'];
+  tuitionName: Scalars['String']['input'];
+};
+
+export type PaymentSlice = {
+  __typename?: 'PaymentSlice';
+  deadline?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  refundable?: Maybe<Scalars['Boolean']['output']>;
+  schoolYear?: Maybe<SchoolYear>;
 };
 
 export type PaymentSliceInput = {
-  deadline?: unknown;
-  id?: number | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  numberOrder: number;
-  refundable?: boolean | null | undefined;
-  schoolYearId: number;
+  deadline?: InputMaybe<Scalars['Date']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  refundable?: InputMaybe<Scalars['Boolean']['input']>;
+  schoolYearId: Scalars['Int']['input'];
+};
+
+export type Payroll = {
+  __typename?: 'Payroll';
+  baseSalary: Scalars['BigDecimal']['output'];
+  employee?: Maybe<Employee>;
+  enterpriseId: Scalars['Int']['output'];
+  grossSalary: Scalars['BigDecimal']['output'];
+  id: Scalars['Long']['output'];
+  netSalary: Scalars['BigDecimal']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  paymentMode?: Maybe<PaymentMode>;
+  period?: Maybe<PayrollPeriod>;
+  recordDate: Scalars['String']['output'];
+  status: PayrollStatus;
+  taxableSalary: Scalars['BigDecimal']['output'];
+  totalEmployeeDeduction: Scalars['BigDecimal']['output'];
+  totalEmployerDeduction: Scalars['BigDecimal']['output'];
 };
 
 export type PayrollCreateInput = {
-  baseSalary: unknown;
-  deductions?: Array<EmployeeDeductionInput> | null | undefined;
-  earnings?: Array<EmployeeEarningInput> | null | undefined;
-  employeeId: number;
-  employerDeductions?: Array<EmployerDeductionInput> | null | undefined;
-  enterpriseId: number;
-  note?: string | null | undefined;
-  number?: string | null | undefined;
-  operationDate: unknown;
-  paymentModeId?: number | null | undefined;
-  periodId: number;
+  baseSalary: Scalars['BigDecimal']['input'];
+  deductions?: InputMaybe<Array<EmployeeDeductionInput>>;
+  earnings?: InputMaybe<Array<EmployeeEarningInput>>;
+  employeeId: Scalars['Int']['input'];
+  employerDeductions?: InputMaybe<Array<EmployerDeductionInput>>;
+  enterpriseId: Scalars['Int']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  operationDate: Scalars['Date']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  periodId: Scalars['Int']['input'];
+};
+
+export type PayrollPeriod = {
+  __typename?: 'PayrollPeriod';
+  createdAt?: Maybe<Scalars['String']['output']>;
+  endDate: Scalars['String']['output'];
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  paymentDate: Scalars['String']['output'];
+  startDate: Scalars['String']['output'];
+  status: PeriodStatus;
+  type: PayrollPeriodType;
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type PayrollPeriodCreateInput = {
-  endDate: unknown;
-  enterpriseId: number;
-  paymentDate: unknown;
-  startDate: unknown;
+  endDate: Scalars['Date']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  paymentDate: Scalars['Date']['input'];
+  startDate: Scalars['Date']['input'];
   status: PeriodStatus;
   type: PayrollPeriodType;
 };
 
-export type PayrollPeriodType =
-  | 'BI_WEEKLY'
-  | 'MONTHLY'
-  | 'SEMI_MONTHLY'
-  | 'WEEKLY';
+export enum PayrollPeriodType {
+  BiWeekly = 'BI_WEEKLY',
+  Monthly = 'MONTHLY',
+  SemiMonthly = 'SEMI_MONTHLY',
+  Weekly = 'WEEKLY'
+}
 
 export type PayrollPeriodUpdateInput = {
-  endDate: unknown;
-  enterpriseId: number;
-  id: number;
-  paymentDate: unknown;
-  startDate: unknown;
+  endDate: Scalars['Date']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  paymentDate: Scalars['Date']['input'];
+  startDate: Scalars['Date']['input'];
   status: PeriodStatus;
   type: PayrollPeriodType;
 };
 
-export type PayrollStatus =
-  | 'CANCELLED'
-  | 'DRAFT'
-  | 'PAID';
+export enum PayrollStatus {
+  Cancelled = 'CANCELLED',
+  Draft = 'DRAFT',
+  Paid = 'PAID'
+}
 
 export type PayrollUpdateInput = {
-  baseSalary: unknown;
-  deductions?: Array<EmployeeDeductionInput> | null | undefined;
-  earnings?: Array<EmployeeEarningInput> | null | undefined;
-  employeeId: number;
-  employerDeductions?: Array<EmployerDeductionInput> | null | undefined;
-  enterpriseId: number;
-  id: unknown;
-  note?: string | null | undefined;
-  number: string;
-  operationDate: unknown;
-  paymentModeId?: number | null | undefined;
-  periodId: number;
+  baseSalary: Scalars['BigDecimal']['input'];
+  deductions?: InputMaybe<Array<EmployeeDeductionInput>>;
+  earnings?: InputMaybe<Array<EmployeeEarningInput>>;
+  employeeId: Scalars['Int']['input'];
+  employerDeductions?: InputMaybe<Array<EmployerDeductionInput>>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Long']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  number: Scalars['String']['input'];
+  operationDate: Scalars['Date']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  periodId: Scalars['Int']['input'];
+};
+
+export type Period = {
+  __typename?: 'Period';
+  coefficient?: Maybe<Scalars['Float']['output']>;
+  endDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  label: Scalars['String']['output'];
+  label2?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  message2?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  startDate?: Maybe<Scalars['String']['output']>;
 };
 
 export type PeriodInput = {
-  coefficient: unknown;
-  endDate?: unknown;
-  id?: number | null | undefined;
-  label: string;
-  label2?: string | null | undefined;
-  message?: string | null | undefined;
-  message2?: string | null | undefined;
-  numberOrder: unknown;
-  schoolYearId: number;
-  startDate?: unknown;
+  coefficient: Scalars['PositiveFloat']['input'];
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  label: Scalars['String']['input'];
+  label2?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  message2?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Byte']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
-export type PeriodStatus =
-  | 'CLOSED'
-  | 'OPENED'
-  | 'PAID'
-  | 'PROCESSING';
+export enum PeriodStatus {
+  Closed = 'CLOSED',
+  Opened = 'OPENED',
+  Paid = 'PAID',
+  Processing = 'PROCESSING'
+}
 
-export type PeriodType =
-  | 'SEMESTER'
-  | 'TRIMESTER';
+export enum PeriodType {
+  Semester = 'SEMESTER',
+  Trimester = 'TRIMESTER'
+}
+
+export type Permission = {
+  __typename?: 'Permission';
+  /**
+   *  todo change to enum
+   * name: String!
+   */
+  active: Scalars['Boolean']['output'];
+  code: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  updatedAt: Scalars['String']['output'];
+};
 
 export type PermissionCreateInput = {
   /** name: String! */
-  active: boolean;
-  code: string;
-  description?: string | null | undefined;
+  active: Scalars['Boolean']['input'];
+  code: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** # new approach */
+export type PermissionItem2 = {
+  __typename?: 'PermissionItem2';
+  groupName: Scalars['String']['output'];
+  items: Array<PermissionItemItem>;
 };
 
 export type PermissionItemInput2 = {
-  groupName: string;
+  groupName: Scalars['String']['input'];
   items: Array<PermissionItemItemInput>;
 };
 
+export type PermissionItemItem = {
+  __typename?: 'PermissionItemItem';
+  checked: Scalars['Boolean']['output'];
+  code: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+};
+
 export type PermissionItemItemInput = {
-  checked: boolean;
-  code: string;
-  id: number;
+  checked: Scalars['Boolean']['input'];
+  code: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
 };
 
 export type PermissionUpdateInput = {
   /** name: String! */
-  active: boolean;
-  code: string;
-  description?: string | null | undefined;
-  id: number;
+  active: Scalars['Boolean']['input'];
+  code: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
 };
 
-export type PersonType =
-  | 'CUSTOMER'
-  | 'GUARDIAN'
-  | 'STUDENT'
-  | 'SUPPLIER'
-  | 'TEACHER';
+/** scalar Upload */
+export type Person = {
+  active?: Maybe<Scalars['Boolean']['output']>;
+  /** not required for compatibility */
+  address?: Maybe<Address>;
+  contactInfo?: Maybe<ContactInfo>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  /** gender: Gender */
+  enterprise?: Maybe<Enterprise>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+};
+
+export enum PersonType {
+  Customer = 'CUSTOMER',
+  Guardian = 'GUARDIAN',
+  Student = 'STUDENT',
+  Supplier = 'SUPPLIER',
+  Teacher = 'TEACHER'
+}
+
+export type Personnel = {
+  active?: Maybe<Scalars['Boolean']['output']>;
+  /** not required for compatibility */
+  address?: Maybe<Address>;
+  administrationEntryDate?: Maybe<Scalars['String']['output']>;
+  birthDate?: Maybe<Scalars['String']['output']>;
+  birthplace?: Maybe<Scalars['String']['output']>;
+  bloodGroup?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  childrenCount?: Maybe<Scalars['Int']['output']>;
+  civility?: Maybe<Civility>;
+  clazz?: Maybe<Scalars['String']['output']>;
+  cniNumber?: Maybe<Scalars['String']['output']>;
+  /** Personnel fields */
+  code: Scalars['String']['output'];
+  contactInfo?: Maybe<ContactInfo>;
+  currentPicture?: Maybe<Scalars['String']['output']>;
+  currentPost?: Maybe<Scalars['String']['output']>;
+  departureDate?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterpriseId?: Maybe<Scalars['ID']['output']>;
+  ethnicGroup?: Maybe<Scalars['String']['output']>;
+  fatherName?: Maybe<Scalars['String']['output']>;
+  fatherProfession?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  firstServiceDate?: Maybe<Scalars['String']['output']>;
+  firstServicePlace?: Maybe<Scalars['String']['output']>;
+  function?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  grading?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  isEmployee?: Maybe<Scalars['Boolean']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  maritalStatus?: Maybe<MaritalStatus>;
+  motherName?: Maybe<Scalars['String']['output']>;
+  motherProfession?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  numberAssignment?: Maybe<Scalars['String']['output']>;
+  origin?: Maybe<Origin>;
+  personnelType?: Maybe<PersonnelType>;
+  rank?: Maybe<Scalars['String']['output']>;
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  religion?: Maybe<Scalars['String']['output']>;
+  rhesus?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
+  schoolCharge?: Maybe<Scalars['Boolean']['output']>;
+  schoolServiceDate?: Maybe<Scalars['String']['output']>;
+  spouseProfession?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<PersonnelStatus>;
+};
+
+export type PersonnelCodeJson = {
+  __typename?: 'PersonnelCodeJson';
+  postRadical?: Maybe<Scalars['String']['output']>;
+  prefix: PrefixType;
+  prefixSep: Scalars['String']['output'];
+  radicalFill?: Maybe<Scalars['String']['output']>;
+  radicalLength?: Maybe<Scalars['Int']['output']>;
+  radicalType: RadicalType;
+  randomSuffix?: Maybe<Scalars['Boolean']['output']>;
+  resetNumberOrder: Scalars['Boolean']['output'];
+  suffixLength: Scalars['Int']['output'];
+};
 
 export type PersonnelCodeJsonInput = {
-  postRadical?: string | null | undefined;
+  postRadical?: InputMaybe<Scalars['String']['input']>;
   prefix: PrefixType;
-  prefixSep: string;
-  radicalFill?: string | null | undefined;
-  radicalLength?: number | null | undefined;
+  prefixSep: Scalars['String']['input'];
+  radicalFill?: InputMaybe<Scalars['String']['input']>;
+  radicalLength?: InputMaybe<Scalars['Int']['input']>;
   radicalType: RadicalType;
-  randomSuffix: boolean;
-  resetNumberOrder: boolean;
-  suffixLength: number;
+  randomSuffix: Scalars['Boolean']['input'];
+  resetNumberOrder: Scalars['Boolean']['input'];
+  suffixLength: Scalars['Int']['input'];
 };
 
-export type PersonnelStatus =
-  | 'CIVIL_SERVANT'
-  | 'TEMPORARY_WORKER';
+export enum PersonnelStatus {
+  CivilServant = 'CIVIL_SERVANT',
+  TemporaryWorker = 'TEMPORARY_WORKER'
+}
 
-export type PersonnelType =
-  | 'AGENT'
-  | 'TEACHER';
+export enum PersonnelType {
+  Agent = 'AGENT',
+  Teacher = 'TEACHER'
+}
+
+export type PictureJson = {
+  __typename?: 'PictureJson';
+  picturePath: Scalars['String']['output'];
+};
 
 export type PictureJsonInput = {
-  picturePath: string;
+  picturePath: Scalars['String']['input'];
+};
+
+export type Position = {
+  __typename?: 'Position';
+  active: Scalars['Boolean']['output'];
+  baseSalary?: Maybe<Scalars['BigDecimal']['output']>;
+  bonusPercentage?: Maybe<Scalars['BigDecimal']['output']>;
+  createdAt: Scalars['String']['output'];
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  overtimeRate?: Maybe<Scalars['BigDecimal']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['String']['output']>;
 };
 
 export type PositionCreateInput = {
-  active: boolean;
-  baseSalary?: unknown;
-  bonusPercentage?: unknown;
-  enterpriseId: number;
-  note?: string | null | undefined;
-  overtimeRate?: unknown;
-  title: string;
+  active: Scalars['Boolean']['input'];
+  baseSalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  bonusPercentage?: InputMaybe<Scalars['BigDecimal']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  overtimeRate?: InputMaybe<Scalars['BigDecimal']['input']>;
+  title: Scalars['String']['input'];
 };
 
 export type PositionUpdateInput = {
-  active: boolean;
-  baseSalary?: unknown;
-  bonusPercentage?: unknown;
-  enterpriseId: number;
-  id: number;
-  note?: string | null | undefined;
-  overtimeRate?: unknown;
-  title: string;
+  active: Scalars['Boolean']['input'];
+  baseSalary?: InputMaybe<Scalars['BigDecimal']['input']>;
+  bonusPercentage?: InputMaybe<Scalars['BigDecimal']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  overtimeRate?: InputMaybe<Scalars['BigDecimal']['input']>;
+  title: Scalars['String']['input'];
 };
 
-export type PrefixType =
-  | 'FULL_YEAR'
-  | 'NONE'
-  | 'SHORT_YEAR';
+export type Post = {
+  __typename?: 'Post';
+  body: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  userId: Scalars['Int']['output'];
+};
+
+export enum PrefixType {
+  FullYear = 'FULL_YEAR',
+  None = 'NONE',
+  ShortYear = 'SHORT_YEAR'
+}
+
+export enum PriceType {
+  ConsumerPrice = 'CONSUMER_PRICE',
+  RetailPrice = 'RETAIL_PRICE',
+  SemiWholesalePrice = 'SEMI_WHOLESALE_PRICE',
+  SuperWholesalePrice = 'SUPER_WHOLESALE_PRICE',
+  WholesalePrice = 'WHOLESALE_PRICE'
+}
+
+export type PrimarySequentialEvaluationType = {
+  __typename?: 'PrimarySequentialEvaluationType';
+  evaluationType?: Maybe<EvaluationType>;
+  evaluationTypeId?: Maybe<Scalars['ID']['output']>;
+  note?: Maybe<Scalars['Float']['output']>;
+};
+
+export type PrimarySequentialEvaluationTypeInput = {
+  evaluationTypeId?: InputMaybe<Scalars['ID']['input']>;
+  note?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type PrimarySequentialNote = {
+  __typename?: 'PrimarySequentialNote';
+  exAequo?: Maybe<Scalars['Boolean']['output']>;
+  note?: Maybe<Scalars['Float']['output']>;
+  primarySequentialNotePK?: Maybe<PrimarySequentialNotePk>;
+  rank?: Maybe<Scalars['Int']['output']>;
+};
+
+/**
+ * input PrimarySequentialNotePKInput {
+ *     studentId: ID!
+ *     subPeriodId: ID!
+ *     subjectId: ID!
+ *     evaluationTypeId: ID!
+ * }
+ */
+export type PrimarySequentialNoteForm = {
+  __typename?: 'PrimarySequentialNoteForm';
+  primarySequentialEvaluationTypes?: Maybe<Array<PrimarySequentialEvaluationType>>;
+  sequentialNotePK?: Maybe<SequentialNotePk>;
+  student?: Maybe<Student>;
+  subPeriod?: Maybe<SubPeriod>;
+  subject?: Maybe<Subject>;
+};
+
+export type PrimarySequentialNoteFormInput = {
+  primarySequentialEvaluationTypes?: InputMaybe<Array<PrimarySequentialEvaluationTypeInput>>;
+  sequentialNotePK?: InputMaybe<SequentialNotePkInput>;
+};
+
+export type PrimarySequentialNotePk = {
+  __typename?: 'PrimarySequentialNotePK';
+  evaluationTypeId: Scalars['ID']['output'];
+  studentId: Scalars['ID']['output'];
+  subPeriodId: Scalars['ID']['output'];
+  subjectId: Scalars['ID']['output'];
+};
+
+export type Product = {
+  __typename?: 'Product';
+  active: Scalars['Boolean']['output'];
+  category?: Maybe<ProductCategory>;
+  cost?: Maybe<Scalars['Float']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  minSalePrice?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
+  picture?: Maybe<Scalars['String']['output']>;
+  productType: ProductType;
+  profitMargin?: Maybe<Scalars['Float']['output']>;
+  purchaseAccount?: Maybe<Account>;
+  purchaseDescription?: Maybe<Scalars['String']['output']>;
+  purchasePrice?: Maybe<Scalars['Float']['output']>;
+  saleAccount?: Maybe<Account>;
+  saleDescription?: Maybe<Scalars['String']['output']>;
+  salePrice?: Maybe<Scalars['Float']['output']>;
+  sku: Scalars['String']['output'];
+};
+
+export type ProductCategory = {
+  __typename?: 'ProductCategory';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<ProductCategory>;
+};
 
 export type ProductCategoryCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ProductCategoryUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ProductType =
-  | 'ARTICLE'
-  | 'SERVICE'
-  | 'STOCK'
-  | 'TUITION';
+export enum ProductType {
+  Article = 'ARTICLE',
+  Service = 'SERVICE',
+  Stock = 'STOCK',
+  Tuition = 'TUITION'
+}
+
+export type ProductUnion = {
+  __typename?: 'ProductUnion';
+  active: Scalars['Boolean']['output'];
+  articleId?: Maybe<Scalars['Int']['output']>;
+  /**
+   * discount: Discount
+   * saleAccount: Account
+   * purchaseAccount: Account
+   */
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Long']['output'];
+  name: Scalars['String']['output'];
+  /**
+   * saleDescription: String
+   * purchaseDescription: String
+   */
+  picture?: Maybe<Scalars['String']['output']>;
+  productCategory?: Maybe<ProductCategory>;
+  productType: ProductType;
+  /**
+   * minSalePrice: Float
+   * cost: Float
+   */
+  purchasePrice?: Maybe<Scalars['Float']['output']>;
+  /** preferredVendor: Vendor */
+  quantity?: Maybe<Scalars['Float']['output']>;
+  salePrice?: Maybe<Scalars['Float']['output']>;
+  serviceId?: Maybe<Scalars['Int']['output']>;
+  sku?: Maybe<Scalars['String']['output']>;
+};
 
 export type QuarterlyCompNote = {
   items: Array<QuarterlyCompNoteItemInput>;
-  registrationNumber: string;
-  studentFullName: string;
-  studentId: unknown;
+  registrationNumber: Scalars['String']['input'];
+  studentFullName: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type QuarterlyCompNoteInput = {
+  __typename?: 'QuarterlyCompNoteInput';
+  items?: Maybe<Array<QuarterlyCompNoteItem>>;
+  registrationNumber: Scalars['String']['output'];
+  studentFullName: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
+};
+
+export type QuarterlyCompNoteItem = {
+  __typename?: 'QuarterlyCompNoteItem';
+  competenceId: Scalars['Long']['output'];
+  note?: Maybe<Scalars['Float']['output']>;
+  numberOrder: Scalars['Int']['output'];
 };
 
 export type QuarterlyCompNoteItemInput = {
-  competenceId: unknown;
-  note: number;
-  numberOrder: number;
+  competenceId: Scalars['Long']['input'];
+  note: Scalars['Float']['input'];
+  numberOrder: Scalars['Int']['input'];
 };
 
 export type QuarterlyNote = {
-  note1?: number | null | undefined;
-  note2?: number | null | undefined;
-  studentFullName: string;
-  studentId: unknown;
+  note1?: InputMaybe<Scalars['Float']['input']>;
+  note2?: InputMaybe<Scalars['Float']['input']>;
+  studentFullName: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type QuarterlyNoteInput = {
+  __typename?: 'QuarterlyNoteInput';
+  note1?: Maybe<Scalars['Float']['output']>;
+  note2?: Maybe<Scalars['Float']['output']>;
+  student?: Maybe<Student>;
+  studentFullName?: Maybe<Scalars['String']['output']>;
+};
+
+export type QuarterlyReport = {
+  __typename?: 'QuarterlyReport';
+  average?: Maybe<Scalars['Float']['output']>;
+  rank?: Maybe<Scalars['Short']['output']>;
+};
+
+export type QuarterlyReportObservation = {
+  __typename?: 'QuarterlyReportObservation';
+  observation?: Maybe<Scalars['String']['output']>;
+  period?: Maybe<Period>;
+  quarterlyReport?: Maybe<QuarterlyReport>;
+  quarterlyReportPK: QuarterlyReportPk;
+  student?: Maybe<Student>;
 };
 
 export type QuarterlyReportObservationInput = {
-  observation?: string | null | undefined;
+  observation?: InputMaybe<Scalars['String']['input']>;
   quarterlyReportPK: QuarterlyReportPkInput;
 };
 
-export type QuarterlyReportPkInput = {
-  periodId: number;
-  studentId: unknown;
+export type QuarterlyReportPk = {
+  __typename?: 'QuarterlyReportPK';
+  periodId: Scalars['Int']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
-export type RadicalType =
-  | 'SCHOOL_CODE'
-  | 'STUDENT_INITIAL';
+export type QuarterlyReportPkInput = {
+  periodId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  /** find account config by enterpriseId */
+  accountConfig?: Maybe<AccountJson>;
+  articleUnionById?: Maybe<ArticleUnion>;
+  assignedTeachers?: Maybe<Array<Teacher>>;
+  attendanceById?: Maybe<Attendance>;
+  attendances?: Maybe<Array<Attendance>>;
+  bankAccountById?: Maybe<BankAccount>;
+  bankAccounts?: Maybe<Array<BankAccount>>;
+  bankTransactionById?: Maybe<BankTransaction>;
+  bankTransactions?: Maybe<Array<BankTransaction>>;
+  billById?: Maybe<Bill>;
+  billItems?: Maybe<Array<BillItem>>;
+  bills?: Maybe<Array<Bill>>;
+  buildOptaTimeslot?: Maybe<Array<Maybe<OptaTimeslot>>>;
+  cashVoucherAvailable?: Maybe<Array<CashVoucher>>;
+  cashVoucherById?: Maybe<CashVoucher>;
+  cashVouchers?: Maybe<Array<CashVoucher>>;
+  checkGiselPayment?: Maybe<GiselPaymentCheckResult>;
+  checkTeacherAvailability?: Maybe<Scalars['Boolean']['output']>;
+  competenceById?: Maybe<Competence>;
+  competences?: Maybe<Array<Competence>>;
+  competencesByLevel?: Maybe<Array<CompetenceLevel>>;
+  customerById?: Maybe<Customer>;
+  customerByOperationId?: Maybe<SelectWrapper>;
+  customerCategories?: Maybe<Array<CustomerCategory>>;
+  customerCategoryById?: Maybe<CustomerCategory>;
+  customerOperations?: Maybe<CustomerOperationResult>;
+  customers?: Maybe<Array<Customer>>;
+  dashboard?: Maybe<Dashboard>;
+  decodeAccount?: Maybe<AccountJson>;
+  decodeDiscipline?: Maybe<DisciplineJson>;
+  decodeDocumentHeader?: Maybe<DocumentHeaderJson>;
+  decodeDuplicatedStudent?: Maybe<DuplicatedStudentJson>;
+  decodeExpense?: Maybe<ExpenseJson>;
+  decodeLedger?: Maybe<LedgerJson>;
+  decodeLicense?: Maybe<LicenseJson>;
+  decodePersonnelCode?: Maybe<PersonnelCodeJson>;
+  decodePicture?: Maybe<PictureJson>;
+  decodeRegistrationNumber?: Maybe<RegistrationNumberJson>;
+  decodeReport?: Maybe<ReportJson>;
+  decodeReportHeader?: Maybe<ReportHeaderJson>;
+  decodeSchoolYear?: Maybe<SchoolYearJson>;
+  decodeSecurity?: Maybe<SecurityJson>;
+  decodeStudentInvoice?: Maybe<StudentInvoiceJson>;
+  decodeStudentPayment?: Maybe<StudentPaymentJson>;
+  deductionById?: Maybe<Deduction>;
+  deductionCategories?: Maybe<Array<DeductionCategory>>;
+  deductionCategoryById?: Maybe<DeductionCategory>;
+  deductions?: Maybe<Array<Deduction>>;
+  departments?: Maybe<Array<Department>>;
+  discountById?: Maybe<Discount>;
+  discounts?: Maybe<Array<Discount>>;
+  downgradeSubject?: Maybe<Array<SequentialNote>>;
+  earningById?: Maybe<Earning>;
+  earningCategories?: Maybe<Array<EarningCategory>>;
+  earningCategoryById?: Maybe<EarningCategory>;
+  earnings?: Maybe<Array<Earning>>;
+  employeeById?: Maybe<Employee>;
+  employeeDeductionByPayrollId?: Maybe<Array<EmployeeDeduction>>;
+  employeeEarningByPayrollId?: Maybe<Array<EmployeeEarning>>;
+  employees?: Maybe<Array<Employee>>;
+  employeesWithoutPayroll?: Maybe<Array<Employee>>;
+  employerDeductionByPayrollId?: Maybe<Array<EmployerDeduction>>;
+  encodeAccount?: Maybe<Scalars['String']['output']>;
+  /** DisciplineJson */
+  encodeDiscipline?: Maybe<Scalars['String']['output']>;
+  encodeDocumentHeader?: Maybe<Scalars['String']['output']>;
+  /**  DuplicatedStudentJson */
+  encodeDuplicatedStudent?: Maybe<Scalars['String']['output']>;
+  /**  ExpenseJson */
+  encodeExpense?: Maybe<Scalars['String']['output']>;
+  /** LedgerJson */
+  encodeLedger?: Maybe<Scalars['String']['output']>;
+  /** LicenseJson */
+  encodeLicense?: Maybe<Scalars['String']['output']>;
+  /**  PersonnelCodeJson */
+  encodePersonnelCode?: Maybe<Scalars['String']['output']>;
+  /**  PictureJson */
+  encodePicture?: Maybe<Scalars['String']['output']>;
+  /**  RegistrationNumberJson */
+  encodeRegistrationNumber?: Maybe<Scalars['String']['output']>;
+  /** ReportJson */
+  encodeReport?: Maybe<Scalars['String']['output']>;
+  /**  ReportHeaderJson */
+  encodeReportHeader?: Maybe<Scalars['String']['output']>;
+  /** SchoolYearJson */
+  encodeSchoolYear?: Maybe<Scalars['String']['output']>;
+  encodeSecurity?: Maybe<Scalars['String']['output']>;
+  /**  StudentInvoiceJson */
+  encodeStudentInvoice?: Maybe<Scalars['String']['output']>;
+  /**  StudentPaymentJson */
+  encodeStudentPayment?: Maybe<Scalars['String']['output']>;
+  enrollmentsOfStudent?: Maybe<Array<EnrollmentHistory>>;
+  evalCompBySubject?: Maybe<Array<EvalCompResult>>;
+  evalCompOfClass?: Maybe<Array<EvalCompResult>>;
+  evalTypeById?: Maybe<EvalType>;
+  evalTypes?: Maybe<Array<EvalType>>;
+  expenseById?: Maybe<Expense>;
+  expenseCategories?: Maybe<Array<ExpenseCategory>>;
+  expenseCategoryById?: Maybe<ExpenseCategory>;
+  expenseItems?: Maybe<Array<ExpenseItem>>;
+  expenses?: Maybe<Array<Expense>>;
+  feeGroupById?: Maybe<FeeGroup>;
+  feeGroups?: Maybe<Array<FeeGroup>>;
+  feeStructure?: Maybe<Array<FeeStructureInput>>;
+  findAccountByEnterprise?: Maybe<Array<Account>>;
+  findAccountById?: Maybe<Account>;
+  findAccountCategoryById?: Maybe<AccountCategory>;
+  findAccountGroup?: Maybe<Array<AccountGroup>>;
+  findAccountGroupById?: Maybe<AccountGroup>;
+  findAccountGroupByModel?: Maybe<Array<AccountGroup>>;
+  findAccountModelById?: Maybe<AccountModel>;
+  findAccountingEntryItem?: Maybe<Array<AccountingEntryItem>>;
+  findAdministratorByEnterprise?: Maybe<Array<Administrator>>;
+  findAdministratorById?: Maybe<Administrator>;
+  findAllAccountCategory?: Maybe<Array<AccountCategory>>;
+  findAllAccountModel?: Maybe<Array<AccountModel>>;
+  findAllLanguages?: Maybe<Array<Language>>;
+  findAllLiableTypes?: Maybe<Array<LiableType>>;
+  findAllRoles?: Maybe<Array<Role>>;
+  findAllUserGroups?: Maybe<Array<UserGroup>>;
+  findAnnualNote?: Maybe<Array<AnnualNoteInput>>;
+  findAnnualReportSummary?: Maybe<Array<AnnualReportSummary>>;
+  findAnnualResult?: Maybe<Array<AnnualResult>>;
+  findAnnualResultSummary?: Maybe<Array<AnnualResultSummary>>;
+  findBank?: Maybe<Array<Bank>>;
+  findBankAgency?: Maybe<Array<BankAgency>>;
+  findBankOperation?: Maybe<Array<BankOperation>>;
+  findBranch?: Maybe<Array<Branch>>;
+  findBranchBySchoolYear?: Maybe<Array<Branch>>;
+  findChartOfAccount?: Maybe<Array<ChartOfAccount>>;
+  findChartOfAccountById?: Maybe<ChartOfAccount>;
+  findChartOfAccountByModel?: Maybe<Array<ChartOfAccount>>;
+  findChartOfAccountNextId?: Maybe<Scalars['ID']['output']>;
+  findClass?: Maybe<Array<Clazz>>;
+  findClassBySchoolYear?: Maybe<Array<Clazz>>;
+  findClassBySubjectNotInDistribution?: Maybe<Array<Clazz>>;
+  findClassByTeacher?: Maybe<Array<Clazz>>;
+  findClassDistribution?: Maybe<Array<Maybe<Distribution>>>;
+  findClassForNoteInput?: Maybe<Array<Clazz>>;
+  findClassSubject?: Maybe<Array<Clazz>>;
+  findClassWhereAnnualReportCardReady?: Maybe<Array<Clazz>>;
+  findClassWhereQuarterlyReportCardReady?: Maybe<Array<Clazz>>;
+  findClassWhereReportCardReady?: Maybe<Array<Clazz>>;
+  findConfiguration?: Maybe<Array<Configuration>>;
+  findConfigurationById?: Maybe<Configuration>;
+  findCouncilDecision?: Maybe<Array<CouncilDecision>>;
+  findCurrency?: Maybe<Array<Currency>>;
+  findCycle?: Maybe<Array<Cycle>>;
+  findCycleById?: Maybe<Cycle>;
+  findDayOfClass?: Maybe<Array<DayOfClass>>;
+  findDuplicatedStudent?: Maybe<Array<DuplicatedStudent>>;
+  findEnterpriseById?: Maybe<Enterprise>;
+  findEvaluationType?: Maybe<Array<EvaluationType>>;
+  findExpectedCompetence?: Maybe<Array<ExpectedCompetence>>;
+  findExpenseAccount?: Maybe<Array<Account>>;
+  findFrequent?: Maybe<Array<Frequent>>;
+  findGuardian?: Maybe<Array<Guardian>>;
+  findLanguageById?: Maybe<Language>;
+  findLevel?: Maybe<Array<Level>>;
+  findLogCodeByEnterprise?: Maybe<Array<LogCode>>;
+  findLogCodeById?: Maybe<LogCode>;
+  findLoginHistory?: Maybe<Array<LoginHistory>>;
+  findLoginHistoryByUsername?: Maybe<Array<LoginHistory>>;
+  findMarkAppreciationBySchool?: Maybe<Array<MarkAppreciation>>;
+  findMarkAppreciationBySchoolAndLanguage?: Maybe<Array<MarkAppreciation>>;
+  findNotAppliedByCustomerId?: Maybe<Array<Maybe<Payment>>>;
+  findNotAppliedBySupplierId?: Maybe<Array<Maybe<BillPayment>>>;
+  findOldSchool?: Maybe<Array<OldSchool>>;
+  findOperation?: Maybe<Array<Operation>>;
+  findOperationByQuery?: Maybe<Array<Operation>>;
+  findOperationClass?: Maybe<Array<OperationClass>>;
+  findPaymentGroup?: Maybe<Array<Maybe<PaymentGroup>>>;
+  findPaymentMode?: Maybe<Array<PaymentMode>>;
+  findPaymentSlice?: Maybe<Array<PaymentSlice>>;
+  findPeopleByEnterprise?: Maybe<Array<Person>>;
+  findPeopleWithoutAccount?: Maybe<Array<Person>>;
+  findPeriod?: Maybe<Array<Period>>;
+  findPersonnel?: Maybe<Array<Personnel>>;
+  findPrimarySequentialNote?: Maybe<Array<PrimarySequentialNote>>;
+  findPrimarySequentialNoteForm?: Maybe<Array<PrimarySequentialNoteForm>>;
+  findQuarterlyNote?: Maybe<Array<QuarterlyNoteInput>>;
+  findQuarterlyReportObservation?: Maybe<Array<QuarterlyReportObservation>>;
+  findReportAppreciation?: Maybe<Array<ReportAppreciation>>;
+  findReportCategoryByEnterprise?: Maybe<Array<ReportCategory>>;
+  findReportItemByEnterprise?: Maybe<Array<ReportItem>>;
+  findRoleById?: Maybe<Role>;
+  findSchoolById?: Maybe<School>;
+  findSchoolFee?: Maybe<Array<SchoolFee>>;
+  findSchoolFeeLevel?: Maybe<Array<SchoolFeeLevel>>;
+  findSchoolLiable?: Maybe<Array<SchoolLiable>>;
+  findSchoolSection?: Maybe<Array<SchoolSection>>;
+  findSchoolSectionById?: Maybe<SchoolSection>;
+  findSchoolYear?: Maybe<Array<SchoolYear>>;
+  findSchoolYearById?: Maybe<SchoolYear>;
+  findSequentialClassReportByGender?: Maybe<Array<SequentialClassReportByGender>>;
+  findSequentialDiscipline?: Maybe<Array<SequentialDiscipline>>;
+  findSequentialNote?: Maybe<Array<SequentialNote>>;
+  findSpecialAccount?: Maybe<Array<SpecialAccount>>;
+  findStudent?: Maybe<Array<Student>>;
+  findStudentByClass?: Maybe<Array<Student>>;
+  findStudentById?: Maybe<Student>;
+  findStudentGuardianByStudent?: Maybe<Array<StudentGuardian>>;
+  findStudentInvoiceItemByStudent?: Maybe<Array<StudentInvoiceItem>>;
+  findStudentInvoiceItemByStudentPayment?: Maybe<Array<StudentInvoiceItem>>;
+  findStudentPayment?: Maybe<Array<StudentPayment>>;
+  findStudentPaymentGroup?: Maybe<PaymentGroup>;
+  findStudentPaymentItemByStudent?: Maybe<Array<StudentPaymentItem>>;
+  findStudentPaymentItemByStudentPayment?: Maybe<Array<StudentPaymentItem>>;
+  findStudentPicture?: Maybe<StudentPicture>;
+  findSubPeriod?: Maybe<Array<SubPeriod>>;
+  findSubject?: Maybe<Array<Subject>>;
+  findSubjectBranch?: Maybe<Array<Maybe<SubjectBranch>>>;
+  findSubjectBranchEvaluationType?: Maybe<Array<SubjectBranchEvaluationType>>;
+  findSubjectBranchEvaluationTypeForm?: Maybe<Array<SubjectBranchEvaluationTypeForm>>;
+  findSubjectByClass?: Maybe<Array<Subject>>;
+  findSubjectById?: Maybe<Subject>;
+  findSubjectDepartment?: Maybe<Array<SubjectDepartment>>;
+  findSubjectDepartmentById?: Maybe<SubjectDepartment>;
+  findSubjectForNote?: Maybe<Array<Subject>>;
+  findSubjectGroup?: Maybe<Array<SubjectGroup>>;
+  findSubjectGroups?: Maybe<Array<SubjectGroups>>;
+  findSubjectLanguage?: Maybe<Language>;
+  findSubjectNotInSubjectGroup?: Maybe<Array<Subject>>;
+  findTeacher?: Maybe<Array<Teacher>>;
+  findTeacherBySubjectDepartment?: Maybe<Array<Teacher>>;
+  findTimeSlot?: Maybe<Array<TimeSlot>>;
+  findUnpaidBillBySupplierId?: Maybe<Array<Bill>>;
+  findUnpaidInvoiceByCustomerId?: Maybe<Array<Invoice>>;
+  findUnpaidSchoolFee?: Maybe<Array<SchoolFeeLevel>>;
+  findUnpaidSchoolFeeWithInvoice?: Maybe<Array<SchoolFeeLevel>>;
+  findUserByEnterprise?: Maybe<Array<Maybe<User>>>;
+  findUserById?: Maybe<User>;
+  findUserByUsername?: Maybe<User>;
+  /**  @auth(role: "ROLE_USER") */
+  findUserGroupById?: Maybe<UserGroup>;
+  frequentByClass?: Maybe<Array<FrequentBulkUpdate>>;
+  frequentById?: Maybe<Frequent>;
+  frequentByRegistrationNumber?: Maybe<Frequent>;
+  frequentConnection?: Maybe<FrequentConnection>;
+  frequents?: Maybe<Array<FrequentUnion>>;
+  generateAccountNumber?: Maybe<Scalars['String']['output']>;
+  getAccountingEntryNumber?: Maybe<Scalars['String']['output']>;
+  getBankOperationNumber?: Maybe<Scalars['String']['output']>;
+  getBillPaymentNumber?: Maybe<Scalars['String']['output']>;
+  getInvoiceNumber?: Maybe<Scalars['String']['output']>;
+  getPaymentNumber?: Maybe<Scalars['String']['output']>;
+  getProductReference: Scalars['String']['output'];
+  guardianById?: Maybe<Guardian>;
+  guardianReligions?: Maybe<Array<Scalars['String']['output']>>;
+  guardianStreets?: Maybe<Array<Scalars['String']['output']>>;
+  guardiansOfStudent?: Maybe<Array<StudentGuardian>>;
+  guidedSetup?: Maybe<GuidedSetup>;
+  headDepartments?: Maybe<Array<Maybe<HeadDepartment>>>;
+  initCycles?: Maybe<Array<CycleSetup>>;
+  initLevels?: Maybe<Array<LevelSetup>>;
+  installmentById?: Maybe<Installment>;
+  installments?: Maybe<Array<Installment>>;
+  invoiceById?: Maybe<Invoice>;
+  invoiceByOperationId?: Maybe<Invoice>;
+  invoiceForPayment?: Maybe<InvoiceForPayment>;
+  invoiceItems?: Maybe<Array<InvoiceItem>>;
+  invoices?: Maybe<Array<Invoice>>;
+  levelsBySchoolYear?: Maybe<Array<Level>>;
+  loadFromRegistrationNumbers?: Maybe<Array<StudentPictureImportDto>>;
+  loadLicense?: Maybe<LicenseJson>;
+  loadLicenseFromText?: Maybe<LicenseJson>;
+  mobileOperations?: Maybe<Array<MobileOperation>>;
+  newCode?: Maybe<Scalars['String']['output']>;
+  newRegistrationNumber?: Maybe<Scalars['String']['output']>;
+  newRegistrationNumberWithStudentInitial?: Maybe<Scalars['String']['output']>;
+  nonEmployeePersonnel?: Maybe<Array<Personnel>>;
+  pFreeSequentialNote?: Maybe<Array<PFreeSequentialNote>>;
+  pSequentialNote?: Maybe<Array<PSequentialNote>>;
+  paymentConditionById?: Maybe<PaymentCondition>;
+  paymentConditions?: Maybe<Array<PaymentCondition>>;
+  paymentItems?: Maybe<Array<PaymentItem>>;
+  paymentOfStudent?: Maybe<PaymentOfStudent>;
+  paymentOfStudentBalance?: Maybe<MobileRestToPay>;
+  payrollById?: Maybe<Payroll>;
+  payrollNumber: Scalars['String']['output'];
+  payrollPeriodById?: Maybe<PayrollPeriod>;
+  payrollPeriods?: Maybe<Array<PayrollPeriod>>;
+  payrolls?: Maybe<Array<Payroll>>;
+  permissionGroups?: Maybe<Array<Scalars['String']['output']>>;
+  permissionGroups2: Array<PermissionItem2>;
+  permissions?: Maybe<Array<Permission>>;
+  /** permissionsOfRole(roleId: Int!): [PermissionItem!]! */
+  permissionsOfRole2: Array<PermissionItem2>;
+  positionById?: Maybe<Position>;
+  positions?: Maybe<Array<Position>>;
+  post?: Maybe<Post>;
+  prepareAllSequentialSMS?: Maybe<Array<Message>>;
+  prepareSMS?: Maybe<Array<Message>>;
+  prepareSequentialSMSForClass?: Maybe<Array<Message>>;
+  productById?: Maybe<Product>;
+  productCategories?: Maybe<Array<ProductCategory>>;
+  productCategoryById?: Maybe<ProductCategory>;
+  productNameExists: Scalars['Boolean']['output'];
+  /**  findAllProduct(id: Int!): [Product!] */
+  productReferenceExists: Scalars['Boolean']['output'];
+  products?: Maybe<Array<ProductUnion>>;
+  quarterlyCompNote?: Maybe<Array<QuarterlyCompNoteInput>>;
+  quarterlyCompNoteFromEval?: Maybe<Array<QuarterlyCompNoteInput>>;
+  readLicense?: Maybe<LicenseJson>;
+  reportCategories?: Maybe<Array<ReportCategory>>;
+  reportItems?: Maybe<Array<ReportItem>>;
+  roles?: Maybe<Array<RoleNew>>;
+  schoolByIdentifier?: Maybe<School>;
+  schoolFeeLevel?: Maybe<Array<SchoolFeeLevelInput>>;
+  schoolYearActive?: Maybe<SchoolYear>;
+  schoolYearByIdentifier?: Maybe<SchoolYear>;
+  serviceUnionById?: Maybe<ServiceUnion>;
+  studentBirthplaces?: Maybe<Array<Scalars['String']['output']>>;
+  /**
+   *  findStudentPaymentGroup(studentId: Long!, schoolId: Int!): PaymentGroup
+   *  studentPaymentExists(studentId: Long!, schoolId: Int!): Boolean
+   *  studentPaymentsExists(studentIds: [Long!]!, schoolId: Int!): Boolean
+   */
+  studentInvoiceCompulsoryStatus?: Maybe<Scalars['Boolean']['output']>;
+  studentInvoiceForUpdate?: Maybe<StudentInvoiceUpdate>;
+  studentInvoiceItemByReference?: Maybe<Array<StudentInvoiceItem>>;
+  studentInvoices?: Maybe<Array<StudentInvoice>>;
+  studentPaymentExists?: Maybe<Scalars['Boolean']['output']>;
+  studentPaymentForUpdate?: Maybe<StudentPaymentUpdate>;
+  studentPaymentsExists?: Maybe<Scalars['Boolean']['output']>;
+  studentReligions?: Maybe<Array<Scalars['String']['output']>>;
+  subCompetenceById?: Maybe<SubCompetence>;
+  subCompetences?: Maybe<Array<SubCompetence>>;
+  subCompetencesByClass?: Maybe<Array<SubCompetence>>;
+  subCompetencesByLevel?: Maybe<Array<SubCompetenceInput>>;
+  subjectAssignments?: Maybe<Array<SubjectAssignment>>;
+  /**
+   * getBillNumber(enterpriseId: Int!): String
+   * findPurchaseWhereNoInventory(id: Int!): [Operation!]
+   * billForPayment(billId: Long!): BillForPayment
+   */
+  supplierByBillId?: Maybe<Supplier>;
+  supplierById?: Maybe<Supplier>;
+  supplierCategories?: Maybe<Array<SupplierCategory>>;
+  supplierCategoryById?: Maybe<SupplierCategory>;
+  suppliers?: Maybe<Array<Supplier>>;
+  timeTables?: Maybe<Array<TimeTableForm>>;
+  tuitionByEnterpriseId?: Maybe<Array<Maybe<TuitionUnion>>>;
+  tuitionUnionById?: Maybe<TuitionUnion>;
+  unregisteredStudent?: Maybe<Array<Student>>;
+  vendorOperations?: Maybe<VendorOperationResult>;
+};
+
+
+export type QueryAccountConfigArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryArticleUnionByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type QueryAssignedTeachersArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryAttendanceByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryAttendancesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryBankAccountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryBankAccountsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryBankTransactionByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryBankTransactionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryBillByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryBillItemsArgs = {
+  billId: Scalars['Long']['input'];
+};
+
+
+export type QueryBillsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryBuildOptaTimeslotArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryCashVoucherAvailableArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryCashVoucherByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryCashVouchersArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryCheckGiselPaymentArgs = {
+  input: GiselPaymentCheckInput;
+};
+
+
+export type QueryCheckTeacherAvailabilityArgs = {
+  dayOfClassId: Scalars['Int']['input'];
+  teacherId: Scalars['Long']['input'];
+  timeSlotId: Scalars['Int']['input'];
+};
+
+
+export type QueryCompetenceByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryCompetencesArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryCompetencesByLevelArgs = {
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryCustomerByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryCustomerByOperationIdArgs = {
+  operationId: Scalars['Long']['input'];
+};
+
+
+export type QueryCustomerCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryCustomerCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryCustomerOperationsArgs = {
+  endDate: Scalars['Date']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+};
+
+
+export type QueryCustomersArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDashboardArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDecodeAccountArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeDisciplineArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeDocumentHeaderArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeDuplicatedStudentArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeExpenseArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeLedgerArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeLicenseArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodePersonnelCodeArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodePictureArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeRegistrationNumberArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeReportArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeReportHeaderArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeSchoolYearArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeSecurityArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeStudentInvoiceArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDecodeStudentPaymentArgs = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDeductionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDeductionCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDeductionCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDeductionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDepartmentsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDiscountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDiscountsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDowngradeSubjectArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryEarningByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryEarningCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryEarningCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryEarningsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryEmployeeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryEmployeeDeductionByPayrollIdArgs = {
+  payrollId: Scalars['Long']['input'];
+};
+
+
+export type QueryEmployeeEarningByPayrollIdArgs = {
+  payrollId: Scalars['Long']['input'];
+};
+
+
+export type QueryEmployeesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryEmployeesWithoutPayrollArgs = {
+  enterpriseId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type QueryEmployerDeductionByPayrollIdArgs = {
+  payrollId: Scalars['Long']['input'];
+};
+
+
+export type QueryEncodeAccountArgs = {
+  accountJson?: InputMaybe<AccountJsonInput>;
+};
+
+
+export type QueryEncodeDisciplineArgs = {
+  json?: InputMaybe<DisciplineJsonInput>;
+};
+
+
+export type QueryEncodeDocumentHeaderArgs = {
+  json?: InputMaybe<DocumentHeaderJsonInput>;
+};
+
+
+export type QueryEncodeDuplicatedStudentArgs = {
+  json: DuplicatedStudentJsonInput;
+};
+
+
+export type QueryEncodeExpenseArgs = {
+  json?: InputMaybe<ExpenseJsonInput>;
+};
+
+
+export type QueryEncodeLedgerArgs = {
+  json?: InputMaybe<LedgerJsonInput>;
+};
+
+
+export type QueryEncodeLicenseArgs = {
+  json?: InputMaybe<LicenseJsonInput>;
+};
+
+
+export type QueryEncodePersonnelCodeArgs = {
+  json?: InputMaybe<PersonnelCodeJsonInput>;
+};
+
+
+export type QueryEncodePictureArgs = {
+  json?: InputMaybe<PictureJsonInput>;
+};
+
+
+export type QueryEncodeRegistrationNumberArgs = {
+  json?: InputMaybe<RegistrationNumberJsonInput>;
+};
+
+
+export type QueryEncodeReportArgs = {
+  json?: InputMaybe<ReportJsonInput>;
+};
+
+
+export type QueryEncodeReportHeaderArgs = {
+  json?: InputMaybe<ReportHeaderJsonInput>;
+};
+
+
+export type QueryEncodeSchoolYearArgs = {
+  json?: InputMaybe<SchoolYearJsonInput>;
+};
+
+
+export type QueryEncodeSecurityArgs = {
+  json?: InputMaybe<SecurityJsonInput>;
+};
+
+
+export type QueryEncodeStudentInvoiceArgs = {
+  json?: InputMaybe<StudentInvoiceJsonInput>;
+};
+
+
+export type QueryEncodeStudentPaymentArgs = {
+  json?: InputMaybe<StudentPaymentJsonInput>;
+};
+
+
+export type QueryEnrollmentsOfStudentArgs = {
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryEvalCompBySubjectArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryEvalCompOfClassArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type QueryEvalTypeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryEvalTypesArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryExpenseByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryExpenseCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryExpenseCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryExpenseItemsArgs = {
+  expenseId: Scalars['Long']['input'];
+};
+
+
+export type QueryExpensesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryFeeGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFeeGroupsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFeeStructureArgs = {
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountGroupByModelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountModelByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAccountingEntryItemArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindAdministratorByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAdministratorByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindAnnualNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAnnualReportSummaryArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  newClassIsNull: Scalars['Boolean']['input'];
+  search: Scalars['String']['input'];
+  shuffle: Scalars['Boolean']['input'];
+  sortByMerit: Scalars['Boolean']['input'];
+};
+
+
+export type QueryFindAnnualResultArgs = {
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindAnnualResultSummaryArgs = {
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindBankArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindBankAgencyArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindBankOperationArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindBranchArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindBranchBySchoolYearArgs = {
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindChartOfAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindChartOfAccountByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindChartOfAccountByModelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassBySchoolYearArgs = {
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassBySubjectNotInDistributionArgs = {
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassByTeacherArgs = {
+  schoolId: Scalars['Int']['input'];
+  teacherId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindClassDistributionArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassForNoteInputArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassSubjectArgs = {
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassWhereAnnualReportCardReadyArgs = {
+  schoolYear: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassWhereQuarterlyReportCardReadyArgs = {
+  period: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassWhereReportCardReadyArgs = {
+  subPeriod: Scalars['Int']['input'];
+};
+
+
+export type QueryFindConfigurationArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindConfigurationByIdArgs = {
+  id?: InputMaybe<ConfigurationPkInput>;
+};
+
+
+export type QueryFindCouncilDecisionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindCurrencyArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindCycleArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindCycleByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindDayOfClassArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindDuplicatedStudentArgs = {
+  criteria?: InputMaybe<DuplicatedStudentCriteria>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindEnterpriseByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindEvaluationTypeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindExpectedCompetenceArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindExpenseAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindFrequentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindGuardianArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLanguageByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLevelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLogCodeByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLogCodeByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLoginHistoryArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindLoginHistoryByUsernameArgs = {
+  username: Scalars['String']['input'];
+};
+
+
+export type QueryFindMarkAppreciationBySchoolArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindMarkAppreciationBySchoolAndLanguageArgs = {
+  languageId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindNotAppliedByCustomerIdArgs = {
+  customerId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindNotAppliedBySupplierIdArgs = {
+  supplierId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindOldSchoolArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindOperationArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindOperationByQueryArgs = {
+  search: Scalars['String']['input'];
+};
+
+
+export type QueryFindOperationClassArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPaymentGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPaymentModeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPaymentSliceArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPeopleByEnterpriseArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPeopleWithoutAccountArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPeriodArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPersonnelArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPrimarySequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindPrimarySequentialNoteFormArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindQuarterlyNoteArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindQuarterlyReportObservationArgs = {
+  classId: Scalars['Int']['input'];
+  period: Scalars['Int']['input'];
+};
+
+
+export type QueryFindReportAppreciationArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindReportCategoryByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindReportItemByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindRoleByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolFeeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolFeeLevelArgs = {
+  levelId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolLiableArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolSectionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolSectionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSchoolYearArgs = {
+  id: Scalars['Int']['input'];
+  removeArchived?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryFindSchoolYearByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSequentialClassReportByGenderArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSequentialDisciplineArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSpecialAccountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindStudentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindStudentByClassArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindStudentByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentGuardianByStudentArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentInvoiceItemByStudentArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentInvoiceItemByStudentPaymentArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentPaymentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindStudentPaymentGroupArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentPaymentItemByStudentArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentPaymentItemByStudentPaymentArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryFindStudentPictureArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindSubPeriodArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectBranchArgs = {
+  branchId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectBranchEvaluationTypeArgs = {
+  branchId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectBranchEvaluationTypeFormArgs = {
+  branchId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectByClassArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectDepartmentArgs = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryFindSubjectDepartmentByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectForNoteArgs = {
+  classId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectGroupsArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectLanguageArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindSubjectNotInSubjectGroupArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindTeacherArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindTeacherBySubjectDepartmentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindTimeSlotArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindUnpaidBillBySupplierIdArgs = {
+  supplierId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindUnpaidInvoiceByCustomerIdArgs = {
+  customerId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindUnpaidSchoolFeeArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindUnpaidSchoolFeeWithInvoiceArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryFindUserByEnterpriseArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindUserByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFindUserByUsernameArgs = {
+  username: Scalars['String']['input'];
+};
+
+
+export type QueryFindUserGroupByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryFrequentByClassArgs = {
+  classId: Scalars['Int']['input'];
+};
+
+
+export type QueryFrequentByIdArgs = {
+  frequentPK: FrequentPkInput;
+};
+
+
+export type QueryFrequentByRegistrationNumberArgs = {
+  registrationNumber: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFrequentConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  classIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<FrequentOrder>;
+  schoolId: Scalars['Int']['input'];
+  searchText?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFrequentsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryGenerateAccountNumberArgs = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  number: Scalars['String']['input'];
+};
+
+
+export type QueryGetAccountingEntryNumberArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryGetBankOperationNumberArgs = {
+  id: Scalars['Int']['input'];
+  type?: InputMaybe<BankOperationType>;
+};
+
+
+export type QueryGetBillPaymentNumberArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetInvoiceNumberArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetPaymentNumberArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetProductReferenceArgs = {
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type QueryGuardianByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryGuardianReligionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryGuardianStreetsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryGuardiansOfStudentArgs = {
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryGuidedSetupArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryHeadDepartmentsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryInitCyclesArgs = {
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryInitLevelsArgs = {
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryInstallmentByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryInstallmentsArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryInvoiceByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryInvoiceByOperationIdArgs = {
+  operationId: Scalars['Long']['input'];
+};
+
+
+export type QueryInvoiceForPaymentArgs = {
+  operationId: Scalars['Long']['input'];
+};
+
+
+export type QueryInvoiceItemsArgs = {
+  invoiceId: Scalars['Long']['input'];
+};
+
+
+export type QueryInvoicesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryLevelsBySchoolYearArgs = {
+  schoolYearId: Scalars['Int']['input'];
+};
+
+
+export type QueryLoadFromRegistrationNumbersArgs = {
+  folderName: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryLoadLicenseArgs = {
+  fileName: Scalars['String']['input'];
+};
+
+
+export type QueryLoadLicenseFromTextArgs = {
+  base64Text: Scalars['String']['input'];
+};
+
+
+export type QueryMobileOperationsArgs = {
+  endDate: Scalars['Date']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+};
+
+
+export type QueryNewCodeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryNewRegistrationNumberArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryNewRegistrationNumberWithStudentInitialArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentName?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryNonEmployeePersonnelArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryPFreeSequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  subPeriodIds: Array<Scalars['Int']['input']>;
+};
+
+
+export type QueryPSequentialNoteArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type QueryPaymentConditionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryPaymentConditionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryPaymentItemsArgs = {
+  paymentId: Scalars['Long']['input'];
+};
+
+
+export type QueryPaymentOfStudentArgs = {
+  invoiceId: Scalars['Long']['input'];
+};
+
+
+export type QueryPaymentOfStudentBalanceArgs = {
+  registrationNumber: Scalars['String']['input'];
+  schoolIdentifier: Scalars['String']['input'];
+};
+
+
+export type QueryPayrollByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QueryPayrollNumberArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryPayrollPeriodByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryPayrollPeriodsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryPayrollsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryPermissionsOfRole2Args = {
+  roleId: Scalars['Int']['input'];
+};
+
+
+export type QueryPositionByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryPositionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryPostArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryPrepareAllSequentialSmsArgs = {
+  schoolId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type QueryPrepareSmsArgs = {
+  periodId: Scalars['Int']['input'];
+};
+
+
+export type QueryPrepareSequentialSmsForClassArgs = {
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+
+export type QueryProductByIdArgs = {
+  id?: InputMaybe<Scalars['Long']['input']>;
+};
+
+
+export type QueryProductCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryProductCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryProductNameExistsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type QueryProductReferenceExistsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+  reference: Scalars['String']['input'];
+};
+
+
+export type QueryProductsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryQuarterlyCompNoteArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryQuarterlyCompNoteFromEvalArgs = {
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+
+export type QueryReadLicenseArgs = {
+  data: Scalars['String']['input'];
+};
+
+
+export type QueryRolesArgs = {
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QuerySchoolByIdentifierArgs = {
+  identifier: Scalars['String']['input'];
+};
+
+
+export type QuerySchoolFeeLevelArgs = {
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QuerySchoolYearActiveArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QuerySchoolYearByIdentifierArgs = {
+  schoolIdentifier: Scalars['String']['input'];
+};
+
+
+export type QueryServiceUnionByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type QueryStudentBirthplacesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryStudentInvoiceCompulsoryStatusArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryStudentInvoiceForUpdateArgs = {
+  invoiceId: Scalars['Long']['input'];
+};
+
+
+export type QueryStudentInvoiceItemByReferenceArgs = {
+  reference: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryStudentInvoicesArgs = {
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryStudentPaymentExistsArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentId: Scalars['Long']['input'];
+};
+
+
+export type QueryStudentPaymentForUpdateArgs = {
+  paymentId: Scalars['Long']['input'];
+};
+
+
+export type QueryStudentPaymentsExistsArgs = {
+  schoolId: Scalars['Int']['input'];
+  studentIds: Array<Scalars['Long']['input']>;
+};
+
+
+export type QueryStudentReligionsArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QuerySubCompetenceByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QuerySubCompetencesArgs = {
+  competenceId: Scalars['Int']['input'];
+};
+
+
+export type QuerySubCompetencesByClassArgs = {
+  classId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QuerySubCompetencesByLevelArgs = {
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QuerySubjectAssignmentsArgs = {
+  classId: Scalars['Int']['input'];
+};
+
+
+export type QuerySupplierByBillIdArgs = {
+  billId: Scalars['Long']['input'];
+};
+
+
+export type QuerySupplierByIdArgs = {
+  id: Scalars['Long']['input'];
+};
+
+
+export type QuerySupplierCategoriesArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QuerySupplierCategoryByIdArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QuerySuppliersArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryTimeTablesArgs = {
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryTuitionByEnterpriseIdArgs = {
+  enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryTuitionUnionByIdArgs = {
+  productId: Scalars['Long']['input'];
+};
+
+
+export type QueryUnregisteredStudentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryVendorOperationsArgs = {
+  endDate: Scalars['Date']['input'];
+  enterpriseId: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+};
+
+export enum RadicalType {
+  SchoolCode = 'SCHOOL_CODE',
+  StudentInitial = 'STUDENT_INITIAL'
+}
+
+export type RegistrationNumberJson = {
+  __typename?: 'RegistrationNumberJson';
+  prefix: PrefixType;
+  prefixSep: Scalars['String']['output'];
+  radicalFill?: Maybe<Scalars['String']['output']>;
+  radicalLength?: Maybe<Scalars['Int']['output']>;
+  radicalType: RadicalType;
+  randomSuffix?: Maybe<Scalars['Boolean']['output']>;
+  resetNumberOrder: Scalars['Boolean']['output'];
+  suffixLength: Scalars['Int']['output'];
+};
 
 export type RegistrationNumberJsonInput = {
   prefix: PrefixType;
-  prefixSep: string;
-  radicalFill?: string | null | undefined;
-  radicalLength?: number | null | undefined;
+  prefixSep: Scalars['String']['input'];
+  radicalFill?: InputMaybe<Scalars['String']['input']>;
+  radicalLength?: InputMaybe<Scalars['Int']['input']>;
   radicalType: RadicalType;
-  randomSuffix: boolean;
-  resetNumberOrder: boolean;
-  suffixLength: number;
+  randomSuffix: Scalars['Boolean']['input'];
+  resetNumberOrder: Scalars['Boolean']['input'];
+  suffixLength: Scalars['Int']['input'];
 };
 
-export type Relation =
-  | 'AUNT'
-  | 'BROTHER'
-  | 'COUSIN'
-  | 'FATHER'
-  | 'GRAND_AUNT'
-  | 'GRAND_FATHER'
-  | 'GRAND_MOTHER'
-  | 'GRAND_UNCLE'
-  | 'MOTHER'
-  | 'SISTER'
-  | 'SPOUSE'
-  | 'STEPFATHER'
-  | 'STEPMOTHER'
-  | 'TUTOR'
-  | 'UNCLE';
+export enum Relation {
+  Aunt = 'AUNT',
+  Brother = 'BROTHER',
+  Cousin = 'COUSIN',
+  Father = 'FATHER',
+  GrandAunt = 'GRAND_AUNT',
+  GrandFather = 'GRAND_FATHER',
+  GrandMother = 'GRAND_MOTHER',
+  GrandUncle = 'GRAND_UNCLE',
+  Mother = 'MOTHER',
+  Sister = 'SISTER',
+  Spouse = 'SPOUSE',
+  Stepfather = 'STEPFATHER',
+  Stepmother = 'STEPMOTHER',
+  Tutor = 'TUTOR',
+  Uncle = 'UNCLE'
+}
+
+export type ReportAppreciation = {
+  __typename?: 'ReportAppreciation';
+  appreciation: Scalars['String']['output'];
+  code: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  max: Scalars['Float']['output'];
+  min: Scalars['Float']['output'];
+};
+
+export type ReportAppreciationInput = {
+  appreciation: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  languageId: Scalars['Int']['input'];
+  max: Scalars['Float']['input'];
+  min: Scalars['Float']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+export type ReportCategory = {
+  __typename?: 'ReportCategory';
+  icon?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  items?: Maybe<Array<ReportItem>>;
+  language?: Maybe<ReportLanguage>;
+  name: Scalars['String']['output'];
+};
+
+export type ReportHeaderJson = {
+  __typename?: 'ReportHeaderJson';
+  leftHeader?: Maybe<Scalars['String']['output']>;
+  rightHeader?: Maybe<Scalars['String']['output']>;
+};
 
 export type ReportHeaderJsonInput = {
-  leftHeader?: string | null | undefined;
-  rightHeader?: string | null | undefined;
+  leftHeader?: InputMaybe<Scalars['String']['input']>;
+  rightHeader?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ReportItem = {
+  __typename?: 'ReportItem';
+  categories: Array<ReportCategory>;
+  favorite?: Maybe<Scalars['Boolean']['output']>;
+  help?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  link?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+};
+
+export type ReportJson = {
+  __typename?: 'ReportJson';
+  annualSubPeriodsRequired?: Maybe<Scalars['Int']['output']>;
+  customReportHeader?: Maybe<Scalars['Boolean']['output']>;
+  minSubjectsPercentage?: Maybe<Scalars['Float']['output']>;
+  quarterlySubPeriodsRequired?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ReportJsonInput = {
-  annualSubPeriodsRequired?: unknown;
-  customReportHeader?: boolean | null | undefined;
-  minSubjectsPercentage?: number | null | undefined;
-  quarterlySubPeriodsRequired?: unknown;
+  annualSubPeriodsRequired?: InputMaybe<Scalars['Byte']['input']>;
+  customReportHeader?: InputMaybe<Scalars['Boolean']['input']>;
+  minSubjectsPercentage?: InputMaybe<Scalars['Float']['input']>;
+  quarterlySubPeriodsRequired?: InputMaybe<Scalars['Byte']['input']>;
 };
 
-export type ReportLanguage =
-  | 'FRENCH';
+export enum ReportLanguage {
+  French = 'FRENCH'
+}
+
+export type Role = {
+  __typename?: 'Role';
+  code: Scalars['String']['output'];
+  creationDate?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
+};
 
 export type RoleId = {
-  id?: number | null | undefined;
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type RoleInput = {
+  code: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type RoleNew = {
+  __typename?: 'RoleNew';
+  active: Scalars['Boolean']['output'];
+  createdAt: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  permissions?: Maybe<Array<Permission>>;
 };
 
 export type RoleNewCreateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
   permissionItems: Array<PermissionItemInput2>;
 };
 
 export type RoleNewUpdateInput = {
-  active: boolean;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
+  active: Scalars['Boolean']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
   permissionItems: Array<PermissionItemInput2>;
 };
 
-export type SchoolCategory =
-  | 'BILINGUAL_HIGH_SCHOOL'
-  | 'BILINGUAL_PRIMARY_SCHOOL'
-  | 'CETIC'
-  | 'COLLEGE'
-  | 'ENGLISH_HIGH_SCHOOL'
-  | 'ENGLISH_PRIMARY_SCHOOL'
-  | 'HIGH_SCHOOL'
-  | 'PRIMARY_SCHOOL'
-  | 'TECHNICAL_HIGH_SCHOOL'
-  | 'UNIVERSITY';
+export type RoleUpdateInput = {
+  code: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type ScaledEvaluationType = {
+  __typename?: 'ScaledEvaluationType';
+  evaluationType?: Maybe<EvaluationType>;
+  scale?: Maybe<Scalars['Float']['output']>;
+};
+
+export type ScaledEvaluationTypeInput = {
+  evaluationTypeId?: InputMaybe<Scalars['Int']['input']>;
+  scale?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type School = {
+  __typename?: 'School';
+  /** parent: Enterprise */
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  /**  misc */
+  authNumber?: Maybe<Scalars['String']['output']>;
+  bilingualName?: Maybe<Scalars['String']['output']>;
+  contactInfo?: Maybe<ContactInfo>;
+  creationDate?: Maybe<Scalars['String']['output']>;
+  /** @deprecated No longer supported */
+  current?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  identifier?: Maybe<Scalars['String']['output']>;
+  legalInfo?: Maybe<LegalInfo>;
+  logo?: Maybe<Scalars['String']['output']>;
+  motto?: Maybe<Scalars['String']['output']>;
+  motto2?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  nsifNumber?: Maybe<Scalars['String']['output']>;
+  /** School fields */
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  schoolCategory?: Maybe<SchoolCategory>;
+  schoolCode?: Maybe<Scalars['String']['output']>;
+  schoolType?: Maybe<SchoolType>;
+  shortName?: Maybe<Scalars['String']['output']>;
+  signingAddress?: Maybe<Scalars['String']['output']>;
+  studentType?: Maybe<StudentType>;
+  venue?: Maybe<Scalars['String']['output']>;
+  webSite?: Maybe<Scalars['String']['output']>;
+};
+
+export enum SchoolCategory {
+  BilingualHighSchool = 'BILINGUAL_HIGH_SCHOOL',
+  BilingualPrimarySchool = 'BILINGUAL_PRIMARY_SCHOOL',
+  Cetic = 'CETIC',
+  College = 'COLLEGE',
+  EnglishHighSchool = 'ENGLISH_HIGH_SCHOOL',
+  EnglishPrimarySchool = 'ENGLISH_PRIMARY_SCHOOL',
+  HighSchool = 'HIGH_SCHOOL',
+  PrimarySchool = 'PRIMARY_SCHOOL',
+  TechnicalHighSchool = 'TECHNICAL_HIGH_SCHOOL',
+  University = 'UNIVERSITY'
+}
+
+export type SchoolFee = {
+  __typename?: 'SchoolFee';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  mandatory?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  saleAccount?: Maybe<Account>;
+  school?: Maybe<School>;
+};
 
 export type SchoolFeeInput = {
-  active?: boolean | null | undefined;
-  code: string;
-  id?: number | null | undefined;
-  mandatory?: boolean | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  numberOrder: number;
-  saleAccountId?: number | null | undefined;
-  schoolId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  mandatory?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  schoolId: Scalars['Int']['input'];
+};
+
+export type SchoolFeeLevel = {
+  __typename?: 'SchoolFeeLevel';
+  level?: Maybe<Level>;
+  paymentGroup?: Maybe<PaymentGroup>;
+  paymentSlice?: Maybe<PaymentSlice>;
+  requiredAmount: Scalars['Float']['output'];
+  schoolFee?: Maybe<SchoolFee>;
+  schoolFeeLevelPK?: Maybe<SchoolFeeLevelPk>;
 };
 
 export type SchoolFeeLevelForm = {
-  items?: Array<SchoolFeeLevelItemForm> | null | undefined;
-  levelId: number;
+  items?: InputMaybe<Array<SchoolFeeLevelItemForm>>;
+  levelId: Scalars['Int']['input'];
+};
+
+export type SchoolFeeLevelInput = {
+  __typename?: 'SchoolFeeLevelInput';
+  items?: Maybe<Array<SchoolFeeLevelItem>>;
+  paymentGroupId: Scalars['Int']['output'];
+  paymentGroupName: Scalars['String']['output'];
 };
 
 export type SchoolFeeLevelInputI = {
   items: Array<SchoolFeeLevelItemInput>;
-  paymentGroupId: number;
-  paymentGroupName: string;
+  paymentGroupId: Scalars['Int']['input'];
+  paymentGroupName: Scalars['String']['input'];
+};
+
+export type SchoolFeeLevelItem = {
+  __typename?: 'SchoolFeeLevelItem';
+  items?: Maybe<Array<SchoolFeeLevelItemItem>>;
+  paymentSliceId: Scalars['Int']['output'];
+  paymentSliceName: Scalars['String']['output'];
 };
 
 export type SchoolFeeLevelItemForm = {
-  paymentGroupId: number;
-  paymentSliceId: number;
-  requiredAmount: number;
-  schoolFeeId: number;
+  paymentGroupId: Scalars['Int']['input'];
+  paymentSliceId: Scalars['Int']['input'];
+  requiredAmount: Scalars['Float']['input'];
+  schoolFeeId: Scalars['Int']['input'];
 };
 
 export type SchoolFeeLevelItemInput = {
   items: Array<SchoolFeeLevelItemItemInput>;
-  paymentSliceId: number;
-  paymentSliceName: string;
+  paymentSliceId: Scalars['Int']['input'];
+  paymentSliceName: Scalars['String']['input'];
+};
+
+export type SchoolFeeLevelItemItem = {
+  __typename?: 'SchoolFeeLevelItemItem';
+  requiredAmount: Scalars['Float']['output'];
+  schoolFeeId: Scalars['Int']['output'];
+  schoolFeeName: Scalars['String']['output'];
 };
 
 export type SchoolFeeLevelItemItemInput = {
-  requiredAmount: number;
-  schoolFeeId: number;
-  schoolFeeName: string;
+  requiredAmount: Scalars['Float']['input'];
+  schoolFeeId: Scalars['Int']['input'];
+  schoolFeeName: Scalars['String']['input'];
+};
+
+export type SchoolFeeLevelPk = {
+  __typename?: 'SchoolFeeLevelPK';
+  levelId: Scalars['Int']['output'];
+  paymentGroupId: Scalars['Int']['output'];
+  paymentSliceId: Scalars['Int']['output'];
+  schoolFeeId: Scalars['Int']['output'];
+};
+
+export type SchoolInit = {
+  __typename?: 'SchoolInit';
+  administratorName: Scalars['String']['output'];
+  administratorNumber: Scalars['String']['output'];
+  password: Scalars['String']['output'];
+  schoolCategory: SchoolCategory;
+  schoolName: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type SchoolInitInput = {
-  administratorName: string;
-  administratorNumber: string;
-  password: string;
+  administratorName: Scalars['String']['input'];
+  administratorNumber: Scalars['String']['input'];
+  password: Scalars['String']['input'];
   schoolCategory: SchoolCategory;
-  schoolName: string;
-  username: string;
+  schoolName: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 /**
@@ -1915,3186 +8451,4141 @@ export type SchoolInitInput = {
  * }
  */
 export type SchoolInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
   /**  misc */
-  authNumber?: string | null | undefined;
-  bilingualName?: string | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  creationDate?: unknown;
-  current?: boolean | null | undefined;
-  id?: number | null | undefined;
-  legalInfo?: LegalInput | null | undefined;
-  logo?: string | null | undefined;
-  motto?: string | null | undefined;
-  motto2?: string | null | undefined;
-  name: string;
-  name2?: string | null | undefined;
-  note?: string | null | undefined;
-  nsifNumber?: string | null | undefined;
-  parent?: EnterpriseId | null | undefined;
+  authNumber?: InputMaybe<Scalars['String']['input']>;
+  bilingualName?: InputMaybe<Scalars['String']['input']>;
+  contactInfo?: InputMaybe<ContactInput>;
+  creationDate?: InputMaybe<Scalars['Date']['input']>;
+  current?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  legalInfo?: InputMaybe<LegalInput>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  motto?: InputMaybe<Scalars['String']['input']>;
+  motto2?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  name2?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  nsifNumber?: InputMaybe<Scalars['String']['input']>;
+  parent?: InputMaybe<EnterpriseId>;
   /** School fields */
-  registrationNumber?: string | null | undefined;
-  schoolCategory?: SchoolCategory | null | undefined;
-  schoolCode?: string | null | undefined;
-  schoolType?: SchoolType | null | undefined;
-  shortName?: string | null | undefined;
-  signingAddress?: string | null | undefined;
-  studentType?: StudentType | null | undefined;
-  venue?: string | null | undefined;
-  webSite?: string | null | undefined;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
+  schoolCategory?: InputMaybe<SchoolCategory>;
+  schoolCode?: InputMaybe<Scalars['String']['input']>;
+  schoolType?: InputMaybe<SchoolType>;
+  shortName?: InputMaybe<Scalars['String']['input']>;
+  signingAddress?: InputMaybe<Scalars['String']['input']>;
+  studentType?: InputMaybe<StudentType>;
+  venue?: InputMaybe<Scalars['String']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SchoolLiable = {
+  __typename?: 'SchoolLiable';
+  email?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  liableType?: Maybe<LiableType>;
+  name: Scalars['String']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  signature?: Maybe<Scalars['String']['output']>;
 };
 
 export type SchoolLiableInput = {
-  email?: string | null | undefined;
-  id?: number | null | undefined;
-  liableTypeId: number;
-  name: string;
-  schoolId: number;
-  signature?: string | null | undefined;
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  liableTypeId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+  signature?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SchoolManager = {
+  __typename?: 'SchoolManager';
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+export type SchoolSection = {
+  __typename?: 'SchoolSection';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  id: Scalars['Int']['output'];
+  language?: Maybe<Language>;
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
 };
 
 export type SchoolSectionInput = {
-  active?: boolean | null | undefined;
-  id?: number | null | undefined;
-  languageId: number;
-  name: string;
-  note?: string | null | undefined;
-  schoolId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  languageId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  schoolId: Scalars['Int']['input'];
 };
 
-export type SchoolType =
-  | 'PRIVATE'
-  | 'PUBLIC';
+export enum SchoolType {
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
 
 export type SchoolUpdateInput = {
-  id: number;
-  motto?: string | null | undefined;
-  motto2: string;
-  name: string;
+  id: Scalars['Int']['input'];
+  motto?: InputMaybe<Scalars['String']['input']>;
+  motto2: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   /**  shortName: String */
-  name2: string;
-  postOfficeBox?: string | null | undefined;
+  name2: Scalars['String']['input'];
+  postOfficeBox?: InputMaybe<Scalars['String']['input']>;
   /**
    *  logo: String
    * School fields
    */
-  registrationNumber?: string | null | undefined;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
   schoolCategory: SchoolCategory;
-  schoolCode: string;
+  schoolCode: Scalars['String']['input'];
   schoolType: SchoolType;
   studentType: StudentType;
-  telephone?: string | null | undefined;
-  town: string;
+  telephone?: InputMaybe<Scalars['String']['input']>;
+  town: Scalars['String']['input'];
+};
+
+export type SchoolYear = {
+  __typename?: 'SchoolYear';
+  ageMax?: Maybe<Scalars['Int']['output']>;
+  ageMin?: Maybe<Scalars['Int']['output']>;
+  archived?: Maybe<Scalars['Boolean']['output']>;
+  closed?: Maybe<Scalars['Boolean']['output']>;
+  current?: Maybe<Scalars['Boolean']['output']>;
+  cycleCount?: Maybe<Scalars['Int']['output']>;
+  endDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  label: Scalars['String']['output'];
+  label2?: Maybe<Scalars['String']['output']>;
+  locked?: Maybe<Scalars['Boolean']['output']>;
+  periodType?: Maybe<PeriodType>;
+  schoolId: Scalars['Int']['output'];
+  startDate?: Maybe<Scalars['String']['output']>;
 };
 
 export type SchoolYearInput = {
-  ageMax?: unknown;
-  ageMin?: unknown;
-  closed?: boolean | null | undefined;
-  current?: boolean | null | undefined;
-  cycleCount?: unknown;
-  endDate?: unknown;
-  id?: number | null | undefined;
-  label: string;
-  label2?: string | null | undefined;
-  locked?: boolean | null | undefined;
-  periodType?: PeriodType | null | undefined;
-  schoolId: number;
-  startDate?: unknown;
+  ageMax?: InputMaybe<Scalars['Byte']['input']>;
+  ageMin?: InputMaybe<Scalars['Byte']['input']>;
+  closed?: InputMaybe<Scalars['Boolean']['input']>;
+  current?: InputMaybe<Scalars['Boolean']['input']>;
+  cycleCount?: InputMaybe<Scalars['Byte']['input']>;
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  label: Scalars['String']['input'];
+  label2?: InputMaybe<Scalars['String']['input']>;
+  locked?: InputMaybe<Scalars['Boolean']['input']>;
+  periodType?: InputMaybe<PeriodType>;
+  schoolId: Scalars['Int']['input'];
+  startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
-export type SectionType =
-  | 'ASSET'
-  | 'CHARGE'
-  | 'LIABILITY'
-  | 'PRODUCT';
+export type SchoolYearJson = {
+  __typename?: 'SchoolYearJson';
+  id: Scalars['Int']['output'];
+  label: Scalars['String']['output'];
+};
+
+export type SchoolYearJsonInput = {
+  id: Scalars['Int']['input'];
+  label: Scalars['String']['input'];
+};
+
+export enum SectionType {
+  Asset = 'ASSET',
+  Charge = 'CHARGE',
+  Liability = 'LIABILITY',
+  Product = 'PRODUCT'
+}
+
+export type SecurityJson = {
+  __typename?: 'SecurityJson';
+  enableSecuredLogin?: Maybe<Scalars['Boolean']['output']>;
+  type?: Maybe<LoginSecurityType>;
+};
 
 export type SecurityJsonInput = {
-  enableSecuredLogin?: boolean | null | undefined;
-  type?: LoginSecurityType | null | undefined;
+  enableSecuredLogin?: InputMaybe<Scalars['Boolean']['input']>;
+  type?: InputMaybe<LoginSecurityType>;
+};
+
+export type SelectWrapper = {
+  __typename?: 'SelectWrapper';
+  customerId: Scalars['Int']['output'];
+  customerNumber: Scalars['String']['output'];
+  displayName: Scalars['String']['output'];
+  id: Scalars['Long']['output'];
+};
+
+export type SequentialClassReportByGender = {
+  __typename?: 'SequentialClassReportByGender';
+  className?: Maybe<Scalars['String']['output']>;
+  clazz?: Maybe<Clazz>;
+  subPeriod?: Maybe<SubPeriod>;
+  subPeriodName?: Maybe<Scalars['String']['output']>;
+  successRate?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SequentialDiscipline = {
+  __typename?: 'SequentialDiscipline';
+  behaviorBlame?: Maybe<Scalars['Int']['output']>;
+  definitiveExclusion?: Maybe<Scalars['Int']['output']>;
+  detention?: Maybe<Scalars['Int']['output']>;
+  disciplinaryBoard?: Maybe<Scalars['Int']['output']>;
+  justifiedAbsence?: Maybe<Scalars['Int']['output']>;
+  sequentialDisciplinePK: SequentialDisciplinePk;
+  student?: Maybe<Student>;
+  temporaryExclusion?: Maybe<Scalars['Int']['output']>;
+  unjustifiedAbsence?: Maybe<Scalars['Int']['output']>;
+  warning?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SequentialDisciplineInput = {
-  behaviorBlame?: number | null | undefined;
-  definitiveExclusion?: number | null | undefined;
-  detention?: number | null | undefined;
-  disciplinaryBoard?: number | null | undefined;
-  justifiedAbsence?: number | null | undefined;
+  behaviorBlame?: InputMaybe<Scalars['Int']['input']>;
+  definitiveExclusion?: InputMaybe<Scalars['Int']['input']>;
+  detention?: InputMaybe<Scalars['Int']['input']>;
+  disciplinaryBoard?: InputMaybe<Scalars['Int']['input']>;
+  justifiedAbsence?: InputMaybe<Scalars['Int']['input']>;
   sequentialDisciplinePK: SequentialDisciplinePkInput;
-  temporaryExclusion?: number | null | undefined;
-  unjustifiedAbsence?: number | null | undefined;
-  warning?: number | null | undefined;
+  temporaryExclusion?: InputMaybe<Scalars['Int']['input']>;
+  unjustifiedAbsence?: InputMaybe<Scalars['Int']['input']>;
+  warning?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SequentialDisciplinePk = {
+  __typename?: 'SequentialDisciplinePK';
+  studentId: Scalars['ID']['output'];
+  subPeriodId: Scalars['ID']['output'];
 };
 
 export type SequentialDisciplinePkInput = {
-  studentId: unknown;
-  subPeriodId: number;
+  studentId: Scalars['Long']['input'];
+  subPeriodId: Scalars['Int']['input'];
+};
+
+export type SequentialNote = {
+  __typename?: 'SequentialNote';
+  /** @deprecated No longer supported */
+  appreciation?: Maybe<Scalars['String']['output']>;
+  exAequo?: Maybe<Scalars['Boolean']['output']>;
+  note?: Maybe<Scalars['Float']['output']>;
+  rank?: Maybe<Scalars['Int']['output']>;
+  sequentialNotePK: SequentialNotePk;
+  student?: Maybe<Student>;
+  subPeriod?: Maybe<SubPeriod>;
+  subject?: Maybe<Subject>;
 };
 
 export type SequentialNoteInput = {
-  appreciation?: string | null | undefined;
-  exAequo?: boolean | null | undefined;
-  note: number;
-  rank?: unknown;
+  appreciation?: InputMaybe<Scalars['String']['input']>;
+  exAequo?: InputMaybe<Scalars['Boolean']['input']>;
+  note: Scalars['Float']['input'];
+  rank?: InputMaybe<Scalars['Short']['input']>;
   sequentialNotePK: SequentialNotePkInput;
   /**  @deprecated */
-  studentFullName: string;
+  studentFullName: Scalars['String']['input'];
+};
+
+export type SequentialNotePk = {
+  __typename?: 'SequentialNotePK';
+  studentId: Scalars['Long']['output'];
+  subPeriodId: Scalars['Int']['output'];
+  subjectId: Scalars['Int']['output'];
 };
 
 export type SequentialNotePkInput = {
-  studentId: unknown;
-  subPeriodId: number;
-  subjectId: number;
+  studentId: Scalars['Long']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+};
+
+export type Service = {
+  __typename?: 'Service';
+  enterprise: Enterprise;
+  hourCount?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['Int']['output'];
+  product: Product;
 };
 
 export type ServiceCreateInput = {
-  active: boolean;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
+  active: Scalars['Boolean']['input'];
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
   /**
    * preferredVendorId: Int
    * unitId: Int
    *  Service fields
    */
-  hourCount?: number | null | undefined;
-  minSalePrice?: unknown;
-  name: string;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  hourCount?: InputMaybe<Scalars['Int']['input']>;
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceUnion = {
+  __typename?: 'ServiceUnion';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  cost?: Maybe<Scalars['BigDecimal']['output']>;
+  discount?: Maybe<Discount>;
+  enterprise?: Maybe<Enterprise>;
+  hoursCount?: Maybe<Scalars['Int']['output']>;
+  minSalePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  name: Scalars['String']['output'];
+  picture?: Maybe<Scalars['String']['output']>;
+  productCategory?: Maybe<ProductCategory>;
+  productId: Scalars['Long']['output'];
+  purchaseAccount?: Maybe<Account>;
+  purchaseDescription?: Maybe<Scalars['String']['output']>;
+  purchasePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  saleAccount?: Maybe<Account>;
+  saleDescription?: Maybe<Scalars['String']['output']>;
+  salePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  serviceId?: Maybe<Scalars['Int']['output']>;
+  sku?: Maybe<Scalars['String']['output']>;
 };
 
 export type ServiceUpdateInput = {
-  active?: boolean | null | undefined;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
   /**
    * preferredVendorId: Int
    *  Service fields
    */
-  hourCount?: number | null | undefined;
-  id: number;
-  minSalePrice?: unknown;
-  name: string;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  hourCount?: InputMaybe<Scalars['Int']['input']>;
+  id: Scalars['Int']['input'];
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type SetupStep =
-  | 'BRANCHES'
-  | 'CLASSES'
-  | 'CYCLES'
-  | 'LEVELS'
-  | 'SCHOOL'
-  | 'SCHOOL_YEAR';
+export enum SetupStep {
+  Branches = 'BRANCHES',
+  Classes = 'CLASSES',
+  Cycles = 'CYCLES',
+  Levels = 'LEVELS',
+  School = 'SCHOOL',
+  SchoolYear = 'SCHOOL_YEAR'
+}
+
+export type SpecialAccount = {
+  __typename?: 'SpecialAccount';
+  account?: Maybe<Account>;
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Int']['output'];
+  /** account Id */
+  name?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  selected?: Maybe<Scalars['Boolean']['output']>;
+  specialAccountPK: SpecialAccountPk;
+  specialAccountType: SpecialAccountType;
+};
 
 export type SpecialAccountInput = {
-  note?: string | null | undefined;
-  selected?: boolean | null | undefined;
+  note?: InputMaybe<Scalars['String']['input']>;
+  selected?: InputMaybe<Scalars['Boolean']['input']>;
   specialAccountPK: SpecialAccountPkInput;
   specialAccountType: SpecialAccountType;
 };
 
-export type SpecialAccountPkInput = {
-  accountId: number;
-  enterpriseId: number;
+export type SpecialAccountPk = {
+  __typename?: 'SpecialAccountPK';
+  accountId: Scalars['Int']['output'];
+  enterpriseId: Scalars['Int']['output'];
 };
 
-export type SpecialAccountType =
-  | 'CUSTOMER'
-  | 'PAYMENT'
-  | 'PURCHASE'
-  | 'SALE'
-  | 'SERVICE_PURCHASE'
-  | 'SERVICE_SALE'
-  | 'STOCK'
-  | 'STOCK_PROVISION'
-  | 'STOCK_VARIATION'
-  | 'VENDOR';
+export type SpecialAccountPkInput = {
+  accountId: Scalars['Int']['input'];
+  enterpriseId: Scalars['Int']['input'];
+};
+
+export enum SpecialAccountType {
+  Customer = 'CUSTOMER',
+  Payment = 'PAYMENT',
+  Purchase = 'PURCHASE',
+  Sale = 'SALE',
+  ServicePurchase = 'SERVICE_PURCHASE',
+  ServiceSale = 'SERVICE_SALE',
+  Stock = 'STOCK',
+  StockProvision = 'STOCK_PROVISION',
+  StockVariation = 'STOCK_VARIATION',
+  Vendor = 'VENDOR'
+}
+
+export type Student = Person & {
+  __typename?: 'Student';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  birthDate: Scalars['String']['output'];
+  birthplace: Scalars['String']['output'];
+  bloodGroup?: Maybe<Scalars['String']['output']>;
+  contactInfo?: Maybe<ContactInfo>;
+  createdDate?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  ethnicGroup?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  id: Scalars['Long']['output'];
+  inscriptionMode?: Maybe<InscriptionMode>;
+  knownHealthProblem?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  origin?: Maybe<Origin>;
+  otherUsefulInfo?: Maybe<Scalars['String']['output']>;
+  presumeBirthDate?: Maybe<Scalars['Boolean']['output']>;
+  /** Student fields */
+  registrationNumber: Scalars['String']['output'];
+  religion?: Maybe<Scalars['String']['output']>;
+  rhesus?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
+};
 
 export type StudentCreateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  apt?: boolean | null | undefined;
-  birthDate: unknown;
-  birthplace: string;
-  bloodGroup?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  apt?: InputMaybe<Scalars['Boolean']['input']>;
+  birthDate: Scalars['Date']['input'];
+  birthplace: Scalars['String']['input'];
+  bloodGroup?: InputMaybe<Scalars['String']['input']>;
   /** Fake fields */
-  classId?: number | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  displayName?: string | null | undefined;
-  enterpriseId?: number | null | undefined;
-  ethnicGroup?: string | null | undefined;
-  external?: boolean | null | undefined;
-  firstName?: string | null | undefined;
-  formerStudent?: boolean | null | undefined;
-  gender?: Gender | null | undefined;
-  id?: unknown;
-  inscriptionMode?: InscriptionMode | null | undefined;
-  knownHealthProblem?: string | null | undefined;
-  lastName: string;
-  mailTo?: Relation | null | undefined;
-  note?: string | null | undefined;
-  numberOrder?: string | null | undefined;
-  oldSchoolId?: number | null | undefined;
-  origin?: OriginInput | null | undefined;
-  otherUsefulInfo?: string | null | undefined;
-  paymentGroupId?: number | null | undefined;
-  picture?: string | null | undefined;
-  presumeBirthDate?: boolean | null | undefined;
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  contactInfo?: InputMaybe<ContactInput>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  ethnicGroup?: InputMaybe<Scalars['String']['input']>;
+  external?: InputMaybe<Scalars['Boolean']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  formerStudent?: InputMaybe<Scalars['Boolean']['input']>;
+  gender?: InputMaybe<Gender>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  inscriptionMode?: InputMaybe<InscriptionMode>;
+  knownHealthProblem?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  mailTo?: InputMaybe<Relation>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder?: InputMaybe<Scalars['String']['input']>;
+  oldSchoolId?: InputMaybe<Scalars['Int']['input']>;
+  origin?: InputMaybe<OriginInput>;
+  otherUsefulInfo?: InputMaybe<Scalars['String']['input']>;
+  paymentGroupId?: InputMaybe<Scalars['Int']['input']>;
+  picture?: InputMaybe<Scalars['String']['input']>;
+  presumeBirthDate?: InputMaybe<Scalars['Boolean']['input']>;
   /** Student fields */
-  registrationNumber?: string | null | undefined;
-  religion?: string | null | undefined;
-  repeater?: boolean | null | undefined;
-  rhesus?: string | null | undefined;
-  schoolId?: number | null | undefined;
-  smsTo?: Relation | null | undefined;
-  studentGuardianCollection?: Array<StudentGuardianInput | null | undefined> | null | undefined;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  rhesus?: InputMaybe<Scalars['String']['input']>;
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
+  smsTo?: InputMaybe<Relation>;
+  studentGuardianCollection?: InputMaybe<Array<InputMaybe<StudentGuardianInput>>>;
+};
+
+export type StudentGuardian = {
+  __typename?: 'StudentGuardian';
+  guardian?: Maybe<Guardian>;
+  relation?: Maybe<Relation>;
+  student?: Maybe<Student>;
+  studentGuardianPK?: Maybe<StudentGuardianPk>;
 };
 
 export type StudentGuardianInput = {
-  relation?: Relation | null | undefined;
-  studentGuardianPK?: StudentGuardianPkInput | null | undefined;
+  relation?: InputMaybe<Relation>;
+  studentGuardianPK?: InputMaybe<StudentGuardianPkInput>;
+};
+
+export type StudentGuardianPk = {
+  __typename?: 'StudentGuardianPK';
+  guardianId: Scalars['Long']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type StudentGuardianPkInput = {
-  guardianId?: unknown;
-  studentId?: unknown;
+  guardianId?: InputMaybe<Scalars['Long']['input']>;
+  studentId?: InputMaybe<Scalars['Long']['input']>;
 };
 
 export type StudentImportInput = {
-  birthDate: unknown;
-  birthplace: string;
-  firstName?: string | null | undefined;
-  gender: string;
-  lastName: string;
-  registrationNumber: string;
-  repeater: string;
-  studentId?: unknown;
+  birthDate: Scalars['Date']['input'];
+  birthplace: Scalars['String']['input'];
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  registrationNumber: Scalars['String']['input'];
+  repeater: Scalars['String']['input'];
+  studentId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type StudentInvoice = {
+  __typename?: 'StudentInvoice';
+  amountPaid?: Maybe<Scalars['BigDecimal']['output']>;
+  /**
+   * studentInvoiceItemCollection: [StudentInvoiceItem!]
+   * calculated field
+   */
+  frequent?: Maybe<Frequent>;
+  id: Scalars['Long']['output'];
+  operationDate: Scalars['String']['output'];
+  reference: Scalars['String']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  /** note: String */
+  student?: Maybe<Student>;
+  totalAmount: Scalars['BigDecimal']['output'];
 };
 
 export type StudentInvoiceInput = {
-  id?: unknown;
-  operationDate: unknown;
-  reference?: string | null | undefined;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  operationDate: Scalars['Date']['input'];
+  reference?: InputMaybe<Scalars['String']['input']>;
   /** fake fields */
-  schoolId: number;
-  schoolYearId?: number | null | undefined;
+  schoolId: Scalars['Int']['input'];
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
   /**  note: String */
-  studentId: unknown;
-  studentInvoiceItemCollection?: Array<StudentInvoiceItemInput> | null | undefined;
-  totalAmount?: number | null | undefined;
+  studentId: Scalars['Long']['input'];
+  studentInvoiceItemCollection?: InputMaybe<Array<StudentInvoiceItemInput>>;
+  totalAmount?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type StudentInvoiceItem = {
+  __typename?: 'StudentInvoiceItem';
+  amount: Scalars['BigDecimal']['output'];
+  paymentSlice?: Maybe<PaymentSlice>;
+  schoolFee?: Maybe<SchoolFee>;
+  studentInvoice?: Maybe<StudentInvoice>;
+  studentInvoiceItemPK?: Maybe<StudentInvoiceItemPk>;
 };
 
 export type StudentInvoiceItemInput = {
-  amount: unknown;
-  studentInvoiceItemPK?: StudentInvoiceItemPkInput | null | undefined;
+  amount: Scalars['BigDecimal']['input'];
+  studentInvoiceItemPK?: InputMaybe<StudentInvoiceItemPkInput>;
+};
+
+export type StudentInvoiceItemPk = {
+  __typename?: 'StudentInvoiceItemPK';
+  paymentSliceId: Scalars['Int']['output'];
+  schoolFeeId: Scalars['Int']['output'];
+  studentInvoiceId: Scalars['Long']['output'];
 };
 
 export type StudentInvoiceItemPkInput = {
-  paymentSliceId: number;
-  schoolFeeId: number;
-  studentPaymentId?: unknown;
+  paymentSliceId: Scalars['Int']['input'];
+  schoolFeeId: Scalars['Int']['input'];
+  studentPaymentId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type StudentInvoiceJson = {
+  __typename?: 'StudentInvoiceJson';
+  compulsory?: Maybe<Scalars['Boolean']['output']>;
+  prefix: Scalars['String']['output'];
+  radical: InvoiceRadicalType;
+  resetNumberOrder: Scalars['Boolean']['output'];
+  suffixLength: Scalars['Int']['output'];
 };
 
 export type StudentInvoiceJsonInput = {
-  compulsory?: boolean | null | undefined;
-  prefix: string;
+  compulsory?: InputMaybe<Scalars['Boolean']['input']>;
+  prefix: Scalars['String']['input'];
   radical: InvoiceRadicalType;
-  resetNumberOrder: boolean;
-  suffixLength: number;
+  resetNumberOrder: Scalars['Boolean']['input'];
+  suffixLength: Scalars['Int']['input'];
 };
 
-export type StudentInvoiceUpdateInput = {
-  id: unknown;
-  operationDate: unknown;
-  reference?: string | null | undefined;
-  registrationNumber?: string | null | undefined;
+export type StudentInvoiceUpdate = {
+  __typename?: 'StudentInvoiceUpdate';
+  id: Scalars['Long']['output'];
+  operationDate: Scalars['Date']['output'];
+  reference?: Maybe<Scalars['String']['output']>;
+  registrationNumber?: Maybe<Scalars['String']['output']>;
   /**
    * studentInvoiceItemCollection: [StudentInvoiceItemInput!]
    * fake fields
    */
-  schoolId: number;
-  schoolYearId?: number | null | undefined;
+  schoolId: Scalars['Int']['output'];
+  schoolYearId?: Maybe<Scalars['Int']['output']>;
   /**  note: String */
-  studentId: unknown;
-  studentName: string;
-  totalAmount?: number | null | undefined;
+  studentId: Scalars['Long']['output'];
+  studentName: Scalars['String']['output'];
+  totalAmount?: Maybe<Scalars['Float']['output']>;
+};
+
+export type StudentInvoiceUpdateInput = {
+  id: Scalars['Long']['input'];
+  operationDate: Scalars['Date']['input'];
+  reference?: InputMaybe<Scalars['String']['input']>;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * studentInvoiceItemCollection: [StudentInvoiceItemInput!]
+   * fake fields
+   */
+  schoolId: Scalars['Int']['input'];
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  /**  note: String */
+  studentId: Scalars['Long']['input'];
+  studentName: Scalars['String']['input'];
+  totalAmount?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type StudentPayment = {
+  __typename?: 'StudentPayment';
+  /** calculated field */
+  frequent?: Maybe<Frequent>;
+  id: Scalars['Long']['output'];
+  inKindValue?: Maybe<Scalars['Float']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  paymentAccount?: Maybe<Account>;
+  paymentDate: Scalars['String']['output'];
+  paymentMode?: Maybe<PaymentMode>;
+  reference: Scalars['String']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  student?: Maybe<Student>;
+  /** studentPaymentItemCollection: [StudentPaymentItem!] */
+  studentInvoice?: Maybe<StudentInvoice>;
+  totalAmountPaid: Scalars['Float']['output'];
 };
 
 export type StudentPaymentInput = {
-  id?: unknown;
-  note?: string | null | undefined;
-  paymentAccountId?: number | null | undefined;
-  paymentDate: unknown;
-  paymentModeId?: number | null | undefined;
-  reference?: string | null | undefined;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  paymentAccountId?: InputMaybe<Scalars['Int']['input']>;
+  paymentDate: Scalars['Date']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  reference?: InputMaybe<Scalars['String']['input']>;
   /** fake fields */
-  schoolId: number;
-  schoolYearId?: number | null | undefined;
-  studentId: unknown;
-  studentInvoiceId?: unknown;
-  studentPaymentItemCollection?: Array<StudentPaymentItemInput> | null | undefined;
-  totalAmountPaid?: number | null | undefined;
+  schoolId: Scalars['Int']['input'];
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  studentId: Scalars['Long']['input'];
+  studentInvoiceId?: InputMaybe<Scalars['Long']['input']>;
+  studentPaymentItemCollection?: InputMaybe<Array<StudentPaymentItemInput>>;
+  totalAmountPaid?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type StudentPaymentItem = {
+  __typename?: 'StudentPaymentItem';
+  amountPaid: Scalars['Float']['output'];
+  inKindPayment?: Maybe<Scalars['Boolean']['output']>;
+  studentPaymentItemPK?: Maybe<StudentPaymentItemPk>;
 };
 
 export type StudentPaymentItemInput = {
-  amountPaid: number;
-  inKindPayment: boolean;
-  studentPaymentItemPK?: StudentPaymentItemPkInput | null | undefined;
+  amountPaid: Scalars['Float']['input'];
+  inKindPayment: Scalars['Boolean']['input'];
+  studentPaymentItemPK?: InputMaybe<StudentPaymentItemPkInput>;
+};
+
+export type StudentPaymentItemPk = {
+  __typename?: 'StudentPaymentItemPK';
+  paymentSliceId: Scalars['Int']['output'];
+  schoolFeeId: Scalars['Int']['output'];
+  studentPaymentId: Scalars['Long']['output'];
 };
 
 export type StudentPaymentItemPkInput = {
-  paymentSliceId: number;
-  schoolFeeId: number;
-  studentPaymentId?: unknown;
+  paymentSliceId: Scalars['Int']['input'];
+  schoolFeeId: Scalars['Int']['input'];
+  studentPaymentId?: InputMaybe<Scalars['Long']['input']>;
+};
+
+export type StudentPaymentItemUpdate = {
+  __typename?: 'StudentPaymentItemUpdate';
+  amountPaid: Scalars['Float']['output'];
+  inKindPayment: Scalars['Boolean']['output'];
+  paymentSlice?: Maybe<Scalars['String']['output']>;
+  paymentSliceId: Scalars['Int']['output'];
+  schoolFee?: Maybe<Scalars['String']['output']>;
+  schoolFeeId: Scalars['Int']['output'];
+  studentPaymentId?: Maybe<Scalars['Long']['output']>;
+  studentPaymentItemPK?: Maybe<StudentPaymentItemPk>;
 };
 
 export type StudentPaymentItemUpdateInput = {
-  amountPaid: number;
-  inKindPayment: boolean;
-  paymentSlice?: string | null | undefined;
-  paymentSliceId: number;
-  schoolFee?: string | null | undefined;
-  schoolFeeId: number;
-  studentPaymentId?: unknown;
-  studentPaymentItemPK?: StudentPaymentItemPkInput | null | undefined;
+  amountPaid: Scalars['Float']['input'];
+  inKindPayment: Scalars['Boolean']['input'];
+  paymentSlice?: InputMaybe<Scalars['String']['input']>;
+  paymentSliceId: Scalars['Int']['input'];
+  schoolFee?: InputMaybe<Scalars['String']['input']>;
+  schoolFeeId: Scalars['Int']['input'];
+  studentPaymentId?: InputMaybe<Scalars['Long']['input']>;
+  studentPaymentItemPK?: InputMaybe<StudentPaymentItemPkInput>;
+};
+
+export type StudentPaymentJson = {
+  __typename?: 'StudentPaymentJson';
+  bigSizeReceipt?: Maybe<Scalars['Boolean']['output']>;
+  forceClassChange?: Maybe<Scalars['Boolean']['output']>;
+  leftSignature?: Maybe<Scalars['String']['output']>;
+  middleSignature?: Maybe<Scalars['String']['output']>;
+  paymentGroupCompulsory?: Maybe<Scalars['Boolean']['output']>;
+  prefix: Scalars['String']['output'];
+  radical: InvoiceRadicalType;
+  resetNumberOrder: Scalars['Boolean']['output'];
+  rightSignature?: Maybe<Scalars['String']['output']>;
+  schoolFeeCompulsory?: Maybe<Scalars['Boolean']['output']>;
+  showEmptyNonCompulsory?: Maybe<Scalars['Boolean']['output']>;
+  suffixLength: Scalars['Int']['output'];
+  uniqueInvoice?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type StudentPaymentJsonInput = {
-  bigSizeReceipt?: boolean | null | undefined;
-  forceClassChange?: boolean | null | undefined;
-  leftSignature?: string | null | undefined;
-  middleSignature?: string | null | undefined;
-  paymentGroupCompulsory?: boolean | null | undefined;
-  prefix: string;
+  bigSizeReceipt?: InputMaybe<Scalars['Boolean']['input']>;
+  forceClassChange?: InputMaybe<Scalars['Boolean']['input']>;
+  leftSignature?: InputMaybe<Scalars['String']['input']>;
+  middleSignature?: InputMaybe<Scalars['String']['input']>;
+  paymentGroupCompulsory?: InputMaybe<Scalars['Boolean']['input']>;
+  prefix: Scalars['String']['input'];
   radical: InvoiceRadicalType;
-  resetNumberOrder: boolean;
-  rightSignature?: string | null | undefined;
-  schoolFeeCompulsory?: boolean | null | undefined;
-  showEmptyNonCompulsory?: boolean | null | undefined;
-  suffixLength: number;
-  uniqueInvoice?: boolean | null | undefined;
+  resetNumberOrder: Scalars['Boolean']['input'];
+  rightSignature?: InputMaybe<Scalars['String']['input']>;
+  schoolFeeCompulsory?: InputMaybe<Scalars['Boolean']['input']>;
+  showEmptyNonCompulsory?: InputMaybe<Scalars['Boolean']['input']>;
+  suffixLength: Scalars['Int']['input'];
+  uniqueInvoice?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type StudentPaymentUpdate = {
+  __typename?: 'StudentPaymentUpdate';
+  id: Scalars['Long']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  paymentAccountId?: Maybe<Scalars['Int']['output']>;
+  paymentDate: Scalars['Date']['output'];
+  paymentModeId?: Maybe<Scalars['Int']['output']>;
+  reference: Scalars['String']['output'];
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  /** fake fields */
+  schoolId: Scalars['Int']['output'];
+  schoolYearId?: Maybe<Scalars['Int']['output']>;
+  studentId: Scalars['Long']['output'];
+  studentInvoiceId?: Maybe<Scalars['Long']['output']>;
+  studentName: Scalars['String']['output'];
+  studentPaymentItemCollection?: Maybe<Array<StudentPaymentItemUpdate>>;
+  totalAmountPaid?: Maybe<Scalars['Float']['output']>;
 };
 
 export type StudentPaymentUpdateInput = {
-  id: unknown;
-  note?: string | null | undefined;
-  paymentAccountId?: number | null | undefined;
-  paymentDate: unknown;
-  paymentModeId?: number | null | undefined;
-  reference: string;
-  registrationNumber?: string | null | undefined;
+  id: Scalars['Long']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  paymentAccountId?: InputMaybe<Scalars['Int']['input']>;
+  paymentDate: Scalars['Date']['input'];
+  paymentModeId?: InputMaybe<Scalars['Int']['input']>;
+  reference: Scalars['String']['input'];
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
   /** fake fields */
-  schoolId: number;
-  schoolYearId?: number | null | undefined;
-  studentId: unknown;
-  studentInvoiceId?: unknown;
-  studentName: string;
-  studentPaymentItemCollection?: Array<StudentPaymentItemUpdateInput> | null | undefined;
-  totalAmountPaid?: number | null | undefined;
+  schoolId: Scalars['Int']['input'];
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+  studentId: Scalars['Long']['input'];
+  studentInvoiceId?: InputMaybe<Scalars['Long']['input']>;
+  studentName: Scalars['String']['input'];
+  studentPaymentItemCollection?: InputMaybe<Array<StudentPaymentItemUpdateInput>>;
+  totalAmountPaid?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type StudentPicture = {
+  __typename?: 'StudentPicture';
+  image?: Maybe<Scalars['String']['output']>;
+  schoolYear?: Maybe<SchoolYear>;
+  student?: Maybe<Student>;
+  studentPicturePK?: Maybe<StudentPicturePk>;
+};
+
+export type StudentPictureImportDto = {
+  __typename?: 'StudentPictureImportDTO';
+  birthDate: Scalars['String']['output'];
+  birthplace: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Scalars['String']['output']>;
+  lastName: Scalars['String']['output'];
+  picture: Scalars['String']['output'];
+  registrationNumber: Scalars['String']['output'];
+  studentId: Scalars['Long']['output'];
 };
 
 export type StudentPictureInput = {
-  picture: string;
-  studentId: unknown;
+  picture: Scalars['String']['input'];
+  studentId: Scalars['Long']['input'];
 };
 
-export type StudentType =
-  | 'PUPIL'
-  | 'STUDENT'
-  | 'UNIVERSITY_STUDENT';
+export type StudentPicturePk = {
+  __typename?: 'StudentPicturePK';
+  schoolYearId: Scalars['Int']['output'];
+  studentId: Scalars['Long']['output'];
+};
+
+export enum StudentType {
+  Pupil = 'PUPIL',
+  Student = 'STUDENT',
+  UniversityStudent = 'UNIVERSITY_STUDENT'
+}
 
 export type StudentUpdateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  apt?: boolean | null | undefined;
-  birthDate: unknown;
-  birthplace: string;
-  bloodGroup?: string | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  apt?: InputMaybe<Scalars['Boolean']['input']>;
+  birthDate: Scalars['Date']['input'];
+  birthplace: Scalars['String']['input'];
+  bloodGroup?: InputMaybe<Scalars['String']['input']>;
   /** Fake fields */
-  classId?: number | null | undefined;
-  contactInfo?: ContactInput | null | undefined;
-  displayName?: string | null | undefined;
-  enterpriseId?: number | null | undefined;
-  ethnicGroup?: string | null | undefined;
-  external?: boolean | null | undefined;
-  firstName?: string | null | undefined;
-  formerStudent?: boolean | null | undefined;
-  gender?: Gender | null | undefined;
-  id: unknown;
-  inscriptionMode?: InscriptionMode | null | undefined;
-  knownHealthProblem?: string | null | undefined;
-  lastName: string;
-  mailTo?: Relation | null | undefined;
-  note?: string | null | undefined;
-  numberOrder?: string | null | undefined;
-  oldSchoolId?: number | null | undefined;
-  origin?: OriginInput | null | undefined;
-  otherUsefulInfo?: string | null | undefined;
-  paymentGroupId?: number | null | undefined;
-  picture?: string | null | undefined;
-  presumeBirthDate?: boolean | null | undefined;
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  contactInfo?: InputMaybe<ContactInput>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  ethnicGroup?: InputMaybe<Scalars['String']['input']>;
+  external?: InputMaybe<Scalars['Boolean']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  formerStudent?: InputMaybe<Scalars['Boolean']['input']>;
+  gender?: InputMaybe<Gender>;
+  id: Scalars['Long']['input'];
+  inscriptionMode?: InputMaybe<InscriptionMode>;
+  knownHealthProblem?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  mailTo?: InputMaybe<Relation>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder?: InputMaybe<Scalars['String']['input']>;
+  oldSchoolId?: InputMaybe<Scalars['Int']['input']>;
+  origin?: InputMaybe<OriginInput>;
+  otherUsefulInfo?: InputMaybe<Scalars['String']['input']>;
+  paymentGroupId?: InputMaybe<Scalars['Int']['input']>;
+  picture?: InputMaybe<Scalars['String']['input']>;
+  presumeBirthDate?: InputMaybe<Scalars['Boolean']['input']>;
   /** Student fields */
-  registrationNumber: string;
-  religion?: string | null | undefined;
-  repeater?: boolean | null | undefined;
-  rhesus?: string | null | undefined;
-  schoolId?: number | null | undefined;
-  smsTo?: Relation | null | undefined;
-  studentGuardianCollection?: Array<StudentGuardianInput | null | undefined> | null | undefined;
+  registrationNumber: Scalars['String']['input'];
+  religion?: InputMaybe<Scalars['String']['input']>;
+  repeater?: InputMaybe<Scalars['Boolean']['input']>;
+  rhesus?: InputMaybe<Scalars['String']['input']>;
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
+  smsTo?: InputMaybe<Relation>;
+  studentGuardianCollection?: InputMaybe<Array<InputMaybe<StudentGuardianInput>>>;
+};
+
+export type SubCompetence = {
+  __typename?: 'SubCompetence';
+  active: Scalars['Boolean']['output'];
+  code: Scalars['String']['output'];
+  competence?: Maybe<Competence>;
+  competenceId: Scalars['Int']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  marks: Scalars['Short']['output'];
+  name: Scalars['String']['output'];
+  optional: Scalars['Boolean']['output'];
+  /**  school: School */
+  schoolId: Scalars['Int']['output'];
+};
+
+export type SubCompetenceInput = {
+  __typename?: 'SubCompetenceInput';
+  competenceId: Scalars['Int']['output'];
+  competenceName: Scalars['String']['output'];
+  items?: Maybe<Array<SubCompetenceItemInput>>;
+  schoolId: Scalars['Int']['output'];
 };
 
 export type SubCompetenceInputI = {
-  competenceId: number;
-  competenceName: string;
+  competenceId: Scalars['Int']['input'];
+  competenceName: Scalars['String']['input'];
   items: Array<SubCompetenceItemInputI>;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
+};
+
+export type SubCompetenceItemInput = {
+  __typename?: 'SubCompetenceItemInput';
+  active: Scalars['Boolean']['output'];
+  code: Scalars['String']['output'];
+  items?: Maybe<Array<SubCompetenceItemItemInput>>;
+  name: Scalars['String']['output'];
+  optional: Scalars['Boolean']['output'];
+  subCompetenceId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SubCompetenceItemInputI = {
-  active: boolean;
-  code: string;
+  active: Scalars['Boolean']['input'];
+  code: Scalars['String']['input'];
   items: Array<SubCompetenceItemItemInputI>;
-  name: string;
-  optional: boolean;
-  subCompetenceId?: number | null | undefined;
+  name: Scalars['String']['input'];
+  optional: Scalars['Boolean']['input'];
+  subCompetenceId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SubCompetenceItemItemInput = {
+  __typename?: 'SubCompetenceItemItemInput';
+  evalTypeId: Scalars['Int']['output'];
+  evalTypeName: Scalars['String']['output'];
+  id?: Maybe<Scalars['Long']['output']>;
+  marks: Scalars['Short']['output'];
 };
 
 export type SubCompetenceItemItemInputI = {
-  evalTypeId: number;
-  evalTypeName: string;
-  id?: unknown;
-  marks: unknown;
+  evalTypeId: Scalars['Int']['input'];
+  evalTypeName: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Long']['input']>;
+  marks: Scalars['Short']['input'];
+};
+
+export type SubPeriod = {
+  __typename?: 'SubPeriod';
+  coefficient?: Maybe<Scalars['Float']['output']>;
+  endDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  label: Scalars['String']['output'];
+  label2?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  message2?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  period?: Maybe<Period>;
+  startDate?: Maybe<Scalars['String']['output']>;
 };
 
 export type SubPeriodInput = {
-  coefficient?: number | null | undefined;
-  endDate?: unknown;
-  id?: number | null | undefined;
-  label: string;
-  label2?: string | null | undefined;
-  message?: string | null | undefined;
-  message2?: string | null | undefined;
-  numberOrder: unknown;
-  periodId: number;
-  startDate?: unknown;
+  coefficient?: InputMaybe<Scalars['Float']['input']>;
+  endDate?: InputMaybe<Scalars['Date']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  label: Scalars['String']['input'];
+  label2?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  message2?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Byte']['input'];
+  periodId: Scalars['Int']['input'];
+  startDate?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type Subject = {
+  __typename?: 'Subject';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  showInTimeTable?: Maybe<Scalars['Boolean']['output']>;
+  subjectDepartment?: Maybe<SubjectDepartment>;
+};
+
+export type SubjectAssignment = {
+  __typename?: 'SubjectAssignment';
+  subjectId: Scalars['Int']['output'];
+  subjectName: Scalars['String']['output'];
+  teacherId?: Maybe<Scalars['Long']['output']>;
+  teacherName?: Maybe<Scalars['String']['output']>;
+};
+
+export type SubjectBranch = {
+  __typename?: 'SubjectBranch';
+  coefficient?: Maybe<Scalars['Float']['output']>;
+  maxSessionDuration?: Maybe<Scalars['Int']['output']>;
+  number?: Maybe<Scalars['String']['output']>;
+  priority?: Maybe<Scalars['Int']['output']>;
+  scale?: Maybe<Scalars['String']['output']>;
+  sessionCount?: Maybe<Scalars['Int']['output']>;
+  /** branch: Branch */
+  subject?: Maybe<Subject>;
+  subjectBranchPK?: Maybe<SubjectBranchPk>;
+  weeklyHourCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type SubjectBranchEvaluationType = {
+  __typename?: 'SubjectBranchEvaluationType';
+  scale?: Maybe<Scalars['Float']['output']>;
+  subjectBranchEvaluationTypePK?: Maybe<SubjectBranchEvaluationTypePk>;
+};
+
+export type SubjectBranchEvaluationTypeForm = {
+  __typename?: 'SubjectBranchEvaluationTypeForm';
+  branch?: Maybe<Branch>;
+  scaledEvaluationTypes?: Maybe<Array<ScaledEvaluationType>>;
+  subject?: Maybe<Subject>;
+  subjectBranchPK?: Maybe<SubjectBranchPk>;
+};
+
+export type SubjectBranchEvaluationTypeFormInput = {
+  scaledEvaluationTypes?: InputMaybe<Array<ScaledEvaluationTypeInput>>;
+  subjectBranchPK?: InputMaybe<SubjectBranchPkInput>;
+};
+
+export type SubjectBranchEvaluationTypeInput = {
+  scale?: InputMaybe<Scalars['Float']['input']>;
+  subjectBranchEvaluationTypePK?: InputMaybe<SubjectBranchEvaluationTypePkInput>;
+};
+
+export type SubjectBranchEvaluationTypePk = {
+  __typename?: 'SubjectBranchEvaluationTypePK';
+  branchId?: Maybe<Scalars['Int']['output']>;
+  evaluationTypeId?: Maybe<Scalars['Int']['output']>;
+  subjectId?: Maybe<Scalars['Int']['output']>;
+};
+
+export type SubjectBranchEvaluationTypePkInput = {
+  branchId?: InputMaybe<Scalars['Int']['input']>;
+  evaluationTypeId?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SubjectBranchInput = {
-  coefficient?: number | null | undefined;
-  maxSessionDuration?: unknown;
-  number?: string | null | undefined;
-  priority?: unknown;
-  scale?: string | null | undefined;
-  sessionCount?: unknown;
-  subjectBranchPK?: SubjectBranchPkInput | null | undefined;
-  subjectName?: string | null | undefined;
-  weeklyHourCount?: unknown;
+  coefficient?: InputMaybe<Scalars['Float']['input']>;
+  maxSessionDuration?: InputMaybe<Scalars['Byte']['input']>;
+  number?: InputMaybe<Scalars['String']['input']>;
+  priority?: InputMaybe<Scalars['Byte']['input']>;
+  scale?: InputMaybe<Scalars['String']['input']>;
+  sessionCount?: InputMaybe<Scalars['Byte']['input']>;
+  subjectBranchPK?: InputMaybe<SubjectBranchPkInput>;
+  subjectName?: InputMaybe<Scalars['String']['input']>;
+  weeklyHourCount?: InputMaybe<Scalars['Byte']['input']>;
+};
+
+export type SubjectBranchPk = {
+  __typename?: 'SubjectBranchPK';
+  branchId?: Maybe<Scalars['Int']['output']>;
+  subjectId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SubjectBranchPkInput = {
-  branchId?: number | null | undefined;
-  subjectId?: number | null | undefined;
+  branchId?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SubjectDepartment = {
+  __typename?: 'SubjectDepartment';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
+  schoolSection?: Maybe<SchoolSection>;
+  schoolSectionId: Scalars['Int']['output'];
 };
 
 export type SubjectDepartmentInput = {
-  active?: boolean | null | undefined;
-  code?: string | null | undefined;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  schoolId?: number | null | undefined;
-  schoolSectionId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
+  schoolSectionId: Scalars['Int']['input'];
+};
+
+export type SubjectGroup = {
+  __typename?: 'SubjectGroup';
+  branch?: Maybe<Branch>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  subjectCount?: Maybe<Scalars['Int']['output']>;
+  subjectGroupItemCollection?: Maybe<Array<SubjectGroupItem>>;
+  totalCoefficient?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SubjectGroupInput = {
-  branchId: number;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  numberOrder: unknown;
-  subjectCount?: unknown;
-  subjectGroupItemCollection?: Array<SubjectGroupItemInput> | null | undefined;
-  totalCoefficient?: number | null | undefined;
+  branchId: Scalars['Int']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Byte']['input'];
+  subjectCount?: InputMaybe<Scalars['Byte']['input']>;
+  subjectGroupItemCollection?: InputMaybe<Array<SubjectGroupItemInput>>;
+  totalCoefficient?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type SubjectGroupItem = {
+  __typename?: 'SubjectGroupItem';
+  position?: Maybe<Scalars['Int']['output']>;
+  subject?: Maybe<Subject>;
+  subjectGroupItemPK?: Maybe<SubjectGroupItemPk>;
 };
 
 export type SubjectGroupItemInput = {
-  position?: unknown;
-  subjectGroupItemPK?: SubjectGroupItemPkInput | null | undefined;
-  subjectName?: string | null | undefined;
+  position?: InputMaybe<Scalars['Byte']['input']>;
+  subjectGroupItemPK?: InputMaybe<SubjectGroupItemPkInput>;
+  subjectName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SubjectGroupItemPk = {
+  __typename?: 'SubjectGroupItemPK';
+  subjectGroupId?: Maybe<Scalars['Int']['output']>;
+  subjectId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type SubjectGroupItemPkInput = {
-  subjectGroupId?: number | null | undefined;
-  subjectId?: number | null | undefined;
+  subjectGroupId?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SubjectGroupUpdateInput = {
-  branchId: number;
-  id: number;
-  name: string;
-  note?: string | null | undefined;
-  numberOrder: unknown;
-  subjectCount?: unknown;
-  subjectGroupItemCollection?: Array<SubjectGroupItemInput> | null | undefined;
-  totalCoefficient?: number | null | undefined;
+  branchId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Byte']['input'];
+  subjectCount?: InputMaybe<Scalars['Byte']['input']>;
+  subjectGroupItemCollection?: InputMaybe<Array<SubjectGroupItemInput>>;
+  totalCoefficient?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type SubjectGroups = {
+  __typename?: 'SubjectGroups';
+  branch?: Maybe<Branch>;
+  id: Scalars['Int']['output'];
+  subjectGroups?: Maybe<Array<SubjectGroup>>;
 };
 
 export type SubjectGroupsInput = {
-  id: number;
-  subjectGroups?: Array<SubjectGroupInput> | null | undefined;
+  id: Scalars['Int']['input'];
+  subjectGroups?: InputMaybe<Array<SubjectGroupInput>>;
 };
 
 export type SubjectGroupsUpdateInput = {
-  id: number;
-  subjectGroups?: Array<SubjectGroupUpdateInput> | null | undefined;
+  id: Scalars['Int']['input'];
+  subjectGroups?: InputMaybe<Array<SubjectGroupUpdateInput>>;
 };
 
 export type SubjectInput = {
-  active?: boolean | null | undefined;
-  code?: string | null | undefined;
-  displayName: string;
-  id?: number | null | undefined;
-  name: string;
-  note?: string | null | undefined;
-  showInTimeTable?: boolean | null | undefined;
-  subjectDepartmentId: number;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  displayName: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
+  showInTimeTable?: InputMaybe<Scalars['Boolean']['input']>;
+  subjectDepartmentId: Scalars['Int']['input'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  competenceCreated?: Maybe<Competence>;
+  evalTypeCreated?: Maybe<EvalType>;
+  onAccountCategoryCreated?: Maybe<AccountCategory>;
+  onAccountCreated?: Maybe<Account>;
+  onAccountGroupCreated?: Maybe<AccountGroup>;
+  onAccountModelCreated?: Maybe<AccountModel>;
+  onAttendanceCreated?: Maybe<Attendance>;
+  onBankAccountCreated?: Maybe<BankAccount>;
+  onBankAgencyCreated?: Maybe<BankAgency>;
+  onBankCreated?: Maybe<Bank>;
+  onBankOperationCreated?: Maybe<BankOperation>;
+  onBankTransactionCreated?: Maybe<BankTransaction>;
+  onBillCreated?: Maybe<Bill>;
+  onBranchCreated?: Maybe<Branch>;
+  onBranchSubjectGroupCreated?: Maybe<SubjectGroups>;
+  onCashVoucherCreated?: Maybe<CashVoucher>;
+  onChartOfAccountCreated?: Maybe<ChartOfAccount>;
+  onClassCreated?: Maybe<Clazz>;
+  onConfigurationCreated?: Maybe<Configuration>;
+  onCouncilDecisionCreated?: Maybe<CouncilDecision>;
+  onCurrencyCreated?: Maybe<Currency>;
+  onCustomerCategoryCreated?: Maybe<CustomerCategory>;
+  onCustomerCreated?: Maybe<Customer>;
+  onCycleCreated?: Maybe<Cycle>;
+  onDayOfClassCreated?: Maybe<DayOfClass>;
+  onDeductionCategoryCreated?: Maybe<DeductionCategory>;
+  onDeductionCreated?: Maybe<Deduction>;
+  onDepartmentCreated?: Maybe<Department>;
+  onDiscountCreated?: Maybe<Discount>;
+  onEarningCategoryCreated?: Maybe<EarningCategory>;
+  onEarningCreated?: Maybe<Earning>;
+  onEmployeeCreated?: Maybe<Employee>;
+  onEvaluationTypeCreated?: Maybe<EvaluationType>;
+  onExpenseCategoryCreated?: Maybe<ExpenseCategory>;
+  onExpenseCreated?: Maybe<Expense>;
+  onFeeGroupCreated?: Maybe<FeeGroup>;
+  onFrequentCreated?: Maybe<Frequent>;
+  onGuardianCreated?: Maybe<Guardian>;
+  onInstallmentCreated?: Maybe<Installment>;
+  onInvoiceCreated?: Maybe<Invoice>;
+  onLanguageCreated?: Maybe<Language>;
+  onLevelCreated?: Maybe<Level>;
+  onLiableTypeCreated?: Maybe<LiableType>;
+  onLogCodeCreated?: Maybe<LogCode>;
+  onMarkAppreciationCreated?: Maybe<MarkAppreciation>;
+  onOldSchoolCreated?: Maybe<OldSchool>;
+  onOperationClassCreated?: Maybe<OperationClass>;
+  onOperationCreated?: Maybe<Operation>;
+  onPaymentConditionCreated?: Maybe<PaymentCondition>;
+  onPaymentGroupCreated?: Maybe<PaymentGroup>;
+  onPaymentModeCreated?: Maybe<PaymentMode>;
+  onPaymentSliceCreated?: Maybe<PaymentSlice>;
+  onPayrollPeriodCreated?: Maybe<PayrollPeriod>;
+  onPeriodCreated?: Maybe<Period>;
+  onPermissionCreated?: Maybe<Permission>;
+  onPersonnelCreated?: Maybe<Personnel>;
+  onPositionCreated?: Maybe<Position>;
+  onProductCreated?: Maybe<ProductUnion>;
+  onReportAppreciationCreated?: Maybe<ReportAppreciation>;
+  onRoleCreated?: Maybe<Role>;
+  onRoleNewCreated?: Maybe<RoleNew>;
+  onSchoolCreated?: Maybe<School>;
+  onSchoolFeeCreated?: Maybe<SchoolFee>;
+  onSchoolLiableCreated?: Maybe<SchoolLiable>;
+  onSchoolSectionCreated?: Maybe<SchoolSection>;
+  onSchoolYearCreated?: Maybe<SchoolYear>;
+  onSpecialAccountCreated?: Maybe<SpecialAccount>;
+  onStudentCreated?: Maybe<Student>;
+  onStudentInvoiceCreated?: Maybe<StudentInvoice>;
+  onStudentPaymentCreated?: Maybe<StudentPayment>;
+  onSubPeriodCreated?: Maybe<SubPeriod>;
+  onSubjectCreated?: Maybe<Subject>;
+  onSubjectDepartmentCreated?: Maybe<SubjectDepartment>;
+  onSubjectGroupCreated?: Maybe<SubjectGroup>;
+  onSupplierCategoryCreated?: Maybe<SupplierCategory>;
+  onSupplierCreated?: Maybe<Supplier>;
+  onTeacherCreated?: Maybe<Teacher>;
+  onTimeSlotCreated?: Maybe<TimeSlot>;
+  onUserCreated?: Maybe<User>;
+  onUserGroupCreated?: Maybe<UserGroup>;
+  payrollCreated?: Maybe<Payroll>;
+  productCategoryCreated: ProductCategory;
+};
+
+export type Supplier = Person & {
+  __typename?: 'Supplier';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  address?: Maybe<Address>;
+  /** Supplier fields */
+  birthDate?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<SupplierCategory>;
+  contactInfo?: Maybe<ContactInfo>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  id: Scalars['Long']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  purchaseCondition?: Maybe<PaymentCondition>;
+  rating?: Maybe<Scalars['Int']['output']>;
+  supplierAccount?: Maybe<Account>;
+  taxNumber?: Maybe<Scalars['String']['output']>;
+  tradeRegister?: Maybe<Scalars['String']['output']>;
+  webSite?: Maybe<Scalars['String']['output']>;
+};
+
+export type SupplierCategory = {
+  __typename?: 'SupplierCategory';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<SupplierCategory>;
 };
 
 export type SupplierCategoryCreateInput = {
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SupplierCategoryUpdateInput = {
-  active?: boolean | null | undefined;
-  description?: string | null | undefined;
-  enterpriseId: number;
-  id: number;
-  name: string;
-  parentId?: number | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SupplierCreateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
   /** Supplier fields */
-  birthDate?: unknown;
-  categoryId: number;
-  contactInfo?: ContactInput | null | undefined;
-  displayName: string;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  lastName?: string | null | undefined;
-  note?: string | null | undefined;
-  purchaseConditionId?: number | null | undefined;
-  rating?: number | null | undefined;
-  supplierAccountId: number;
-  taxNumber?: string | null | undefined;
-  tradeRegister?: string | null | undefined;
-  webSite?: string | null | undefined;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  categoryId: Scalars['Int']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  displayName: Scalars['String']['input'];
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  purchaseConditionId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  supplierAccountId: Scalars['Int']['input'];
+  taxNumber?: InputMaybe<Scalars['String']['input']>;
+  tradeRegister?: InputMaybe<Scalars['String']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SupplierUpdateInput = {
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
   /** Supplier fields */
-  birthDate?: unknown;
-  categoryId: number;
-  contactInfo?: ContactInput | null | undefined;
-  displayName: string;
-  enterpriseId?: number | null | undefined;
-  firstName?: string | null | undefined;
-  gender?: Gender | null | undefined;
-  id: unknown;
-  lastName?: string | null | undefined;
-  note?: string | null | undefined;
-  purchaseConditionId?: number | null | undefined;
-  rating?: number | null | undefined;
-  supplierAccountId: number;
-  taxNumber?: string | null | undefined;
-  tradeRegister?: string | null | undefined;
-  webSite?: string | null | undefined;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  categoryId: Scalars['Int']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  displayName: Scalars['String']['input'];
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Gender>;
+  id: Scalars['Long']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  purchaseConditionId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  supplierAccountId: Scalars['Int']['input'];
+  taxNumber?: InputMaybe<Scalars['String']['input']>;
+  tradeRegister?: InputMaybe<Scalars['String']['input']>;
+  webSite?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Teacher = Person & Personnel & {
+  __typename?: 'Teacher';
+  academicDiploma?: Maybe<Scalars['String']['output']>;
+  academicPlace?: Maybe<Scalars['String']['output']>;
+  academicYear?: Maybe<Scalars['String']['output']>;
+  active?: Maybe<Scalars['Boolean']['output']>;
+  /** not required for compatibility */
+  address?: Maybe<Address>;
+  administrationEntryDate?: Maybe<Scalars['String']['output']>;
+  birthDate?: Maybe<Scalars['String']['output']>;
+  birthplace?: Maybe<Scalars['String']['output']>;
+  bloodGroup?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  childrenCount?: Maybe<Scalars['Int']['output']>;
+  civility?: Maybe<Civility>;
+  clazz?: Maybe<Scalars['String']['output']>;
+  cniNumber?: Maybe<Scalars['String']['output']>;
+  /** Personnel fields */
+  code: Scalars['String']['output'];
+  contactInfo?: Maybe<ContactInfo>;
+  currentPicture?: Maybe<Scalars['String']['output']>;
+  currentPost?: Maybe<Scalars['String']['output']>;
+  departureDate?: Maybe<Scalars['String']['output']>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  /** Teacher fields */
+  dueHours?: Maybe<Scalars['Int']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  enterpriseId?: Maybe<Scalars['ID']['output']>;
+  ethnicGroup?: Maybe<Scalars['String']['output']>;
+  fatherName?: Maybe<Scalars['String']['output']>;
+  fatherProfession?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  firstServiceDate?: Maybe<Scalars['String']['output']>;
+  firstServicePlace?: Maybe<Scalars['String']['output']>;
+  function?: Maybe<Scalars['String']['output']>;
+  gender?: Maybe<Gender>;
+  grading?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Long']['output'];
+  isEmployee?: Maybe<Scalars['Boolean']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  maritalStatus?: Maybe<MaritalStatus>;
+  motherName?: Maybe<Scalars['String']['output']>;
+  motherProfession?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  numberAssignment?: Maybe<Scalars['String']['output']>;
+  origin?: Maybe<Origin>;
+  personnelType?: Maybe<PersonnelType>;
+  professionalDiploma?: Maybe<Scalars['String']['output']>;
+  professionalPlace?: Maybe<Scalars['String']['output']>;
+  professionalYear?: Maybe<Scalars['String']['output']>;
+  rank?: Maybe<Scalars['String']['output']>;
+  registrationNumber?: Maybe<Scalars['String']['output']>;
+  religion?: Maybe<Scalars['String']['output']>;
+  rhesus?: Maybe<Scalars['String']['output']>;
+  school?: Maybe<School>;
+  schoolCharge?: Maybe<Scalars['Boolean']['output']>;
+  schoolServiceDate?: Maybe<Scalars['String']['output']>;
+  speciality?: Maybe<Scalars['String']['output']>;
+  spouseProfession?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<PersonnelStatus>;
+  subjectDepartmentCollection?: Maybe<Array<Maybe<SubjectDepartment>>>;
 };
 
 export type TeacherCreateInput = {
-  academicDiploma?: string | null | undefined;
-  academicPlace?: string | null | undefined;
-  academicYear?: string | null | undefined;
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  administrationEntryDate?: unknown;
-  birthDate?: unknown;
-  birthplace?: string | null | undefined;
-  bloodGroup?: string | null | undefined;
-  category?: string | null | undefined;
-  childrenCount?: unknown;
-  civility?: Civility | null | undefined;
-  clazz?: string | null | undefined;
-  cniNumber?: string | null | undefined;
+  academicDiploma?: InputMaybe<Scalars['String']['input']>;
+  academicPlace?: InputMaybe<Scalars['String']['input']>;
+  academicYear?: InputMaybe<Scalars['String']['input']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  administrationEntryDate?: InputMaybe<Scalars['Date']['input']>;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  birthplace?: InputMaybe<Scalars['String']['input']>;
+  bloodGroup?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  childrenCount?: InputMaybe<Scalars['Byte']['input']>;
+  civility?: InputMaybe<Civility>;
+  clazz?: InputMaybe<Scalars['String']['input']>;
+  cniNumber?: InputMaybe<Scalars['String']['input']>;
   /** Personnel fields */
-  code: string;
-  contactInfo?: ContactInput | null | undefined;
-  currentPicture?: string | null | undefined;
-  currentPost?: string | null | undefined;
-  departureDate?: unknown;
-  displayName?: string | null | undefined;
+  code: Scalars['String']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  currentPicture?: InputMaybe<Scalars['String']['input']>;
+  currentPost?: InputMaybe<Scalars['String']['input']>;
+  departureDate?: InputMaybe<Scalars['Date']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** Teacher fields */
-  dueHours?: unknown;
-  enterpriseId?: number | null | undefined;
-  ethnicGroup?: string | null | undefined;
-  fatherName?: string | null | undefined;
-  fatherProfession?: string | null | undefined;
-  firstName?: string | null | undefined;
-  firstServiceDate?: unknown;
-  firstServicePlace?: string | null | undefined;
-  function?: string | null | undefined;
+  dueHours?: InputMaybe<Scalars['Byte']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  ethnicGroup?: InputMaybe<Scalars['String']['input']>;
+  fatherName?: InputMaybe<Scalars['String']['input']>;
+  fatherProfession?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  firstServiceDate?: InputMaybe<Scalars['Date']['input']>;
+  firstServicePlace?: InputMaybe<Scalars['String']['input']>;
+  function?: InputMaybe<Scalars['String']['input']>;
   /** not required for compatibility */
-  gender?: Gender | null | undefined;
-  grading?: unknown;
-  id?: unknown;
-  lastName?: string | null | undefined;
-  maritalStatus?: MaritalStatus | null | undefined;
-  motherName?: string | null | undefined;
-  motherProfession?: string | null | undefined;
-  note?: string | null | undefined;
-  numberAssignment?: string | null | undefined;
-  origin?: OriginInput | null | undefined;
-  personnelType?: PersonnelType | null | undefined;
-  professionalDiploma?: string | null | undefined;
-  professionalPlace?: string | null | undefined;
-  professionalYear?: string | null | undefined;
-  rank?: string | null | undefined;
-  registrationNumber?: string | null | undefined;
-  religion?: string | null | undefined;
-  rhesus?: string | null | undefined;
-  schoolCharge?: boolean | null | undefined;
-  schoolId: number;
-  schoolServiceDate?: unknown;
-  speciality?: string | null | undefined;
-  spouseProfession?: string | null | undefined;
-  status?: PersonnelStatus | null | undefined;
-  subjectDepartmentIds?: Array<number> | null | undefined;
+  gender?: InputMaybe<Gender>;
+  grading?: InputMaybe<Scalars['Short']['input']>;
+  id?: InputMaybe<Scalars['Long']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  maritalStatus?: InputMaybe<MaritalStatus>;
+  motherName?: InputMaybe<Scalars['String']['input']>;
+  motherProfession?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberAssignment?: InputMaybe<Scalars['String']['input']>;
+  origin?: InputMaybe<OriginInput>;
+  personnelType?: InputMaybe<PersonnelType>;
+  professionalDiploma?: InputMaybe<Scalars['String']['input']>;
+  professionalPlace?: InputMaybe<Scalars['String']['input']>;
+  professionalYear?: InputMaybe<Scalars['String']['input']>;
+  rank?: InputMaybe<Scalars['String']['input']>;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  rhesus?: InputMaybe<Scalars['String']['input']>;
+  schoolCharge?: InputMaybe<Scalars['Boolean']['input']>;
+  schoolId: Scalars['Int']['input'];
+  schoolServiceDate?: InputMaybe<Scalars['Date']['input']>;
+  speciality?: InputMaybe<Scalars['String']['input']>;
+  spouseProfession?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<PersonnelStatus>;
+  subjectDepartmentIds?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type TeacherUpdateInput = {
-  academicDiploma?: string | null | undefined;
-  academicPlace?: string | null | undefined;
-  academicYear?: string | null | undefined;
-  active?: boolean | null | undefined;
-  address?: AddressInput | null | undefined;
-  administrationEntryDate?: unknown;
-  birthDate?: unknown;
-  birthplace?: string | null | undefined;
-  bloodGroup?: string | null | undefined;
-  category?: string | null | undefined;
-  childrenCount?: unknown;
-  civility?: Civility | null | undefined;
-  clazz?: string | null | undefined;
-  cniNumber?: string | null | undefined;
+  academicDiploma?: InputMaybe<Scalars['String']['input']>;
+  academicPlace?: InputMaybe<Scalars['String']['input']>;
+  academicYear?: InputMaybe<Scalars['String']['input']>;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  address?: InputMaybe<AddressInput>;
+  administrationEntryDate?: InputMaybe<Scalars['Date']['input']>;
+  birthDate?: InputMaybe<Scalars['Date']['input']>;
+  birthplace?: InputMaybe<Scalars['String']['input']>;
+  bloodGroup?: InputMaybe<Scalars['String']['input']>;
+  category?: InputMaybe<Scalars['String']['input']>;
+  childrenCount?: InputMaybe<Scalars['Byte']['input']>;
+  civility?: InputMaybe<Civility>;
+  clazz?: InputMaybe<Scalars['String']['input']>;
+  cniNumber?: InputMaybe<Scalars['String']['input']>;
   /** Personnel fields */
-  code: string;
-  contactInfo?: ContactInput | null | undefined;
-  currentPicture?: string | null | undefined;
-  currentPost?: string | null | undefined;
-  departureDate?: unknown;
-  displayName?: string | null | undefined;
+  code: Scalars['String']['input'];
+  contactInfo?: InputMaybe<ContactInput>;
+  currentPicture?: InputMaybe<Scalars['String']['input']>;
+  currentPost?: InputMaybe<Scalars['String']['input']>;
+  departureDate?: InputMaybe<Scalars['Date']['input']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** Teacher fields */
-  dueHours?: unknown;
-  enterpriseId?: number | null | undefined;
-  ethnicGroup?: string | null | undefined;
-  fatherName?: string | null | undefined;
-  fatherProfession?: string | null | undefined;
-  firstName?: string | null | undefined;
-  firstServiceDate?: unknown;
-  firstServicePlace?: string | null | undefined;
-  function?: string | null | undefined;
+  dueHours?: InputMaybe<Scalars['Byte']['input']>;
+  enterpriseId?: InputMaybe<Scalars['Int']['input']>;
+  ethnicGroup?: InputMaybe<Scalars['String']['input']>;
+  fatherName?: InputMaybe<Scalars['String']['input']>;
+  fatherProfession?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  firstServiceDate?: InputMaybe<Scalars['Date']['input']>;
+  firstServicePlace?: InputMaybe<Scalars['String']['input']>;
+  function?: InputMaybe<Scalars['String']['input']>;
   /** not required for compatibility */
-  gender?: Gender | null | undefined;
-  grading?: unknown;
-  id: unknown;
-  lastName?: string | null | undefined;
-  maritalStatus?: MaritalStatus | null | undefined;
-  motherName?: string | null | undefined;
-  motherProfession?: string | null | undefined;
-  note?: string | null | undefined;
-  numberAssignment?: string | null | undefined;
-  origin?: OriginInput | null | undefined;
-  personnelType?: PersonnelType | null | undefined;
-  professionalDiploma?: string | null | undefined;
-  professionalPlace?: string | null | undefined;
-  professionalYear?: string | null | undefined;
-  rank?: string | null | undefined;
-  registrationNumber?: string | null | undefined;
-  religion?: string | null | undefined;
-  rhesus?: string | null | undefined;
-  schoolCharge?: boolean | null | undefined;
-  schoolId: number;
-  schoolServiceDate?: unknown;
-  speciality?: string | null | undefined;
-  spouseProfession?: string | null | undefined;
-  status?: PersonnelStatus | null | undefined;
-  subjectDepartmentIds?: Array<number> | null | undefined;
+  gender?: InputMaybe<Gender>;
+  grading?: InputMaybe<Scalars['Short']['input']>;
+  id: Scalars['Long']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  maritalStatus?: InputMaybe<MaritalStatus>;
+  motherName?: InputMaybe<Scalars['String']['input']>;
+  motherProfession?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  numberAssignment?: InputMaybe<Scalars['String']['input']>;
+  origin?: InputMaybe<OriginInput>;
+  personnelType?: InputMaybe<PersonnelType>;
+  professionalDiploma?: InputMaybe<Scalars['String']['input']>;
+  professionalPlace?: InputMaybe<Scalars['String']['input']>;
+  professionalYear?: InputMaybe<Scalars['String']['input']>;
+  rank?: InputMaybe<Scalars['String']['input']>;
+  registrationNumber?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  rhesus?: InputMaybe<Scalars['String']['input']>;
+  schoolCharge?: InputMaybe<Scalars['Boolean']['input']>;
+  schoolId: Scalars['Int']['input'];
+  schoolServiceDate?: InputMaybe<Scalars['Date']['input']>;
+  speciality?: InputMaybe<Scalars['String']['input']>;
+  spouseProfession?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<PersonnelStatus>;
+  subjectDepartmentIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type TimeSlot = {
+  __typename?: 'TimeSlot';
+  endTime: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  isActive: Scalars['Boolean']['output'];
+  isBreakTime: Scalars['Boolean']['output'];
+  /** slotOrder: Int! */
+  name: Scalars['String']['output'];
+  schoolYear?: Maybe<SchoolYear>;
+  startTime: Scalars['String']['output'];
 };
 
 export type TimeSlotCreateInput = {
-  endTime: string;
-  isActive: boolean;
-  isBreakTime: boolean;
-  name: string;
-  schoolId: number;
-  startTime: string;
+  endTime: Scalars['String']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isBreakTime: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+  startTime: Scalars['String']['input'];
+};
+
+export type TimeSlotForm = {
+  __typename?: 'TimeSlotForm';
+  lessons?: Maybe<Array<Lesson>>;
+  timeSlot?: Maybe<TimeSlot>;
 };
 
 export type TimeSlotUpdateInput = {
-  endTime: string;
-  id: number;
-  isActive: boolean;
-  isBreakTime: boolean;
-  name: string;
-  schoolId: number;
-  startTime: string;
+  endTime: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
+  isActive: Scalars['Boolean']['input'];
+  isBreakTime: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
+  startTime: Scalars['String']['input'];
+};
+
+export type TimeTable = {
+  __typename?: 'TimeTable';
+  clazz?: Maybe<Clazz>;
+  dayOfClass?: Maybe<DayOfClass>;
+  subject?: Maybe<Subject>;
+  subjectId?: Maybe<Scalars['Int']['output']>;
+  timeSlot?: Maybe<TimeSlot>;
+  timeTablePK?: Maybe<TimeTablePk>;
+};
+
+export type TimeTableDayOfClass = {
+  __typename?: 'TimeTableDayOfClass';
+  dayOfClassId: Scalars['Int']['output'];
+  dayOfWeek: Scalars['String']['output'];
+  timeSlots?: Maybe<Array<TimeTableTimeSlot>>;
+};
+
+export type TimeTableForm = {
+  __typename?: 'TimeTableForm';
+  endTime: Scalars['String']['output'];
+  items?: Maybe<Array<Maybe<TimeTableFormItem>>>;
+  startTime: Scalars['String']['output'];
+  timeSlotId: Scalars['Int']['output'];
+};
+
+export type TimeTableForm0 = {
+  __typename?: 'TimeTableForm0';
+  classId: Scalars['Int']['output'];
+  dayOfClasses?: Maybe<Array<TimeTableDayOfClass>>;
 };
 
 export type TimeTableFormInput = {
-  items?: Array<TimeTableFormItemInput> | null | undefined;
-  timeSlotId: number;
+  items?: InputMaybe<Array<TimeTableFormItemInput>>;
+  timeSlotId: Scalars['Int']['input'];
+};
+
+export type TimeTableFormItem = {
+  __typename?: 'TimeTableFormItem';
+  available: Scalars['Boolean']['output'];
+  dayOfClassId: Scalars['Int']['output'];
+  dayOfWeek: Scalars['String']['output'];
+  subjectId?: Maybe<Scalars['Int']['output']>;
+  subjectName?: Maybe<Scalars['String']['output']>;
+  teacherId?: Maybe<Scalars['Long']['output']>;
+  teacherName?: Maybe<Scalars['String']['output']>;
 };
 
 export type TimeTableFormItemInput = {
-  dayOfClassId: number;
-  subjectId: number;
-  teacherId: unknown;
+  dayOfClassId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  teacherId: Scalars['Long']['input'];
+};
+
+export type TimeTablePk = {
+  __typename?: 'TimeTablePK';
+  classId: Scalars['Int']['output'];
+  dayOfClassId: Scalars['Int']['output'];
+  timeSlotId: Scalars['Int']['output'];
+};
+
+export type TimeTableTimeSlot = {
+  __typename?: 'TimeTableTimeSlot';
+  endTime: Scalars['String']['output'];
+  startTime: Scalars['String']['output'];
+  subjectId?: Maybe<Scalars['Int']['output']>;
+  subjectName?: Maybe<Scalars['String']['output']>;
+  timeSlotId: Scalars['Int']['output'];
+};
+
+export enum TransactionType {
+  AccountingEntry = 'ACCOUNTING_ENTRY',
+  CashPurchase = 'CASH_PURCHASE',
+  Check = 'CHECK',
+  Credit = 'CREDIT',
+  Deposit = 'DEPOSIT',
+  DraftInvoice = 'DRAFT_INVOICE',
+  Estimate = 'ESTIMATE',
+  HoursWorked = 'HOURS_WORKED',
+  InternalTransfer = 'INTERNAL_TRANSFER',
+  Invoice = 'INVOICE',
+  Payment = 'PAYMENT',
+  Refund = 'REFUND',
+  SalesReceipt = 'SALES_RECEIPT',
+  VendorCredit = 'VENDOR_CREDIT',
+  VendorInvoice = 'VENDOR_INVOICE'
+}
+
+export type Tuition = {
+  __typename?: 'Tuition';
+  allowPaymentInKind: Scalars['Boolean']['output'];
+  enterprise?: Maybe<Enterprise>;
+  id: Scalars['Int']['output'];
+  isCollected: Scalars['Boolean']['output'];
+  isDeliverable: Scalars['Boolean']['output'];
+  isMandatory: Scalars['Boolean']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  product?: Maybe<Product>;
 };
 
 export type TuitionCreateInput = {
-  active: boolean;
-  allowPaymentInKind: boolean;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
-  isCollected: boolean;
-  isDeliverable: boolean;
-  isMandatory: boolean;
-  minSalePrice?: unknown;
-  name: string;
+  active: Scalars['Boolean']['input'];
+  allowPaymentInKind: Scalars['Boolean']['input'];
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  isCollected: Scalars['Boolean']['input'];
+  isDeliverable: Scalars['Boolean']['input'];
+  isMandatory: Scalars['Boolean']['input'];
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
   /**
    * preferredVendorId: Int
    * unitId: Int
    *  Tuition fields
    */
-  name2?: string | null | undefined;
-  numberOrder: number;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  name2?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TuitionUnion = {
+  __typename?: 'TuitionUnion';
+  active?: Maybe<Scalars['Boolean']['output']>;
+  allowPaymentInKind: Scalars['Boolean']['output'];
+  cost?: Maybe<Scalars['BigDecimal']['output']>;
+  enterprise?: Maybe<Enterprise>;
+  isCollected: Scalars['Boolean']['output'];
+  isDeliverable: Scalars['Boolean']['output'];
+  isMandatory: Scalars['Boolean']['output'];
+  minSalePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  name: Scalars['String']['output'];
+  name2?: Maybe<Scalars['String']['output']>;
+  numberOrder: Scalars['Int']['output'];
+  picture?: Maybe<Scalars['String']['output']>;
+  productCategory?: Maybe<ProductCategory>;
+  productId: Scalars['Long']['output'];
+  purchaseAccount?: Maybe<Account>;
+  purchaseDescription?: Maybe<Scalars['String']['output']>;
+  purchasePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  /**  discount: Discount */
+  saleAccount?: Maybe<Account>;
+  saleDescription?: Maybe<Scalars['String']['output']>;
+  salePrice?: Maybe<Scalars['BigDecimal']['output']>;
+  sku?: Maybe<Scalars['String']['output']>;
+  tuitionId?: Maybe<Scalars['Int']['output']>;
 };
 
 export type TuitionUpdateInput = {
-  active?: boolean | null | undefined;
-  allowPaymentInKind: boolean;
-  cost?: unknown;
-  discountId?: number | null | undefined;
-  enterpriseId: number;
-  id: number;
-  isCollected: boolean;
-  isDeliverable: boolean;
-  isMandatory: boolean;
-  minSalePrice?: unknown;
-  name: string;
+  active?: InputMaybe<Scalars['Boolean']['input']>;
+  allowPaymentInKind: Scalars['Boolean']['input'];
+  cost?: InputMaybe<Scalars['BigDecimal']['input']>;
+  discountId?: InputMaybe<Scalars['Int']['input']>;
+  enterpriseId: Scalars['Int']['input'];
+  id: Scalars['Int']['input'];
+  isCollected: Scalars['Boolean']['input'];
+  isDeliverable: Scalars['Boolean']['input'];
+  isMandatory: Scalars['Boolean']['input'];
+  minSalePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  name: Scalars['String']['input'];
   /**  Tuition fields */
-  name2?: string | null | undefined;
-  numberOrder: number;
-  picture?: string | null | undefined;
-  productCategoryId: number;
-  purchaseAccountId?: number | null | undefined;
-  purchaseDescription?: string | null | undefined;
-  purchasePrice?: unknown;
-  saleAccountId?: number | null | undefined;
-  saleDescription?: string | null | undefined;
-  salePrice?: unknown;
-  sku?: string | null | undefined;
+  name2?: InputMaybe<Scalars['String']['input']>;
+  numberOrder: Scalars['Int']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  productCategoryId: Scalars['Int']['input'];
+  purchaseAccountId?: InputMaybe<Scalars['Int']['input']>;
+  purchaseDescription?: InputMaybe<Scalars['String']['input']>;
+  purchasePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  saleAccountId?: InputMaybe<Scalars['Int']['input']>;
+  saleDescription?: InputMaybe<Scalars['String']['input']>;
+  salePrice?: InputMaybe<Scalars['BigDecimal']['input']>;
+  sku?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdatePasswordInput = {
-  newPassword: string;
-  originalPassword: string;
+  newPassword: Scalars['String']['input'];
+  originalPassword: Scalars['String']['input'];
+};
+
+export type User = {
+  __typename?: 'User';
+  creationDate?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  /** @dateFormat */
+  expiryDate?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  /** @dateFormat */
+  isEnabled?: Maybe<Scalars['Boolean']['output']>;
+  isLogged?: Maybe<Scalars['Boolean']['output']>;
+  /** @dateFormat */
+  lastLogin?: Maybe<Scalars['String']['output']>;
+  lastResetDate?: Maybe<Scalars['String']['output']>;
+  /** @dateFormat */
+  lastUpdate?: Maybe<Scalars['String']['output']>;
+  mfa?: Maybe<Scalars['Boolean']['output']>;
+  /** @auth(role: "ROLE_ADMIN") */
+  password?: Maybe<Scalars['String']['output']>;
+  person: Person;
+  requiredPasswordChange?: Maybe<Scalars['Boolean']['output']>;
+  requiredReset?: Maybe<Scalars['Boolean']['output']>;
+  /** @dateFormat */
+  resetCount?: Maybe<Scalars['Int']['output']>;
+  /**  deprecated */
+  roles?: Maybe<Array<RoleNew>>;
+  secretImageUri?: Maybe<Scalars['String']['output']>;
+  telephone?: Maybe<Scalars['String']['output']>;
+  userGroupCollection?: Maybe<Array<Maybe<UserGroup>>>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserCreateInput = {
-  email?: string | null | undefined;
-  id?: number | null | undefined;
-  isEnabled?: boolean | null | undefined;
-  mfa?: boolean | null | undefined;
-  password: string;
-  personId: unknown;
+  email?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  isEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  mfa?: InputMaybe<Scalars['Boolean']['input']>;
+  password: Scalars['String']['input'];
+  personId: Scalars['Long']['input'];
   /**  deprecated */
-  roles?: Array<number> | null | undefined;
-  telephone?: string | null | undefined;
-  userGroupCollection?: Array<number> | null | undefined;
-  username: string;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+  telephone?: InputMaybe<Scalars['String']['input']>;
+  userGroupCollection?: InputMaybe<Array<Scalars['Int']['input']>>;
+  username: Scalars['String']['input'];
+};
+
+export type UserGroup = {
+  __typename?: 'UserGroup';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
+  roleCollection?: Maybe<Array<Role>>;
+};
+
+export type UserGroupId = {
+  id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UserGroupInput = {
-  description?: string | null | undefined;
-  id?: number | null | undefined;
-  isActive?: boolean | null | undefined;
-  name: string;
-  roleCollection?: Array<RoleId | null | undefined> | null | undefined;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+  roleCollection?: InputMaybe<Array<InputMaybe<RoleId>>>;
 };
 
 export type UserUpdateInput = {
-  email?: string | null | undefined;
-  id: number;
-  isEnabled?: boolean | null | undefined;
-  mfa?: boolean | null | undefined;
-  password?: string | null | undefined;
-  personId: unknown;
+  email?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  isEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  mfa?: InputMaybe<Scalars['Boolean']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  personId: Scalars['Long']['input'];
   /**  deprecated */
-  roles?: Array<number> | null | undefined;
-  telephone?: string | null | undefined;
-  userGroupCollection?: Array<number> | null | undefined;
-  username: string;
+  roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+  telephone?: InputMaybe<Scalars['String']['input']>;
+  userGroupCollection?: InputMaybe<Array<Scalars['Int']['input']>>;
+  username: Scalars['String']['input'];
 };
 
-export type VendorOperationType =
-  | 'INVOICE'
-  | 'PAYMENT';
+export type VendorOperation = {
+  __typename?: 'VendorOperation';
+  amount: Scalars['Float']['output'];
+  balance: Scalars['Float']['output'];
+  discount?: Maybe<Scalars['Float']['output']>;
+  distinctProduct?: Maybe<Scalars['Int']['output']>;
+  enterpriseId: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
+  number: Scalars['String']['output'];
+  operationDate: Scalars['String']['output'];
+  operationId: Scalars['Long']['output'];
+  quantity?: Maybe<Scalars['Int']['output']>;
+  supplier: Scalars['String']['output'];
+  vendorOperationType: VendorOperationType;
+};
 
-export type AccountFieldsFragment = { id: number, number: string, name: string, displayName: string | null, active: boolean | null, balance: number | null, balanceType: BalanceType | null, description: string | null, chartOfAccount: { id: number, name: string, number: string, accountGroup: { id: number, name: string, sectionType: SectionType } | null, accountCategory: { id: number, name: string, accountType: AccountType } | null } | null, parent: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number, name: string } | null };
+export type VendorOperationResult = {
+  __typename?: 'VendorOperationResult';
+  operations?: Maybe<Array<VendorOperation>>;
+  paymentInfo?: Maybe<VendorPaymentInfo>;
+};
+
+export enum VendorOperationType {
+  Invoice = 'INVOICE',
+  Payment = 'PAYMENT'
+}
+
+export type VendorPaymentInfo = {
+  __typename?: 'VendorPaymentInfo';
+  openBill?: Maybe<Scalars['Float']['output']>;
+  openBillCount?: Maybe<Scalars['Int']['output']>;
+  /**
+   * schoolFee: Float
+   * schoolFeeCount: Int
+   */
+  overdue?: Maybe<Scalars['Float']['output']>;
+  overdueCount?: Maybe<Scalars['Int']['output']>;
+  paid?: Maybe<Scalars['Float']['output']>;
+  paidCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AccountFieldsFragment = { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null, active?: boolean | null, balance?: number | null, balanceType?: BalanceType | null, description?: string | null, chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string, sectionType: SectionType } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType } | null } | null, parent?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null };
 
 export type AccountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountsQuery = { accounts: Array<{ id: number, number: string, name: string, displayName: string | null, active: boolean | null, balance: number | null, balanceType: BalanceType | null, description: string | null, chartOfAccount: { id: number, name: string, number: string, accountGroup: { id: number, name: string, sectionType: SectionType } | null, accountCategory: { id: number, name: string, accountType: AccountType } | null } | null, parent: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number, name: string } | null }> | null };
+export type AccountsQuery = { __typename?: 'Query', accounts?: Array<{ __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null, active?: boolean | null, balance?: number | null, balanceType?: BalanceType | null, description?: string | null, chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string, sectionType: SectionType } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType } | null } | null, parent?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null }> | null };
 
 export type AccountSaveMutationVariables = Exact<{
-  account?: AccountInput | null | undefined;
+  account?: InputMaybe<AccountInput>;
 }>;
 
 
-export type AccountSaveMutation = { account: { id: number, number: string, name: string, displayName: string | null, active: boolean | null, balance: number | null, balanceType: BalanceType | null, description: string | null, chartOfAccount: { id: number, name: string, number: string, accountGroup: { id: number, name: string, sectionType: SectionType } | null, accountCategory: { id: number, name: string, accountType: AccountType } | null } | null, parent: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number, name: string } | null } | null };
+export type AccountSaveMutation = { __typename?: 'Mutation', account?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null, active?: boolean | null, balance?: number | null, balanceType?: BalanceType | null, description?: string | null, chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string, sectionType: SectionType } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType } | null } | null, parent?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
 export type AccountDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountDeleteMutation = { deleteAccountById: boolean | null };
+export type AccountDeleteMutation = { __typename?: 'Mutation', deleteAccountById?: boolean | null };
 
 export type AccountCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountCreatedSubscription = { account: { id: number, number: string, name: string, displayName: string | null, active: boolean | null, balance: number | null, balanceType: BalanceType | null, description: string | null } | null };
+export type AccountCreatedSubscription = { __typename?: 'Subscription', account?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null, active?: boolean | null, balance?: number | null, balanceType?: BalanceType | null, description?: string | null } | null };
 
 export type NextAccountNumberQueryVariables = Exact<{
-  number: string;
-  id: number;
+  number: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type NextAccountNumberQuery = { generateAccountNumber: string | null };
+export type NextAccountNumberQuery = { __typename?: 'Query', generateAccountNumber?: string | null };
 
 export type ExpenseAccountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ExpenseAccountsQuery = { accounts: Array<{ id: number, number: string, name: string, displayName: string | null, active: boolean | null, balance: number | null, balanceType: BalanceType | null, description: string | null, chartOfAccount: { id: number, name: string, number: string, accountGroup: { id: number, name: string, sectionType: SectionType } | null, accountCategory: { id: number, name: string, accountType: AccountType } | null } | null, parent: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number, name: string } | null }> | null };
+export type ExpenseAccountsQuery = { __typename?: 'Query', accounts?: Array<{ __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null, active?: boolean | null, balance?: number | null, balanceType?: BalanceType | null, description?: string | null, chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string, sectionType: SectionType } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType } | null } | null, parent?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null }> | null };
 
-export type AccountCategoryFieldsFragment = { id: number, name: string, accountType: AccountType, active: boolean | null, description: string | null };
+export type AccountCategoryFieldsFragment = { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType, active?: boolean | null, description?: string | null };
 
 export type AccountCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountCategoriesQuery = { accountCategories: Array<{ id: number, name: string, accountType: AccountType, active: boolean | null, description: string | null }> | null };
+export type AccountCategoriesQuery = { __typename?: 'Query', accountCategories?: Array<{ __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType, active?: boolean | null, description?: string | null }> | null };
 
 export type AccountCategorySaveMutationVariables = Exact<{
-  category?: AccountCategoryInput | null | undefined;
+  category?: InputMaybe<AccountCategoryInput>;
 }>;
 
 
-export type AccountCategorySaveMutation = { accountCategory: { id: number, name: string, accountType: AccountType, active: boolean | null, description: string | null } | null };
+export type AccountCategorySaveMutation = { __typename?: 'Mutation', accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType, active?: boolean | null, description?: string | null } | null };
 
 export type AccountCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountCategoryDeleteMutation = { deleteAccountCategoryById: boolean | null };
+export type AccountCategoryDeleteMutation = { __typename?: 'Mutation', deleteAccountCategoryById?: boolean | null };
 
 export type AccountCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountCategoryCreatedSubscription = { accountCategory: { id: number, name: string, accountType: AccountType, active: boolean | null, description: string | null } | null };
+export type AccountCategoryCreatedSubscription = { __typename?: 'Subscription', accountCategory?: { __typename?: 'AccountCategory', id: number, name: string, accountType: AccountType, active?: boolean | null, description?: string | null } | null };
 
-export type AccountGroupFieldsFragment = { id: number, sectionType: SectionType, name: string, level: number | null, active: boolean | null, description: string | null, parent: { id: number, name: string } | null, accountModel: { id: number, name: string } | null };
+export type AccountGroupFieldsFragment = { __typename?: 'AccountGroup', id: number, sectionType: SectionType, name: string, level?: number | null, active?: boolean | null, description?: string | null, parent?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountModel?: { __typename?: 'AccountModel', id: number, name: string } | null };
 
 export type AccountGroupsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountGroupsQuery = { accountGroups: Array<{ id: number, sectionType: SectionType, name: string, level: number | null, active: boolean | null, description: string | null, parent: { id: number, name: string } | null, accountModel: { id: number, name: string } | null }> | null };
+export type AccountGroupsQuery = { __typename?: 'Query', accountGroups?: Array<{ __typename?: 'AccountGroup', id: number, sectionType: SectionType, name: string, level?: number | null, active?: boolean | null, description?: string | null, parent?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountModel?: { __typename?: 'AccountModel', id: number, name: string } | null }> | null };
 
 export type AccountGroupSaveMutationVariables = Exact<{
-  group?: AccountGroupInput | null | undefined;
+  group?: InputMaybe<AccountGroupInput>;
 }>;
 
 
-export type AccountGroupSaveMutation = { accountGroup: { id: number, sectionType: SectionType, name: string, level: number | null, active: boolean | null, description: string | null, parent: { id: number, name: string } | null, accountModel: { id: number, name: string } | null } | null };
+export type AccountGroupSaveMutation = { __typename?: 'Mutation', accountGroup?: { __typename?: 'AccountGroup', id: number, sectionType: SectionType, name: string, level?: number | null, active?: boolean | null, description?: string | null, parent?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountModel?: { __typename?: 'AccountModel', id: number, name: string } | null } | null };
 
 export type AccountGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountGroupDeleteMutation = { deleteAccountGroupById: boolean | null };
+export type AccountGroupDeleteMutation = { __typename?: 'Mutation', deleteAccountGroupById?: boolean | null };
 
 export type AccountGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountGroupCreatedSubscription = { accountGroup: { id: number, sectionType: SectionType, name: string, level: number | null, active: boolean | null, description: string | null } | null };
+export type AccountGroupCreatedSubscription = { __typename?: 'Subscription', accountGroup?: { __typename?: 'AccountGroup', id: number, sectionType: SectionType, name: string, level?: number | null, active?: boolean | null, description?: string | null } | null };
 
-export type AccountModelFieldsFragment = { id: number, code: string | null, languageType: LanguageType, country: string | null, active: boolean | null, current: boolean | null, name: string, note: string | null };
+export type AccountModelFieldsFragment = { __typename?: 'AccountModel', id: number, code?: string | null, languageType: LanguageType, country?: string | null, active?: boolean | null, current?: boolean | null, name: string, note?: string | null };
 
 export type AccountModelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountModelsQuery = { accountModels: Array<{ id: number, code: string | null, languageType: LanguageType, country: string | null, active: boolean | null, current: boolean | null, name: string, note: string | null }> | null };
+export type AccountModelsQuery = { __typename?: 'Query', accountModels?: Array<{ __typename?: 'AccountModel', id: number, code?: string | null, languageType: LanguageType, country?: string | null, active?: boolean | null, current?: boolean | null, name: string, note?: string | null }> | null };
 
 export type AccountModelSaveMutationVariables = Exact<{
-  model?: AccountModelInput | null | undefined;
-  id: number;
+  model?: InputMaybe<AccountModelInput>;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountModelSaveMutation = { accountModel: { id: number, code: string | null, languageType: LanguageType, country: string | null, active: boolean | null, current: boolean | null, name: string, note: string | null } | null };
+export type AccountModelSaveMutation = { __typename?: 'Mutation', accountModel?: { __typename?: 'AccountModel', id: number, code?: string | null, languageType: LanguageType, country?: string | null, active?: boolean | null, current?: boolean | null, name: string, note?: string | null } | null };
 
 export type AccountModelDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountModelDeleteMutation = { deleteAccountModelById: boolean | null };
+export type AccountModelDeleteMutation = { __typename?: 'Mutation', deleteAccountModelById?: boolean | null };
 
 export type AccountModelCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AccountModelCreatedSubscription = { accountModel: { id: number, code: string | null, languageType: LanguageType, country: string | null, active: boolean | null, current: boolean | null, name: string, note: string | null } | null };
+export type AccountModelCreatedSubscription = { __typename?: 'Subscription', accountModel?: { __typename?: 'AccountModel', id: number, code?: string | null, languageType: LanguageType, country?: string | null, active?: boolean | null, current?: boolean | null, name: string, note?: string | null } | null };
 
-export type ChartOfAccountFieldsFragment = { id: number, name: string, number: string, active: boolean | null, note: string | null, logCodes: string | null, accountGroup: { id: number, name: string } | null, accountCategory: { id: number, name: string } | null, parent: { id: number, number: string, name: string } | null };
+export type ChartOfAccountFieldsFragment = { __typename?: 'ChartOfAccount', id: number, name: string, number: string, active?: boolean | null, note?: string | null, logCodes?: string | null, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string } | null, parent?: { __typename?: 'ChartOfAccount', id: number, number: string, name: string } | null };
 
 export type ChartOfAccountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ChartOfAccountsQuery = { chartOfAccounts: Array<{ id: number, name: string, number: string, active: boolean | null, note: string | null, logCodes: string | null, accountGroup: { id: number, name: string } | null, accountCategory: { id: number, name: string } | null, parent: { id: number, number: string, name: string } | null }> | null };
+export type ChartOfAccountsQuery = { __typename?: 'Query', chartOfAccounts?: Array<{ __typename?: 'ChartOfAccount', id: number, name: string, number: string, active?: boolean | null, note?: string | null, logCodes?: string | null, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string } | null, parent?: { __typename?: 'ChartOfAccount', id: number, number: string, name: string } | null }> | null };
 
 export type ChartOfAccountSaveMutationVariables = Exact<{
-  account?: ChartOfAccountInput | null | undefined;
+  account?: InputMaybe<ChartOfAccountInput>;
 }>;
 
 
-export type ChartOfAccountSaveMutation = { chartOfAccount: { id: number, name: string, number: string, active: boolean | null, note: string | null, logCodes: string | null, accountGroup: { id: number, name: string } | null, accountCategory: { id: number, name: string } | null, parent: { id: number, number: string, name: string } | null } | null };
+export type ChartOfAccountSaveMutation = { __typename?: 'Mutation', chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, active?: boolean | null, note?: string | null, logCodes?: string | null, accountGroup?: { __typename?: 'AccountGroup', id: number, name: string } | null, accountCategory?: { __typename?: 'AccountCategory', id: number, name: string } | null, parent?: { __typename?: 'ChartOfAccount', id: number, number: string, name: string } | null } | null };
 
 export type ChartOfAccountDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ChartOfAccountDeleteMutation = { deleteChartOfAccountById: boolean | null };
+export type ChartOfAccountDeleteMutation = { __typename?: 'Mutation', deleteChartOfAccountById?: boolean | null };
 
 export type ChartOfAccountCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChartOfAccountCreatedSubscription = { chartOfAccount: { id: number, name: string, number: string, active: boolean | null, note: string | null, logCodes: string | null } | null };
+export type ChartOfAccountCreatedSubscription = { __typename?: 'Subscription', chartOfAccount?: { __typename?: 'ChartOfAccount', id: number, name: string, number: string, active?: boolean | null, note?: string | null, logCodes?: string | null } | null };
 
 export type ChartOfAccountNextIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChartOfAccountNextIdQuery = { id: string | null };
+export type ChartOfAccountNextIdQuery = { __typename?: 'Query', id?: string | null };
 
-export type OperationFieldsFragment = { id: unknown, number: string | null, operationDate: string | null, recordDate: string | null, enterprise: { id: number, name: string } | null };
+export type OperationFieldsFragment = { __typename?: 'AccountingEntry', id: any, number?: string | null, operationDate?: string | null, recordDate?: string | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null };
 
-export type AccountingEntryFieldsFragment = { amount: number | null, note: string | null };
+export type AccountingEntryFieldsFragment = { __typename?: 'AccountingEntry', amount?: number | null, note?: string | null };
 
 export type AccountingEntryNumberQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AccountingEntryNumberQuery = { getAccountingEntryNumber: string | null };
+export type AccountingEntryNumberQuery = { __typename?: 'Query', getAccountingEntryNumber?: string | null };
 
 export type AccountingEntryItemQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type AccountingEntryItemQuery = { accountingEntryItems: Array<{ id: string, amount: number, directionType: DirectionType | null, description: string | null, person:
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-     | null, logCode: { id: number, name: string }, account: { id: number, name: string, number: string } }> | null };
+export type AccountingEntryItemQuery = { __typename?: 'Query', accountingEntryItems?: Array<{ __typename?: 'AccountingEntryItem', id: string, amount: number, directionType?: DirectionType | null, description?: string | null, person?:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null }
+     | null, logCode: { __typename?: 'LogCode', id: number, name: string }, account: { __typename?: 'Account', id: number, name: string, number: string } }> | null };
 
 export type OperationsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OperationsQuery = { operations: Array<{ id: unknown, number: string | null, operationDate: string | null, recordDate: string | null, amount: number | null, note: string | null, enterprise: { id: number, name: string } | null }> | null };
+export type OperationsQuery = { __typename?: 'Query', operations?: Array<{ __typename?: 'AccountingEntry', id: any, number?: string | null, operationDate?: string | null, recordDate?: string | null, amount?: number | null, note?: string | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null }> | null };
 
 export type OperationCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OperationCreatedSubscription = { operation: { id: unknown, number: string | null, operationDate: string | null, recordDate: string | null, amount: number | null, note: string | null, enterprise: { id: number, name: string } | null } | null };
+export type OperationCreatedSubscription = { __typename?: 'Subscription', operation?: { __typename?: 'AccountingEntry', id: any, number?: string | null, operationDate?: string | null, recordDate?: string | null, amount?: number | null, note?: string | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
 export type AccountingEntrySaveMutationVariables = Exact<{
-  entry?: AccountingEntryInput | null | undefined;
+  entry?: InputMaybe<AccountingEntryInput>;
 }>;
 
 
-export type AccountingEntrySaveMutation = { operation: { id: unknown, number: string | null, operationDate: string | null, recordDate: string | null, amount: number | null, note: string | null, enterprise: { id: number, name: string } | null } | null };
+export type AccountingEntrySaveMutation = { __typename?: 'Mutation', operation?: { __typename?: 'AccountingEntry', id: any, number?: string | null, operationDate?: string | null, recordDate?: string | null, amount?: number | null, note?: string | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
-export type LogCodeFieldsFragment = { id: number, logType: LogType, name: string, active: boolean | null, note: string | null, enterpriseId: number };
+export type LogCodeFieldsFragment = { __typename?: 'LogCode', id: number, logType: LogType, name: string, active?: boolean | null, note?: string | null, enterpriseId: number };
 
 export type LogCodesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LogCodesQuery = { logCodes: Array<{ id: number, logType: LogType, name: string, active: boolean | null, note: string | null, enterpriseId: number }> | null };
+export type LogCodesQuery = { __typename?: 'Query', logCodes?: Array<{ __typename?: 'LogCode', id: number, logType: LogType, name: string, active?: boolean | null, note?: string | null, enterpriseId: number }> | null };
 
 export type LogCodeSaveMutationVariables = Exact<{
-  logCode?: LogCodeInput | null | undefined;
+  logCode?: InputMaybe<LogCodeInput>;
 }>;
 
 
-export type LogCodeSaveMutation = { logCode: { id: number, logType: LogType, name: string, active: boolean | null, note: string | null, enterpriseId: number } | null };
+export type LogCodeSaveMutation = { __typename?: 'Mutation', logCode?: { __typename?: 'LogCode', id: number, logType: LogType, name: string, active?: boolean | null, note?: string | null, enterpriseId: number } | null };
 
 export type LogCodeDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LogCodeDeleteMutation = { deleteLogCodeById: boolean | null };
+export type LogCodeDeleteMutation = { __typename?: 'Mutation', deleteLogCodeById?: boolean | null };
 
 export type LogCodeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogCodeCreatedSubscription = { logCode: { id: number, logType: LogType, name: string, active: boolean | null, note: string | null, enterpriseId: number } | null };
+export type LogCodeCreatedSubscription = { __typename?: 'Subscription', logCode?: { __typename?: 'LogCode', id: number, logType: LogType, name: string, active?: boolean | null, note?: string | null, enterpriseId: number } | null };
 
-export type SpecialAccountFieldsFragment = { id: number, name: string | null, selected: boolean | null, specialAccountType: SpecialAccountType, note: string | null, specialAccountPK: { accountId: number, enterpriseId: number }, account: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number } | null };
+export type SpecialAccountFieldsFragment = { __typename?: 'SpecialAccount', id: number, name?: string | null, selected?: boolean | null, specialAccountType: SpecialAccountType, note?: string | null, specialAccountPK: { __typename?: 'SpecialAccountPK', accountId: number, enterpriseId: number }, account?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null };
 
 export type SpecialAccountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SpecialAccountsQuery = { specialAccounts: Array<{ id: number, name: string | null, selected: boolean | null, specialAccountType: SpecialAccountType, note: string | null, specialAccountPK: { accountId: number, enterpriseId: number }, account: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number } | null }> | null };
+export type SpecialAccountsQuery = { __typename?: 'Query', specialAccounts?: Array<{ __typename?: 'SpecialAccount', id: number, name?: string | null, selected?: boolean | null, specialAccountType: SpecialAccountType, note?: string | null, specialAccountPK: { __typename?: 'SpecialAccountPK', accountId: number, enterpriseId: number }, account?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null }> | null };
 
 export type SpecialAccountSaveMutationVariables = Exact<{
-  account?: SpecialAccountInput | null | undefined;
+  account?: InputMaybe<SpecialAccountInput>;
 }>;
 
 
-export type SpecialAccountSaveMutation = { specialAccount: { id: number, name: string | null, selected: boolean | null, specialAccountType: SpecialAccountType, note: string | null, specialAccountPK: { accountId: number, enterpriseId: number }, account: { id: number, number: string, name: string, displayName: string | null } | null, enterprise: { id: number } | null } | null };
+export type SpecialAccountSaveMutation = { __typename?: 'Mutation', specialAccount?: { __typename?: 'SpecialAccount', id: number, name?: string | null, selected?: boolean | null, specialAccountType: SpecialAccountType, note?: string | null, specialAccountPK: { __typename?: 'SpecialAccountPK', accountId: number, enterpriseId: number }, account?: { __typename?: 'Account', id: number, number: string, name: string, displayName?: string | null } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type SpecialAccountDeleteMutationVariables = Exact<{
-  id?: SpecialAccountPkInput | null | undefined;
+  id?: InputMaybe<SpecialAccountPkInput>;
 }>;
 
 
-export type SpecialAccountDeleteMutation = { deleteSpecialAccountById: boolean | null };
+export type SpecialAccountDeleteMutation = { __typename?: 'Mutation', deleteSpecialAccountById?: boolean | null };
 
 export type SpecialAccountCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SpecialAccountCreatedSubscription = { specialAccount: { id: number, name: string | null } | null };
+export type SpecialAccountCreatedSubscription = { __typename?: 'Subscription', specialAccount?: { __typename?: 'SpecialAccount', id: number, name?: string | null } | null };
 
-export type BankAccountFragmentFragment = { id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit: number | null, interestRate: number | null, openedDate: string | null, closedDate: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number, account: { id: number, number: string, name: string } | null };
+export type BankAccountFragmentFragment = { __typename?: 'BankAccount', id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit?: number | null, interestRate?: number | null, openedDate?: string | null, closedDate?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, number: string, name: string } | null };
 
 export type BankAccountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BankAccountsQuery = { bankAccounts: Array<{ id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit: number | null, interestRate: number | null, openedDate: string | null, closedDate: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number, account: { id: number, number: string, name: string } | null }> | null };
+export type BankAccountsQuery = { __typename?: 'Query', bankAccounts?: Array<{ __typename?: 'BankAccount', id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit?: number | null, interestRate?: number | null, openedDate?: string | null, closedDate?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, number: string, name: string } | null }> | null };
 
 export type BankAccountCreateMutationVariables = Exact<{
   account: BankAccountCreateInput;
 }>;
 
 
-export type BankAccountCreateMutation = { bankAccount: { id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit: number | null, interestRate: number | null, openedDate: string | null, closedDate: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number, account: { id: number, number: string, name: string } | null } | null };
+export type BankAccountCreateMutation = { __typename?: 'Mutation', bankAccount?: { __typename?: 'BankAccount', id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit?: number | null, interestRate?: number | null, openedDate?: string | null, closedDate?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, number: string, name: string } | null } | null };
 
 export type BankAccountUpdateMutationVariables = Exact<{
   account: BankAccountUpdateInput;
 }>;
 
 
-export type BankAccountUpdateMutation = { bankAccount: { id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit: number | null, interestRate: number | null, openedDate: string | null, closedDate: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number, account: { id: number, number: string, name: string } | null } | null };
+export type BankAccountUpdateMutation = { __typename?: 'Mutation', bankAccount?: { __typename?: 'BankAccount', id: number, name: string, number: string, balance: number, openingBalance: number, type: BankAccountType, status: BankAccountStatus, overdraftLimit?: number | null, interestRate?: number | null, openedDate?: string | null, closedDate?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, number: string, name: string } | null } | null };
 
 export type BankAccountDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BankAccountDeleteMutation = { bankAccountDeleteById: boolean | null };
+export type BankAccountDeleteMutation = { __typename?: 'Mutation', bankAccountDeleteById?: boolean | null };
 
 export type BankAccountCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BankAccountCreatedSubscription = { bankAccount: { id: number, name: string } | null };
+export type BankAccountCreatedSubscription = { __typename?: 'Subscription', bankAccount?: { __typename?: 'BankAccount', id: number, name: string } | null };
 
-export type BankTransactionFragmentFragment = { id: unknown, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description: string | null, bankAccount: { id: number, name: string } | null, account: { id: number, name: string, number: string } | null };
+export type BankTransactionFragmentFragment = { __typename?: 'BankTransaction', id: any, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description?: string | null, bankAccount?: { __typename?: 'BankAccount', id: number, name: string } | null, account?: { __typename?: 'Account', id: number, name: string, number: string } | null };
 
 export type BankTransactionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BankTransactionsQuery = { bankTransactions: Array<{ id: unknown, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description: string | null, bankAccount: { id: number, name: string } | null, account: { id: number, name: string, number: string } | null }> | null };
+export type BankTransactionsQuery = { __typename?: 'Query', bankTransactions?: Array<{ __typename?: 'BankTransaction', id: any, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description?: string | null, bankAccount?: { __typename?: 'BankAccount', id: number, name: string } | null, account?: { __typename?: 'Account', id: number, name: string, number: string } | null }> | null };
 
 export type BankTransactionCreateMutationVariables = Exact<{
   transaction: BankTransactionCreateInput;
 }>;
 
 
-export type BankTransactionCreateMutation = { bankTransaction: { id: unknown, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description: string | null, bankAccount: { id: number, name: string } | null, account: { id: number, name: string, number: string } | null } | null };
+export type BankTransactionCreateMutation = { __typename?: 'Mutation', bankTransaction?: { __typename?: 'BankTransaction', id: any, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description?: string | null, bankAccount?: { __typename?: 'BankAccount', id: number, name: string } | null, account?: { __typename?: 'Account', id: number, name: string, number: string } | null } | null };
 
 export type BankTransactionUpdateMutationVariables = Exact<{
   transaction: BankTransactionUpdateInput;
 }>;
 
 
-export type BankTransactionUpdateMutation = { bankTransaction: { id: unknown, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description: string | null, bankAccount: { id: number, name: string } | null, account: { id: number, name: string, number: string } | null } | null };
+export type BankTransactionUpdateMutation = { __typename?: 'Mutation', bankTransaction?: { __typename?: 'BankTransaction', id: any, type: BankTransactionType, status: BankTransactionStatus, referenceNumber: string, transactionDate: string, amount: number, description?: string | null, bankAccount?: { __typename?: 'BankAccount', id: number, name: string } | null, account?: { __typename?: 'Account', id: number, name: string, number: string } | null } | null };
 
 export type BankTransactionDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type BankTransactionDeleteMutation = { bankTransactionDeleteById: boolean | null };
+export type BankTransactionDeleteMutation = { __typename?: 'Mutation', bankTransactionDeleteById?: boolean | null };
 
 export type BankTransactionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BankTransactionCreatedSubscription = { bankTransaction: { id: unknown, enterpriseId: number } | null };
+export type BankTransactionCreatedSubscription = { __typename?: 'Subscription', bankTransaction?: { __typename?: 'BankTransaction', id: any, enterpriseId: number } | null };
 
-export type OperationClassFieldsFragment = { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number };
+export type OperationClassFieldsFragment = { __typename?: 'OperationClass', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number };
 
 export type OperationClassesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OperationClassesQuery = { operationClasses: Array<{ id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number }> | null };
+export type OperationClassesQuery = { __typename?: 'Query', operationClasses?: Array<{ __typename?: 'OperationClass', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number }> | null };
 
 export type OperationClassSaveMutationVariables = Exact<{
-  operationClass?: OperationClassInput | null | undefined;
+  operationClass?: InputMaybe<OperationClassInput>;
 }>;
 
 
-export type OperationClassSaveMutation = { operationClass: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number } | null };
+export type OperationClassSaveMutation = { __typename?: 'Mutation', operationClass?: { __typename?: 'OperationClass', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number } | null };
 
 export type OperationClassDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OperationClassDeleteMutation = { deleteOperationClassById: boolean | null };
+export type OperationClassDeleteMutation = { __typename?: 'Mutation', deleteOperationClassById?: boolean | null };
 
 export type OperationClassCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OperationClassCreatedSubscription = { operationClass: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number } | null };
+export type OperationClassCreatedSubscription = { __typename?: 'Subscription', operationClass?: { __typename?: 'OperationClass', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number } | null };
 
 export type SequentialDisciplineQueryVariables = Exact<{
-  classId: number;
-  subPeriodId: number;
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialDisciplineQuery = { sequentialDisciplines: Array<{ unjustifiedAbsence: number | null, justifiedAbsence: number | null, detention: number | null, warning: number | null, behaviorBlame: number | null, temporaryExclusion: number | null, definitiveExclusion: number | null, disciplinaryBoard: number | null, sequentialDisciplinePK: { studentId: string, subPeriodId: string }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type SequentialDisciplineQuery = { __typename?: 'Query', sequentialDisciplines?: Array<{ __typename?: 'SequentialDiscipline', unjustifiedAbsence?: number | null, justifiedAbsence?: number | null, detention?: number | null, warning?: number | null, behaviorBlame?: number | null, temporaryExclusion?: number | null, definitiveExclusion?: number | null, disciplinaryBoard?: number | null, sequentialDisciplinePK: { __typename?: 'SequentialDisciplinePK', studentId: string, subPeriodId: string }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type SequentialDisciplineSaveMutationVariables = Exact<{
-  disciplines?: Array<SequentialDisciplineInput> | SequentialDisciplineInput | null | undefined;
-  classId: number;
-  subPeriodId: number;
-  schoolId: number;
+  disciplines?: InputMaybe<Array<SequentialDisciplineInput> | SequentialDisciplineInput>;
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialDisciplineSaveMutation = { sequentialDiscipline: Array<{ unjustifiedAbsence: number | null, justifiedAbsence: number | null, detention: number | null, warning: number | null, behaviorBlame: number | null, temporaryExclusion: number | null, definitiveExclusion: number | null, disciplinaryBoard: number | null, sequentialDisciplinePK: { studentId: string, subPeriodId: string }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type SequentialDisciplineSaveMutation = { __typename?: 'Mutation', sequentialDiscipline?: Array<{ __typename?: 'SequentialDiscipline', unjustifiedAbsence?: number | null, justifiedAbsence?: number | null, detention?: number | null, warning?: number | null, behaviorBlame?: number | null, temporaryExclusion?: number | null, definitiveExclusion?: number | null, disciplinaryBoard?: number | null, sequentialDisciplinePK: { __typename?: 'SequentialDisciplinePK', studentId: string, subPeriodId: string }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type QuarterlyDisciplineCalculationMutationVariables = Exact<{
-  classId: number;
-  periodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyDisciplineCalculationMutation = { calculateQuarterlyDiscipline: boolean | null };
+export type QuarterlyDisciplineCalculationMutation = { __typename?: 'Mutation', calculateQuarterlyDiscipline?: boolean | null };
 
 export type QuarterlyDisciplinesCalculationMutationVariables = Exact<{
-  periodId: number;
-  schoolId: number;
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyDisciplinesCalculationMutation = { calculateAllQuarterlyDiscipline: boolean | null };
+export type QuarterlyDisciplinesCalculationMutation = { __typename?: 'Mutation', calculateAllQuarterlyDiscipline?: boolean | null };
 
 export type AnnualDisciplineCalculationMutationVariables = Exact<{
-  classId: number;
-  schoolYearId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualDisciplineCalculationMutation = { calculateAnnualDiscipline: boolean | null };
+export type AnnualDisciplineCalculationMutation = { __typename?: 'Mutation', calculateAnnualDiscipline?: boolean | null };
 
 export type AnnualDisciplinesCalculationMutationVariables = Exact<{
-  schoolYearId: number;
-  schoolId: number;
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualDisciplinesCalculationMutation = { calculateAllAnnualDiscipline: boolean | null };
+export type AnnualDisciplinesCalculationMutation = { __typename?: 'Mutation', calculateAllAnnualDiscipline?: boolean | null };
 
-export type BillFragmentFragment = { id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null };
+export type BillFragmentFragment = { __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null };
 
 export type BillsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BillsQuery = { bills: Array<{ id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null }> | null };
+export type BillsQuery = { __typename?: 'Query', bills?: Array<{ __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null }> | null };
 
 export type BillByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type BillByIdQuery = { bill: { id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null } | null };
+export type BillByIdQuery = { __typename?: 'Query', bill?: { __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type BillSaveMutationVariables = Exact<{
   bill: BillCreateInput;
 }>;
 
 
-export type BillSaveMutation = { bill: { id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null } | null };
+export type BillSaveMutation = { __typename?: 'Mutation', bill?: { __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type BillUpdateMutationVariables = Exact<{
   bill: BillUpdateInput;
 }>;
 
 
-export type BillUpdateMutation = { bill: { id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null } | null };
+export type BillUpdateMutation = { __typename?: 'Mutation', bill?: { __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type BillDeleteByIdMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type BillDeleteByIdMutation = { billDeleteById: boolean | null };
+export type BillDeleteByIdMutation = { __typename?: 'Mutation', billDeleteById?: boolean | null };
 
 export type BillCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BillCreatedSubscription = { bill: { id: unknown, number: string, operationDate: string, note: string | null, amount: number | null, originalNumber: string | null, deadline: string | null, balance: number | null, quantity: number | null, distinctProduct: number | null, discount: number | null, address: string | null, enterpriseId: number, condition: { id: number, name: string } | null, supplier: { id: unknown, lastName: string | null, firstName: string | null } | null, voucher: { id: unknown, number: string } | null, department: { id: number, name: string } | null } | null };
+export type BillCreatedSubscription = { __typename?: 'Subscription', bill?: { __typename?: 'Bill', id: any, number: string, operationDate: string, note?: string | null, amount?: number | null, originalNumber?: string | null, deadline?: string | null, balance?: number | null, quantity?: number | null, distinctProduct?: number | null, discount?: number | null, address?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type BillItemsQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type BillItemsQuery = { items: Array<{ id: unknown, unitPrice: unknown, quantity: number, discount: number | null, description: string | null, total: unknown, unitPriceF: unknown, quantityF: number, product: { id: unknown, name: string, sku: string } | null }> | null };
+export type BillItemsQuery = { __typename?: 'Query', items?: Array<{ __typename?: 'BillItem', id: any, unitPrice: any, quantity: number, discount?: number | null, description?: string | null, total: any, unitPriceF: any, quantityF: number, product?: { __typename?: 'Product', id: any, name: string, sku: string } | null }> | null };
 
 export type BillUnpaidBySupplierQueryVariables = Exact<{
-  supplierId: unknown;
+  supplierId: Scalars['Long']['input'];
 }>;
 
 
-export type BillUnpaidBySupplierQuery = { bills: Array<{ id: unknown, number: string, operationDate: string, amount: number | null, balance: number | null, deadline: string | null }> | null };
+export type BillUnpaidBySupplierQuery = { __typename?: 'Query', bills?: Array<{ __typename?: 'Bill', id: any, number: string, operationDate: string, amount?: number | null, balance?: number | null, deadline?: string | null }> | null };
 
 export type BillPaymentSaveMutationVariables = Exact<{
   payment: BillPaymentInput;
 }>;
 
 
-export type BillPaymentSaveMutation = { billPaymentSave: boolean | null };
+export type BillPaymentSaveMutation = { __typename?: 'Mutation', billPaymentSave?: boolean | null };
 
 export type BillPaymentDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type BillPaymentDeleteMutation = { billPaymentDeleteById: boolean | null };
+export type BillPaymentDeleteMutation = { __typename?: 'Mutation', billPaymentDeleteById?: boolean | null };
 
 export type SupplierByBillIdQueryVariables = Exact<{
-  billId: unknown;
+  billId: Scalars['Long']['input'];
 }>;
 
 
-export type SupplierByBillIdQuery = { supplier: { id: unknown, lastName: string | null, firstName: string | null } | null };
+export type SupplierByBillIdQuery = { __typename?: 'Query', supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null } | null };
 
-export type CashVoucherFragmentFragment = { id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string, firstName: string | null }
-    | { id: unknown, lastName: string, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
-   | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null };
+export type CashVoucherFragmentFragment = { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+    | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+    | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+    | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+   | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null };
 
 export type CashVouchersQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CashVouchersQuery = { cashVouchers: Array<{ id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null }> | null };
+export type CashVouchersQuery = { __typename?: 'Query', cashVouchers?: Array<{ __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null }> | null };
 
 export type CashVoucherQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type CashVoucherQuery = { cashVoucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null } | null };
+export type CashVoucherQuery = { __typename?: 'Query', cashVoucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type CashVoucherSaveMutationVariables = Exact<{
   cashVoucher: CashVoucherCreateInput;
 }>;
 
 
-export type CashVoucherSaveMutation = { cashVoucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null } | null };
+export type CashVoucherSaveMutation = { __typename?: 'Mutation', cashVoucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type CashVoucherUpdateMutationVariables = Exact<{
   cashVoucher: CashVoucherUpdateInput;
 }>;
 
 
-export type CashVoucherUpdateMutation = { cashVoucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null } | null };
+export type CashVoucherUpdateMutation = { __typename?: 'Mutation', cashVoucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type CashVoucherDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type CashVoucherDeleteMutation = { cashVoucherDeleteById: boolean | null };
+export type CashVoucherDeleteMutation = { __typename?: 'Mutation', cashVoucherDeleteById?: boolean | null };
 
 export type CashVoucherCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CashVoucherCreatedSubscription = { cashVoucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null } | null };
+export type CashVoucherCreatedSubscription = { __typename?: 'Subscription', cashVoucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null } | null };
 
 export type CashVoucherApproveMutationVariables = Exact<{
-  id: unknown;
-  operator: string;
+  id: Scalars['Long']['input'];
+  operator: Scalars['String']['input'];
 }>;
 
 
-export type CashVoucherApproveMutation = { cashVoucherApprove: boolean | null };
+export type CashVoucherApproveMutation = { __typename?: 'Mutation', cashVoucherApprove?: boolean | null };
 
 export type CashVoucherAvailableQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CashVoucherAvailableQuery = { cashVouchers: Array<{ id: unknown, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt: string | null, enterpriseId: number, operator: string | null, personType: PersonType, active: boolean, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-     | null, category: { id: number, name: string } | null, department: { id: number, name: string } | null }> | null };
+export type CashVoucherAvailableQuery = { __typename?: 'Query', cashVouchers?: Array<{ __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number, reason: string, status: CashVoucherStatus, createdAt: string, updatedAt?: string | null, enterpriseId: number, operator?: string | null, personType: PersonType, active: boolean, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
+     | null, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null }> | null };
 
-export type ExpenseCategoryFragmentFragment = { id: number, name: string, active: boolean, maxAllowedAmount: number | null, description: string | null, enterpriseId: number, account: { id: number, name: string } | null };
+export type ExpenseCategoryFragmentFragment = { __typename?: 'ExpenseCategory', id: number, name: string, active: boolean, maxAllowedAmount?: number | null, description?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, name: string } | null };
 
 export type ExpenseCategoriesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ExpenseCategoriesQuery = { expenseCategories: Array<{ id: number, name: string, active: boolean, maxAllowedAmount: number | null, description: string | null, enterpriseId: number, account: { id: number, name: string } | null }> | null };
+export type ExpenseCategoriesQuery = { __typename?: 'Query', expenseCategories?: Array<{ __typename?: 'ExpenseCategory', id: number, name: string, active: boolean, maxAllowedAmount?: number | null, description?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, name: string } | null }> | null };
 
 export type ExpenseCategorySaveMutationVariables = Exact<{
   category: ExpenseCategoryCreateInput;
 }>;
 
 
-export type ExpenseCategorySaveMutation = { expenseCategory: { id: number, name: string, active: boolean, maxAllowedAmount: number | null, description: string | null, enterpriseId: number, account: { id: number, name: string } | null } | null };
+export type ExpenseCategorySaveMutation = { __typename?: 'Mutation', expenseCategory?: { __typename?: 'ExpenseCategory', id: number, name: string, active: boolean, maxAllowedAmount?: number | null, description?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type ExpenseCategoryUpdateMutationVariables = Exact<{
   category: ExpenseCategoryUpdateInput;
 }>;
 
 
-export type ExpenseCategoryUpdateMutation = { expenseCategory: { id: number, name: string, active: boolean, maxAllowedAmount: number | null, description: string | null, enterpriseId: number, account: { id: number, name: string } | null } | null };
+export type ExpenseCategoryUpdateMutation = { __typename?: 'Mutation', expenseCategory?: { __typename?: 'ExpenseCategory', id: number, name: string, active: boolean, maxAllowedAmount?: number | null, description?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type ExpenseCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ExpenseCategoryDeleteMutation = { expenseCategoryDeleteById: boolean | null };
+export type ExpenseCategoryDeleteMutation = { __typename?: 'Mutation', expenseCategoryDeleteById?: boolean | null };
 
 export type ExpenseCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExpenseCategoryCreatedSubscription = { expenseCategory: { id: number, name: string, active: boolean, maxAllowedAmount: number | null, description: string | null, enterpriseId: number, account: { id: number, name: string } | null } | null };
+export type ExpenseCategoryCreatedSubscription = { __typename?: 'Subscription', expenseCategory?: { __typename?: 'ExpenseCategory', id: number, name: string, active: boolean, maxAllowedAmount?: number | null, description?: string | null, enterpriseId: number, account?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
-export type ExpenseFieldsFragment = { id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null };
+export type ExpenseFieldsFragment = { __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null };
 
 export type ExpensesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ExpensesQuery = { expenses: Array<{ id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null }> | null };
+export type ExpensesQuery = { __typename?: 'Query', expenses?: Array<{ __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null }> | null };
 
 export type ExpenseByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ExpenseByIdQuery = { expense: { id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null } | null };
+export type ExpenseByIdQuery = { __typename?: 'Query', expense?: { __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null } | null };
 
 export type ExpenseItemsQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ExpenseItemsQuery = { items: Array<{ id: unknown, quantity: number, unitPrice: number, description: string | null, quantityF: number, unitPriceF: number, category: { id: number, name: string } | null, person:
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-      | { id: unknown, displayName: string | null }
-     | null, operationClass: { id: number, name: string } | null }> | null };
+export type ExpenseItemsQuery = { __typename?: 'Query', items?: Array<{ __typename?: 'ExpenseItem', id: any, quantity: number, unitPrice: number, description?: string | null, quantityF: number, unitPriceF: number, category?: { __typename?: 'ExpenseCategory', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null }
+     | null, operationClass?: { __typename?: 'OperationClass', id: number, name: string } | null }> | null };
 
 export type ExpenseSaveMutationVariables = Exact<{
   expense: ExpenseCreateInput;
 }>;
 
 
-export type ExpenseSaveMutation = { expense: { id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null } | null };
+export type ExpenseSaveMutation = { __typename?: 'Mutation', expense?: { __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null } | null };
 
 export type ExpenseUpdateMutationVariables = Exact<{
   expense: ExpenseUpdateInput;
 }>;
 
 
-export type ExpenseUpdateMutation = { expense: { id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null } | null };
+export type ExpenseUpdateMutation = { __typename?: 'Mutation', expense?: { __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null } | null };
 
 export type ExpenseDeleteByIdMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ExpenseDeleteByIdMutation = { expenseDeleteById: boolean | null };
+export type ExpenseDeleteByIdMutation = { __typename?: 'Mutation', expenseDeleteById?: boolean | null };
 
 export type ExpenseCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExpenseCreatedSubscription = { expense: { id: unknown, number: string, operationDate: string, recordDate: string, amount: number | null, taxAmount: number | null, quantity: number, note: string | null, enterpriseId: number, paymentMode: { id: number, name: string } | null, paymentAccount: { id: number, name: string } | null, department: { id: number, name: string } | null, voucher: { id: unknown, number: string, date: string, amount: number, usedAmount: number } | null } | null };
+export type ExpenseCreatedSubscription = { __typename?: 'Subscription', expense?: { __typename?: 'Expense', id: any, number: string, operationDate: string, recordDate: string, amount?: number | null, taxAmount?: number | null, quantity: number, note?: string | null, enterpriseId: number, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, department?: { __typename?: 'Department', id: number, name: string } | null, voucher?: { __typename?: 'CashVoucher', id: any, number: string, date: string, amount: number, usedAmount: number } | null } | null };
 
-export type VendorOperationFieldsFragment = { id: string, operationId: unknown, vendorOperationType: VendorOperationType, operationDate: string, number: string, amount: number, balance: number, quantity: number | null, distinctProduct: number | null, supplier: string, enterpriseId: number, discount: number | null, invoiceType: VendorOperationType };
+export type VendorOperationFieldsFragment = { __typename?: 'VendorOperation', id: string, operationId: any, vendorOperationType: VendorOperationType, operationDate: string, number: string, amount: number, balance: number, quantity?: number | null, distinctProduct?: number | null, supplier: string, enterpriseId: number, discount?: number | null, invoiceType: VendorOperationType };
 
 export type VendorOperationsQueryVariables = Exact<{
-  id: number;
-  startDate: unknown;
-  endDate: unknown;
+  id: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+  endDate: Scalars['Date']['input'];
 }>;
 
 
-export type VendorOperationsQuery = { vendorOperations: { operations: Array<{ id: string, operationId: unknown, vendorOperationType: VendorOperationType, operationDate: string, number: string, amount: number, balance: number, quantity: number | null, distinctProduct: number | null, supplier: string, enterpriseId: number, discount: number | null, invoiceType: VendorOperationType }> | null, paymentInfo: { overdue: number | null, overdueCount: number | null, openBill: number | null, openBillCount: number | null, paid: number | null, paidCount: number | null } | null } | null };
+export type VendorOperationsQuery = { __typename?: 'Query', vendorOperations?: { __typename?: 'VendorOperationResult', operations?: Array<{ __typename?: 'VendorOperation', id: string, operationId: any, vendorOperationType: VendorOperationType, operationDate: string, number: string, amount: number, balance: number, quantity?: number | null, distinctProduct?: number | null, supplier: string, enterpriseId: number, discount?: number | null, invoiceType: VendorOperationType }> | null, paymentInfo?: { __typename?: 'VendorPaymentInfo', overdue?: number | null, overdueCount?: number | null, openBill?: number | null, openBillCount?: number | null, paid?: number | null, paidCount?: number | null } | null } | null };
 
 export type AnnualNotesQueryVariables = Exact<{
-  classId: number;
-  subjectId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualNotesQuery = { annualNotes: Array<{ note1: number | null, note2: number | null, note3: number | null, note4: number | null, note5: number | null, note6: number | null, studentFullName: string | null, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type AnnualNotesQuery = { __typename?: 'Query', annualNotes?: Array<{ __typename?: 'AnnualNoteInput', note1?: number | null, note2?: number | null, note3?: number | null, note4?: number | null, note5?: number | null, note6?: number | null, studentFullName?: string | null, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type AnnualNoteSaveMutationVariables = Exact<{
   notes: Array<AnnualNote> | AnnualNote;
-  classId: number;
-  subjectId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualNoteSaveMutation = { storeAnnualNote: boolean | null };
+export type AnnualNoteSaveMutation = { __typename?: 'Mutation', storeAnnualNote?: boolean | null };
 
 export type AnnualCompNoteCalculationMutationVariables = Exact<{
-  classId: number;
-  schoolYearId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualCompNoteCalculationMutation = { calculateAnnualCompNote: boolean | null };
+export type AnnualCompNoteCalculationMutation = { __typename?: 'Mutation', calculateAnnualCompNote?: boolean | null };
 
 export type AnnualCompNotesCalculationMutationVariables = Exact<{
-  schoolYearId: number;
-  schoolId: number;
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualCompNotesCalculationMutation = { calculateAllAnnualCompNote: boolean | null };
+export type AnnualCompNotesCalculationMutation = { __typename?: 'Mutation', calculateAllAnnualCompNote?: boolean | null };
 
-export type AnnualResultFieldsFragment = { observation: string | null, annualReportPK: { studentId: unknown, schoolYearId: number }, councilDecision: { id: number, code: string, name: string } | null, clazz: { id: number, name: string } | null, branch: { id: number, name: string } | null, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, annualReport: { average: number | null, rank: unknown } | null };
+export type AnnualResultFieldsFragment = { __typename?: 'AnnualResult', observation?: string | null, annualReportPK: { __typename?: 'AnnualReportPK', studentId: any, schoolYearId: number }, councilDecision?: { __typename?: 'CouncilDecision', id: number, code: string, name: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, annualReport?: { __typename?: 'AnnualReport', average?: number | null, rank?: any | null } | null };
 
 export type AnnualResultsQueryVariables = Exact<{
-  classId: number;
-  schoolYearId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualResultsQuery = { annualResults: Array<{ observation: string | null, annualReportPK: { studentId: unknown, schoolYearId: number }, councilDecision: { id: number, code: string, name: string } | null, clazz: { id: number, name: string } | null, branch: { id: number, name: string } | null, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, annualReport: { average: number | null, rank: unknown } | null }> | null };
+export type AnnualResultsQuery = { __typename?: 'Query', annualResults?: Array<{ __typename?: 'AnnualResult', observation?: string | null, annualReportPK: { __typename?: 'AnnualReportPK', studentId: any, schoolYearId: number }, councilDecision?: { __typename?: 'CouncilDecision', id: number, code: string, name: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, annualReport?: { __typename?: 'AnnualReport', average?: number | null, rank?: any | null } | null }> | null };
 
 export type AnnualResultSaveMutationVariables = Exact<{
   results: Array<AnnualResultInput> | AnnualResultInput;
-  classId: number;
-  schoolYearId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualResultSaveMutation = { annualResults: Array<{ observation: string | null, annualReportPK: { studentId: unknown, schoolYearId: number }, councilDecision: { id: number, code: string, name: string } | null, clazz: { id: number, name: string } | null, branch: { id: number, name: string } | null, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, annualReport: { average: number | null, rank: unknown } | null }> | null };
+export type AnnualResultSaveMutation = { __typename?: 'Mutation', annualResults?: Array<{ __typename?: 'AnnualResult', observation?: string | null, annualReportPK: { __typename?: 'AnnualReportPK', studentId: any, schoolYearId: number }, councilDecision?: { __typename?: 'CouncilDecision', id: number, code: string, name: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, annualReport?: { __typename?: 'AnnualReport', average?: number | null, rank?: any | null } | null }> | null };
 
 export type BulkAnnualResultSaveMutationVariables = Exact<{
-  anForm?: AnnualResultFormInput | null | undefined;
+  anForm?: InputMaybe<AnnualResultFormInput>;
 }>;
 
 
-export type BulkAnnualResultSaveMutation = { storeBulkAnnualResult: boolean | null };
+export type BulkAnnualResultSaveMutation = { __typename?: 'Mutation', storeBulkAnnualResult?: boolean | null };
 
 export type AnnualReportRankingQueryVariables = Exact<{
-  search: string;
-  newClassIsNull: boolean;
-  shuffle: boolean;
-  limit?: number | null | undefined;
-  sortByMerit: boolean;
+  search: Scalars['String']['input'];
+  newClassIsNull: Scalars['Boolean']['input'];
+  shuffle: Scalars['Boolean']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  sortByMerit: Scalars['Boolean']['input'];
 }>;
 
 
-export type AnnualReportRankingQuery = { annualReportSummary: Array<{ studentId: unknown, studentName: string | null, average: number | null, decision: string | null, gender: string | null, newBranch: string | null, newClass: string | null, birthDate: string | null, className: string | null, levelName: string | null, branchName: string | null, numberOrder: number | null }> | null };
+export type AnnualReportRankingQuery = { __typename?: 'Query', annualReportSummary?: Array<{ __typename?: 'AnnualReportSummary', studentId?: any | null, studentName?: string | null, average?: number | null, decision?: string | null, gender?: string | null, newBranch?: string | null, newClass?: string | null, birthDate?: string | null, className?: string | null, levelName?: string | null, branchName?: string | null, numberOrder?: number | null }> | null };
 
 export type StudentProgressionMutationVariables = Exact<{
-  currentSchoolYearId: number;
-  nextSchoolYearId: number;
+  currentSchoolYearId: Scalars['Int']['input'];
+  nextSchoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentProgressionMutation = { makeStudentProgression: boolean | null };
+export type StudentProgressionMutation = { __typename?: 'Mutation', makeStudentProgression?: boolean | null };
 
 export type AnnualResultSummaryQueryVariables = Exact<{
-  schoolYearId: number;
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualResultSummaryQuery = { findAnnualResultSummary: Array<{ className: string, boysCount: number, girlsCount: number, repeaterCount: number, totalCount: number }> | null };
+export type AnnualResultSummaryQuery = { __typename?: 'Query', findAnnualResultSummary?: Array<{ __typename?: 'AnnualResultSummary', className: string, boysCount: number, girlsCount: number, repeaterCount: number, totalCount: number }> | null };
 
 export type EvalCompOfClassQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type EvalCompOfClassQuery = { competences: Array<{ classId: number, periodId: number, subjectId: number, subjectName: string, items: Array<{ id: number | null, numberOrder: number, competence: string, active: boolean }> }> | null };
+export type EvalCompOfClassQuery = { __typename?: 'Query', competences?: Array<{ __typename?: 'EvalCompResult', classId: number, periodId: number, subjectId: number, subjectName: string, items: Array<{ __typename?: 'EvalCompItem', id?: number | null, numberOrder: number, competence: string, active: boolean }> }> | null };
 
 export type EvalCompBySubjectQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
-  subjectId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
 }>;
 
 
-export type EvalCompBySubjectQuery = { competences: Array<{ classId: number, periodId: number, subjectId: number, subjectName: string, items: Array<{ id: number | null, numberOrder: number, competence: string, active: boolean }> }> | null };
+export type EvalCompBySubjectQuery = { __typename?: 'Query', competences?: Array<{ __typename?: 'EvalCompResult', classId: number, periodId: number, subjectId: number, subjectName: string, items: Array<{ __typename?: 'EvalCompItem', id?: number | null, numberOrder: number, competence: string, active: boolean }> }> | null };
 
 export type EvalCompSaveMutationVariables = Exact<{
   competences: Array<EvalCompInput> | EvalCompInput;
 }>;
 
 
-export type EvalCompSaveMutation = { evalCompSave: boolean | null };
+export type EvalCompSaveMutation = { __typename?: 'Mutation', evalCompSave?: boolean | null };
 
-export type ExpectedCompetenceFieldsFragment = { competence: string | null, expectedCompetencePK: { classId: number, periodId: number, subjectId: number } | null, subject: { id: number, code: string | null, name: string } | null };
+export type ExpectedCompetenceFieldsFragment = { __typename?: 'ExpectedCompetence', competence?: string | null, expectedCompetencePK?: { __typename?: 'ExpectedCompetencePK', classId: number, periodId: number, subjectId: number } | null, subject?: { __typename?: 'Subject', id: number, code?: string | null, name: string } | null };
 
 export type ExpectedCompetencesQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type ExpectedCompetencesQuery = { expectedCompetences: Array<{ competence: string | null, expectedCompetencePK: { classId: number, periodId: number, subjectId: number } | null, subject: { id: number, code: string | null, name: string } | null }> | null };
+export type ExpectedCompetencesQuery = { __typename?: 'Query', expectedCompetences?: Array<{ __typename?: 'ExpectedCompetence', competence?: string | null, expectedCompetencePK?: { __typename?: 'ExpectedCompetencePK', classId: number, periodId: number, subjectId: number } | null, subject?: { __typename?: 'Subject', id: number, code?: string | null, name: string } | null }> | null };
 
 export type ExpectedCompetencesSaveMutationVariables = Exact<{
   competences: Array<ExpectedCompetenceInput> | ExpectedCompetenceInput;
 }>;
 
 
-export type ExpectedCompetencesSaveMutation = { expectedCompetence: Array<{ competence: string | null, expectedCompetencePK: { classId: number, periodId: number, subjectId: number } | null, subject: { id: number, code: string | null, name: string } | null }> | null };
+export type ExpectedCompetencesSaveMutation = { __typename?: 'Mutation', expectedCompetence?: Array<{ __typename?: 'ExpectedCompetence', competence?: string | null, expectedCompetencePK?: { __typename?: 'ExpectedCompetencePK', classId: number, periodId: number, subjectId: number } | null, subject?: { __typename?: 'Subject', id: number, code?: string | null, name: string } | null }> | null };
 
 export type QuarterlyCompNotesQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
-  subjectId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyCompNotesQuery = { quarterlyCompNote: Array<{ studentId: unknown, studentFullName: string, registrationNumber: string, items: Array<{ competenceId: unknown, numberOrder: number, note: number | null }> | null }> | null };
+export type QuarterlyCompNotesQuery = { __typename?: 'Query', quarterlyCompNote?: Array<{ __typename?: 'QuarterlyCompNoteInput', studentId: any, studentFullName: string, registrationNumber: string, items?: Array<{ __typename?: 'QuarterlyCompNoteItem', competenceId: any, numberOrder: number, note?: number | null }> | null }> | null };
 
 export type QuarterlyCompNoteFromEvalQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
-  subjectId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyCompNoteFromEvalQuery = { quarterlyCompNote: Array<{ studentId: unknown, studentFullName: string, registrationNumber: string, items: Array<{ competenceId: unknown, numberOrder: number, note: number | null }> | null }> | null };
+export type QuarterlyCompNoteFromEvalQuery = { __typename?: 'Query', quarterlyCompNote?: Array<{ __typename?: 'QuarterlyCompNoteInput', studentId: any, studentFullName: string, registrationNumber: string, items?: Array<{ __typename?: 'QuarterlyCompNoteItem', competenceId: any, numberOrder: number, note?: number | null }> | null }> | null };
 
 export type QuarterlyCompNoteSaveMutationVariables = Exact<{
   notes: Array<QuarterlyCompNote> | QuarterlyCompNote;
-  classId: number;
-  periodId: number;
-  schoolId: number;
-  subjectId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyCompNoteSaveMutation = { quarterlyCompNoteSave: boolean | null };
+export type QuarterlyCompNoteSaveMutation = { __typename?: 'Mutation', quarterlyCompNoteSave?: boolean | null };
 
 export type QuarterlyNotesQueryVariables = Exact<{
-  classId: number;
-  subjectId: number;
-  periodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyNotesQuery = { quarterlyNotes: Array<{ note1: number | null, note2: number | null, studentFullName: string | null, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type QuarterlyNotesQuery = { __typename?: 'Query', quarterlyNotes?: Array<{ __typename?: 'QuarterlyNoteInput', note1?: number | null, note2?: number | null, studentFullName?: string | null, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type QuarterlyNoteSaveMutationVariables = Exact<{
   notes: Array<QuarterlyNote> | QuarterlyNote;
-  classId: number;
-  subjectId: number;
-  periodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyNoteSaveMutation = { storeQuarterlyNote: boolean | null };
+export type QuarterlyNoteSaveMutation = { __typename?: 'Mutation', storeQuarterlyNote?: boolean | null };
 
-export type QuarterlyReportObservationFieldsFragment = { observation: string | null, quarterlyReportPK: { studentId: unknown, periodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, quarterlyReport: { average: number | null, rank: unknown } | null };
+export type QuarterlyReportObservationFieldsFragment = { __typename?: 'QuarterlyReportObservation', observation?: string | null, quarterlyReportPK: { __typename?: 'QuarterlyReportPK', studentId: any, periodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, quarterlyReport?: { __typename?: 'QuarterlyReport', average?: number | null, rank?: any | null } | null };
 
 export type QuarterlyReportObservationsQueryVariables = Exact<{
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyReportObservationsQuery = { quarterlyReportObservations: Array<{ observation: string | null, quarterlyReportPK: { studentId: unknown, periodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, quarterlyReport: { average: number | null, rank: unknown } | null }> | null };
+export type QuarterlyReportObservationsQuery = { __typename?: 'Query', quarterlyReportObservations?: Array<{ __typename?: 'QuarterlyReportObservation', observation?: string | null, quarterlyReportPK: { __typename?: 'QuarterlyReportPK', studentId: any, periodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, quarterlyReport?: { __typename?: 'QuarterlyReport', average?: number | null, rank?: any | null } | null }> | null };
 
 export type QuarterlyReportObservationSaveMutationVariables = Exact<{
   observations: Array<QuarterlyReportObservationInput> | QuarterlyReportObservationInput;
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyReportObservationSaveMutation = { quarterlyReportObservations: Array<{ observation: string | null, quarterlyReportPK: { studentId: unknown, periodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null, quarterlyReport: { average: number | null, rank: unknown } | null }> | null };
+export type QuarterlyReportObservationSaveMutation = { __typename?: 'Mutation', quarterlyReportObservations?: Array<{ __typename?: 'QuarterlyReportObservation', observation?: string | null, quarterlyReportPK: { __typename?: 'QuarterlyReportPK', studentId: any, periodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null, quarterlyReport?: { __typename?: 'QuarterlyReport', average?: number | null, rank?: any | null } | null }> | null };
 
-export type SequentialNoteFieldsFragment = { note: number | null, appreciation: string | null, rank: number | null, exAequo: boolean | null, sequentialNotePK: { studentId: unknown, subjectId: number, subPeriodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null };
+export type SequentialNoteFieldsFragment = { __typename?: 'SequentialNote', note?: number | null, appreciation?: string | null, rank?: number | null, exAequo?: boolean | null, sequentialNotePK: { __typename?: 'SequentialNotePK', studentId: any, subjectId: number, subPeriodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null };
 
 export type SequentialNotesQueryVariables = Exact<{
-  classId: number;
-  subjectId: number;
-  subPeriodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialNotesQuery = { sequentialNotes: Array<{ note: number | null, appreciation: string | null, rank: number | null, exAequo: boolean | null, sequentialNotePK: { studentId: unknown, subjectId: number, subPeriodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type SequentialNotesQuery = { __typename?: 'Query', sequentialNotes?: Array<{ __typename?: 'SequentialNote', note?: number | null, appreciation?: string | null, rank?: number | null, exAequo?: boolean | null, sequentialNotePK: { __typename?: 'SequentialNotePK', studentId: any, subjectId: number, subPeriodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type DowngradeSubjectQueryVariables = Exact<{
-  classId: number;
-  subjectId: number;
-  subPeriodId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
 }>;
 
 
-export type DowngradeSubjectQuery = { sequentialNotes: Array<{ note: number | null, appreciation: string | null, rank: number | null, exAequo: boolean | null, sequentialNotePK: { studentId: unknown, subjectId: number, subPeriodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type DowngradeSubjectQuery = { __typename?: 'Query', sequentialNotes?: Array<{ __typename?: 'SequentialNote', note?: number | null, appreciation?: string | null, rank?: number | null, exAequo?: boolean | null, sequentialNotePK: { __typename?: 'SequentialNotePK', studentId: any, subjectId: number, subPeriodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type SequentialNotesSaveMutationVariables = Exact<{
   notes: Array<SequentialNoteInput> | SequentialNoteInput;
-  classId: number;
-  subjectId: number;
-  subPeriodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialNotesSaveMutation = { sequentialNotes: Array<{ note: number | null, appreciation: string | null, rank: number | null, exAequo: boolean | null, sequentialNotePK: { studentId: unknown, subjectId: number, subPeriodId: number }, student: { id: unknown, registrationNumber: string, lastName: string, firstName: string | null } | null }> | null };
+export type SequentialNotesSaveMutation = { __typename?: 'Mutation', sequentialNotes?: Array<{ __typename?: 'SequentialNote', note?: number | null, appreciation?: string | null, rank?: number | null, exAequo?: boolean | null, sequentialNotePK: { __typename?: 'SequentialNotePK', studentId: any, subjectId: number, subPeriodId: number }, student?: { __typename?: 'Student', id: any, registrationNumber: string, lastName: string, firstName?: string | null } | null }> | null };
 
 export type SequentialNoteDeleteMutationVariables = Exact<{
-  classId: number;
-  subjectId: number;
-  subPeriodId: number;
+  classId: Scalars['Int']['input'];
+  subjectId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialNoteDeleteMutation = { deleteSequentialNote: boolean | null };
+export type SequentialNoteDeleteMutation = { __typename?: 'Mutation', deleteSequentialNote?: boolean | null };
 
 export type SequentialAverageCalculationMutationVariables = Exact<{
-  classId: number;
-  subPeriodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialAverageCalculationMutation = { calculateSequentialAverage: boolean | null };
+export type SequentialAverageCalculationMutation = { __typename?: 'Mutation', calculateSequentialAverage?: boolean | null };
 
 export type SequentialAveragesCalculationMutationVariables = Exact<{
-  subPeriodId: number;
-  schoolId: number;
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialAveragesCalculationMutation = { calculateAllSequentialAverage: boolean | null };
+export type SequentialAveragesCalculationMutation = { __typename?: 'Mutation', calculateAllSequentialAverage?: boolean | null };
 
 export type QuarterlyAverageCalculationMutationVariables = Exact<{
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyAverageCalculationMutation = { calculateQuarterlyAverage: boolean | null };
+export type QuarterlyAverageCalculationMutation = { __typename?: 'Mutation', calculateQuarterlyAverage?: boolean | null };
 
 export type QuarterlyAveragesCalculationMutationVariables = Exact<{
-  periodId: number;
-  schoolId: number;
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyAveragesCalculationMutation = { calculateAllQuarterlyAverage: boolean | null };
+export type QuarterlyAveragesCalculationMutation = { __typename?: 'Mutation', calculateAllQuarterlyAverage?: boolean | null };
 
 export type AnnualAverageCalculationMutationVariables = Exact<{
-  classId: number;
-  schoolYearId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualAverageCalculationMutation = { calculateAnnualAverage: boolean | null };
+export type AnnualAverageCalculationMutation = { __typename?: 'Mutation', calculateAnnualAverage?: boolean | null };
 
 export type AnnualAveragesCalculationMutationVariables = Exact<{
-  schoolYearId: number;
-  schoolId: number;
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualAveragesCalculationMutation = { calculateAllAnnualAverage: boolean | null };
+export type AnnualAveragesCalculationMutation = { __typename?: 'Mutation', calculateAllAnnualAverage?: boolean | null };
 
 export type QuarterlyNoteCalculationMutationVariables = Exact<{
-  classId: number;
-  periodId: number;
+  classId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyNoteCalculationMutation = { calculateQuarterlyNote: boolean | null };
+export type QuarterlyNoteCalculationMutation = { __typename?: 'Mutation', calculateQuarterlyNote?: boolean | null };
 
 export type QuarterlyNotesCalculationMutationVariables = Exact<{
-  periodId: number;
-  schoolId: number;
+  periodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type QuarterlyNotesCalculationMutation = { calculateAllQuarterlyNote: boolean | null };
+export type QuarterlyNotesCalculationMutation = { __typename?: 'Mutation', calculateAllQuarterlyNote?: boolean | null };
 
 export type AnnualNoteCalculationMutationVariables = Exact<{
-  classId: number;
-  schoolYearId: number;
+  classId: Scalars['Int']['input'];
+  schoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualNoteCalculationMutation = { calculateAnnualNote: boolean | null };
+export type AnnualNoteCalculationMutation = { __typename?: 'Mutation', calculateAnnualNote?: boolean | null };
 
 export type AnnualNotesCalculationMutationVariables = Exact<{
-  schoolYearId: number;
-  schoolId: number;
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AnnualNotesCalculationMutation = { calculateAllAnnualNote: boolean | null };
+export type AnnualNotesCalculationMutation = { __typename?: 'Mutation', calculateAllAnnualNote?: boolean | null };
 
 export type SequentialClassReportByGenderQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SequentialClassReportByGenderQuery = { report: Array<{ successRate: number | null, className: string | null, subPeriodName: string | null, clazz: { id: number, name: string } | null, subPeriod: { id: number, label: string } | null }> | null };
+export type SequentialClassReportByGenderQuery = { __typename?: 'Query', report?: Array<{ __typename?: 'SequentialClassReportByGender', successRate?: number | null, className?: string | null, subPeriodName?: string | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null, subPeriod?: { __typename?: 'SubPeriod', id: number, label: string } | null }> | null };
 
 export type InitiatePaymentMutationVariables = Exact<{
   input: GiselPayRequestedInput;
 }>;
 
 
-export type InitiatePaymentMutation = { reference: string | null };
+export type InitiatePaymentMutation = { __typename?: 'Mutation', reference?: string | null };
 
 export type CheckAndConfirmPaymentMutationVariables = Exact<{
   input: GiselPaymentCheckInput;
 }>;
 
 
-export type CheckAndConfirmPaymentMutation = { checkPaymentAndConfirm: { code: number, result: { statut: string, description: string | null } | null } | null };
+export type CheckAndConfirmPaymentMutation = { __typename?: 'Mutation', checkPaymentAndConfirm?: { __typename?: 'GiselPaymentCheckResult', code: number, result?: { __typename?: 'GiselPaymentCheckSubResult', statut: string, description?: string | null } | null } | null };
 
-export type MobileOperationFieldsFragment = { id: string, operationId: unknown, type: string, operationDate: string, referenceOrder: string | null, reference: string | null, amount: number | null, fee: number | null, person: string | null, personType: string | null, enterpriseId: number, description: string, paymentNumber: string | null, payObject: string | null, status: string | null, invoiceType: string };
+export type MobileOperationFieldsFragment = { __typename?: 'MobileOperation', id: string, operationId: any, type: string, operationDate: string, referenceOrder?: string | null, reference?: string | null, amount?: number | null, fee?: number | null, person?: string | null, personType?: string | null, enterpriseId: number, description: string, paymentNumber?: string | null, payObject?: string | null, status?: string | null, invoiceType: string };
 
 export type MobileOperationsQueryVariables = Exact<{
-  id: number;
-  startDate: unknown;
-  endDate: unknown;
+  id: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+  endDate: Scalars['Date']['input'];
 }>;
 
 
-export type MobileOperationsQuery = { mobileOperations: Array<{ id: string, operationId: unknown, type: string, operationDate: string, referenceOrder: string | null, reference: string | null, amount: number | null, fee: number | null, person: string | null, personType: string | null, enterpriseId: number, description: string, paymentNumber: string | null, payObject: string | null, status: string | null, invoiceType: string }> | null };
+export type MobileOperationsQuery = { __typename?: 'Query', mobileOperations?: Array<{ __typename?: 'MobileOperation', id: string, operationId: any, type: string, operationDate: string, referenceOrder?: string | null, reference?: string | null, amount?: number | null, fee?: number | null, person?: string | null, personType?: string | null, enterpriseId: number, description: string, paymentNumber?: string | null, payObject?: string | null, status?: string | null, invoiceType: string }> | null };
 
-export type PaymentGroupFieldsFragment = { id: number, name: string, name2: string | null, note: string | null, autoInclusion: boolean | null, formerStudent: boolean | null, external: boolean | null, fallback: boolean | null, schoolYear: { id: number, label: string } | null };
+export type PaymentGroupFieldsFragment = { __typename?: 'PaymentGroup', id: number, name: string, name2?: string | null, note?: string | null, autoInclusion?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, fallback?: boolean | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type PaymentGroupsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentGroupsQuery = { paymentGroups: Array<{ id: number, name: string, name2: string | null, note: string | null, autoInclusion: boolean | null, formerStudent: boolean | null, external: boolean | null, fallback: boolean | null, schoolYear: { id: number, label: string } | null } | null> | null };
+export type PaymentGroupsQuery = { __typename?: 'Query', paymentGroups?: Array<{ __typename?: 'PaymentGroup', id: number, name: string, name2?: string | null, note?: string | null, autoInclusion?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, fallback?: boolean | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null> | null };
 
 export type PaymentGroupSaveMutationVariables = Exact<{
-  group?: PaymentGroupInput | null | undefined;
+  group?: InputMaybe<PaymentGroupInput>;
 }>;
 
 
-export type PaymentGroupSaveMutation = { paymentGroup: { id: number, name: string, name2: string | null, note: string | null, autoInclusion: boolean | null, formerStudent: boolean | null, external: boolean | null, fallback: boolean | null, schoolYear: { id: number, label: string } | null } | null };
+export type PaymentGroupSaveMutation = { __typename?: 'Mutation', paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string, name2?: string | null, note?: string | null, autoInclusion?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, fallback?: boolean | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null };
 
 export type PaymentGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentGroupDeleteMutation = { deletePaymentGroupById: boolean | null };
+export type PaymentGroupDeleteMutation = { __typename?: 'Mutation', deletePaymentGroupById?: boolean | null };
 
 export type PaymentGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PaymentGroupCreatedSubscription = { paymentGroup: { id: number, name: string, name2: string | null, note: string | null, autoInclusion: boolean | null, formerStudent: boolean | null, external: boolean | null, fallback: boolean | null } | null };
+export type PaymentGroupCreatedSubscription = { __typename?: 'Subscription', paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string, name2?: string | null, note?: string | null, autoInclusion?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, fallback?: boolean | null } | null };
 
-export type PaymentModeFieldsFragment = { id: number, name: string, description: string | null, active: boolean | null, school: { id: number } };
+export type PaymentModeFieldsFragment = { __typename?: 'PaymentMode', id: number, name: string, description?: string | null, active?: boolean | null, school: { __typename?: 'School', id: number } };
 
 export type PaymentModesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentModesQuery = { paymentModes: Array<{ id: number, name: string, description: string | null, active: boolean | null, school: { id: number } }> | null };
+export type PaymentModesQuery = { __typename?: 'Query', paymentModes?: Array<{ __typename?: 'PaymentMode', id: number, name: string, description?: string | null, active?: boolean | null, school: { __typename?: 'School', id: number } }> | null };
 
 export type PaymentModeSaveMutationVariables = Exact<{
-  mode?: PaymentModeInput | null | undefined;
+  mode?: InputMaybe<PaymentModeInput>;
 }>;
 
 
-export type PaymentModeSaveMutation = { paymentMode: { id: number, name: string, description: string | null, active: boolean | null, school: { id: number } } | null };
+export type PaymentModeSaveMutation = { __typename?: 'Mutation', paymentMode?: { __typename?: 'PaymentMode', id: number, name: string, description?: string | null, active?: boolean | null, school: { __typename?: 'School', id: number } } | null };
 
 export type PaymentModeDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentModeDeleteMutation = { deletePaymentModeById: boolean | null };
+export type PaymentModeDeleteMutation = { __typename?: 'Mutation', deletePaymentModeById?: boolean | null };
 
 export type PaymentModeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PaymentModeCreatedSubscription = { paymentMode: { id: number, name: string, description: string | null, active: boolean | null } | null };
+export type PaymentModeCreatedSubscription = { __typename?: 'Subscription', paymentMode?: { __typename?: 'PaymentMode', id: number, name: string, description?: string | null, active?: boolean | null } | null };
 
-export type PaymentSliceFieldsFragment = { id: number, numberOrder: number, name: string, name2: string | null, note: string | null, refundable: boolean | null, deadline: string | null, schoolYear: { id: number, label: string } | null };
+export type PaymentSliceFieldsFragment = { __typename?: 'PaymentSlice', id: number, numberOrder: number, name: string, name2?: string | null, note?: string | null, refundable?: boolean | null, deadline?: string | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type PaymentSlicesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentSlicesQuery = { paymentSlices: Array<{ id: number, numberOrder: number, name: string, name2: string | null, note: string | null, refundable: boolean | null, deadline: string | null, schoolYear: { id: number, label: string } | null }> | null };
+export type PaymentSlicesQuery = { __typename?: 'Query', paymentSlices?: Array<{ __typename?: 'PaymentSlice', id: number, numberOrder: number, name: string, name2?: string | null, note?: string | null, refundable?: boolean | null, deadline?: string | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null }> | null };
 
 export type PaymentSliceSaveMutationVariables = Exact<{
-  slice?: PaymentSliceInput | null | undefined;
+  slice?: InputMaybe<PaymentSliceInput>;
 }>;
 
 
-export type PaymentSliceSaveMutation = { paymentSlice: { id: number, numberOrder: number, name: string, name2: string | null, note: string | null, refundable: boolean | null, deadline: string | null, schoolYear: { id: number, label: string } | null } | null };
+export type PaymentSliceSaveMutation = { __typename?: 'Mutation', paymentSlice?: { __typename?: 'PaymentSlice', id: number, numberOrder: number, name: string, name2?: string | null, note?: string | null, refundable?: boolean | null, deadline?: string | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null };
 
 export type PaymentSliceDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentSliceDeleteMutation = { deletePaymentSliceById: boolean | null };
+export type PaymentSliceDeleteMutation = { __typename?: 'Mutation', deletePaymentSliceById?: boolean | null };
 
 export type PaymentSliceCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PaymentSliceCreatedSubscription = { paymentSlice: { id: number, numberOrder: number, name: string, name2: string | null, note: string | null, refundable: boolean | null, deadline: string | null } | null };
+export type PaymentSliceCreatedSubscription = { __typename?: 'Subscription', paymentSlice?: { __typename?: 'PaymentSlice', id: number, numberOrder: number, name: string, name2?: string | null, note?: string | null, refundable?: boolean | null, deadline?: string | null } | null };
 
-export type SchoolFeeFieldsFragment = { id: number, numberOrder: number, code: string, name: string, name2: string | null, note: string | null, active: boolean | null, mandatory: boolean | null, saleAccount: { id: number, name: string } | null, school: { id: number, name: string } | null };
+export type SchoolFeeFieldsFragment = { __typename?: 'SchoolFee', id: number, numberOrder: number, code: string, name: string, name2?: string | null, note?: string | null, active?: boolean | null, mandatory?: boolean | null, saleAccount?: { __typename?: 'Account', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null };
 
 export type SchoolFeesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolFeesQuery = { schoolFees: Array<{ id: number, numberOrder: number, code: string, name: string, name2: string | null, note: string | null, active: boolean | null, mandatory: boolean | null, saleAccount: { id: number, name: string } | null, school: { id: number, name: string } | null }> | null };
+export type SchoolFeesQuery = { __typename?: 'Query', schoolFees?: Array<{ __typename?: 'SchoolFee', id: number, numberOrder: number, code: string, name: string, name2?: string | null, note?: string | null, active?: boolean | null, mandatory?: boolean | null, saleAccount?: { __typename?: 'Account', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null }> | null };
 
 export type SchoolFeeSaveMutationVariables = Exact<{
-  schoolFee?: SchoolFeeInput | null | undefined;
+  schoolFee?: InputMaybe<SchoolFeeInput>;
 }>;
 
 
-export type SchoolFeeSaveMutation = { schoolFee: { id: number, numberOrder: number, code: string, name: string, name2: string | null, note: string | null, active: boolean | null, mandatory: boolean | null, saleAccount: { id: number, name: string } | null, school: { id: number, name: string } | null } | null };
+export type SchoolFeeSaveMutation = { __typename?: 'Mutation', schoolFee?: { __typename?: 'SchoolFee', id: number, numberOrder: number, code: string, name: string, name2?: string | null, note?: string | null, active?: boolean | null, mandatory?: boolean | null, saleAccount?: { __typename?: 'Account', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
 export type SchoolFeeDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolFeeDeleteMutation = { deleteSchoolFeeById: boolean | null };
+export type SchoolFeeDeleteMutation = { __typename?: 'Mutation', deleteSchoolFeeById?: boolean | null };
 
 export type SchoolFeeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SchoolFeeCreatedSubscription = { schoolFee: { id: number, numberOrder: number, code: string, name: string, name2: string | null, note: string | null, active: boolean | null, mandatory: boolean | null } | null };
+export type SchoolFeeCreatedSubscription = { __typename?: 'Subscription', schoolFee?: { __typename?: 'SchoolFee', id: number, numberOrder: number, code: string, name: string, name2?: string | null, note?: string | null, active?: boolean | null, mandatory?: boolean | null } | null };
 
 export type SchoolFeeLevelSaveMutationVariables = Exact<{
-  form?: SchoolFeeLevelForm | null | undefined;
+  form?: InputMaybe<SchoolFeeLevelForm>;
 }>;
 
 
-export type SchoolFeeLevelSaveMutation = { storeSchoolFeeLevel: boolean | null };
+export type SchoolFeeLevelSaveMutation = { __typename?: 'Mutation', storeSchoolFeeLevel?: boolean | null };
 
 export type SchoolFeeLevelsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolFeeLevelsQuery = { schoolFeeLevels: Array<{ requiredAmount: number, schoolFeeLevelPK: { levelId: number, schoolFeeId: number, paymentGroupId: number, paymentSliceId: number } | null, level: { id: number, name: string } | null, schoolFee: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, paymentSlice: { id: number, name: string } | null }> | null };
+export type SchoolFeeLevelsQuery = { __typename?: 'Query', schoolFeeLevels?: Array<{ __typename?: 'SchoolFeeLevel', requiredAmount: number, schoolFeeLevelPK?: { __typename?: 'SchoolFeeLevelPK', levelId: number, schoolFeeId: number, paymentGroupId: number, paymentSliceId: number } | null, level?: { __typename?: 'Level', id: number, name: string } | null, schoolFee?: { __typename?: 'SchoolFee', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, paymentSlice?: { __typename?: 'PaymentSlice', id: number, name: string } | null }> | null };
 
 export type SchoolFeeLevelSimpleQueryVariables = Exact<{
-  levelId: number;
-  schoolId: number;
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolFeeLevelSimpleQuery = { fees: Array<{ paymentGroupId: number, paymentGroupName: string, items: Array<{ paymentSliceId: number, paymentSliceName: string, items: Array<{ schoolFeeId: number, schoolFeeName: string, requiredAmount: number }> | null }> | null }> | null };
+export type SchoolFeeLevelSimpleQuery = { __typename?: 'Query', fees?: Array<{ __typename?: 'SchoolFeeLevelInput', paymentGroupId: number, paymentGroupName: string, items?: Array<{ __typename?: 'SchoolFeeLevelItem', paymentSliceId: number, paymentSliceName: string, items?: Array<{ __typename?: 'SchoolFeeLevelItemItem', schoolFeeId: number, schoolFeeName: string, requiredAmount: number }> | null }> | null }> | null };
 
 export type SchoolFeeLevelSimpleSaveMutationVariables = Exact<{
   form: Array<SchoolFeeLevelInputI> | SchoolFeeLevelInputI;
-  levelId: number;
+  levelId: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolFeeLevelSimpleSaveMutation = { schoolFeeLevelSave: boolean | null };
+export type SchoolFeeLevelSimpleSaveMutation = { __typename?: 'Mutation', schoolFeeLevelSave?: boolean | null };
 
-export type StudentInvoiceFieldsFragment = { id: unknown, reference: string, operationDate: string, totalAmount: unknown, amountPaid: unknown, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null };
+export type StudentInvoiceFieldsFragment = { __typename?: 'StudentInvoice', id: any, reference: string, operationDate: string, totalAmount: any, amountPaid?: any | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null };
 
 export type StudentInvoicesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentInvoicesQuery = { studentInvoices: Array<{ id: unknown, reference: string, operationDate: string, totalAmount: unknown, amountPaid: unknown, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null }> | null };
+export type StudentInvoicesQuery = { __typename?: 'Query', studentInvoices?: Array<{ __typename?: 'StudentInvoice', id: any, reference: string, operationDate: string, totalAmount: any, amountPaid?: any | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null }> | null };
 
 export type StudentInvoiceSaveMutationVariables = Exact<{
-  invoice?: StudentInvoiceInput | null | undefined;
+  invoice?: InputMaybe<StudentInvoiceInput>;
 }>;
 
 
-export type StudentInvoiceSaveMutation = { studentInvoice: { id: unknown, reference: string, operationDate: string, totalAmount: unknown, amountPaid: unknown, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null } | null };
+export type StudentInvoiceSaveMutation = { __typename?: 'Mutation', studentInvoice?: { __typename?: 'StudentInvoice', id: any, reference: string, operationDate: string, totalAmount: any, amountPaid?: any | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null } | null };
 
 export type StudentInvoiceDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentInvoiceDeleteMutation = { studentInvoiceDeleteById: boolean | null };
+export type StudentInvoiceDeleteMutation = { __typename?: 'Mutation', studentInvoiceDeleteById?: boolean | null };
 
 export type StudentInvoicesDeleteMutationVariables = Exact<{
-  ids: Array<unknown> | unknown;
+  ids: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
 }>;
 
 
-export type StudentInvoicesDeleteMutation = { studentInvoiceDeleteByIds: boolean | null };
+export type StudentInvoicesDeleteMutation = { __typename?: 'Mutation', studentInvoiceDeleteByIds?: boolean | null };
 
 export type StudentInvoiceCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StudentInvoiceCreatedSubscription = { studentInvoice: { id: unknown, reference: string, operationDate: string, totalAmount: unknown, amountPaid: unknown } | null };
+export type StudentInvoiceCreatedSubscription = { __typename?: 'Subscription', studentInvoice?: { __typename?: 'StudentInvoice', id: any, reference: string, operationDate: string, totalAmount: any, amountPaid?: any | null } | null };
 
 export type StudentInvoiceItemByReferenceQueryVariables = Exact<{
-  reference: string;
-  schoolId: number;
+  reference: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentInvoiceItemByReferenceQuery = { studentInvoiceItemByReference: Array<{ amount: unknown, studentInvoiceItemPK: { schoolFeeId: number, studentInvoiceId: unknown, paymentSliceId: number } | null, schoolFee: { id: number, name: string } | null, paymentSlice: { id: number, name: string, deadline: string | null } | null, studentInvoice: { id: unknown, student: { id: unknown, lastName: string, firstName: string | null } | null } | null }> | null };
+export type StudentInvoiceItemByReferenceQuery = { __typename?: 'Query', studentInvoiceItemByReference?: Array<{ __typename?: 'StudentInvoiceItem', amount: any, studentInvoiceItemPK?: { __typename?: 'StudentInvoiceItemPK', schoolFeeId: number, studentInvoiceId: any, paymentSliceId: number } | null, schoolFee?: { __typename?: 'SchoolFee', id: number, name: string } | null, paymentSlice?: { __typename?: 'PaymentSlice', id: number, name: string, deadline?: string | null } | null, studentInvoice?: { __typename?: 'StudentInvoice', id: any, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null } | null } | null }> | null };
 
 export type StudentInvoiceCompulsoryStatusQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentInvoiceCompulsoryStatusQuery = { compulsoryStatus: boolean | null };
+export type StudentInvoiceCompulsoryStatusQuery = { __typename?: 'Query', compulsoryStatus?: boolean | null };
 
 export type StudentInvoiceForUpdateQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentInvoiceForUpdateQuery = { invoices: { id: unknown, reference: string | null, operationDate: unknown, totalAmount: number | null, studentId: unknown, studentName: string, registrationNumber: string | null } | null };
+export type StudentInvoiceForUpdateQuery = { __typename?: 'Query', invoices?: { __typename?: 'StudentInvoiceUpdate', id: any, reference?: string | null, operationDate: any, totalAmount?: number | null, studentId: any, studentName: string, registrationNumber?: string | null } | null };
 
 export type StudentInvoiceUpdateMutationVariables = Exact<{
   invoice: StudentInvoiceUpdateInput;
 }>;
 
 
-export type StudentInvoiceUpdateMutation = { studentInvoiceUpdate: boolean | null };
+export type StudentInvoiceUpdateMutation = { __typename?: 'Mutation', studentInvoiceUpdate?: boolean | null };
 
-export type StudentPaymentFieldsFragment = { id: unknown, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue: number | null, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, paymentAccount: { id: number, name: string } | null, paymentMode: { id: number, name: string } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null, studentInvoice: { id: unknown, reference: string } | null };
+export type StudentPaymentFieldsFragment = { __typename?: 'StudentPayment', id: any, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue?: number | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null, studentInvoice?: { __typename?: 'StudentInvoice', id: any, reference: string } | null };
 
 export type StudentPaymentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentPaymentsQuery = { studentPayments: Array<{ id: unknown, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue: number | null, studentInvoice: { id: unknown, reference: string } | null, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, paymentAccount: { id: number, name: string } | null, paymentMode: { id: number, name: string } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null }> | null };
+export type StudentPaymentsQuery = { __typename?: 'Query', studentPayments?: Array<{ __typename?: 'StudentPayment', id: any, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue?: number | null, studentInvoice?: { __typename?: 'StudentInvoice', id: any, reference: string } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null }> | null };
 
 export type StudentPaymentExistsQueryVariables = Exact<{
-  studentId: unknown;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentPaymentExistsQuery = { studentPaymentExists: boolean | null };
+export type StudentPaymentExistsQuery = { __typename?: 'Query', studentPaymentExists?: boolean | null };
 
 export type StudentPaymentsExistsQueryVariables = Exact<{
-  studentIds: Array<unknown> | unknown;
-  schoolId: number;
+  studentIds: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentPaymentsExistsQuery = { studentPaymentsExists: boolean | null };
+export type StudentPaymentsExistsQuery = { __typename?: 'Query', studentPaymentsExists?: boolean | null };
 
 export type StudentPaymentSaveMutationVariables = Exact<{
-  payment?: StudentPaymentInput | null | undefined;
+  payment?: InputMaybe<StudentPaymentInput>;
 }>;
 
 
-export type StudentPaymentSaveMutation = { studentPayment: { id: unknown, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue: number | null, student: { id: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender: Gender | null } | null, paymentAccount: { id: number, name: string } | null, paymentMode: { id: number, name: string } | null, frequent: { frequentPK: { studentId: unknown, classId: number, schoolYearId: number } | null, clazz: { id: number, name: string } | null } | null, studentInvoice: { id: unknown, reference: string } | null } | null };
+export type StudentPaymentSaveMutation = { __typename?: 'Mutation', studentPayment?: { __typename?: 'StudentPayment', id: any, reference: string, paymentDate: string, totalAmountPaid: number, inKindValue?: number | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: string, birthplace: string, gender?: Gender | null } | null, paymentAccount?: { __typename?: 'Account', id: number, name: string } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, frequent?: { __typename?: 'Frequent', frequentPK?: { __typename?: 'FrequentPK', studentId: any, classId: number, schoolYearId: number } | null, clazz?: { __typename?: 'Clazz', id: number, name: string } | null } | null, studentInvoice?: { __typename?: 'StudentInvoice', id: any, reference: string } | null } | null };
 
 export type StudentPaymentDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentPaymentDeleteMutation = { deleteStudentPaymentById: boolean | null };
+export type StudentPaymentDeleteMutation = { __typename?: 'Mutation', deleteStudentPaymentById?: boolean | null };
 
 export type StudentPaymentsDeleteMutationVariables = Exact<{
-  ids: Array<unknown> | unknown;
+  ids: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
 }>;
 
 
-export type StudentPaymentsDeleteMutation = { studentPaymentDeleteByIds: boolean | null };
+export type StudentPaymentsDeleteMutation = { __typename?: 'Mutation', studentPaymentDeleteByIds?: boolean | null };
 
 export type StudentPaymentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StudentPaymentCreatedSubscription = { studentPayment: { id: unknown, reference: string, paymentDate: string, totalAmountPaid: number } | null };
+export type StudentPaymentCreatedSubscription = { __typename?: 'Subscription', studentPayment?: { __typename?: 'StudentPayment', id: any, reference: string, paymentDate: string, totalAmountPaid: number } | null };
 
 export type UnpaidSchoolFeeQueryVariables = Exact<{
-  studentId: unknown;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type UnpaidSchoolFeeQuery = { findUnpaidSchoolFee: Array<{ requiredAmount: number, schoolFeeLevelPK: { schoolFeeId: number, levelId: number, paymentGroupId: number, paymentSliceId: number } | null, schoolFee: { id: number, name: string } | null, paymentSlice: { id: number, name: string, deadline: string | null } | null }> | null };
+export type UnpaidSchoolFeeQuery = { __typename?: 'Query', findUnpaidSchoolFee?: Array<{ __typename?: 'SchoolFeeLevel', requiredAmount: number, schoolFeeLevelPK?: { __typename?: 'SchoolFeeLevelPK', schoolFeeId: number, levelId: number, paymentGroupId: number, paymentSliceId: number } | null, schoolFee?: { __typename?: 'SchoolFee', id: number, name: string } | null, paymentSlice?: { __typename?: 'PaymentSlice', id: number, name: string, deadline?: string | null } | null }> | null };
 
 export type UnpaidSchoolFeeWithInvoiceQueryVariables = Exact<{
-  studentId: unknown;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type UnpaidSchoolFeeWithInvoiceQuery = { schoolFeeLevels: Array<{ requiredAmount: number, schoolFeeLevelPK: { schoolFeeId: number, levelId: number, paymentGroupId: number, paymentSliceId: number } | null, schoolFee: { id: number, name: string } | null, paymentSlice: { id: number, name: string, deadline: string | null } | null }> | null };
+export type UnpaidSchoolFeeWithInvoiceQuery = { __typename?: 'Query', schoolFeeLevels?: Array<{ __typename?: 'SchoolFeeLevel', requiredAmount: number, schoolFeeLevelPK?: { __typename?: 'SchoolFeeLevelPK', schoolFeeId: number, levelId: number, paymentGroupId: number, paymentSliceId: number } | null, schoolFee?: { __typename?: 'SchoolFee', id: number, name: string } | null, paymentSlice?: { __typename?: 'PaymentSlice', id: number, name: string, deadline?: string | null } | null }> | null };
 
 export type StudentPaymentUpdateMutationVariables = Exact<{
   payment: StudentPaymentUpdateInput;
 }>;
 
 
-export type StudentPaymentUpdateMutation = { studentPaymentUpdate: boolean | null };
+export type StudentPaymentUpdateMutation = { __typename?: 'Mutation', studentPaymentUpdate?: boolean | null };
 
 export type StudentPaymentForUpdateQueryVariables = Exact<{
-  paymentId: unknown;
+  paymentId: Scalars['Long']['input'];
 }>;
 
 
-export type StudentPaymentForUpdateQuery = { studentPayment: { id: unknown, reference: string, paymentDate: unknown, totalAmountPaid: number | null, note: string | null, studentId: unknown, studentName: string, registrationNumber: string | null, studentInvoiceId: unknown, paymentAccountId: number | null, paymentModeId: number | null, items: Array<{ paymentSlice: string | null, schoolFee: string | null, inKindPayment: boolean, paymentSliceId: number, schoolFeeId: number, studentPaymentId: unknown, paidAmount: number, studentPaymentItemPK: { paymentSliceId: number, schoolFeeId: number, studentPaymentId: unknown } | null }> | null } | null };
+export type StudentPaymentForUpdateQuery = { __typename?: 'Query', studentPayment?: { __typename?: 'StudentPaymentUpdate', id: any, reference: string, paymentDate: any, totalAmountPaid?: number | null, note?: string | null, studentId: any, studentName: string, registrationNumber?: string | null, studentInvoiceId?: any | null, paymentAccountId?: number | null, paymentModeId?: number | null, items?: Array<{ __typename?: 'StudentPaymentItemUpdate', paymentSlice?: string | null, schoolFee?: string | null, inKindPayment: boolean, paymentSliceId: number, schoolFeeId: number, studentPaymentId?: any | null, paidAmount: number, studentPaymentItemPK?: { __typename?: 'StudentPaymentItemPK', paymentSliceId: number, schoolFeeId: number, studentPaymentId: any } | null }> | null } | null };
 
-export type AttendanceFieldsFragment = { id: unknown, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime: string | null, departureTime: string | null, breakStartTime: string | null, breakEndTime: string | null, note: string | null, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null };
+export type AttendanceFieldsFragment = { __typename?: 'Attendance', id: any, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime?: string | null, departureTime?: string | null, breakStartTime?: string | null, breakEndTime?: string | null, note?: string | null, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null };
 
 export type AttendancesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type AttendancesQuery = { attendances: Array<{ id: unknown, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime: string | null, departureTime: string | null, breakStartTime: string | null, breakEndTime: string | null, note: string | null, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null }> | null };
+export type AttendancesQuery = { __typename?: 'Query', attendances?: Array<{ __typename?: 'Attendance', id: any, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime?: string | null, departureTime?: string | null, breakStartTime?: string | null, breakEndTime?: string | null, note?: string | null, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null }> | null };
 
 export type AttendanceSaveMutationVariables = Exact<{
   attendance: AttendanceCreateInput;
 }>;
 
 
-export type AttendanceSaveMutation = { attendance: { id: unknown, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime: string | null, departureTime: string | null, breakStartTime: string | null, breakEndTime: string | null, note: string | null, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null };
+export type AttendanceSaveMutation = { __typename?: 'Mutation', attendance?: { __typename?: 'Attendance', id: any, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime?: string | null, departureTime?: string | null, breakStartTime?: string | null, breakEndTime?: string | null, note?: string | null, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null };
 
 export type AttendanceUpdateMutationVariables = Exact<{
   attendance: AttendanceUpdateInput;
 }>;
 
 
-export type AttendanceUpdateMutation = { attendance: { id: unknown, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime: string | null, departureTime: string | null, breakStartTime: string | null, breakEndTime: string | null, note: string | null, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null };
+export type AttendanceUpdateMutation = { __typename?: 'Mutation', attendance?: { __typename?: 'Attendance', id: any, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime?: string | null, departureTime?: string | null, breakStartTime?: string | null, breakEndTime?: string | null, note?: string | null, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null };
 
 export type AttendanceDeleteByIdMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type AttendanceDeleteByIdMutation = { attendanceDeleteById: boolean | null };
+export type AttendanceDeleteByIdMutation = { __typename?: 'Mutation', attendanceDeleteById?: boolean | null };
 
 export type AttendanceCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AttendanceCreatedSubscription = { attendance: { id: unknown, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime: string | null, departureTime: string | null, breakStartTime: string | null, breakEndTime: string | null, note: string | null, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null };
+export type AttendanceCreatedSubscription = { __typename?: 'Subscription', attendance?: { __typename?: 'Attendance', id: any, workDate: string, status: ApprovalStatus, enterpriseId: number, type: AttendanceType, arrivalTime?: string | null, departureTime?: string | null, breakStartTime?: string | null, breakEndTime?: string | null, note?: string | null, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null };
 
-export type DeductionCategoryFieldsFragment = { id: number, numberOrder: unknown, name: string, active: boolean, mandatory: boolean, description: string | null, enterpriseId: number };
+export type DeductionCategoryFieldsFragment = { __typename?: 'DeductionCategory', id: number, numberOrder: any, name: string, active: boolean, mandatory: boolean, description?: string | null, enterpriseId: number };
 
 export type DeductionCategoryQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DeductionCategoryQuery = { deductionCategories: Array<{ id: number, numberOrder: unknown, name: string, active: boolean, mandatory: boolean, description: string | null, enterpriseId: number }> | null };
+export type DeductionCategoryQuery = { __typename?: 'Query', deductionCategories?: Array<{ __typename?: 'DeductionCategory', id: number, numberOrder: any, name: string, active: boolean, mandatory: boolean, description?: string | null, enterpriseId: number }> | null };
 
 export type DeductionCategorySaveMutationVariables = Exact<{
   category: DeductionCategoryCreateInput;
 }>;
 
 
-export type DeductionCategorySaveMutation = { deductionCategory: { id: number, numberOrder: unknown, name: string, active: boolean, mandatory: boolean, description: string | null, enterpriseId: number } | null };
+export type DeductionCategorySaveMutation = { __typename?: 'Mutation', deductionCategory?: { __typename?: 'DeductionCategory', id: number, numberOrder: any, name: string, active: boolean, mandatory: boolean, description?: string | null, enterpriseId: number } | null };
 
 export type DeductionCategoryUpdateMutationVariables = Exact<{
   category: DeductionCategoryUpdateInput;
 }>;
 
 
-export type DeductionCategoryUpdateMutation = { deductionCategory: { id: number, numberOrder: unknown, name: string, active: boolean, mandatory: boolean, description: string | null, enterpriseId: number } | null };
+export type DeductionCategoryUpdateMutation = { __typename?: 'Mutation', deductionCategory?: { __typename?: 'DeductionCategory', id: number, numberOrder: any, name: string, active: boolean, mandatory: boolean, description?: string | null, enterpriseId: number } | null };
 
 export type DeductionCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DeductionCategoryDeleteMutation = { deductionCategoryDeleteById: boolean | null };
+export type DeductionCategoryDeleteMutation = { __typename?: 'Mutation', deductionCategoryDeleteById?: boolean | null };
 
 export type DeductionCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DeductionCategoryCreatedSubscription = { deductionCategory: { id: number, name: string, active: boolean, description: string | null, enterpriseId: number } | null };
+export type DeductionCategoryCreatedSubscription = { __typename?: 'Subscription', deductionCategory?: { __typename?: 'DeductionCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number } | null };
 
-export type DeductionFieldsFragment = { id: number, code: string | null, name: string, active: boolean, description: string | null, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null };
+export type DeductionFieldsFragment = { __typename?: 'Deduction', id: number, code?: string | null, name: string, active: boolean, description?: string | null, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'DeductionCategory', id: number, name: string } | null };
 
 export type DeductionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DeductionsQuery = { deductions: Array<{ id: number, code: string | null, name: string, active: boolean, description: string | null, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null }> | null };
+export type DeductionsQuery = { __typename?: 'Query', deductions?: Array<{ __typename?: 'Deduction', id: number, code?: string | null, name: string, active: boolean, description?: string | null, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'DeductionCategory', id: number, name: string } | null }> | null };
 
 export type DeductionSaveMutationVariables = Exact<{
   deduction: DeductionCreateInput;
 }>;
 
 
-export type DeductionSaveMutation = { deduction: { id: number, code: string | null, name: string, active: boolean, description: string | null, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null } | null };
+export type DeductionSaveMutation = { __typename?: 'Mutation', deduction?: { __typename?: 'Deduction', id: number, code?: string | null, name: string, active: boolean, description?: string | null, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'DeductionCategory', id: number, name: string } | null } | null };
 
 export type DeductionUpdateMutationVariables = Exact<{
   deduction: DeductionUpdateInput;
 }>;
 
 
-export type DeductionUpdateMutation = { deduction: { id: number, code: string | null, name: string, active: boolean, description: string | null, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null } | null };
+export type DeductionUpdateMutation = { __typename?: 'Mutation', deduction?: { __typename?: 'Deduction', id: number, code?: string | null, name: string, active: boolean, description?: string | null, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'DeductionCategory', id: number, name: string } | null } | null };
 
 export type DeductionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DeductionDeleteMutation = { deductionDeleteById: boolean | null };
+export type DeductionDeleteMutation = { __typename?: 'Mutation', deductionDeleteById?: boolean | null };
 
 export type DeductionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DeductionCreatedSubscription = { deduction: { id: number, code: string | null, name: string, active: boolean, description: string | null, enterpriseId: number } | null };
+export type DeductionCreatedSubscription = { __typename?: 'Subscription', deduction?: { __typename?: 'Deduction', id: number, code?: string | null, name: string, active: boolean, description?: string | null, enterpriseId: number } | null };
 
-export type DepartmentFieldsFragment = { id: number, name: string, manager: string | null, active: boolean | null, note: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number };
+export type DepartmentFieldsFragment = { __typename?: 'Department', id: number, name: string, manager?: string | null, active?: boolean | null, note?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number };
 
 export type DepartmentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DepartmentsQuery = { departments: Array<{ id: number, name: string, manager: string | null, active: boolean | null, note: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number }> | null };
+export type DepartmentsQuery = { __typename?: 'Query', departments?: Array<{ __typename?: 'Department', id: number, name: string, manager?: string | null, active?: boolean | null, note?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number }> | null };
 
 export type DepartmentSaveMutationVariables = Exact<{
   department: DepartmentCreateInput;
 }>;
 
 
-export type DepartmentSaveMutation = { department: { id: number, name: string, manager: string | null, active: boolean | null, note: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number } | null };
+export type DepartmentSaveMutation = { __typename?: 'Mutation', department?: { __typename?: 'Department', id: number, name: string, manager?: string | null, active?: boolean | null, note?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number } | null };
 
 export type DepartmentUpdateMutationVariables = Exact<{
   department: DepartmentUpdateInput;
 }>;
 
 
-export type DepartmentUpdateMutation = { department: { id: number, name: string, manager: string | null, active: boolean | null, note: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number } | null };
+export type DepartmentUpdateMutation = { __typename?: 'Mutation', department?: { __typename?: 'Department', id: number, name: string, manager?: string | null, active?: boolean | null, note?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number } | null };
 
 export type DepartmentDeleteByIdMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DepartmentDeleteByIdMutation = { departmentDeleteById: boolean | null };
+export type DepartmentDeleteByIdMutation = { __typename?: 'Mutation', departmentDeleteById?: boolean | null };
 
 export type DepartmentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DepartmentCreatedSubscription = { department: { id: number, name: string, manager: string | null, active: boolean | null, note: string | null, createdAt: string | null, updatedAt: string | null, enterpriseId: number } | null };
+export type DepartmentCreatedSubscription = { __typename?: 'Subscription', department?: { __typename?: 'Department', id: number, name: string, manager?: string | null, active?: boolean | null, note?: string | null, createdAt?: string | null, updatedAt?: string | null, enterpriseId: number } | null };
 
-export type EarningCategoryFieldsFragment = { id: number, numberOrder: unknown, name: string, description: string | null, active: boolean, enterpriseId: number };
+export type EarningCategoryFieldsFragment = { __typename?: 'EarningCategory', id: number, numberOrder: any, name: string, description?: string | null, active: boolean, enterpriseId: number };
 
 export type EarningCategoryQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EarningCategoryQuery = { earningCategories: Array<{ id: number, numberOrder: unknown, name: string, description: string | null, active: boolean, enterpriseId: number }> | null };
+export type EarningCategoryQuery = { __typename?: 'Query', earningCategories?: Array<{ __typename?: 'EarningCategory', id: number, numberOrder: any, name: string, description?: string | null, active: boolean, enterpriseId: number }> | null };
 
 export type EarningCategorySaveMutationVariables = Exact<{
   category: EarningCategoryCreateInput;
 }>;
 
 
-export type EarningCategorySaveMutation = { earningCategory: { id: number, numberOrder: unknown, name: string, description: string | null, active: boolean, enterpriseId: number } | null };
+export type EarningCategorySaveMutation = { __typename?: 'Mutation', earningCategory?: { __typename?: 'EarningCategory', id: number, numberOrder: any, name: string, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type EarningCategoryUpdateMutationVariables = Exact<{
   category: EarningCategoryUpdateInput;
 }>;
 
 
-export type EarningCategoryUpdateMutation = { earningCategory: { id: number, numberOrder: unknown, name: string, description: string | null, active: boolean, enterpriseId: number } | null };
+export type EarningCategoryUpdateMutation = { __typename?: 'Mutation', earningCategory?: { __typename?: 'EarningCategory', id: number, numberOrder: any, name: string, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type EarningCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EarningCategoryDeleteMutation = { earningCategoryDeleteById: boolean | null };
+export type EarningCategoryDeleteMutation = { __typename?: 'Mutation', earningCategoryDeleteById?: boolean | null };
 
 export type EarningCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EarningCategoryCreatedSubscription = { earningCategory: { id: number, name: string, active: boolean, description: string | null, enterpriseId: number } | null };
+export type EarningCategoryCreatedSubscription = { __typename?: 'Subscription', earningCategory?: { __typename?: 'EarningCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number } | null };
 
-export type EarningFieldsFragment = { id: number, code: string | null, name: string, active: boolean, description: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null };
+export type EarningFieldsFragment = { __typename?: 'Earning', id: number, code?: string | null, name: string, active: boolean, description?: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'EarningCategory', id: number, name: string } | null };
 
 export type EarningsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EarningsQuery = { earnings: Array<{ id: number, code: string | null, name: string, active: boolean, description: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null }> | null };
+export type EarningsQuery = { __typename?: 'Query', earnings?: Array<{ __typename?: 'Earning', id: number, code?: string | null, name: string, active: boolean, description?: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'EarningCategory', id: number, name: string } | null }> | null };
 
 export type EarningSaveMutationVariables = Exact<{
   earning: EarningCreateInput;
 }>;
 
 
-export type EarningSaveMutation = { earning: { id: number, code: string | null, name: string, active: boolean, description: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null } | null };
+export type EarningSaveMutation = { __typename?: 'Mutation', earning?: { __typename?: 'Earning', id: number, code?: string | null, name: string, active: boolean, description?: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'EarningCategory', id: number, name: string } | null } | null };
 
 export type EarningUpdateMutationVariables = Exact<{
   earning: EarningUpdateInput;
 }>;
 
 
-export type EarningUpdateMutation = { earning: { id: number, code: string | null, name: string, active: boolean, description: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category: { id: number, name: string } | null } | null };
+export type EarningUpdateMutation = { __typename?: 'Mutation', earning?: { __typename?: 'Earning', id: number, code?: string | null, name: string, active: boolean, description?: string | null, isTaxable: boolean, isOvertime: boolean, calculationType: CalculationType, enterpriseId: number, category?: { __typename?: 'EarningCategory', id: number, name: string } | null } | null };
 
 export type EarningDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EarningDeleteMutation = { earningDeleteById: boolean | null };
+export type EarningDeleteMutation = { __typename?: 'Mutation', earningDeleteById?: boolean | null };
 
 export type EarningCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EarningCreatedSubscription = { earning: { id: number, code: string | null, name: string, active: boolean, calculationType: CalculationType, isTaxable: boolean, description: string | null, isOvertime: boolean, enterpriseId: number } | null };
+export type EarningCreatedSubscription = { __typename?: 'Subscription', earning?: { __typename?: 'Earning', id: number, code?: string | null, name: string, active: boolean, calculationType: CalculationType, isTaxable: boolean, description?: string | null, isOvertime: boolean, enterpriseId: number } | null };
 
-export type EmployeeFragmentFragment = { id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null };
+export type EmployeeFragmentFragment = { __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null };
 
 export type EmployeesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EmployeesQuery = { employees: Array<{ id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null }> | null };
+export type EmployeesQuery = { __typename?: 'Query', employees?: Array<{ __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null }> | null };
 
 export type EmployeeByIdQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EmployeeByIdQuery = { employee: { id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null } | null };
+export type EmployeeByIdQuery = { __typename?: 'Query', employee?: { __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null } | null };
 
 export type EmployeeSaveMutationVariables = Exact<{
   employee: EmployeeCreateInput;
 }>;
 
 
-export type EmployeeSaveMutation = { employee: { id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null } | null };
+export type EmployeeSaveMutation = { __typename?: 'Mutation', employee?: { __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null } | null };
 
 export type EmployeeUpdateMutationVariables = Exact<{
   employee: EmployeeUpdateInput;
 }>;
 
 
-export type EmployeeUpdateMutation = { employee: { id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null } | null };
+export type EmployeeUpdateMutation = { __typename?: 'Mutation', employee?: { __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null } | null };
 
 export type EmployeeDeleteByIdMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EmployeeDeleteByIdMutation = { employeeDeleteById: boolean | null };
+export type EmployeeDeleteByIdMutation = { __typename?: 'Mutation', employeeDeleteById?: boolean | null };
 
 export type EmployeeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EmployeeCreatedSubscription = { employee: { id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null } | null };
+export type EmployeeCreatedSubscription = { __typename?: 'Subscription', employee?: { __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null } | null };
 
 export type EmployeesWithoutPayrollQueryVariables = Exact<{
-  enterpriseId: number;
-  periodId: number;
+  enterpriseId: Scalars['Int']['input'];
+  periodId: Scalars['Int']['input'];
 }>;
 
 
-export type EmployeesWithoutPayrollQuery = { employees: Array<{ id: number, nsifNumber: string | null, hireDate: string | null, terminationDate: string | null, employmentStatus: EmploymentStatus | null, employmentType: EmploymentType | null, baseSalary: unknown, createdAt: string, updatedAt: string | null, enterpriseId: number, payType: PayType | null, hourlySalary: unknown, department: { id: number, name: string } | null, position: { id: number, title: string } | null, personnel: { id: unknown, firstName: string | null, lastName: string | null, code: string } | null }> | null };
+export type EmployeesWithoutPayrollQuery = { __typename?: 'Query', employees?: Array<{ __typename?: 'Employee', id: number, nsifNumber?: string | null, hireDate?: string | null, terminationDate?: string | null, employmentStatus?: EmploymentStatus | null, employmentType?: EmploymentType | null, baseSalary?: any | null, createdAt: string, updatedAt?: string | null, enterpriseId: number, payType?: PayType | null, hourlySalary?: any | null, department?: { __typename?: 'Department', id: number, name: string } | null, position?: { __typename?: 'Position', id: number, title: string } | null, personnel?: { __typename?: 'Teacher', id: any, firstName?: string | null, lastName?: string | null, code: string } | null }> | null };
 
-export type PayrollPeriodFieldsFragment = { id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt: string | null, updatedAt: string | null, type: PayrollPeriodType, enterpriseId: number };
+export type PayrollPeriodFieldsFragment = { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt?: string | null, updatedAt?: string | null, type: PayrollPeriodType, enterpriseId: number };
 
 export type PayrollPeriodsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PayrollPeriodsQuery = { payrollPeriods: Array<{ id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt: string | null, updatedAt: string | null, type: PayrollPeriodType, enterpriseId: number }> | null };
+export type PayrollPeriodsQuery = { __typename?: 'Query', payrollPeriods?: Array<{ __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt?: string | null, updatedAt?: string | null, type: PayrollPeriodType, enterpriseId: number }> | null };
 
 export type PayrollPeriodSaveMutationVariables = Exact<{
   period: PayrollPeriodCreateInput;
 }>;
 
 
-export type PayrollPeriodSaveMutation = { payrollPeriod: { id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt: string | null, updatedAt: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
+export type PayrollPeriodSaveMutation = { __typename?: 'Mutation', payrollPeriod?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt?: string | null, updatedAt?: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
 
 export type PayrollPeriodUpdateMutationVariables = Exact<{
   period: PayrollPeriodUpdateInput;
 }>;
 
 
-export type PayrollPeriodUpdateMutation = { payrollPeriod: { id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt: string | null, updatedAt: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
+export type PayrollPeriodUpdateMutation = { __typename?: 'Mutation', payrollPeriod?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt?: string | null, updatedAt?: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
 
 export type PayrollPeriodDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PayrollPeriodDeleteMutation = { payrollPeriodDeleteById: boolean | null };
+export type PayrollPeriodDeleteMutation = { __typename?: 'Mutation', payrollPeriodDeleteById?: boolean | null };
 
 export type PayrollPeriodCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PayrollPeriodCreatedSubscription = { payrollPeriod: { id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt: string | null, updatedAt: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
+export type PayrollPeriodCreatedSubscription = { __typename?: 'Subscription', payrollPeriod?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string, paymentDate: string, status: PeriodStatus, createdAt?: string | null, updatedAt?: string | null, type: PayrollPeriodType, enterpriseId: number } | null };
 
-export type PayrollFieldsFragment = { id: unknown, number: string, baseSalary: unknown, grossSalary: unknown, netSalary: unknown, totalEmployeeDeduction: unknown, totalEmployerDeduction: unknown, taxableSalary: unknown, operationDate: string, note: string | null, status: PayrollStatus, enterpriseId: number, period: { id: number, startDate: string, endDate: string } | null, employee: { id: number, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null, paymentMode: { id: number, name: string } | null };
+export type PayrollFieldsFragment = { __typename?: 'Payroll', id: any, number: string, baseSalary: any, grossSalary: any, netSalary: any, totalEmployeeDeduction: any, totalEmployerDeduction: any, taxableSalary: any, operationDate: string, note?: string | null, status: PayrollStatus, enterpriseId: number, period?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string } | null, employee?: { __typename?: 'Employee', id: number, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null };
 
 export type EmployeeEarningsQueryVariables = Exact<{
-  payrollId: unknown;
+  payrollId: Scalars['Long']['input'];
 }>;
 
 
-export type EmployeeEarningsQuery = { earnings: Array<{ id: unknown, base: unknown, rate: unknown, description: string | null, isTaxable: boolean | null, baseF: unknown, rateF: unknown, item: { id: number, name: string } | null }> | null };
+export type EmployeeEarningsQuery = { __typename?: 'Query', earnings?: Array<{ __typename?: 'EmployeeEarning', id: any, base: any, rate: any, description?: string | null, isTaxable?: boolean | null, baseF: any, rateF: any, item?: { __typename?: 'Earning', id: number, name: string } | null }> | null };
 
 export type EmployeeDeductionsQueryVariables = Exact<{
-  payrollId: unknown;
+  payrollId: Scalars['Long']['input'];
 }>;
 
 
-export type EmployeeDeductionsQuery = { deductions: Array<{ id: unknown, base: unknown, rate: unknown, description: string | null, baseF: unknown, rateF: unknown, item: { id: number, name: string } | null }> | null };
+export type EmployeeDeductionsQuery = { __typename?: 'Query', deductions?: Array<{ __typename?: 'EmployeeDeduction', id: any, base: any, rate: any, description?: string | null, baseF: any, rateF: any, item?: { __typename?: 'Deduction', id: number, name: string } | null }> | null };
 
 export type EmployerDeductionsQueryVariables = Exact<{
-  payrollId: unknown;
+  payrollId: Scalars['Long']['input'];
 }>;
 
 
-export type EmployerDeductionsQuery = { deductions: Array<{ id: unknown, base: unknown, rate: unknown, description: string | null, baseF: unknown, rateF: unknown, item: { id: number, name: string } | null }> | null };
+export type EmployerDeductionsQuery = { __typename?: 'Query', deductions?: Array<{ __typename?: 'EmployerDeduction', id: any, base: any, rate: any, description?: string | null, baseF: any, rateF: any, item?: { __typename?: 'Deduction', id: number, name: string } | null }> | null };
 
 export type PayrollByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type PayrollByIdQuery = { payroll: { id: unknown, number: string, baseSalary: unknown, grossSalary: unknown, netSalary: unknown, totalEmployeeDeduction: unknown, totalEmployerDeduction: unknown, taxableSalary: unknown, operationDate: string, note: string | null, status: PayrollStatus, enterpriseId: number, period: { id: number, startDate: string, endDate: string } | null, employee: { id: number, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null, paymentMode: { id: number, name: string } | null } | null };
+export type PayrollByIdQuery = { __typename?: 'Query', payroll?: { __typename?: 'Payroll', id: any, number: string, baseSalary: any, grossSalary: any, netSalary: any, totalEmployeeDeduction: any, totalEmployerDeduction: any, taxableSalary: any, operationDate: string, note?: string | null, status: PayrollStatus, enterpriseId: number, period?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string } | null, employee?: { __typename?: 'Employee', id: number, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null } | null };
 
 export type PayrollsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PayrollsQuery = { payrolls: Array<{ id: unknown, number: string, baseSalary: unknown, grossSalary: unknown, netSalary: unknown, totalEmployeeDeduction: unknown, totalEmployerDeduction: unknown, taxableSalary: unknown, operationDate: string, note: string | null, status: PayrollStatus, enterpriseId: number, period: { id: number, startDate: string, endDate: string } | null, employee: { id: number, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null, paymentMode: { id: number, name: string } | null }> | null };
+export type PayrollsQuery = { __typename?: 'Query', payrolls?: Array<{ __typename?: 'Payroll', id: any, number: string, baseSalary: any, grossSalary: any, netSalary: any, totalEmployeeDeduction: any, totalEmployerDeduction: any, taxableSalary: any, operationDate: string, note?: string | null, status: PayrollStatus, enterpriseId: number, period?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string } | null, employee?: { __typename?: 'Employee', id: number, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null }> | null };
 
 export type PayrollSaveMutationVariables = Exact<{
   payroll: PayrollCreateInput;
 }>;
 
 
-export type PayrollSaveMutation = { payroll: { id: unknown, number: string, baseSalary: unknown, grossSalary: unknown, netSalary: unknown, totalEmployeeDeduction: unknown, totalEmployerDeduction: unknown, taxableSalary: unknown, operationDate: string, note: string | null, status: PayrollStatus, enterpriseId: number, period: { id: number, startDate: string, endDate: string } | null, employee: { id: number, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null, paymentMode: { id: number, name: string } | null } | null };
+export type PayrollSaveMutation = { __typename?: 'Mutation', payroll?: { __typename?: 'Payroll', id: any, number: string, baseSalary: any, grossSalary: any, netSalary: any, totalEmployeeDeduction: any, totalEmployerDeduction: any, taxableSalary: any, operationDate: string, note?: string | null, status: PayrollStatus, enterpriseId: number, period?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string } | null, employee?: { __typename?: 'Employee', id: number, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null } | null };
 
 export type PayrollUpdateMutationVariables = Exact<{
   payroll: PayrollUpdateInput;
 }>;
 
 
-export type PayrollUpdateMutation = { payroll: { id: unknown, number: string, baseSalary: unknown, grossSalary: unknown, netSalary: unknown, totalEmployeeDeduction: unknown, totalEmployerDeduction: unknown, taxableSalary: unknown, operationDate: string, note: string | null, status: PayrollStatus, enterpriseId: number, period: { id: number, startDate: string, endDate: string } | null, employee: { id: number, personnel: { id: unknown, lastName: string | null, firstName: string | null } | null } | null, paymentMode: { id: number, name: string } | null } | null };
+export type PayrollUpdateMutation = { __typename?: 'Mutation', payroll?: { __typename?: 'Payroll', id: any, number: string, baseSalary: any, grossSalary: any, netSalary: any, totalEmployeeDeduction: any, totalEmployerDeduction: any, taxableSalary: any, operationDate: string, note?: string | null, status: PayrollStatus, enterpriseId: number, period?: { __typename?: 'PayrollPeriod', id: number, startDate: string, endDate: string } | null, employee?: { __typename?: 'Employee', id: number, personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null } | null };
 
 export type PayrollDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type PayrollDeleteMutation = { payrollDeleteById: boolean };
+export type PayrollDeleteMutation = { __typename?: 'Mutation', payrollDeleteById: boolean };
 
 export type PayrollCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PayrollCreatedSubscription = { payroll: { id: unknown, baseSalary: unknown, enterpriseId: number } | null };
+export type PayrollCreatedSubscription = { __typename?: 'Subscription', payroll?: { __typename?: 'Payroll', id: any, baseSalary: any, enterpriseId: number } | null };
 
 export type PayrollMarkAsPaidMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type PayrollMarkAsPaidMutation = { payrollMarkAsPaid: boolean };
+export type PayrollMarkAsPaidMutation = { __typename?: 'Mutation', payrollMarkAsPaid: boolean };
 
-export type PositionFieldsFragment = { id: number, title: string, active: boolean, baseSalary: unknown, bonusPercentage: unknown, overtimeRate: unknown, note: string | null, createdAt: string, updatedAt: string | null, enterpriseId: number };
+export type PositionFieldsFragment = { __typename?: 'Position', id: number, title: string, active: boolean, baseSalary?: any | null, bonusPercentage?: any | null, overtimeRate?: any | null, note?: string | null, createdAt: string, updatedAt?: string | null, enterpriseId: number };
 
 export type PositionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PositionsQuery = { positions: Array<{ id: number, title: string, active: boolean, baseSalary: unknown, bonusPercentage: unknown, overtimeRate: unknown, note: string | null, createdAt: string, updatedAt: string | null, enterpriseId: number }> | null };
+export type PositionsQuery = { __typename?: 'Query', positions?: Array<{ __typename?: 'Position', id: number, title: string, active: boolean, baseSalary?: any | null, bonusPercentage?: any | null, overtimeRate?: any | null, note?: string | null, createdAt: string, updatedAt?: string | null, enterpriseId: number }> | null };
 
 export type PositionSaveMutationVariables = Exact<{
   position: PositionCreateInput;
 }>;
 
 
-export type PositionSaveMutation = { position: { id: number, title: string, active: boolean, baseSalary: unknown, bonusPercentage: unknown, overtimeRate: unknown, note: string | null, createdAt: string, updatedAt: string | null, enterpriseId: number } | null };
+export type PositionSaveMutation = { __typename?: 'Mutation', position?: { __typename?: 'Position', id: number, title: string, active: boolean, baseSalary?: any | null, bonusPercentage?: any | null, overtimeRate?: any | null, note?: string | null, createdAt: string, updatedAt?: string | null, enterpriseId: number } | null };
 
 export type PositionUpdateMutationVariables = Exact<{
   position: PositionUpdateInput;
 }>;
 
 
-export type PositionUpdateMutation = { position: { id: number, title: string, active: boolean, baseSalary: unknown, bonusPercentage: unknown, overtimeRate: unknown, note: string | null, createdAt: string, updatedAt: string | null, enterpriseId: number } | null };
+export type PositionUpdateMutation = { __typename?: 'Mutation', position?: { __typename?: 'Position', id: number, title: string, active: boolean, baseSalary?: any | null, bonusPercentage?: any | null, overtimeRate?: any | null, note?: string | null, createdAt: string, updatedAt?: string | null, enterpriseId: number } | null };
 
 export type PositionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PositionDeleteMutation = { positionDeleteById: boolean | null };
+export type PositionDeleteMutation = { __typename?: 'Mutation', positionDeleteById?: boolean | null };
 
 export type PositionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PositionCreatedSubscription = { position: { id: number, title: string, active: boolean, baseSalary: unknown, bonusPercentage: unknown, overtimeRate: unknown, note: string | null, createdAt: string, updatedAt: string | null, enterpriseId: number } | null };
+export type PositionCreatedSubscription = { __typename?: 'Subscription', position?: { __typename?: 'Position', id: number, title: string, active: boolean, baseSalary?: any | null, bonusPercentage?: any | null, overtimeRate?: any | null, note?: string | null, createdAt: string, updatedAt?: string | null, enterpriseId: number } | null };
 
-export type DayOfClassFieldsFragment = { id: number, dayOfWeek: string, active: boolean, openingTime: { id: number, name: string, startTime: string, endTime: string } | null, closingTime: { id: number, name: string, startTime: string, endTime: string } | null };
+export type DayOfClassFieldsFragment = { __typename?: 'DayOfClass', id: number, dayOfWeek: string, active: boolean, openingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null, closingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null };
 
 export type DayOfClassesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DayOfClassesQuery = { dayOfClasses: Array<{ id: number, dayOfWeek: string, active: boolean, openingTime: { id: number, name: string, startTime: string, endTime: string } | null, closingTime: { id: number, name: string, startTime: string, endTime: string } | null }> | null };
+export type DayOfClassesQuery = { __typename?: 'Query', dayOfClasses?: Array<{ __typename?: 'DayOfClass', id: number, dayOfWeek: string, active: boolean, openingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null, closingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null }> | null };
 
 export type DayOfClassSaveMutationVariables = Exact<{
   dayOfClass: DayOfClassCreateInput;
 }>;
 
 
-export type DayOfClassSaveMutation = { dayOfClass: { id: number, dayOfWeek: string, active: boolean, openingTime: { id: number, name: string, startTime: string, endTime: string } | null, closingTime: { id: number, name: string, startTime: string, endTime: string } | null } | null };
+export type DayOfClassSaveMutation = { __typename?: 'Mutation', dayOfClass?: { __typename?: 'DayOfClass', id: number, dayOfWeek: string, active: boolean, openingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null, closingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null } | null };
 
 export type DayOfClassUpdateMutationVariables = Exact<{
   dayOfClass: DayOfClassUpdateInput;
 }>;
 
 
-export type DayOfClassUpdateMutation = { dayOfClass: { id: number, dayOfWeek: string, active: boolean, openingTime: { id: number, name: string, startTime: string, endTime: string } | null, closingTime: { id: number, name: string, startTime: string, endTime: string } | null } | null };
+export type DayOfClassUpdateMutation = { __typename?: 'Mutation', dayOfClass?: { __typename?: 'DayOfClass', id: number, dayOfWeek: string, active: boolean, openingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null, closingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null } | null };
 
 export type DayOfClassDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DayOfClassDeleteMutation = { deleteDayOfClassById: boolean | null };
+export type DayOfClassDeleteMutation = { __typename?: 'Mutation', deleteDayOfClassById?: boolean | null };
 
 export type DayOfClassCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DayOfClassCreatedSubscription = { dayOfClass: { id: number, dayOfWeek: string, active: boolean, openingTime: { id: number, name: string, startTime: string, endTime: string } | null, closingTime: { id: number, name: string, startTime: string, endTime: string } | null } | null };
+export type DayOfClassCreatedSubscription = { __typename?: 'Subscription', dayOfClass?: { __typename?: 'DayOfClass', id: number, dayOfWeek: string, active: boolean, openingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null, closingTime?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string } | null } | null };
 
-export type DistributionFieldsFragment = { weekHoursCount: number | null, headerTeacher: boolean | null, distributionPK: { classId: number, subjectId: number, schoolYearId: number } | null, subject: { id: number, name: string, subjectDepartment: { id: number } | null } | null, teacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null, coTeacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null };
+export type DistributionFieldsFragment = { __typename?: 'Distribution', weekHoursCount?: number | null, headerTeacher?: boolean | null, distributionPK?: { __typename?: 'DistributionPK', classId: number, subjectId: number, schoolYearId: number } | null, subject?: { __typename?: 'Subject', id: number, name: string, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number } | null } | null, teacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null, coTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null };
 
 export type ClassDistributionsQueryVariables = Exact<{
-  classId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type ClassDistributionsQuery = { distributions: Array<{ weekHoursCount: number | null, headerTeacher: boolean | null, distributionPK: { classId: number, subjectId: number, schoolYearId: number } | null, subject: { id: number, name: string, subjectDepartment: { id: number } | null } | null, teacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null, coTeacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null } | null> | null };
+export type ClassDistributionsQuery = { __typename?: 'Query', distributions?: Array<{ __typename?: 'Distribution', weekHoursCount?: number | null, headerTeacher?: boolean | null, distributionPK?: { __typename?: 'DistributionPK', classId: number, subjectId: number, schoolYearId: number } | null, subject?: { __typename?: 'Subject', id: number, name: string, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number } | null } | null, teacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null, coTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null } | null> | null };
 
 export type ClassDistributionSaveMutationVariables = Exact<{
   distributions: Array<DistributionInput> | DistributionInput;
-  classId: number;
+  classId: Scalars['Int']['input'];
 }>;
 
 
-export type ClassDistributionSaveMutation = { distributions: Array<{ weekHoursCount: number | null, headerTeacher: boolean | null, distributionPK: { classId: number, subjectId: number, schoolYearId: number } | null, subject: { id: number, name: string, subjectDepartment: { id: number } | null } | null, teacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null, coTeacher: { id: unknown, lastName: string | null, firstName: string | null, code: string } | null } | null> | null };
+export type ClassDistributionSaveMutation = { __typename?: 'Mutation', distributions?: Array<{ __typename?: 'Distribution', weekHoursCount?: number | null, headerTeacher?: boolean | null, distributionPK?: { __typename?: 'DistributionPK', classId: number, subjectId: number, schoolYearId: number } | null, subject?: { __typename?: 'Subject', id: number, name: string, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number } | null } | null, teacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null, coTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string } | null } | null> | null };
 
 export type AssignedTeachersQueryVariables = Exact<{
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type AssignedTeachersQuery = { teachers: Array<{ id: unknown, lastName: string | null, firstName: string | null }> | null };
+export type AssignedTeachersQuery = { __typename?: 'Query', teachers?: Array<{ __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }> | null };
 
-export type TimeSlotFieldsFragment = { id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean };
+export type TimeSlotFieldsFragment = { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean };
 
 export type TimeSlotsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type TimeSlotsQuery = { timeSlots: Array<{ id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean }> | null };
+export type TimeSlotsQuery = { __typename?: 'Query', timeSlots?: Array<{ __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean }> | null };
 
 export type TimeSlotSaveMutationVariables = Exact<{
   timeSlot: TimeSlotCreateInput;
 }>;
 
 
-export type TimeSlotSaveMutation = { timeSlot: { id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
+export type TimeSlotSaveMutation = { __typename?: 'Mutation', timeSlot?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
 
 export type TimeSlotUpdateMutationVariables = Exact<{
   timeSlot: TimeSlotUpdateInput;
 }>;
 
 
-export type TimeSlotUpdateMutation = { timeSlot: { id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
+export type TimeSlotUpdateMutation = { __typename?: 'Mutation', timeSlot?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
 
 export type TimeSlotDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type TimeSlotDeleteMutation = { deleteTimeSlotById: boolean | null };
+export type TimeSlotDeleteMutation = { __typename?: 'Mutation', deleteTimeSlotById?: boolean | null };
 
 export type TimeSlotCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TimeSlotCreatedSubscription = { timeSlot: { id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
+export type TimeSlotCreatedSubscription = { __typename?: 'Subscription', timeSlot?: { __typename?: 'TimeSlot', id: number, name: string, startTime: string, endTime: string, isBreakTime: boolean, isActive: boolean } | null };
 
 export type TimeTablesQueryVariables = Exact<{
-  classId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type TimeTablesQuery = { timeTables: Array<{ timeSlotId: number, startTime: string, endTime: string, items: Array<{ dayOfClassId: number, dayOfWeek: string, subjectId: number | null, subjectName: string | null, available: boolean, teacherId: unknown, teacherName: string | null } | null> | null }> | null };
+export type TimeTablesQuery = { __typename?: 'Query', timeTables?: Array<{ __typename?: 'TimeTableForm', timeSlotId: number, startTime: string, endTime: string, items?: Array<{ __typename?: 'TimeTableFormItem', dayOfClassId: number, dayOfWeek: string, subjectId?: number | null, subjectName?: string | null, available: boolean, teacherId?: any | null, teacherName?: string | null } | null> | null }> | null };
 
 export type SubjectAssignmentsQueryVariables = Exact<{
-  classId: number;
+  classId: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectAssignmentsQuery = { subjectAssignments: Array<{ subjectId: number, subjectName: string, teacherId: unknown, teacherName: string | null }> | null };
+export type SubjectAssignmentsQuery = { __typename?: 'Query', subjectAssignments?: Array<{ __typename?: 'SubjectAssignment', subjectId: number, subjectName: string, teacherId?: any | null, teacherName?: string | null }> | null };
 
 export type CheckTeacherAvailabilityQueryVariables = Exact<{
-  teacherId: unknown;
-  timeSlotId: number;
-  dayOfClassId: number;
+  teacherId: Scalars['Long']['input'];
+  timeSlotId: Scalars['Int']['input'];
+  dayOfClassId: Scalars['Int']['input'];
 }>;
 
 
-export type CheckTeacherAvailabilityQuery = { checkTeacherAvailability: boolean | null };
+export type CheckTeacherAvailabilityQuery = { __typename?: 'Query', checkTeacherAvailability?: boolean | null };
 
 export type TimeTableSaveMutationVariables = Exact<{
-  classId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
   items: Array<TimeTableFormInput> | TimeTableFormInput;
 }>;
 
 
-export type TimeTableSaveMutation = { timeTableSave: boolean | null };
+export type TimeTableSaveMutation = { __typename?: 'Mutation', timeTableSave?: boolean | null };
 
 export type GenerateTimeTableMutationVariables = Exact<{
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type GenerateTimeTableMutation = { generateTimeTable: boolean | null };
+export type GenerateTimeTableMutation = { __typename?: 'Mutation', generateTimeTable?: boolean | null };
 
-export type CompetenceFieldsFragment = { id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number, level: { id: number, name: string } | null };
+export type CompetenceFieldsFragment = { __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number, level?: { __typename?: 'Level', id: number, name: string } | null };
 
 export type CompetencesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CompetencesQuery = { competences: Array<{ id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number, level: { id: number, name: string } | null }> | null };
+export type CompetencesQuery = { __typename?: 'Query', competences?: Array<{ __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number, level?: { __typename?: 'Level', id: number, name: string } | null }> | null };
 
 export type CompetenceByIdQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CompetenceByIdQuery = { competenceById: { id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number, level: { id: number, name: string } | null } | null };
+export type CompetenceByIdQuery = { __typename?: 'Query', competenceById?: { __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number, level?: { __typename?: 'Level', id: number, name: string } | null } | null };
 
 export type CompetenceSaveMutationVariables = Exact<{
   competence: CompetenceCreateInput;
 }>;
 
 
-export type CompetenceSaveMutation = { competence: { id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number, level: { id: number, name: string } | null } | null };
+export type CompetenceSaveMutation = { __typename?: 'Mutation', competence?: { __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number, level?: { __typename?: 'Level', id: number, name: string } | null } | null };
 
 export type CompetenceUpdateMutationVariables = Exact<{
   competence: CompetenceUpdateInput;
 }>;
 
 
-export type CompetenceUpdateMutation = { competence: { id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number, level: { id: number, name: string } | null } | null };
+export type CompetenceUpdateMutation = { __typename?: 'Mutation', competence?: { __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number, level?: { __typename?: 'Level', id: number, name: string } | null } | null };
 
 export type CompetenceDeleteByIdMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CompetenceDeleteByIdMutation = { competenceDeleteById: boolean | null };
+export type CompetenceDeleteByIdMutation = { __typename?: 'Mutation', competenceDeleteById?: boolean | null };
 
 export type CompetenceCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CompetenceCreatedSubscription = { competence: { id: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean, enterpriseId: number } | null };
+export type CompetenceCreatedSubscription = { __typename?: 'Subscription', competence?: { __typename?: 'Competence', id: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type CompetencesByLevelQueryVariables = Exact<{
-  levelId: number;
-  schoolId: number;
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type CompetencesByLevelQuery = { competences: Array<{ levelId: number, levelName: string, schoolId: number, items: Array<{ competenceId: number, numberOrder: unknown, name: string, marks: unknown, description: string | null, active: boolean }> }> | null };
+export type CompetencesByLevelQuery = { __typename?: 'Query', competences?: Array<{ __typename?: 'CompetenceLevel', levelId: number, levelName: string, schoolId: number, items: Array<{ __typename?: 'CompetenceLevelItem', competenceId: number, numberOrder: any, name: string, marks: any, description?: string | null, active: boolean }> }> | null };
 
 export type CompetenceLevelSaveMutationVariables = Exact<{
   competences: Array<CompetenceLevelInput> | CompetenceLevelInput;
 }>;
 
 
-export type CompetenceLevelSaveMutation = { competenceLevelSave: boolean | null };
+export type CompetenceLevelSaveMutation = { __typename?: 'Mutation', competenceLevelSave?: boolean | null };
 
-export type EvalTypeFieldsFragment = { id: number, name: string, description: string | null, active: boolean, enterpriseId: number };
+export type EvalTypeFieldsFragment = { __typename?: 'EvalType', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number };
 
 export type EvalTypesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EvalTypesQuery = { evalTypes: Array<{ id: number, name: string, description: string | null, active: boolean, enterpriseId: number }> | null };
+export type EvalTypesQuery = { __typename?: 'Query', evalTypes?: Array<{ __typename?: 'EvalType', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number }> | null };
 
 export type EvalTypeByIdQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EvalTypeByIdQuery = { evalTypeById: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number } | null };
+export type EvalTypeByIdQuery = { __typename?: 'Query', evalTypeById?: { __typename?: 'EvalType', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type EvalTypeSaveMutationVariables = Exact<{
   type: EvalTypeInput;
 }>;
 
 
-export type EvalTypeSaveMutation = { evalType: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number } | null };
+export type EvalTypeSaveMutation = { __typename?: 'Mutation', evalType?: { __typename?: 'EvalType', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type EvalTypeDeleteByIdMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type EvalTypeDeleteByIdMutation = { evalTypeDeleteById: boolean | null };
+export type EvalTypeDeleteByIdMutation = { __typename?: 'Mutation', evalTypeDeleteById?: boolean | null };
 
 export type EvalTypeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EvalTypeCreatedSubscription = { evalType: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number } | null };
+export type EvalTypeCreatedSubscription = { __typename?: 'Subscription', evalType?: { __typename?: 'EvalType', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type PSequentialNoteQueryVariables = Exact<{
-  classId: number;
-  subCompetenceId: number;
-  subPeriodId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type PSequentialNoteQuery = { sequentialNotes: Array<{ studentId: unknown, studentFullName: string, registrationNumber: string, items: Array<{ evalTypeId: number, note: number | null, evalTypeName: string, marks: unknown }> | null }> | null };
+export type PSequentialNoteQuery = { __typename?: 'Query', sequentialNotes?: Array<{ __typename?: 'PSequentialNote', studentId: any, studentFullName: string, registrationNumber: string, items?: Array<{ __typename?: 'PSequentialNoteItem', evalTypeId: number, note?: number | null, evalTypeName: string, marks: any }> | null }> | null };
 
 export type PSequentialNoteSaveMutationVariables = Exact<{
   notes: Array<PSequentialNoteInput> | PSequentialNoteInput;
-  classId: number;
-  subPeriodId: number;
-  subCompetenceId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subPeriodId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type PSequentialNoteSaveMutation = { sequentialNote: boolean | null };
+export type PSequentialNoteSaveMutation = { __typename?: 'Mutation', sequentialNote?: boolean | null };
 
 export type PFreeSequentialNoteQueryVariables = Exact<{
-  classId: number;
-  subCompetenceId: number;
-  subPeriodIds: Array<number> | number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  subPeriodIds: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type PFreeSequentialNoteQuery = { sequentialNotes: Array<{ studentId: unknown, studentFullName: string, registrationNumber: string, items: Array<{ subPeriodId: number, subPeriodName: string, items: Array<{ evalTypeId: number, note: number | null, evalTypeName: string, marks: unknown }> | null }> | null }> | null };
+export type PFreeSequentialNoteQuery = { __typename?: 'Query', sequentialNotes?: Array<{ __typename?: 'PFreeSequentialNote', studentId: any, studentFullName: string, registrationNumber: string, items?: Array<{ __typename?: 'PFreeSequentialNoteItem', subPeriodId: number, subPeriodName: string, items?: Array<{ __typename?: 'PFreeSequentialNoteItemItem', evalTypeId: number, note?: number | null, evalTypeName: string, marks: any }> | null }> | null }> | null };
 
 export type PFreeSequentialNoteSaveMutationVariables = Exact<{
   notes: Array<PFreeSequentialNoteInput> | PFreeSequentialNoteInput;
-  classId: number;
-  subCompetenceId: number;
-  schoolId: number;
+  classId: Scalars['Int']['input'];
+  subCompetenceId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type PFreeSequentialNoteSaveMutation = { sequentialNote: boolean | null };
+export type PFreeSequentialNoteSaveMutation = { __typename?: 'Mutation', sequentialNote?: boolean | null };
 
 export type SubCompetencesByLevelQueryVariables = Exact<{
-  levelId: number;
-  schoolId: number;
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SubCompetencesByLevelQuery = { subCompetences: Array<{ competenceId: number, competenceName: string, schoolId: number, items: Array<{ subCompetenceId: number | null, code: string, name: string, active: boolean, optional: boolean, items: Array<{ id: unknown, evalTypeId: number, evalTypeName: string, marks: unknown }> | null }> | null }> | null };
+export type SubCompetencesByLevelQuery = { __typename?: 'Query', subCompetences?: Array<{ __typename?: 'SubCompetenceInput', competenceId: number, competenceName: string, schoolId: number, items?: Array<{ __typename?: 'SubCompetenceItemInput', subCompetenceId?: number | null, code: string, name: string, active: boolean, optional: boolean, items?: Array<{ __typename?: 'SubCompetenceItemItemInput', id?: any | null, evalTypeId: number, evalTypeName: string, marks: any }> | null }> | null }> | null };
 
 export type SubCompetenceSaveMutationVariables = Exact<{
   competences: Array<SubCompetenceInputI> | SubCompetenceInputI;
-  levelId: number;
+  levelId: Scalars['Int']['input'];
 }>;
 
 
-export type SubCompetenceSaveMutation = { subCompetenceSave: boolean | null };
+export type SubCompetenceSaveMutation = { __typename?: 'Mutation', subCompetenceSave?: boolean | null };
 
 export type SubCompetencesByClassQueryVariables = Exact<{
-  classId: number;
+  classId: Scalars['Int']['input'];
 }>;
 
 
-export type SubCompetencesByClassQuery = { subCompetencesByClass: Array<{ id: number, code: string, name: string, competence: { id: number, numberOrder: unknown, name: string } | null }> | null };
+export type SubCompetencesByClassQuery = { __typename?: 'Query', subCompetencesByClass?: Array<{ __typename?: 'SubCompetence', id: number, code: string, name: string, competence?: { __typename?: 'Competence', id: number, numberOrder: any, name: string } | null }> | null };
 
 export type ReportCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReportCategoriesQuery = { reportCategories: Array<{ id: number, name: string, language: ReportLanguage | null, icon: string | null }> | null };
+export type ReportCategoriesQuery = { __typename?: 'Query', reportCategories?: Array<{ __typename?: 'ReportCategory', id: number, name: string, language?: ReportLanguage | null, icon?: string | null }> | null };
 
 export type ReportCategoriesByEnterpriseQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ReportCategoriesByEnterpriseQuery = { reportCategories: Array<{ id: number, name: string, language: ReportLanguage | null, icon: string | null, items: Array<{ id: number, title: string, help: string | null, link: string | null, favorite: boolean | null }> | null }> | null };
+export type ReportCategoriesByEnterpriseQuery = { __typename?: 'Query', reportCategories?: Array<{ __typename?: 'ReportCategory', id: number, name: string, language?: ReportLanguage | null, icon?: string | null, items?: Array<{ __typename?: 'ReportItem', id: number, title: string, help?: string | null, link?: string | null, favorite?: boolean | null }> | null }> | null };
 
 export type ReportItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReportItemsQuery = { reportItems: Array<{ id: number, title: string, help: string | null, link: string | null, favorite: boolean | null, categories: Array<{ id: number, name: string }> }> | null };
+export type ReportItemsQuery = { __typename?: 'Query', reportItems?: Array<{ __typename?: 'ReportItem', id: number, title: string, help?: string | null, link?: string | null, favorite?: boolean | null, categories: Array<{ __typename?: 'ReportCategory', id: number, name: string }> }> | null };
 
 export type ReportItemsByEnterpriseQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ReportItemsByEnterpriseQuery = { reportItems: Array<{ id: number, title: string, help: string | null, link: string | null, favorite: boolean | null, categories: Array<{ id: number, name: string }> }> | null };
+export type ReportItemsByEnterpriseQuery = { __typename?: 'Query', reportItems?: Array<{ __typename?: 'ReportItem', id: number, title: string, help?: string | null, link?: string | null, favorite?: boolean | null, categories: Array<{ __typename?: 'ReportCategory', id: number, name: string }> }> | null };
 
 export type ReportSaveMutationVariables = Exact<{
-  item: number;
-  enterprise: number;
-  favorite: boolean;
+  item: Scalars['Int']['input'];
+  enterprise: Scalars['Int']['input'];
+  favorite: Scalars['Boolean']['input'];
 }>;
 
 
-export type ReportSaveMutation = { enterpriseReport: { favorite: boolean | null, enterpriseReportPK: { reportItemId: number | null, enterpriseId: number | null } } | null };
+export type ReportSaveMutation = { __typename?: 'Mutation', enterpriseReport?: { __typename?: 'EnterpriseReport', favorite?: boolean | null, enterpriseReportPK: { __typename?: 'EnterpriseReportPK', reportItemId?: number | null, enterpriseId?: number | null } } | null };
 
 export type ArticleSaveMutationVariables = Exact<{
   article: ArticleCreateInput;
 }>;
 
 
-export type ArticleSaveMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type ArticleSaveMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ArticleUpdateMutationVariables = Exact<{
   article: ArticleUpdateInput;
 }>;
 
 
-export type ArticleUpdateMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type ArticleUpdateMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ArticleDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ArticleDeleteMutation = { articleDeleteById: boolean | null };
+export type ArticleDeleteMutation = { __typename?: 'Mutation', articleDeleteById?: boolean | null };
 
 export type ArticleUnionByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ArticleUnionByIdQuery = { article: { productId: unknown, name: string, sku: string | null, active: boolean | null, salePrice: unknown, minSalePrice: unknown, cost: unknown, purchasePrice: unknown, saleDescription: string | null, purchaseDescription: string | null, picture: string | null, articleId: number | null, quantity: number | null, productCategory: { id: number, name: string } | null, saleAccount: { id: number, number: string, name: string } | null, purchaseAccount: { id: number, number: string, name: string } | null, enterprise: { id: number, name: string } | null } | null };
+export type ArticleUnionByIdQuery = { __typename?: 'Query', article?: { __typename?: 'ArticleUnion', productId: any, name: string, sku?: string | null, active?: boolean | null, salePrice?: any | null, minSalePrice?: any | null, cost?: any | null, purchasePrice?: any | null, saleDescription?: string | null, purchaseDescription?: string | null, picture?: string | null, articleId?: number | null, quantity?: number | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, saleAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, purchaseAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
-export type CustomerCategoryFragmentFragment = { id: number, name: string, active: boolean, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null };
+export type CustomerCategoryFragmentFragment = { __typename?: 'CustomerCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number, parent?: { __typename?: 'CustomerCategory', id: number, name: string } | null };
 
 export type CustomerCategoriesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CustomerCategoriesQuery = { customerCategories: Array<{ id: number, name: string, active: boolean, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null }> | null };
+export type CustomerCategoriesQuery = { __typename?: 'Query', customerCategories?: Array<{ __typename?: 'CustomerCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number, parent?: { __typename?: 'CustomerCategory', id: number, name: string } | null }> | null };
 
 export type CustomerCategorySaveMutationVariables = Exact<{
   category: CustomerCategoryCreateInput;
 }>;
 
 
-export type CustomerCategorySaveMutation = { customerCategory: { id: number, name: string, active: boolean, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type CustomerCategorySaveMutation = { __typename?: 'Mutation', customerCategory?: { __typename?: 'CustomerCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number, parent?: { __typename?: 'CustomerCategory', id: number, name: string } | null } | null };
 
 export type CustomerCategoryUpdateMutationVariables = Exact<{
   category: CustomerCategoryUpdateInput;
 }>;
 
 
-export type CustomerCategoryUpdateMutation = { customerCategory: { id: number, name: string, active: boolean, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type CustomerCategoryUpdateMutation = { __typename?: 'Mutation', customerCategory?: { __typename?: 'CustomerCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number, parent?: { __typename?: 'CustomerCategory', id: number, name: string } | null } | null };
 
 export type CustomerCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CustomerCategoryDeleteMutation = { customerCategoryDeleteById: boolean | null };
+export type CustomerCategoryDeleteMutation = { __typename?: 'Mutation', customerCategoryDeleteById?: boolean | null };
 
 export type CustomerCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CustomerCategoryCreatedSubscription = { customerCategory: { id: number, name: string, active: boolean, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type CustomerCategoryCreatedSubscription = { __typename?: 'Subscription', customerCategory?: { __typename?: 'CustomerCategory', id: number, name: string, active: boolean, description?: string | null, enterpriseId: number, parent?: { __typename?: 'CustomerCategory', id: number, name: string } | null } | null };
 
-export type CustomerFragmentFragment = { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, prefix: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, paymentMode: { id: number, name: string } | null, paymentCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, customerAccount: { id: number, name: string } | null };
+export type CustomerFragmentFragment = { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, prefix?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'CustomerCategory', id: number, name: string } | null, customerAccount?: { __typename?: 'Account', id: number, name: string } | null };
 
 export type CustomersQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CustomersQuery = { customers: Array<{ id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, prefix: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, paymentMode: { id: number, name: string } | null, paymentCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, customerAccount: { id: number, name: string } | null }> | null };
+export type CustomersQuery = { __typename?: 'Query', customers?: Array<{ __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, prefix?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'CustomerCategory', id: number, name: string } | null, customerAccount?: { __typename?: 'Account', id: number, name: string } | null }> | null };
 
 export type CustomerSaveMutationVariables = Exact<{
   customer: CustomerCreateInput;
 }>;
 
 
-export type CustomerSaveMutation = { customer: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, prefix: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, paymentMode: { id: number, name: string } | null, paymentCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, customerAccount: { id: number, name: string } | null } | null };
+export type CustomerSaveMutation = { __typename?: 'Mutation', customer?: { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, prefix?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'CustomerCategory', id: number, name: string } | null, customerAccount?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type CustomerUpdateMutationVariables = Exact<{
   customer: CustomerUpdateInput;
 }>;
 
 
-export type CustomerUpdateMutation = { customer: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, prefix: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, paymentMode: { id: number, name: string } | null, paymentCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, customerAccount: { id: number, name: string } | null } | null };
+export type CustomerUpdateMutation = { __typename?: 'Mutation', customer?: { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, prefix?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, paymentMode?: { __typename?: 'PaymentMode', id: number, name: string } | null, paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'CustomerCategory', id: number, name: string } | null, customerAccount?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type CustomerDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type CustomerDeleteMutation = { customerDeleteById: boolean | null };
+export type CustomerDeleteMutation = { __typename?: 'Mutation', customerDeleteById?: boolean | null };
 
 export type CustomerCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CustomerCreatedSubscription = { onCustomerCreated: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, enterpriseId: number } | null };
+export type CustomerCreatedSubscription = { __typename?: 'Subscription', onCustomerCreated?: { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, enterpriseId: number } | null };
 
-export type CustomerOperationFragment = { id: string, operationId: unknown, customerOperationType: CustomerOperationType, operationDate: string, number: string, amount: number, balance: number, quantity: number | null, distinctProduct: number | null, customer: string, enterpriseId: number, discount: number | null, className: string | null, invoiceType: CustomerOperationType, operationType: CustomerOperationType };
+export type CustomerOperationFragment = { __typename?: 'CustomerOperation', id: string, operationId: any, customerOperationType: CustomerOperationType, operationDate: string, number: string, amount: number, balance: number, quantity?: number | null, distinctProduct?: number | null, customer: string, enterpriseId: number, discount?: number | null, className?: string | null, invoiceType: CustomerOperationType, operationType: CustomerOperationType };
 
 export type CustomerOperationsQueryVariables = Exact<{
-  id: number;
-  startDate: unknown;
-  endDate: unknown;
+  id: Scalars['Int']['input'];
+  startDate: Scalars['Date']['input'];
+  endDate: Scalars['Date']['input'];
 }>;
 
 
-export type CustomerOperationsQuery = { customerOperations: { operations: Array<{ id: string, operationId: unknown, customerOperationType: CustomerOperationType, operationDate: string, number: string, amount: number, balance: number, quantity: number | null, distinctProduct: number | null, customer: string, enterpriseId: number, discount: number | null, className: string | null, invoiceType: CustomerOperationType, operationType: CustomerOperationType }> | null, paymentInfo: { overdue: number | null, overdueCount: number | null, openInvoice: number | null, openInvoiceCount: number | null, paid: number | null, paidCount: number | null } | null } | null };
+export type CustomerOperationsQuery = { __typename?: 'Query', customerOperations?: { __typename?: 'CustomerOperationResult', operations?: Array<{ __typename?: 'CustomerOperation', id: string, operationId: any, customerOperationType: CustomerOperationType, operationDate: string, number: string, amount: number, balance: number, quantity?: number | null, distinctProduct?: number | null, customer: string, enterpriseId: number, discount?: number | null, className?: string | null, invoiceType: CustomerOperationType, operationType: CustomerOperationType }> | null, paymentInfo?: { __typename?: 'PaymentInfo', overdue?: number | null, overdueCount?: number | null, openInvoice?: number | null, openInvoiceCount?: number | null, paid?: number | null, paidCount?: number | null } | null } | null };
 
-export type DiscountFragmentFragment = { id: number, discountType: DiscountType, name: string, value: number, note: string | null, active: boolean, enterpriseId: number };
+export type DiscountFragmentFragment = { __typename?: 'Discount', id: number, discountType: DiscountType, name: string, value: number, note?: string | null, active: boolean, enterpriseId: number };
 
 export type DiscountsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DiscountsQuery = { discounts: Array<{ id: number, discountType: DiscountType, name: string, value: number, note: string | null, active: boolean, enterpriseId: number }> | null };
+export type DiscountsQuery = { __typename?: 'Query', discounts?: Array<{ __typename?: 'Discount', id: number, discountType: DiscountType, name: string, value: number, note?: string | null, active: boolean, enterpriseId: number }> | null };
 
 export type DiscountSaveMutationVariables = Exact<{
   discount: DiscountCreateInput;
 }>;
 
 
-export type DiscountSaveMutation = { discount: { id: number, discountType: DiscountType, name: string, value: number, note: string | null, active: boolean, enterpriseId: number } | null };
+export type DiscountSaveMutation = { __typename?: 'Mutation', discount?: { __typename?: 'Discount', id: number, discountType: DiscountType, name: string, value: number, note?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type DiscountUpdateMutationVariables = Exact<{
   discount: DiscountUpdateInput;
 }>;
 
 
-export type DiscountUpdateMutation = { discount: { id: number, discountType: DiscountType, name: string, value: number, note: string | null, active: boolean, enterpriseId: number } | null };
+export type DiscountUpdateMutation = { __typename?: 'Mutation', discount?: { __typename?: 'Discount', id: number, discountType: DiscountType, name: string, value: number, note?: string | null, active: boolean, enterpriseId: number } | null };
 
 export type DiscountDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DiscountDeleteMutation = { discount: boolean | null };
+export type DiscountDeleteMutation = { __typename?: 'Mutation', discount?: boolean | null };
 
 export type DiscountCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DiscountCreatedSubscription = { discount: { id: number, discountType: DiscountType, name: string, value: number, note: string | null, active: boolean, enterpriseId: number } | null };
+export type DiscountCreatedSubscription = { __typename?: 'Subscription', discount?: { __typename?: 'Discount', id: number, discountType: DiscountType, name: string, value: number, note?: string | null, active: boolean, enterpriseId: number } | null };
 
-export type FeeGroupFragmentFragment = { id: number, name: string, name2: string | null, registrationDateAfter: string | null, registrationDateBefore: string | null, birthDateAfter: string | null, birthDateBefore: string | null, gender: Gender | null, levelId: number | null, familyOfXAndAboveChildren: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note: string | null };
+export type FeeGroupFragmentFragment = { __typename?: 'FeeGroup', id: number, name: string, name2?: string | null, registrationDateAfter?: string | null, registrationDateBefore?: string | null, birthDateAfter?: string | null, birthDateBefore?: string | null, gender?: Gender | null, levelId?: number | null, familyOfXAndAboveChildren?: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note?: string | null };
 
 export type FeeGroupsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type FeeGroupsQuery = { feeGroups: Array<{ id: number, name: string, name2: string | null, registrationDateAfter: string | null, registrationDateBefore: string | null, birthDateAfter: string | null, birthDateBefore: string | null, gender: Gender | null, levelId: number | null, familyOfXAndAboveChildren: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note: string | null }> | null };
+export type FeeGroupsQuery = { __typename?: 'Query', feeGroups?: Array<{ __typename?: 'FeeGroup', id: number, name: string, name2?: string | null, registrationDateAfter?: string | null, registrationDateBefore?: string | null, birthDateAfter?: string | null, birthDateBefore?: string | null, gender?: Gender | null, levelId?: number | null, familyOfXAndAboveChildren?: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note?: string | null }> | null };
 
 export type FeeGroupSaveMutationVariables = Exact<{
   group: FeeGroupCreateInput;
 }>;
 
 
-export type FeeGroupSaveMutation = { feeGroup: { id: number, name: string, name2: string | null, registrationDateAfter: string | null, registrationDateBefore: string | null, birthDateAfter: string | null, birthDateBefore: string | null, gender: Gender | null, levelId: number | null, familyOfXAndAboveChildren: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note: string | null } | null };
+export type FeeGroupSaveMutation = { __typename?: 'Mutation', feeGroup?: { __typename?: 'FeeGroup', id: number, name: string, name2?: string | null, registrationDateAfter?: string | null, registrationDateBefore?: string | null, birthDateAfter?: string | null, birthDateBefore?: string | null, gender?: Gender | null, levelId?: number | null, familyOfXAndAboveChildren?: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note?: string | null } | null };
 
 export type FeeGroupUpdateMutationVariables = Exact<{
   group: FeeGroupUpdateInput;
 }>;
 
 
-export type FeeGroupUpdateMutation = { feeGroup: { id: number, name: string, name2: string | null, registrationDateAfter: string | null, registrationDateBefore: string | null, birthDateAfter: string | null, birthDateBefore: string | null, gender: Gender | null, levelId: number | null, familyOfXAndAboveChildren: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note: string | null } | null };
+export type FeeGroupUpdateMutation = { __typename?: 'Mutation', feeGroup?: { __typename?: 'FeeGroup', id: number, name: string, name2?: string | null, registrationDateAfter?: string | null, registrationDateBefore?: string | null, birthDateAfter?: string | null, birthDateBefore?: string | null, gender?: Gender | null, levelId?: number | null, familyOfXAndAboveChildren?: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note?: string | null } | null };
 
 export type FeeGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type FeeGroupDeleteMutation = { feeGroupDeleteById: boolean | null };
+export type FeeGroupDeleteMutation = { __typename?: 'Mutation', feeGroupDeleteById?: boolean | null };
 
 export type FeeGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeeGroupCreatedSubscription = { feeGroup: { id: number, name: string, name2: string | null, registrationDateAfter: string | null, registrationDateBefore: string | null, birthDateAfter: string | null, birthDateBefore: string | null, gender: Gender | null, levelId: number | null, familyOfXAndAboveChildren: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note: string | null } | null };
+export type FeeGroupCreatedSubscription = { __typename?: 'Subscription', feeGroup?: { __typename?: 'FeeGroup', id: number, name: string, name2?: string | null, registrationDateAfter?: string | null, registrationDateBefore?: string | null, birthDateAfter?: string | null, birthDateBefore?: string | null, gender?: Gender | null, levelId?: number | null, familyOfXAndAboveChildren?: number | null, oneTimePayment: boolean, isAlumni: boolean, isExternalStudent: boolean, hasScholarship: boolean, isSocialCase: boolean, isStaffStudent: boolean, useAsFallback: boolean, isActive: boolean, note?: string | null } | null };
 
 export type FeeStructureQueryVariables = Exact<{
-  levelId: number;
-  schoolId: number;
+  levelId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type FeeStructureQuery = { fees: Array<{ feeGroupId: number, feeGroupName: string, items: Array<{ installmentId: number, installmentName: string, items: Array<{ tuitionId: number, tuitionName: string, requiredAmount: number, lateFee: number, dueDate: string, gracePeriodDays: number, requiredAmountF: number }> }> }> | null };
+export type FeeStructureQuery = { __typename?: 'Query', fees?: Array<{ __typename?: 'FeeStructureInput', feeGroupId: number, feeGroupName: string, items: Array<{ __typename?: 'FeeStructureItem', installmentId: number, installmentName: string, items: Array<{ __typename?: 'FeeStructureItemItem', tuitionId: number, tuitionName: string, requiredAmount: number, lateFee: number, dueDate: string, gracePeriodDays: number, requiredAmountF: number }> }> }> | null };
 
 export type FeeStructureSaveMutationVariables = Exact<{
   form: Array<FeeStructureInputI> | FeeStructureInputI;
-  levelId: number;
+  levelId: Scalars['Int']['input'];
 }>;
 
 
-export type FeeStructureSaveMutation = { feeStructureSave: boolean | null };
+export type FeeStructureSaveMutation = { __typename?: 'Mutation', feeStructureSave?: boolean | null };
 
-export type InstallmentFragmentFragment = { id: number, numberOrder: number, name: string, name2: string | null, dueDate: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note: string | null, isRefundable: boolean };
+export type InstallmentFragmentFragment = { __typename?: 'Installment', id: number, numberOrder: number, name: string, name2?: string | null, dueDate?: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note?: string | null, isRefundable: boolean };
 
 export type InstallmentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type InstallmentsQuery = { installments: Array<{ id: number, numberOrder: number, name: string, name2: string | null, dueDate: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note: string | null, isRefundable: boolean }> | null };
+export type InstallmentsQuery = { __typename?: 'Query', installments?: Array<{ __typename?: 'Installment', id: number, numberOrder: number, name: string, name2?: string | null, dueDate?: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note?: string | null, isRefundable: boolean }> | null };
 
 export type InstallmentSaveMutationVariables = Exact<{
   installment: InstallmentCreateInput;
 }>;
 
 
-export type InstallmentSaveMutation = { installment: { id: number, numberOrder: number, name: string, name2: string | null, dueDate: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note: string | null, isRefundable: boolean } | null };
+export type InstallmentSaveMutation = { __typename?: 'Mutation', installment?: { __typename?: 'Installment', id: number, numberOrder: number, name: string, name2?: string | null, dueDate?: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note?: string | null, isRefundable: boolean } | null };
 
 export type InstallmentUpdateMutationVariables = Exact<{
   installment: InstallmentUpdateInput;
 }>;
 
 
-export type InstallmentUpdateMutation = { installment: { id: number, numberOrder: number, name: string, name2: string | null, dueDate: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note: string | null, isRefundable: boolean } | null };
+export type InstallmentUpdateMutation = { __typename?: 'Mutation', installment?: { __typename?: 'Installment', id: number, numberOrder: number, name: string, name2?: string | null, dueDate?: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note?: string | null, isRefundable: boolean } | null };
 
 export type InstallmentDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type InstallmentDeleteMutation = { installmentDeleteById: boolean | null };
+export type InstallmentDeleteMutation = { __typename?: 'Mutation', installmentDeleteById?: boolean | null };
 
 export type InstallmentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InstallmentCreatedSubscription = { installment: { id: number, numberOrder: number, name: string, name2: string | null, dueDate: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note: string | null, isRefundable: boolean } | null };
+export type InstallmentCreatedSubscription = { __typename?: 'Subscription', installment?: { __typename?: 'Installment', id: number, numberOrder: number, name: string, name2?: string | null, dueDate?: string | null, gracePeriodDays: number, lateFeePercentage: number, isActive: boolean, note?: string | null, isRefundable: boolean } | null };
 
-export type InvoiceFragmentFragment = { id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string, firstName: string | null }
-    | { id: unknown, lastName: string, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
-    | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoiceFragmentFragment = { __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+    | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+    | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+    | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
    | null };
 
 export type InvoicesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type InvoicesQuery = { invoices: Array<{ id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoicesQuery = { __typename?: 'Query', invoices?: Array<{ __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
      | null }> | null };
 
 export type InvoiceSaveMutationVariables = Exact<{
@@ -5102,13 +12593,13 @@ export type InvoiceSaveMutationVariables = Exact<{
 }>;
 
 
-export type InvoiceSaveMutation = { invoice: { id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoiceSaveMutation = { __typename?: 'Mutation', invoice?: { __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
      | null } | null };
 
 export type InvoiceUpdateMutationVariables = Exact<{
@@ -5116,1000 +12607,1000 @@ export type InvoiceUpdateMutationVariables = Exact<{
 }>;
 
 
-export type InvoiceUpdateMutation = { invoice: { id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoiceUpdateMutation = { __typename?: 'Mutation', invoice?: { __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
      | null } | null };
 
 export type InvoiceDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type InvoiceDeleteMutation = { invoiceDeleteById: boolean | null };
+export type InvoiceDeleteMutation = { __typename?: 'Mutation', invoiceDeleteById?: boolean | null };
 
 export type InvoiceCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InvoiceCreatedSubscription = { invoice: { id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoiceCreatedSubscription = { __typename?: 'Subscription', invoice?: { __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
      | null } | null };
 
 export type InvoiceByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type InvoiceByIdQuery = { invoice: { id: unknown, number: string, invoiceType: InvoiceType, operationDate: string, deadline: string | null, amount: unknown, balance: unknown, quantity: number, distinctProduct: number, discount: number | null, note: string | null, enterpriseId: number, condition: { id: number, name: string } | null, person:
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
-      | { id: unknown, lastName: string | null, firstName: string | null }
+export type InvoiceByIdQuery = { __typename?: 'Query', invoice?: { __typename?: 'Invoice', id: any, number: string, invoiceType: InvoiceType, operationDate: string, deadline?: string | null, amount: any, balance: any, quantity: number, distinctProduct: number, discount?: number | null, note?: string | null, enterpriseId: number, condition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, person?:
+      | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null }
      | null } | null };
 
 export type InvoiceItemsQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type InvoiceItemsQuery = { items: Array<{ id: unknown, unitPrice: unknown, quantity: number, total: unknown, discount: number | null, description: string | null, unitPriceF: unknown, quantityF: number, product: { id: unknown, name: string, sku: string } | null }> | null };
+export type InvoiceItemsQuery = { __typename?: 'Query', items?: Array<{ __typename?: 'InvoiceItem', id: any, unitPrice: any, quantity: number, total: any, discount?: number | null, description?: string | null, unitPriceF: any, quantityF: number, product?: { __typename?: 'Product', id: any, name: string, sku: string } | null }> | null };
 
 export type PaymentOfStudentBalanceQueryVariables = Exact<{
-  registrationNumber: string;
-  identifier: string;
+  registrationNumber: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
 }>;
 
 
-export type PaymentOfStudentBalanceQuery = { info: { studentId: unknown, studentName: string, amount: unknown, studentClass: string } | null };
+export type PaymentOfStudentBalanceQuery = { __typename?: 'Query', info?: { __typename?: 'MobileRestToPay', studentId: any, studentName: string, amount: any, studentClass: string } | null };
 
-export type PaymentConditionFragmentFragment = { id: number, name: string, active: boolean, days: number, description: string | null, enterpriseId: number };
+export type PaymentConditionFragmentFragment = { __typename?: 'PaymentCondition', id: number, name: string, active: boolean, days: number, description?: string | null, enterpriseId: number };
 
 export type PaymentConditionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentConditionsQuery = { paymentConditions: Array<{ id: number, name: string, active: boolean, days: number, description: string | null, enterpriseId: number }> | null };
+export type PaymentConditionsQuery = { __typename?: 'Query', paymentConditions?: Array<{ __typename?: 'PaymentCondition', id: number, name: string, active: boolean, days: number, description?: string | null, enterpriseId: number }> | null };
 
 export type PaymentConditionSaveMutationVariables = Exact<{
   condition: PaymentConditionCreateInput;
 }>;
 
 
-export type PaymentConditionSaveMutation = { paymentCondition: { id: number, name: string, active: boolean, days: number, description: string | null, enterpriseId: number } | null };
+export type PaymentConditionSaveMutation = { __typename?: 'Mutation', paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string, active: boolean, days: number, description?: string | null, enterpriseId: number } | null };
 
 export type PaymentConditionUpdateMutationVariables = Exact<{
   condition: PaymentConditionUpdateInput;
 }>;
 
 
-export type PaymentConditionUpdateMutation = { paymentCondition: { id: number, name: string, active: boolean, days: number, description: string | null, enterpriseId: number } | null };
+export type PaymentConditionUpdateMutation = { __typename?: 'Mutation', paymentCondition?: { __typename?: 'PaymentCondition', id: number, name: string, active: boolean, days: number, description?: string | null, enterpriseId: number } | null };
 
 export type PaymentConditionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PaymentConditionDeleteMutation = { paymentConditionDeleteById: boolean | null };
+export type PaymentConditionDeleteMutation = { __typename?: 'Mutation', paymentConditionDeleteById?: boolean | null };
 
 export type PaymentConditionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PaymentConditionCreatedSubscription = { onPaymentConditionCreated: { id: number, name: string, enterpriseId: number } | null };
+export type PaymentConditionCreatedSubscription = { __typename?: 'Subscription', onPaymentConditionCreated?: { __typename?: 'PaymentCondition', id: number, name: string, enterpriseId: number } | null };
 
 export type PaymentOfStudentQueryVariables = Exact<{
-  invoiceId: unknown;
+  invoiceId: Scalars['Long']['input'];
 }>;
 
 
-export type PaymentOfStudentQuery = { payment: { student: string, registrationNumber: string, studentClass: string, items: Array<{ installmentId: number, installmentName: string, dueDate: string | null, tuitionId: number, tuitionName: string, requiredAmount: unknown, inKindPayment: boolean, invoiceItemId: unknown }> } | null };
+export type PaymentOfStudentQuery = { __typename?: 'Query', payment?: { __typename?: 'PaymentOfStudent', student: string, registrationNumber: string, studentClass: string, items: Array<{ __typename?: 'PaymentOfStudentItem', installmentId: number, installmentName: string, dueDate?: string | null, tuitionId: number, tuitionName: string, requiredAmount: any, inKindPayment: boolean, invoiceItemId: any }> } | null };
 
 export type PaymentOfStudentSaveMutationVariables = Exact<{
   payment: PaymentOfStudentInput;
 }>;
 
 
-export type PaymentOfStudentSaveMutation = { paymentOfStudentSave: boolean | null };
+export type PaymentOfStudentSaveMutation = { __typename?: 'Mutation', paymentOfStudentSave?: boolean | null };
 
 export type PaymentDeleteByIdMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type PaymentDeleteByIdMutation = { paymentDeleteById: boolean | null };
+export type PaymentDeleteByIdMutation = { __typename?: 'Mutation', paymentDeleteById?: boolean | null };
 
-export type ProductCategoryFragmentFragment = { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null };
+export type ProductCategoryFragmentFragment = { __typename?: 'ProductCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'ProductCategory', id: number, name: string } | null };
 
 export type ProductCategoriesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductCategoriesQuery = { productCategories: Array<{ id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null }> | null };
+export type ProductCategoriesQuery = { __typename?: 'Query', productCategories?: Array<{ __typename?: 'ProductCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'ProductCategory', id: number, name: string } | null }> | null };
 
 export type ProductCategorySaveMutationVariables = Exact<{
   category: ProductCategoryCreateInput;
 }>;
 
 
-export type ProductCategorySaveMutation = { productCategory: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type ProductCategorySaveMutation = { __typename?: 'Mutation', productCategory?: { __typename?: 'ProductCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'ProductCategory', id: number, name: string } | null } | null };
 
 export type ProductCategoryUpdateMutationVariables = Exact<{
   category: ProductCategoryUpdateInput;
 }>;
 
 
-export type ProductCategoryUpdateMutation = { productCategory: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type ProductCategoryUpdateMutation = { __typename?: 'Mutation', productCategory?: { __typename?: 'ProductCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'ProductCategory', id: number, name: string } | null } | null };
 
 export type ProductCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductCategoryDeleteMutation = { productCategory: boolean | null };
+export type ProductCategoryDeleteMutation = { __typename?: 'Mutation', productCategory?: boolean | null };
 
 export type ProductCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductCategoryCreatedSubscription = { productCategory: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } };
+export type ProductCategoryCreatedSubscription = { __typename?: 'Subscription', productCategory: { __typename?: 'ProductCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'ProductCategory', id: number, name: string } | null } };
 
-export type ProductListFragment = { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null };
+export type ProductListFragment = { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null };
 
 export type ProductsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductsQuery = { products: Array<{ id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null }> | null };
+export type ProductsQuery = { __typename?: 'Query', products?: Array<{ __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null }> | null };
 
 export type NewProductCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NewProductCreatedSubscription = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type NewProductCreatedSubscription = { __typename?: 'Subscription', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ProductReferenceQueryVariables = Exact<{
-  name: string;
-  id: number;
+  name: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductReferenceQuery = { reference: string };
+export type ProductReferenceQuery = { __typename?: 'Query', reference: string };
 
 export type ProductNameExistsQueryVariables = Exact<{
-  name: string;
-  id: number;
+  name: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductNameExistsQuery = { productNameExists: boolean };
+export type ProductNameExistsQuery = { __typename?: 'Query', productNameExists: boolean };
 
 export type ProductReferenceExistsQueryVariables = Exact<{
-  reference: string;
-  id: number;
+  reference: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ProductReferenceExistsQuery = { productReferenceExists: boolean };
+export type ProductReferenceExistsQuery = { __typename?: 'Query', productReferenceExists: boolean };
 
 export type ProductByIdQueryVariables = Exact<{
-  id?: unknown;
+  id?: InputMaybe<Scalars['Long']['input']>;
 }>;
 
 
-export type ProductByIdQuery = { product: { id: unknown, name: string, productType: ProductType, sku: string, salePrice: number | null, cost: number | null, purchasePrice: number | null } | null };
+export type ProductByIdQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: any, name: string, productType: ProductType, sku: string, salePrice?: number | null, cost?: number | null, purchasePrice?: number | null } | null };
 
 export type ProductToggleStatusMutationVariables = Exact<{
-  productId: unknown;
+  productId: Scalars['Long']['input'];
 }>;
 
 
-export type ProductToggleStatusMutation = { productToggleStatus: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type ProductToggleStatusMutation = { __typename?: 'Mutation', productToggleStatus?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ServiceSaveMutationVariables = Exact<{
   service: ServiceCreateInput;
 }>;
 
 
-export type ServiceSaveMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type ServiceSaveMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ServiceUpdateMutationVariables = Exact<{
   service: ServiceUpdateInput;
 }>;
 
 
-export type ServiceUpdateMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type ServiceUpdateMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type ServiceDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ServiceDeleteMutation = { serviceDeleteById: boolean | null };
+export type ServiceDeleteMutation = { __typename?: 'Mutation', serviceDeleteById?: boolean | null };
 
 export type ServiceUnionByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type ServiceUnionByIdQuery = { service: { productId: unknown, name: string, sku: string | null, active: boolean | null, salePrice: unknown, minSalePrice: unknown, cost: unknown, purchasePrice: unknown, saleDescription: string | null, purchaseDescription: string | null, picture: string | null, serviceId: number | null, hoursCount: number | null, productCategory: { id: number, name: string } | null, saleAccount: { id: number, number: string, name: string } | null, purchaseAccount: { id: number, number: string, name: string } | null, enterprise: { id: number, name: string } | null } | null };
+export type ServiceUnionByIdQuery = { __typename?: 'Query', service?: { __typename?: 'ServiceUnion', productId: any, name: string, sku?: string | null, active?: boolean | null, salePrice?: any | null, minSalePrice?: any | null, cost?: any | null, purchasePrice?: any | null, saleDescription?: string | null, purchaseDescription?: string | null, picture?: string | null, serviceId?: number | null, hoursCount?: number | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, saleAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, purchaseAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
-export type SupplierCategoryFragmentFragment = { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null };
+export type SupplierCategoryFragmentFragment = { __typename?: 'SupplierCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'SupplierCategory', id: number, name: string } | null };
 
 export type SupplierCategoriesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SupplierCategoriesQuery = { supplierCategories: Array<{ id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null }> | null };
+export type SupplierCategoriesQuery = { __typename?: 'Query', supplierCategories?: Array<{ __typename?: 'SupplierCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'SupplierCategory', id: number, name: string } | null }> | null };
 
 export type SupplierCategorySaveMutationVariables = Exact<{
   category: SupplierCategoryCreateInput;
 }>;
 
 
-export type SupplierCategorySaveMutation = { supplierCategory: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type SupplierCategorySaveMutation = { __typename?: 'Mutation', supplierCategory?: { __typename?: 'SupplierCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'SupplierCategory', id: number, name: string } | null } | null };
 
 export type SupplierCategoryUpdateMutationVariables = Exact<{
   category: SupplierCategoryUpdateInput;
 }>;
 
 
-export type SupplierCategoryUpdateMutation = { supplierCategory: { id: number, name: string, active: boolean | null, description: string | null, enterpriseId: number, parent: { id: number, name: string } | null } | null };
+export type SupplierCategoryUpdateMutation = { __typename?: 'Mutation', supplierCategory?: { __typename?: 'SupplierCategory', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number, parent?: { __typename?: 'SupplierCategory', id: number, name: string } | null } | null };
 
 export type SupplierCategoryDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SupplierCategoryDeleteMutation = { supplierCategoryDeleteById: boolean | null };
+export type SupplierCategoryDeleteMutation = { __typename?: 'Mutation', supplierCategoryDeleteById?: boolean | null };
 
 export type SupplierCategoryCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SupplierCategoryCreatedSubscription = { onSupplierCategoryCreated: { id: number, name: string, enterpriseId: number } | null };
+export type SupplierCategoryCreatedSubscription = { __typename?: 'Subscription', onSupplierCategoryCreated?: { __typename?: 'SupplierCategory', id: number, name: string, enterpriseId: number } | null };
 
-export type SupplierFragmentFragment = { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, rating: number | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, purchaseCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, supplierAccount: { id: number, name: string } | null };
+export type SupplierFragmentFragment = { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, rating?: number | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, purchaseCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'SupplierCategory', id: number, name: string } | null, supplierAccount?: { __typename?: 'Account', id: number, name: string } | null };
 
 export type SuppliersQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SuppliersQuery = { suppliers: Array<{ id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, rating: number | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, purchaseCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, supplierAccount: { id: number, name: string } | null }> | null };
+export type SuppliersQuery = { __typename?: 'Query', suppliers?: Array<{ __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, rating?: number | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, purchaseCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'SupplierCategory', id: number, name: string } | null, supplierAccount?: { __typename?: 'Account', id: number, name: string } | null }> | null };
 
 export type SupplierSaveMutationVariables = Exact<{
   supplier: SupplierCreateInput;
 }>;
 
 
-export type SupplierSaveMutation = { supplier: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, rating: number | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, purchaseCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, supplierAccount: { id: number, name: string } | null } | null };
+export type SupplierSaveMutation = { __typename?: 'Mutation', supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, rating?: number | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, purchaseCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'SupplierCategory', id: number, name: string } | null, supplierAccount?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type SupplierUpdateMutationVariables = Exact<{
   supplier: SupplierUpdateInput;
 }>;
 
 
-export type SupplierUpdateMutation = { supplier: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null, note: string | null, birthDate: string | null, webSite: string | null, taxNumber: string | null, tradeRegister: string | null, rating: number | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, purchaseCondition: { id: number, name: string } | null, category: { id: number, name: string } | null, supplierAccount: { id: number, name: string } | null } | null };
+export type SupplierUpdateMutation = { __typename?: 'Mutation', supplier?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null, note?: string | null, birthDate?: string | null, webSite?: string | null, taxNumber?: string | null, tradeRegister?: string | null, rating?: number | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, purchaseCondition?: { __typename?: 'PaymentCondition', id: number, name: string } | null, category?: { __typename?: 'SupplierCategory', id: number, name: string } | null, supplierAccount?: { __typename?: 'Account', id: number, name: string } | null } | null };
 
 export type SupplierDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type SupplierDeleteMutation = { supplierDeleteById: boolean | null };
+export type SupplierDeleteMutation = { __typename?: 'Mutation', supplierDeleteById?: boolean | null };
 
 export type SupplierCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SupplierCreatedSubscription = { onSupplierCreated: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, enterpriseId: number } | null };
+export type SupplierCreatedSubscription = { __typename?: 'Subscription', onSupplierCreated?: { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, enterpriseId: number } | null };
 
 export type TuitionSaveMutationVariables = Exact<{
   tuition: TuitionCreateInput;
 }>;
 
 
-export type TuitionSaveMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type TuitionSaveMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type TuitionUpdateMutationVariables = Exact<{
   tuition: TuitionUpdateInput;
 }>;
 
 
-export type TuitionUpdateMutation = { product: { id: unknown, productType: ProductType, name: string, sku: string | null, active: boolean, salePrice: number | null, purchasePrice: number | null, picture: string | null, quantity: number | null, articleId: number | null, serviceId: number | null, reference: string | null, productCategory: { id: number, name: string } | null, enterprise: { id: number } | null } | null };
+export type TuitionUpdateMutation = { __typename?: 'Mutation', product?: { __typename?: 'ProductUnion', id: any, productType: ProductType, name: string, sku?: string | null, active: boolean, salePrice?: number | null, purchasePrice?: number | null, picture?: string | null, quantity?: number | null, articleId?: number | null, serviceId?: number | null, reference?: string | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number } | null } | null };
 
 export type TuitionDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type TuitionDeleteMutation = { tuitionDeleteById: boolean | null };
+export type TuitionDeleteMutation = { __typename?: 'Mutation', tuitionDeleteById?: boolean | null };
 
 export type TuitionUnionByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type TuitionUnionByIdQuery = { tuition: { productId: unknown, name: string, sku: string | null, active: boolean | null, salePrice: unknown, minSalePrice: unknown, cost: unknown, purchasePrice: unknown, saleDescription: string | null, purchaseDescription: string | null, picture: string | null, tuitionId: number | null, numberOrder: number, name2: string | null, isMandatory: boolean, isCollected: boolean, allowPaymentInKind: boolean, isDeliverable: boolean, productCategory: { id: number, name: string } | null, saleAccount: { id: number, number: string, name: string } | null, purchaseAccount: { id: number, number: string, name: string } | null, enterprise: { id: number, name: string } | null } | null };
+export type TuitionUnionByIdQuery = { __typename?: 'Query', tuition?: { __typename?: 'TuitionUnion', productId: any, name: string, sku?: string | null, active?: boolean | null, salePrice?: any | null, minSalePrice?: any | null, cost?: any | null, purchasePrice?: any | null, saleDescription?: string | null, purchaseDescription?: string | null, picture?: string | null, tuitionId?: number | null, numberOrder: number, name2?: string | null, isMandatory: boolean, isCollected: boolean, allowPaymentInKind: boolean, isDeliverable: boolean, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, saleAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, purchaseAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null };
 
 export type TuitionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type TuitionsQuery = { tuitions: Array<{ productId: unknown, name: string, sku: string | null, active: boolean | null, salePrice: unknown, minSalePrice: unknown, cost: unknown, purchasePrice: unknown, saleDescription: string | null, purchaseDescription: string | null, picture: string | null, tuitionId: number | null, numberOrder: number, name2: string | null, isMandatory: boolean, isCollected: boolean, allowPaymentInKind: boolean, isDeliverable: boolean, id: number | null, productCategory: { id: number, name: string } | null, saleAccount: { id: number, number: string, name: string } | null, purchaseAccount: { id: number, number: string, name: string } | null, enterprise: { id: number, name: string } | null } | null> | null };
+export type TuitionsQuery = { __typename?: 'Query', tuitions?: Array<{ __typename?: 'TuitionUnion', productId: any, name: string, sku?: string | null, active?: boolean | null, salePrice?: any | null, minSalePrice?: any | null, cost?: any | null, purchasePrice?: any | null, saleDescription?: string | null, purchaseDescription?: string | null, picture?: string | null, tuitionId?: number | null, numberOrder: number, name2?: string | null, isMandatory: boolean, isCollected: boolean, allowPaymentInKind: boolean, isDeliverable: boolean, id?: number | null, productCategory?: { __typename?: 'ProductCategory', id: number, name: string } | null, saleAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, purchaseAccount?: { __typename?: 'Account', id: number, number: string, name: string } | null, enterprise?: { __typename?: 'Enterprise', id: number, name: string } | null } | null> | null };
 
-export type BranchFieldsFragment = { id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null, subjectBranchCollection: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null }> | null };
+export type BranchFieldsFragment = { __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null, subjectBranchCollection?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null }> | null };
 
 export type BranchesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BranchesQuery = { branches: Array<{ id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null, subjectBranchCollection: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null }> | null }> | null };
+export type BranchesQuery = { __typename?: 'Query', branches?: Array<{ __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null, subjectBranchCollection?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null }> | null }> | null };
 
 export type BranchesBySchoolYearQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BranchesBySchoolYearQuery = { branches: Array<{ id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null, subjectBranchCollection: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null }> | null }> | null };
+export type BranchesBySchoolYearQuery = { __typename?: 'Query', branches?: Array<{ __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null, subjectBranchCollection?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null }> | null }> | null };
 
 export type BranchSaveMutationVariables = Exact<{
   branch: BranchCreateInput;
 }>;
 
 
-export type BranchSaveMutation = { branch: { id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null, subjectBranchCollection: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null }> | null } | null };
+export type BranchSaveMutation = { __typename?: 'Mutation', branch?: { __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null, subjectBranchCollection?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null }> | null } | null };
 
 export type BranchUpdateMutationVariables = Exact<{
   branch: BranchUpdateInput;
 }>;
 
 
-export type BranchUpdateMutation = { branch: { id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null, subjectBranchCollection: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null }> | null } | null };
+export type BranchUpdateMutation = { __typename?: 'Mutation', branch?: { __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null, subjectBranchCollection?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null }> | null } | null };
 
 export type BranchDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BranchDeleteMutation = { deleteBranchById: boolean | null };
+export type BranchDeleteMutation = { __typename?: 'Mutation', deleteBranchById?: boolean | null };
 
 export type BranchCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BranchCreatedSubscription = { branch: { id: number, name: string, maxStudent: number | null, totalCoefficient: number | null, subjectCount: number | null, classCount: number | null } | null };
+export type BranchCreatedSubscription = { __typename?: 'Subscription', branch?: { __typename?: 'Branch', id: number, name: string, maxStudent?: number | null, totalCoefficient?: number | null, subjectCount?: number | null, classCount?: number | null } | null };
 
 export type SubjectBranchesQueryVariables = Exact<{
-  branchId: number;
+  branchId: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectBranchesQuery = { subjectBranches: Array<{ coefficient: number | null, weeklyHourCount: number | null, sessionCount: number | null, maxSessionDuration: number | null, priority: number | null, number: string | null, scale: string | null, subjectBranchPK: { branchId: number | null, subjectId: number | null } | null, subject: { id: number, name: string, code: string | null } | null } | null> | null };
+export type SubjectBranchesQuery = { __typename?: 'Query', subjectBranches?: Array<{ __typename?: 'SubjectBranch', coefficient?: number | null, weeklyHourCount?: number | null, sessionCount?: number | null, maxSessionDuration?: number | null, priority?: number | null, number?: string | null, scale?: string | null, subjectBranchPK?: { __typename?: 'SubjectBranchPK', branchId?: number | null, subjectId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null } | null } | null> | null };
 
-export type ClassFieldsFragment = { id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null };
+export type ClassFieldsFragment = { __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null };
 
 export type ClassesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesQuery = { clazzes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesQuery = { __typename?: 'Query', clazzes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassesBySchoolYearQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesBySchoolYearQuery = { clazzes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesBySchoolYearQuery = { __typename?: 'Query', clazzes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassesBySubjectQueryVariables = Exact<{
-  subject: number;
-  school: number;
+  subject: Scalars['Int']['input'];
+  school: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesBySubjectQuery = { classes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesBySubjectQuery = { __typename?: 'Query', classes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassesForNoteQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesForNoteQuery = { clazzes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesForNoteQuery = { __typename?: 'Query', clazzes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassSaveMutationVariables = Exact<{
-  clazz?: ClazzInput | null | undefined;
+  clazz?: InputMaybe<ClazzInput>;
 }>;
 
 
-export type ClassSaveMutation = { clazz: { id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null } | null };
+export type ClassSaveMutation = { __typename?: 'Mutation', clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null } | null };
 
 export type ClassDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ClassDeleteMutation = { deleteClassById: boolean | null };
+export type ClassDeleteMutation = { __typename?: 'Mutation', deleteClassById?: boolean | null };
 
 export type ClassCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ClassCreatedSubscription = { clazz: { id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null } | null };
+export type ClassCreatedSubscription = { __typename?: 'Subscription', clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null } | null };
 
 export type ClassesWithSubPeriodReportCardQueryVariables = Exact<{
-  subPeriod: number;
+  subPeriod: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesWithSubPeriodReportCardQuery = { classes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesWithSubPeriodReportCardQuery = { __typename?: 'Query', classes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassesWithPeriodReportCardQueryVariables = Exact<{
-  period: number;
+  period: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesWithPeriodReportCardQuery = { classes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesWithPeriodReportCardQuery = { __typename?: 'Query', classes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
 export type ClassesWithAnnualReportCardQueryVariables = Exact<{
-  schoolYear: number;
+  schoolYear: Scalars['Int']['input'];
 }>;
 
 
-export type ClassesWithAnnualReportCardQuery = { classes: Array<{ id: number, name: string, code: string | null, examClass: boolean | null, autoTimeTable: boolean | null, competenceClass: boolean | null, headTeacher: { id: unknown, lastName: string | null, firstName: string | null } | null, branch: { id: number, name: string, level: { id: number, name: string, cycle: { id: number, name: string, schoolYear: { id: number, label: string } | null } | null } | null } | null }> | null };
+export type ClassesWithAnnualReportCardQuery = { __typename?: 'Query', classes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
-export type ConfigurationFieldsFragment = { id: string, createdBy: string | null, createdDate: string | null, lastModifiedBy: string | null, lastModifiedDate: string | null, configData: string | null, configurationPK: { key: string, enterpriseId: number } };
+export type ConfigurationFieldsFragment = { __typename?: 'Configuration', id: string, createdBy?: string | null, createdDate?: string | null, lastModifiedBy?: string | null, lastModifiedDate?: string | null, configData?: string | null, configurationPK: { __typename?: 'ConfigurationPK', key: string, enterpriseId: number } };
 
 export type ConfigurationQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type ConfigurationQuery = { configs: Array<{ id: string, createdBy: string | null, createdDate: string | null, lastModifiedBy: string | null, lastModifiedDate: string | null, configData: string | null, configurationPK: { key: string, enterpriseId: number } }> | null };
+export type ConfigurationQuery = { __typename?: 'Query', configs?: Array<{ __typename?: 'Configuration', id: string, createdBy?: string | null, createdDate?: string | null, lastModifiedBy?: string | null, lastModifiedDate?: string | null, configData?: string | null, configurationPK: { __typename?: 'ConfigurationPK', key: string, enterpriseId: number } }> | null };
 
 export type ConfigurationSaveMutationVariables = Exact<{
-  config?: ConfigurationInput | null | undefined;
+  config?: InputMaybe<ConfigurationInput>;
 }>;
 
 
-export type ConfigurationSaveMutation = { config: { id: string, createdBy: string | null, createdDate: string | null, lastModifiedBy: string | null, lastModifiedDate: string | null, configData: string | null, configurationPK: { key: string, enterpriseId: number } } | null };
+export type ConfigurationSaveMutation = { __typename?: 'Mutation', config?: { __typename?: 'Configuration', id: string, createdBy?: string | null, createdDate?: string | null, lastModifiedBy?: string | null, lastModifiedDate?: string | null, configData?: string | null, configurationPK: { __typename?: 'ConfigurationPK', key: string, enterpriseId: number } } | null };
 
 export type ConfigurationCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ConfigurationCreatedSubscription = { config: { id: string, createdBy: string | null, createdDate: string | null, lastModifiedBy: string | null, lastModifiedDate: string | null, configData: string | null, configurationPK: { key: string, enterpriseId: number } } | null };
+export type ConfigurationCreatedSubscription = { __typename?: 'Subscription', config?: { __typename?: 'Configuration', id: string, createdBy?: string | null, createdDate?: string | null, lastModifiedBy?: string | null, lastModifiedDate?: string | null, configData?: string | null, configurationPK: { __typename?: 'ConfigurationPK', key: string, enterpriseId: number } } | null };
 
 export type EncodeDocumentHeaderQueryVariables = Exact<{
-  json?: DocumentHeaderJsonInput | null | undefined;
+  json?: InputMaybe<DocumentHeaderJsonInput>;
 }>;
 
 
-export type EncodeDocumentHeaderQuery = { configData: string | null };
+export type EncodeDocumentHeaderQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeDocumentHeaderQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeDocumentHeaderQuery = { documentHeader: { leftHeader: string | null, rightHeader: string | null } | null };
+export type DecodeDocumentHeaderQuery = { __typename?: 'Query', documentHeader?: { __typename?: 'DocumentHeaderJson', leftHeader?: string | null, rightHeader?: string | null } | null };
 
 export type EncodeDisciplineQueryVariables = Exact<{
-  json?: DisciplineJsonInput | null | undefined;
+  json?: InputMaybe<DisciplineJsonInput>;
 }>;
 
 
-export type EncodeDisciplineQuery = { configData: string | null };
+export type EncodeDisciplineQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeDisciplineQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeDisciplineQuery = { discipline: { warning: string | null, blame: string | null, exclusion3: string | null, exclusion5: string | null, exclusion8: string | null, definitiveExclusion: string | null } | null };
+export type DecodeDisciplineQuery = { __typename?: 'Query', discipline?: { __typename?: 'DisciplineJson', warning?: string | null, blame?: string | null, exclusion3?: string | null, exclusion5?: string | null, exclusion8?: string | null, definitiveExclusion?: string | null } | null };
 
 export type EncodeReportQueryVariables = Exact<{
-  json?: ReportJsonInput | null | undefined;
+  json?: InputMaybe<ReportJsonInput>;
 }>;
 
 
-export type EncodeReportQuery = { configData: string | null };
+export type EncodeReportQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeReportQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeReportQuery = { report: { minSubjectsPercentage: number | null, annualSubPeriodsRequired: number | null, quarterlySubPeriodsRequired: number | null, customReportHeader: boolean | null } | null };
+export type DecodeReportQuery = { __typename?: 'Query', report?: { __typename?: 'ReportJson', minSubjectsPercentage?: number | null, annualSubPeriodsRequired?: number | null, quarterlySubPeriodsRequired?: number | null, customReportHeader?: boolean | null } | null };
 
 export type LoadLicenseFromTextQueryVariables = Exact<{
-  base64Text: string;
+  base64Text: Scalars['String']['input'];
 }>;
 
 
-export type LoadLicenseFromTextQuery = { license: { licenseKey: string, enterpriseId: number, schoolYearId: number | null, enterpriseName: string, expiryDate: string, subPeriods: number | null } | null };
+export type LoadLicenseFromTextQuery = { __typename?: 'Query', license?: { __typename?: 'LicenseJson', licenseKey: string, enterpriseId: number, schoolYearId?: number | null, enterpriseName: string, expiryDate: string, subPeriods?: number | null } | null };
 
 export type LoadLicenseFromFileQueryVariables = Exact<{
-  file: string;
+  file: Scalars['String']['input'];
 }>;
 
 
-export type LoadLicenseFromFileQuery = { license: { licenseKey: string, enterpriseId: number, schoolYearId: number | null, enterpriseName: string, expiryDate: string, subPeriods: number | null } | null };
+export type LoadLicenseFromFileQuery = { __typename?: 'Query', license?: { __typename?: 'LicenseJson', licenseKey: string, enterpriseId: number, schoolYearId?: number | null, enterpriseName: string, expiryDate: string, subPeriods?: number | null } | null };
 
 export type DecodeLicenseQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeLicenseQuery = { license: { licenseKey: string, enterpriseId: number, schoolYearId: number | null, enterpriseName: string, expiryDate: string, subPeriods: number | null } | null };
+export type DecodeLicenseQuery = { __typename?: 'Query', license?: { __typename?: 'LicenseJson', licenseKey: string, enterpriseId: number, schoolYearId?: number | null, enterpriseName: string, expiryDate: string, subPeriods?: number | null } | null };
 
 export type EncodeLicenseQueryVariables = Exact<{
-  json?: LicenseJsonInput | null | undefined;
+  json?: InputMaybe<LicenseJsonInput>;
 }>;
 
 
-export type EncodeLicenseQuery = { configData: string | null };
+export type EncodeLicenseQuery = { __typename?: 'Query', configData?: string | null };
 
 export type EncodeSecurityQueryVariables = Exact<{
-  json?: SecurityJsonInput | null | undefined;
+  json?: InputMaybe<SecurityJsonInput>;
 }>;
 
 
-export type EncodeSecurityQuery = { configData: string | null };
+export type EncodeSecurityQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeSecurityQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeSecurityQuery = { security: { enableSecuredLogin: boolean | null, type: LoginSecurityType | null } | null };
+export type DecodeSecurityQuery = { __typename?: 'Query', security?: { __typename?: 'SecurityJson', enableSecuredLogin?: boolean | null, type?: LoginSecurityType | null } | null };
 
 export type EncodeRegistrationNumberQueryVariables = Exact<{
-  json?: RegistrationNumberJsonInput | null | undefined;
+  json?: InputMaybe<RegistrationNumberJsonInput>;
 }>;
 
 
-export type EncodeRegistrationNumberQuery = { configData: string | null };
+export type EncodeRegistrationNumberQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeRegistrationNumberQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeRegistrationNumberQuery = { registrationNumber: { prefix: PrefixType, prefixSep: string, radicalType: RadicalType, radicalLength: number | null, radicalFill: string | null, suffixLength: number, resetNumberOrder: boolean } | null };
+export type DecodeRegistrationNumberQuery = { __typename?: 'Query', registrationNumber?: { __typename?: 'RegistrationNumberJson', prefix: PrefixType, prefixSep: string, radicalType: RadicalType, radicalLength?: number | null, radicalFill?: string | null, suffixLength: number, resetNumberOrder: boolean } | null };
 
 export type EncodeStudentInvoiceQueryVariables = Exact<{
-  json?: StudentInvoiceJsonInput | null | undefined;
+  json?: InputMaybe<StudentInvoiceJsonInput>;
 }>;
 
 
-export type EncodeStudentInvoiceQuery = { configData: string | null };
+export type EncodeStudentInvoiceQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeStudentInvoiceQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeStudentInvoiceQuery = { studentInvoice: { prefix: string, radical: InvoiceRadicalType, suffixLength: number, resetNumberOrder: boolean } | null };
+export type DecodeStudentInvoiceQuery = { __typename?: 'Query', studentInvoice?: { __typename?: 'StudentInvoiceJson', prefix: string, radical: InvoiceRadicalType, suffixLength: number, resetNumberOrder: boolean } | null };
 
 export type EncodeStudentPaymentQueryVariables = Exact<{
-  json?: StudentPaymentJsonInput | null | undefined;
+  json?: InputMaybe<StudentPaymentJsonInput>;
 }>;
 
 
-export type EncodeStudentPaymentQuery = { configData: string | null };
+export type EncodeStudentPaymentQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeStudentPaymentQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeStudentPaymentQuery = { studentPayment: { prefix: string, radical: InvoiceRadicalType, suffixLength: number, resetNumberOrder: boolean, paymentGroupCompulsory: boolean | null, schoolFeeCompulsory: boolean | null, uniqueInvoice: boolean | null, bigSizeReceipt: boolean | null, leftSignature: string | null, rightSignature: string | null, middleSignature: string | null, showEmptyNonCompulsory: boolean | null } | null };
+export type DecodeStudentPaymentQuery = { __typename?: 'Query', studentPayment?: { __typename?: 'StudentPaymentJson', prefix: string, radical: InvoiceRadicalType, suffixLength: number, resetNumberOrder: boolean, paymentGroupCompulsory?: boolean | null, schoolFeeCompulsory?: boolean | null, uniqueInvoice?: boolean | null, bigSizeReceipt?: boolean | null, leftSignature?: string | null, rightSignature?: string | null, middleSignature?: string | null, showEmptyNonCompulsory?: boolean | null } | null };
 
 export type EncodePictureQueryVariables = Exact<{
-  json?: PictureJsonInput | null | undefined;
+  json?: InputMaybe<PictureJsonInput>;
 }>;
 
 
-export type EncodePictureQuery = { configData: string | null };
+export type EncodePictureQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodePictureQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodePictureQuery = { picture: { picturePath: string } | null };
+export type DecodePictureQuery = { __typename?: 'Query', picture?: { __typename?: 'PictureJson', picturePath: string } | null };
 
 export type EncodePersonnelCodeQueryVariables = Exact<{
-  json?: PersonnelCodeJsonInput | null | undefined;
+  json?: InputMaybe<PersonnelCodeJsonInput>;
 }>;
 
 
-export type EncodePersonnelCodeQuery = { configData: string | null };
+export type EncodePersonnelCodeQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodePersonnelCodeQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodePersonnelCodeQuery = { personnelCode: { prefix: PrefixType, prefixSep: string, radicalType: RadicalType, radicalLength: number | null, radicalFill: string | null, postRadical: string | null, suffixLength: number, resetNumberOrder: boolean } | null };
+export type DecodePersonnelCodeQuery = { __typename?: 'Query', personnelCode?: { __typename?: 'PersonnelCodeJson', prefix: PrefixType, prefixSep: string, radicalType: RadicalType, radicalLength?: number | null, radicalFill?: string | null, postRadical?: string | null, suffixLength: number, resetNumberOrder: boolean } | null };
 
 export type EncodeDuplicatedStudentQueryVariables = Exact<{
   json: DuplicatedStudentJsonInput;
 }>;
 
 
-export type EncodeDuplicatedStudentQuery = { configData: string | null };
+export type EncodeDuplicatedStudentQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeDuplicatedStudentQueryVariables = Exact<{
-  data: string;
+  data: Scalars['String']['input'];
 }>;
 
 
-export type DecodeDuplicatedStudentQuery = { duplicatedStudent: { verifyDuplicatedStudent: boolean, includeLastName: boolean, includeFirstName: boolean, includeBirthDate: boolean, includeBirthplace: boolean, includeGender: boolean } | null };
+export type DecodeDuplicatedStudentQuery = { __typename?: 'Query', duplicatedStudent?: { __typename?: 'DuplicatedStudentJson', verifyDuplicatedStudent: boolean, includeLastName: boolean, includeFirstName: boolean, includeBirthDate: boolean, includeBirthplace: boolean, includeGender: boolean } | null };
 
 export type EncodeReportHeaderQueryVariables = Exact<{
-  json?: ReportHeaderJsonInput | null | undefined;
+  json?: InputMaybe<ReportHeaderJsonInput>;
 }>;
 
 
-export type EncodeReportHeaderQuery = { configData: string | null };
+export type EncodeReportHeaderQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeReportHeaderQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeReportHeaderQuery = { reportHeader: { leftHeader: string | null, rightHeader: string | null } | null };
+export type DecodeReportHeaderQuery = { __typename?: 'Query', reportHeader?: { __typename?: 'ReportHeaderJson', leftHeader?: string | null, rightHeader?: string | null } | null };
 
 export type EncodeExpenseQueryVariables = Exact<{
-  json?: ExpenseJsonInput | null | undefined;
+  json?: InputMaybe<ExpenseJsonInput>;
 }>;
 
 
-export type EncodeExpenseQuery = { configData: string | null };
+export type EncodeExpenseQuery = { __typename?: 'Query', configData?: string | null };
 
 export type DecodeExpenseQueryVariables = Exact<{
-  data?: string | null | undefined;
+  data?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type DecodeExpenseQuery = { expense: { voucherCompulsory: boolean } | null };
+export type DecodeExpenseQuery = { __typename?: 'Query', expense?: { __typename?: 'ExpenseJson', voucherCompulsory: boolean } | null };
 
-export type CouncilDecisionFieldsFragment = { id: number, code: string, name: string, decisionType: DecisionType, note: string | null, school: { id: number, name: string } | null };
+export type CouncilDecisionFieldsFragment = { __typename?: 'CouncilDecision', id: number, code: string, name: string, decisionType: DecisionType, note?: string | null, school?: { __typename?: 'School', id: number, name: string } | null };
 
 export type CouncilDecisionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CouncilDecisionsQuery = { councilDecisions: Array<{ id: number, code: string, name: string, decisionType: DecisionType, note: string | null, school: { id: number, name: string } | null }> | null };
+export type CouncilDecisionsQuery = { __typename?: 'Query', councilDecisions?: Array<{ __typename?: 'CouncilDecision', id: number, code: string, name: string, decisionType: DecisionType, note?: string | null, school?: { __typename?: 'School', id: number, name: string } | null }> | null };
 
 export type CouncilDecisionSaveMutationVariables = Exact<{
-  decision?: CouncilDecisionInput | null | undefined;
+  decision?: InputMaybe<CouncilDecisionInput>;
 }>;
 
 
-export type CouncilDecisionSaveMutation = { councilDecision: { id: number, code: string, name: string, decisionType: DecisionType, note: string | null, school: { id: number, name: string } | null } | null };
+export type CouncilDecisionSaveMutation = { __typename?: 'Mutation', councilDecision?: { __typename?: 'CouncilDecision', id: number, code: string, name: string, decisionType: DecisionType, note?: string | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
 export type CouncilDecisionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CouncilDecisionDeleteMutation = { deleteCouncilDecisionById: boolean | null };
+export type CouncilDecisionDeleteMutation = { __typename?: 'Mutation', deleteCouncilDecisionById?: boolean | null };
 
 export type CouncilDecisionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CouncilDecisionCreatedSubscription = { councilDecision: { id: number, code: string, name: string, decisionType: DecisionType, note: string | null } | null };
+export type CouncilDecisionCreatedSubscription = { __typename?: 'Subscription', councilDecision?: { __typename?: 'CouncilDecision', id: number, code: string, name: string, decisionType: DecisionType, note?: string | null } | null };
 
-export type CycleFieldsFragment = { id: number, numberOrder: number, name: string, name2: string | null, levelCount: unknown, schoolYear: { id: number, label: string } | null, schoolSection: { id: number, name: string } | null };
+export type CycleFieldsFragment = { __typename?: 'Cycle', id: number, numberOrder: number, name: string, name2?: string | null, levelCount?: any | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null };
 
 export type CyclesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CyclesQuery = { cycles: Array<{ id: number, numberOrder: number, name: string, name2: string | null, levelCount: unknown, schoolYear: { id: number, label: string } | null, schoolSection: { id: number, name: string } | null }> | null };
+export type CyclesQuery = { __typename?: 'Query', cycles?: Array<{ __typename?: 'Cycle', id: number, numberOrder: number, name: string, name2?: string | null, levelCount?: any | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null }> | null };
 
 export type CycleSaveMutationVariables = Exact<{
-  cycle?: CycleInput | null | undefined;
+  cycle?: InputMaybe<CycleInput>;
 }>;
 
 
-export type CycleSaveMutation = { cycle: { id: number, numberOrder: number, name: string, name2: string | null, levelCount: unknown, schoolYear: { id: number, label: string } | null, schoolSection: { id: number, name: string } | null } | null };
+export type CycleSaveMutation = { __typename?: 'Mutation', cycle?: { __typename?: 'Cycle', id: number, numberOrder: number, name: string, name2?: string | null, levelCount?: any | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null };
 
 export type CycleDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type CycleDeleteMutation = { deleteCycleById: boolean | null };
+export type CycleDeleteMutation = { __typename?: 'Mutation', deleteCycleById?: boolean | null };
 
 export type CycleCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CycleCreatedSubscription = { cycle: { id: number, numberOrder: number, name: string, name2: string | null, levelCount: unknown } | null };
+export type CycleCreatedSubscription = { __typename?: 'Subscription', cycle?: { __typename?: 'Cycle', id: number, numberOrder: number, name: string, name2?: string | null, levelCount?: any | null } | null };
 
 export type DashboardQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DashboardQuery = { dashboard: { students: number | null, personnel: number | null, sections: number | null, cycles: number | null, levels: number | null, branches: number | null, classes: number | null, users: number | null } | null };
+export type DashboardQuery = { __typename?: 'Query', dashboard?: { __typename?: 'Dashboard', students?: number | null, personnel?: number | null, sections?: number | null, cycles?: number | null, levels?: number | null, branches?: number | null, classes?: number | null, users?: number | null } | null };
 
-export type EnrollmentHistoryFragmentFragment = { studentId: unknown, registrationNumber: string | null, lastName: string | null, firstName: string | null, schoolYearId: number | null, schoolYearLabel: string | null, classId: number | null, className: string | null };
+export type EnrollmentHistoryFragmentFragment = { __typename?: 'EnrollmentHistory', studentId?: any | null, registrationNumber?: string | null, lastName?: string | null, firstName?: string | null, schoolYearId?: number | null, schoolYearLabel?: string | null, classId?: number | null, className?: string | null };
 
 export type EnrollmentsOfStudentQueryVariables = Exact<{
-  studentId: unknown;
+  studentId: Scalars['Long']['input'];
 }>;
 
 
-export type EnrollmentsOfStudentQuery = { enrollments: Array<{ studentId: unknown, registrationNumber: string | null, lastName: string | null, firstName: string | null, schoolYearId: number | null, schoolYearLabel: string | null, classId: number | null, className: string | null }> | null };
+export type EnrollmentsOfStudentQuery = { __typename?: 'Query', enrollments?: Array<{ __typename?: 'EnrollmentHistory', studentId?: any | null, registrationNumber?: string | null, lastName?: string | null, firstName?: string | null, schoolYearId?: number | null, schoolYearLabel?: string | null, classId?: number | null, className?: string | null }> | null };
 
-export type GuardianFieldsFragment = { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, job: string | null, religion: string | null, regionOrigin: string | null, departmentOrigin: string | null, districtOrigin: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, language: { id: number, name: string } | null };
+export type GuardianFieldsFragment = { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, job?: string | null, religion?: string | null, regionOrigin?: string | null, departmentOrigin?: string | null, districtOrigin?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, language?: { __typename?: 'Language', id: number, name: string } | null };
 
-export type GuardianCreateFieldsFragment = { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null };
+export type GuardianCreateFieldsFragment = { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null };
 
 export type GuardiansQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type GuardiansQuery = { guardians: Array<{ id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, job: string | null, religion: string | null, regionOrigin: string | null, departmentOrigin: string | null, districtOrigin: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, language: { id: number, name: string } | null }> | null };
+export type GuardiansQuery = { __typename?: 'Query', guardians?: Array<{ __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, job?: string | null, religion?: string | null, regionOrigin?: string | null, departmentOrigin?: string | null, districtOrigin?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, language?: { __typename?: 'Language', id: number, name: string } | null }> | null };
 
 export type GuardianSaveMutationVariables = Exact<{
   guardian: GuardianCreateInput;
 }>;
 
 
-export type GuardianSaveMutation = { guardian: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, job: string | null, religion: string | null, regionOrigin: string | null, departmentOrigin: string | null, districtOrigin: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, language: { id: number, name: string } | null } | null };
+export type GuardianSaveMutation = { __typename?: 'Mutation', guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, job?: string | null, religion?: string | null, regionOrigin?: string | null, departmentOrigin?: string | null, districtOrigin?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, language?: { __typename?: 'Language', id: number, name: string } | null } | null };
 
 export type GuardianUpdateMutationVariables = Exact<{
   guardian: GuardianUpdateInput;
 }>;
 
 
-export type GuardianUpdateMutation = { guardian: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, job: string | null, religion: string | null, regionOrigin: string | null, departmentOrigin: string | null, districtOrigin: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, language: { id: number, name: string } | null } | null };
+export type GuardianUpdateMutation = { __typename?: 'Mutation', guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, job?: string | null, religion?: string | null, regionOrigin?: string | null, departmentOrigin?: string | null, districtOrigin?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, language?: { __typename?: 'Language', id: number, name: string } | null } | null };
 
 export type GuardianDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type GuardianDeleteMutation = { deleteGuardianById: boolean | null };
+export type GuardianDeleteMutation = { __typename?: 'Mutation', deleteGuardianById?: boolean | null };
 
 export type GuardianCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GuardianCreatedSubscription = { guardian: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type GuardianCreatedSubscription = { __typename?: 'Subscription', guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type GuardianStreetsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type GuardianStreetsQuery = { guardianStreets: Array<string> | null };
+export type GuardianStreetsQuery = { __typename?: 'Query', guardianStreets?: Array<string> | null };
 
 export type GuardianByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type GuardianByIdQuery = { guardian: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, profession: string | null, active: boolean | null, note: string | null, job: string | null, religion: string | null, regionOrigin: string | null, departmentOrigin: string | null, districtOrigin: string | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null, language: { id: number, name: string } | null } | null };
+export type GuardianByIdQuery = { __typename?: 'Query', guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, profession?: string | null, active?: boolean | null, note?: string | null, job?: string | null, religion?: string | null, regionOrigin?: string | null, departmentOrigin?: string | null, districtOrigin?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null, language?: { __typename?: 'Language', id: number, name: string } | null } | null };
 
 export type GuardianReligionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type GuardianReligionsQuery = { guardianReligions: Array<string> | null };
+export type GuardianReligionsQuery = { __typename?: 'Query', guardianReligions?: Array<string> | null };
 
 export type HeadDepartmentQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type HeadDepartmentQuery = { headDepartments: Array<{ headDepartmentPK: { schoolYearId: number, departmentId: number } | null, teacher: { id: unknown, lastName: string | null, firstName: string | null } | null, department: { id: number, name: string } | null } | null> | null };
+export type HeadDepartmentQuery = { __typename?: 'Query', headDepartments?: Array<{ __typename?: 'HeadDepartment', headDepartmentPK?: { __typename?: 'HeadDepartmentPK', schoolYearId: number, departmentId: number } | null, teacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, department?: { __typename?: 'SubjectDepartment', id: number, name: string } | null } | null> | null };
 
 export type HeadDepartmentsSaveMutationVariables = Exact<{
   headDepartments: Array<HeadDepartmentInput> | HeadDepartmentInput;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type HeadDepartmentsSaveMutation = { headDepartmentsSave: boolean | null };
+export type HeadDepartmentsSaveMutation = { __typename?: 'Mutation', headDepartmentsSave?: boolean | null };
 
 export type InitSchoolMutationVariables = Exact<{
   input: SchoolInitInput;
 }>;
 
 
-export type InitSchoolMutation = { initSchool: boolean | null };
+export type InitSchoolMutation = { __typename?: 'Mutation', initSchool?: boolean | null };
 
-export type LanguageFieldsFragment = { id: number, code: LanguageType, name: string, active: boolean | null, description: string | null };
+export type LanguageFieldsFragment = { __typename?: 'Language', id: number, code: LanguageType, name: string, active?: boolean | null, description?: string | null };
 
 export type LanguagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LanguagesQuery = { languages: Array<{ id: number, code: LanguageType, name: string, active: boolean | null, description: string | null }> | null };
+export type LanguagesQuery = { __typename?: 'Query', languages?: Array<{ __typename?: 'Language', id: number, code: LanguageType, name: string, active?: boolean | null, description?: string | null }> | null };
 
 export type LanguageSaveMutationVariables = Exact<{
-  language?: LanguageInput | null | undefined;
+  language?: InputMaybe<LanguageInput>;
 }>;
 
 
-export type LanguageSaveMutation = { language: { id: number, code: LanguageType, name: string, active: boolean | null, description: string | null } | null };
+export type LanguageSaveMutation = { __typename?: 'Mutation', language?: { __typename?: 'Language', id: number, code: LanguageType, name: string, active?: boolean | null, description?: string | null } | null };
 
 export type LanguageCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LanguageCreatedSubscription = { language: { id: number, code: LanguageType, name: string, active: boolean | null, description: string | null } | null };
+export type LanguageCreatedSubscription = { __typename?: 'Subscription', language?: { __typename?: 'Language', id: number, code: LanguageType, name: string, active?: boolean | null, description?: string | null } | null };
 
-export type LevelFieldsFragment = { id: number, numberOrder: number, name: string, note: string | null, branchCount: number | null, cycle: { id: number, name: string, schoolSection: { id: number, name: string } | null, schoolYear: { id: number, label: string } | null } | null };
+export type LevelFieldsFragment = { __typename?: 'Level', id: number, numberOrder: number, name: string, note?: string | null, branchCount?: number | null, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null };
 
 export type LevelsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LevelsQuery = { levels: Array<{ id: number, numberOrder: number, name: string, note: string | null, branchCount: number | null, cycle: { id: number, name: string, schoolSection: { id: number, name: string } | null, schoolYear: { id: number, label: string } | null } | null }> | null };
+export type LevelsQuery = { __typename?: 'Query', levels?: Array<{ __typename?: 'Level', id: number, numberOrder: number, name: string, note?: string | null, branchCount?: number | null, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null }> | null };
 
 export type LevelSaveMutationVariables = Exact<{
-  level?: LevelInput | null | undefined;
+  level?: InputMaybe<LevelInput>;
 }>;
 
 
-export type LevelSaveMutation = { level: { id: number, numberOrder: number, name: string, note: string | null, branchCount: number | null, cycle: { id: number, name: string, schoolSection: { id: number, name: string } | null, schoolYear: { id: number, label: string } | null } | null } | null };
+export type LevelSaveMutation = { __typename?: 'Mutation', level?: { __typename?: 'Level', id: number, numberOrder: number, name: string, note?: string | null, branchCount?: number | null, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null };
 
 export type LevelDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LevelDeleteMutation = { deleteLevelById: boolean | null };
+export type LevelDeleteMutation = { __typename?: 'Mutation', deleteLevelById?: boolean | null };
 
 export type LevelCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LevelCreatedSubscription = { level: { id: number, numberOrder: number, name: string, note: string | null, branchCount: number | null } | null };
+export type LevelCreatedSubscription = { __typename?: 'Subscription', level?: { __typename?: 'Level', id: number, numberOrder: number, name: string, note?: string | null, branchCount?: number | null } | null };
 
 export type LevelsBySchoolYearQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LevelsBySchoolYearQuery = { levels: Array<{ id: number, numberOrder: number, name: string, note: string | null, branchCount: number | null, cycle: { id: number, name: string, schoolSection: { id: number, name: string } | null, schoolYear: { id: number, label: string } | null } | null }> | null };
+export type LevelsBySchoolYearQuery = { __typename?: 'Query', levels?: Array<{ __typename?: 'Level', id: number, numberOrder: number, name: string, note?: string | null, branchCount?: number | null, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null }> | null };
 
-export type LiableTypeFieldsFragment = { id: number, name: string, active: boolean | null, prefix: string, note: string | null };
+export type LiableTypeFieldsFragment = { __typename?: 'LiableType', id: number, name: string, active?: boolean | null, prefix: string, note?: string | null };
 
 export type OfficialTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OfficialTypesQuery = { officialTypes: Array<{ id: number, name: string, active: boolean | null, prefix: string, note: string | null }> | null };
+export type OfficialTypesQuery = { __typename?: 'Query', officialTypes?: Array<{ __typename?: 'LiableType', id: number, name: string, active?: boolean | null, prefix: string, note?: string | null }> | null };
 
 export type OfficialTypeSaveMutationVariables = Exact<{
-  type?: LiableTypeInput | null | undefined;
+  type?: InputMaybe<LiableTypeInput>;
 }>;
 
 
-export type OfficialTypeSaveMutation = { officialType: { id: number, name: string, active: boolean | null, prefix: string, note: string | null } | null };
+export type OfficialTypeSaveMutation = { __typename?: 'Mutation', officialType?: { __typename?: 'LiableType', id: number, name: string, active?: boolean | null, prefix: string, note?: string | null } | null };
 
 export type OfficialTypeDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OfficialTypeDeleteMutation = { deleteLiableTypeById: boolean | null };
+export type OfficialTypeDeleteMutation = { __typename?: 'Mutation', deleteLiableTypeById?: boolean | null };
 
 export type OfficialTypeCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OfficialTypeCreatedSubscription = { officialType: { id: number, name: string, active: boolean | null, prefix: string, note: string | null } | null };
+export type OfficialTypeCreatedSubscription = { __typename?: 'Subscription', officialType?: { __typename?: 'LiableType', id: number, name: string, active?: boolean | null, prefix: string, note?: string | null } | null };
 
-export type OldSchoolFieldsFragment = { id: number, name: string, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null };
+export type OldSchoolFieldsFragment = { __typename?: 'OldSchool', id: number, name: string, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null };
 
 export type OldSchoolsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OldSchoolsQuery = { oldSchools: Array<{ id: number, name: string, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null }> | null };
+export type OldSchoolsQuery = { __typename?: 'Query', oldSchools?: Array<{ __typename?: 'OldSchool', id: number, name: string, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null }> | null };
 
 export type OldSchoolSaveMutationVariables = Exact<{
-  oldSchool?: OldSchoolInput | null | undefined;
+  oldSchool?: InputMaybe<OldSchoolInput>;
 }>;
 
 
-export type OldSchoolSaveMutation = { oldSchool: { id: number, name: string, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type OldSchoolSaveMutation = { __typename?: 'Mutation', oldSchool?: { __typename?: 'OldSchool', id: number, name: string, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type OldSchoolDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type OldSchoolDeleteMutation = { deleteOldSchoolById: boolean | null };
+export type OldSchoolDeleteMutation = { __typename?: 'Mutation', deleteOldSchoolById?: boolean | null };
 
 export type OldSchoolCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OldSchoolCreatedSubscription = { oldSchool: { id: number, name: string, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type OldSchoolCreatedSubscription = { __typename?: 'Subscription', oldSchool?: { __typename?: 'OldSchool', id: number, name: string, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
-export type PeriodFieldsFragment = { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, message: string | null, message2: string | null, coefficient: number | null, schoolYear: { id: number, label: string } | null };
+export type PeriodFieldsFragment = { __typename?: 'Period', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, message?: string | null, message2?: string | null, coefficient?: number | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type PeriodsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PeriodsQuery = { periods: Array<{ id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, message: string | null, message2: string | null, coefficient: number | null, schoolYear: { id: number, label: string } | null }> | null };
+export type PeriodsQuery = { __typename?: 'Query', periods?: Array<{ __typename?: 'Period', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, message?: string | null, message2?: string | null, coefficient?: number | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null }> | null };
 
 export type PeriodSaveMutationVariables = Exact<{
-  period?: PeriodInput | null | undefined;
+  period?: InputMaybe<PeriodInput>;
 }>;
 
 
-export type PeriodSaveMutation = { period: { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, message: string | null, message2: string | null, coefficient: number | null, schoolYear: { id: number, label: string } | null } | null };
+export type PeriodSaveMutation = { __typename?: 'Mutation', period?: { __typename?: 'Period', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, message?: string | null, message2?: string | null, coefficient?: number | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null };
 
 export type PeriodDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PeriodDeleteMutation = { deletePeriodById: boolean | null };
+export type PeriodDeleteMutation = { __typename?: 'Mutation', deletePeriodById?: boolean | null };
 
 export type PeriodCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PeriodCreatedSubscription = { period: { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, message: string | null, message2: string | null, coefficient: number | null } | null };
+export type PeriodCreatedSubscription = { __typename?: 'Subscription', period?: { __typename?: 'Period', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, message?: string | null, message2?: string | null, coefficient?: number | null } | null };
 
-export type SchoolFieldsFragment = { id: number, name: string, name2: string | null, registrationNumber: string | null, shortName: string | null, schoolCode: string | null, schoolType: SchoolType | null, schoolCategory: SchoolCategory | null, studentType: StudentType | null, motto: string | null, webSite: string | null, note: string | null, logo: string | null, active: boolean | null, motto2: string | null, creationDate: string | null, authNumber: string | null, nsifNumber: string | null, venue: string | null, signingAddress: string | null, bilingualName: string | null, identifier: string | null, address: { state: string | null, street: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, fax: string | null, postOfficeBox: string | null } | null, legalInfo: { legalForm: string | null, taxpayerNumber: string | null, tradeRegister: string | null, shareCapital: number | null } | null };
+export type SchoolFieldsFragment = { __typename?: 'School', id: number, name: string, name2?: string | null, registrationNumber?: string | null, shortName?: string | null, schoolCode?: string | null, schoolType?: SchoolType | null, schoolCategory?: SchoolCategory | null, studentType?: StudentType | null, motto?: string | null, webSite?: string | null, note?: string | null, logo?: string | null, active?: boolean | null, motto2?: string | null, creationDate?: string | null, authNumber?: string | null, nsifNumber?: string | null, venue?: string | null, signingAddress?: string | null, bilingualName?: string | null, identifier?: string | null, address?: { __typename?: 'Address', state?: string | null, street?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, fax?: string | null, postOfficeBox?: string | null } | null, legalInfo?: { __typename?: 'LegalInfo', legalForm?: string | null, taxpayerNumber?: string | null, tradeRegister?: string | null, shareCapital?: number | null } | null };
 
 export type SchoolByIdQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolByIdQuery = { schools: { id: number, name: string, name2: string | null, registrationNumber: string | null, shortName: string | null, schoolCode: string | null, schoolType: SchoolType | null, schoolCategory: SchoolCategory | null, studentType: StudentType | null, motto: string | null, webSite: string | null, note: string | null, logo: string | null, active: boolean | null, motto2: string | null, creationDate: string | null, authNumber: string | null, nsifNumber: string | null, venue: string | null, signingAddress: string | null, bilingualName: string | null, identifier: string | null, address: { state: string | null, street: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, fax: string | null, postOfficeBox: string | null } | null, legalInfo: { legalForm: string | null, taxpayerNumber: string | null, tradeRegister: string | null, shareCapital: number | null } | null } | null };
+export type SchoolByIdQuery = { __typename?: 'Query', schools?: { __typename?: 'School', id: number, name: string, name2?: string | null, registrationNumber?: string | null, shortName?: string | null, schoolCode?: string | null, schoolType?: SchoolType | null, schoolCategory?: SchoolCategory | null, studentType?: StudentType | null, motto?: string | null, webSite?: string | null, note?: string | null, logo?: string | null, active?: boolean | null, motto2?: string | null, creationDate?: string | null, authNumber?: string | null, nsifNumber?: string | null, venue?: string | null, signingAddress?: string | null, bilingualName?: string | null, identifier?: string | null, address?: { __typename?: 'Address', state?: string | null, street?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, fax?: string | null, postOfficeBox?: string | null } | null, legalInfo?: { __typename?: 'LegalInfo', legalForm?: string | null, taxpayerNumber?: string | null, tradeRegister?: string | null, shareCapital?: number | null } | null } | null };
 
 export type SchoolSaveMutationVariables = Exact<{
-  school?: SchoolInput | null | undefined;
+  school?: InputMaybe<SchoolInput>;
 }>;
 
 
-export type SchoolSaveMutation = { school: { id: number, name: string, name2: string | null, registrationNumber: string | null, shortName: string | null, schoolCode: string | null, schoolType: SchoolType | null, schoolCategory: SchoolCategory | null, studentType: StudentType | null, motto: string | null, webSite: string | null, note: string | null, logo: string | null, active: boolean | null, motto2: string | null, creationDate: string | null, authNumber: string | null, nsifNumber: string | null, venue: string | null, signingAddress: string | null, bilingualName: string | null, identifier: string | null, address: { state: string | null, street: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, fax: string | null, postOfficeBox: string | null } | null, legalInfo: { legalForm: string | null, taxpayerNumber: string | null, tradeRegister: string | null, shareCapital: number | null } | null } | null };
+export type SchoolSaveMutation = { __typename?: 'Mutation', school?: { __typename?: 'School', id: number, name: string, name2?: string | null, registrationNumber?: string | null, shortName?: string | null, schoolCode?: string | null, schoolType?: SchoolType | null, schoolCategory?: SchoolCategory | null, studentType?: StudentType | null, motto?: string | null, webSite?: string | null, note?: string | null, logo?: string | null, active?: boolean | null, motto2?: string | null, creationDate?: string | null, authNumber?: string | null, nsifNumber?: string | null, venue?: string | null, signingAddress?: string | null, bilingualName?: string | null, identifier?: string | null, address?: { __typename?: 'Address', state?: string | null, street?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, fax?: string | null, postOfficeBox?: string | null } | null, legalInfo?: { __typename?: 'LegalInfo', legalForm?: string | null, taxpayerNumber?: string | null, tradeRegister?: string | null, shareCapital?: number | null } | null } | null };
 
 export type CloneConfigMutationVariables = Exact<{
-  schoolYearId: number;
-  destSchoolYearId: number;
+  schoolYearId: Scalars['Int']['input'];
+  destSchoolYearId: Scalars['Int']['input'];
 }>;
 
 
-export type CloneConfigMutation = { cloneConfig: boolean | null };
+export type CloneConfigMutation = { __typename?: 'Mutation', cloneConfig?: boolean | null };
 
 export type PeopleByEnterpriseQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PeopleByEnterpriseQuery = { people: Array<
-    | { __typename: 'Administrator', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null }
-    | { __typename: 'Customer', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null }
-    | { __typename: 'Guardian', id: unknown, lastName: string, firstName: string | null, displayName: string | null, active: boolean | null }
-    | { __typename: 'Student', id: unknown, lastName: string, firstName: string | null, displayName: string | null, active: boolean | null }
-    | { __typename: 'Supplier', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null }
-    | { __typename: 'Teacher', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, active: boolean | null }
+export type PeopleByEnterpriseQuery = { __typename?: 'Query', people?: Array<
+    | { __typename: 'Administrator', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null }
+    | { __typename: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null }
+    | { __typename: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null, active?: boolean | null }
+    | { __typename: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, active?: boolean | null }
+    | { __typename: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null }
+    | { __typename: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, active?: boolean | null }
   > | null };
 
 export type SchoolUpdateMutationVariables = Exact<{
@@ -6117,260 +13608,260 @@ export type SchoolUpdateMutationVariables = Exact<{
 }>;
 
 
-export type SchoolUpdateMutation = { school: { id: number, name: string, name2: string | null, registrationNumber: string | null, shortName: string | null, schoolCode: string | null, schoolType: SchoolType | null, schoolCategory: SchoolCategory | null, studentType: StudentType | null, motto: string | null, webSite: string | null, note: string | null, logo: string | null, active: boolean | null, motto2: string | null, creationDate: string | null, authNumber: string | null, nsifNumber: string | null, venue: string | null, signingAddress: string | null, bilingualName: string | null, identifier: string | null, address: { state: string | null, street: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, fax: string | null, postOfficeBox: string | null } | null, legalInfo: { legalForm: string | null, taxpayerNumber: string | null, tradeRegister: string | null, shareCapital: number | null } | null } | null };
+export type SchoolUpdateMutation = { __typename?: 'Mutation', school?: { __typename?: 'School', id: number, name: string, name2?: string | null, registrationNumber?: string | null, shortName?: string | null, schoolCode?: string | null, schoolType?: SchoolType | null, schoolCategory?: SchoolCategory | null, studentType?: StudentType | null, motto?: string | null, webSite?: string | null, note?: string | null, logo?: string | null, active?: boolean | null, motto2?: string | null, creationDate?: string | null, authNumber?: string | null, nsifNumber?: string | null, venue?: string | null, signingAddress?: string | null, bilingualName?: string | null, identifier?: string | null, address?: { __typename?: 'Address', state?: string | null, street?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, fax?: string | null, postOfficeBox?: string | null } | null, legalInfo?: { __typename?: 'LegalInfo', legalForm?: string | null, taxpayerNumber?: string | null, tradeRegister?: string | null, shareCapital?: number | null } | null } | null };
 
 export type SchoolByIdentifierQueryVariables = Exact<{
-  identifier: string;
+  identifier: Scalars['String']['input'];
 }>;
 
 
-export type SchoolByIdentifierQuery = { school: { id: number, name: string, logo: string | null } | null };
+export type SchoolByIdentifierQuery = { __typename?: 'Query', school?: { __typename?: 'School', id: number, name: string, logo?: string | null } | null };
 
-export type SchoolLiableFieldsFragment = { id: number, name: string, signature: string | null, email: string | null, liableType: { id: number, prefix: string, name: string } | null, schoolYear: { id: number, label: string } | null };
+export type SchoolLiableFieldsFragment = { __typename?: 'SchoolLiable', id: number, name: string, signature?: string | null, email?: string | null, liableType?: { __typename?: 'LiableType', id: number, prefix: string, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type SchoolOfficialsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolOfficialsQuery = { schoolOfficials: Array<{ id: number, name: string, signature: string | null, email: string | null, liableType: { id: number, prefix: string, name: string } | null, schoolYear: { id: number, label: string } | null }> | null };
+export type SchoolOfficialsQuery = { __typename?: 'Query', schoolOfficials?: Array<{ __typename?: 'SchoolLiable', id: number, name: string, signature?: string | null, email?: string | null, liableType?: { __typename?: 'LiableType', id: number, prefix: string, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null }> | null };
 
 export type SchoolOfficialSaveMutationVariables = Exact<{
-  liable?: SchoolLiableInput | null | undefined;
+  liable?: InputMaybe<SchoolLiableInput>;
 }>;
 
 
-export type SchoolOfficialSaveMutation = { schoolOfficial: { id: number, name: string, signature: string | null, email: string | null, liableType: { id: number, prefix: string, name: string } | null, schoolYear: { id: number, label: string } | null } | null };
+export type SchoolOfficialSaveMutation = { __typename?: 'Mutation', schoolOfficial?: { __typename?: 'SchoolLiable', id: number, name: string, signature?: string | null, email?: string | null, liableType?: { __typename?: 'LiableType', id: number, prefix: string, name: string } | null, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null };
 
 export type SchoolOfficialDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolOfficialDeleteMutation = { deleteSchoolLiableById: boolean | null };
+export type SchoolOfficialDeleteMutation = { __typename?: 'Mutation', deleteSchoolLiableById?: boolean | null };
 
 export type SchoolOfficialCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SchoolOfficialCreatedSubscription = { schoolOfficial: { id: number, name: string, signature: string | null, email: string | null } | null };
+export type SchoolOfficialCreatedSubscription = { __typename?: 'Subscription', schoolOfficial?: { __typename?: 'SchoolLiable', id: number, name: string, signature?: string | null, email?: string | null } | null };
 
-export type SchoolSectionFieldsFragment = { id: number, name: string, active: boolean | null, note: string | null, language: { id: number, name: string, code: LanguageType } | null, school: { id: number, name: string } | null };
+export type SchoolSectionFieldsFragment = { __typename?: 'SchoolSection', id: number, name: string, active?: boolean | null, note?: string | null, language?: { __typename?: 'Language', id: number, name: string, code: LanguageType } | null, school?: { __typename?: 'School', id: number, name: string } | null };
 
 export type SchoolSectionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolSectionsQuery = { schoolSections: Array<{ id: number, name: string, active: boolean | null, note: string | null, language: { id: number, name: string, code: LanguageType } | null, school: { id: number, name: string } | null }> | null };
+export type SchoolSectionsQuery = { __typename?: 'Query', schoolSections?: Array<{ __typename?: 'SchoolSection', id: number, name: string, active?: boolean | null, note?: string | null, language?: { __typename?: 'Language', id: number, name: string, code: LanguageType } | null, school?: { __typename?: 'School', id: number, name: string } | null }> | null };
 
 export type SchoolSectionSaveMutationVariables = Exact<{
-  section?: SchoolSectionInput | null | undefined;
+  section?: InputMaybe<SchoolSectionInput>;
 }>;
 
 
-export type SchoolSectionSaveMutation = { schoolSection: { id: number, name: string, active: boolean | null, note: string | null, language: { id: number, name: string, code: LanguageType } | null, school: { id: number, name: string } | null } | null };
+export type SchoolSectionSaveMutation = { __typename?: 'Mutation', schoolSection?: { __typename?: 'SchoolSection', id: number, name: string, active?: boolean | null, note?: string | null, language?: { __typename?: 'Language', id: number, name: string, code: LanguageType } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
 export type SchoolSectionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolSectionDeleteMutation = { deleteSchoolSectionById: boolean | null };
+export type SchoolSectionDeleteMutation = { __typename?: 'Mutation', deleteSchoolSectionById?: boolean | null };
 
 export type SchoolSectionCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SchoolSectionCreatedSubscription = { schoolSection: { id: number, name: string, active: boolean | null, note: string | null, language: { id: number, name: string, code: LanguageType } | null, school: { id: number, name: string } | null } | null };
+export type SchoolSectionCreatedSubscription = { __typename?: 'Subscription', schoolSection?: { __typename?: 'SchoolSection', id: number, name: string, active?: boolean | null, note?: string | null, language?: { __typename?: 'Language', id: number, name: string, code: LanguageType } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
-export type SchoolYearFieldsFragment = { id: number, label: string, label2: string | null, locked: boolean | null, closed: boolean | null, cycleCount: number | null, startDate: string | null, endDate: string | null, ageMin: number | null, ageMax: number | null, current: boolean | null, archived: boolean | null, periodType: PeriodType | null, schoolId: number };
+export type SchoolYearFieldsFragment = { __typename?: 'SchoolYear', id: number, label: string, label2?: string | null, locked?: boolean | null, closed?: boolean | null, cycleCount?: number | null, startDate?: string | null, endDate?: string | null, ageMin?: number | null, ageMax?: number | null, current?: boolean | null, archived?: boolean | null, periodType?: PeriodType | null, schoolId: number };
 
 export type SchoolYearsQueryVariables = Exact<{
-  id: number;
-  removeArchived?: boolean | null | undefined;
+  id: Scalars['Int']['input'];
+  removeArchived?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type SchoolYearsQuery = { schoolYears: Array<{ id: number, label: string, label2: string | null, locked: boolean | null, closed: boolean | null, cycleCount: number | null, startDate: string | null, endDate: string | null, ageMin: number | null, ageMax: number | null, current: boolean | null, archived: boolean | null, periodType: PeriodType | null, schoolId: number }> | null };
+export type SchoolYearsQuery = { __typename?: 'Query', schoolYears?: Array<{ __typename?: 'SchoolYear', id: number, label: string, label2?: string | null, locked?: boolean | null, closed?: boolean | null, cycleCount?: number | null, startDate?: string | null, endDate?: string | null, ageMin?: number | null, ageMax?: number | null, current?: boolean | null, archived?: boolean | null, periodType?: PeriodType | null, schoolId: number }> | null };
 
 export type SchoolYearSaveMutationVariables = Exact<{
-  schoolYear?: SchoolYearInput | null | undefined;
+  schoolYear?: InputMaybe<SchoolYearInput>;
 }>;
 
 
-export type SchoolYearSaveMutation = { schoolYear: Array<{ id: number, label: string, label2: string | null, locked: boolean | null, closed: boolean | null, cycleCount: number | null, startDate: string | null, endDate: string | null, ageMin: number | null, ageMax: number | null, current: boolean | null, archived: boolean | null, periodType: PeriodType | null, schoolId: number }> | null };
+export type SchoolYearSaveMutation = { __typename?: 'Mutation', schoolYear?: Array<{ __typename?: 'SchoolYear', id: number, label: string, label2?: string | null, locked?: boolean | null, closed?: boolean | null, cycleCount?: number | null, startDate?: string | null, endDate?: string | null, ageMin?: number | null, ageMax?: number | null, current?: boolean | null, archived?: boolean | null, periodType?: PeriodType | null, schoolId: number }> | null };
 
 export type SchoolYearDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolYearDeleteMutation = { deleteSchoolYearById: boolean | null };
+export type SchoolYearDeleteMutation = { __typename?: 'Mutation', deleteSchoolYearById?: boolean | null };
 
 export type SchoolYearCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SchoolYearCreatedSubscription = { schoolYear: { id: number, label: string, label2: string | null, locked: boolean | null, closed: boolean | null, cycleCount: number | null, startDate: string | null, endDate: string | null, ageMin: number | null, ageMax: number | null, current: boolean | null, archived: boolean | null, periodType: PeriodType | null, schoolId: number } | null };
+export type SchoolYearCreatedSubscription = { __typename?: 'Subscription', schoolYear?: { __typename?: 'SchoolYear', id: number, label: string, label2?: string | null, locked?: boolean | null, closed?: boolean | null, cycleCount?: number | null, startDate?: string | null, endDate?: string | null, ageMin?: number | null, ageMax?: number | null, current?: boolean | null, archived?: boolean | null, periodType?: PeriodType | null, schoolId: number } | null };
 
 export type SchoolYearActiveQueryVariables = Exact<{
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type SchoolYearActiveQuery = { schoolYear: { id: number, label: string } | null };
+export type SchoolYearActiveQuery = { __typename?: 'Query', schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type SchoolYearByIdentifierQueryVariables = Exact<{
-  identifier: string;
+  identifier: Scalars['String']['input'];
 }>;
 
 
-export type SchoolYearByIdentifierQuery = { schoolYear: { id: number, label: string } | null };
+export type SchoolYearByIdentifierQuery = { __typename?: 'Query', schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type InitCyclesQueryVariables = Exact<{
-  schoolId?: number | null | undefined;
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type InitCyclesQuery = { cycles: Array<{ numberOrder: number, name: string, name2: string, schoolSectionId: number, levelCount: number | null, schoolSection: { id: number, name: string } | null }> | null };
+export type InitCyclesQuery = { __typename?: 'Query', cycles?: Array<{ __typename?: 'CycleSetup', numberOrder: number, name: string, name2: string, schoolSectionId: number, levelCount?: number | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null }> | null };
 
 export type CyclesSaveMutationVariables = Exact<{
   items: Array<CycleSetupInput> | CycleSetupInput;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type CyclesSaveMutation = { cycles: Array<{ id: number, numberOrder: number, name: string }> | null };
+export type CyclesSaveMutation = { __typename?: 'Mutation', cycles?: Array<{ __typename?: 'Cycle', id: number, numberOrder: number, name: string }> | null };
 
 export type GuidedSetupQueryVariables = Exact<{
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type GuidedSetupQuery = { guidedSetup: { schoolId: number, step: SetupStep, completed: boolean } | null };
+export type GuidedSetupQuery = { __typename?: 'Query', guidedSetup?: { __typename?: 'GuidedSetup', schoolId: number, step: SetupStep, completed: boolean } | null };
 
 export type SchoolYearSetupSaveMutationVariables = Exact<{
   schoolYear: SchoolYearInput;
 }>;
 
 
-export type SchoolYearSetupSaveMutation = { schoolYear: { id: number, label: string } | null };
+export type SchoolYearSetupSaveMutation = { __typename?: 'Mutation', schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null };
 
 export type InitLevelsQueryVariables = Exact<{
-  schoolId?: number | null | undefined;
+  schoolId?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type InitLevelsQuery = { levels: Array<{ branchCount: number | null, numberOrder: number, name: string, classCount: number | null, cycle: { id: number, name: string } | null }> | null };
+export type InitLevelsQuery = { __typename?: 'Query', levels?: Array<{ __typename?: 'LevelSetup', branchCount?: number | null, numberOrder: number, name: string, classCount?: number | null, cycle?: { __typename?: 'Cycle', id: number, name: string } | null }> | null };
 
 export type LevelsSaveMutationVariables = Exact<{
   items: Array<LevelSetupInput> | LevelSetupInput;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type LevelsSaveMutation = { levels: Array<{ id: number, name: string, note: string | null, numberOrder: number, branchCount: number | null }> | null };
+export type LevelsSaveMutation = { __typename?: 'Mutation', levels?: Array<{ __typename?: 'Level', id: number, name: string, note?: string | null, numberOrder: number, branchCount?: number | null }> | null };
 
-export type StudentFieldsFragment = { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null };
+export type StudentFieldsFragment = { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null };
 
 export type StudentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentsQuery = { students: Array<{ id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null }> | null };
+export type StudentsQuery = { __typename?: 'Query', students?: Array<{ __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null }> | null };
 
 export type UnregisteredStudentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type UnregisteredStudentsQuery = { students: Array<{ id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null }> | null };
+export type UnregisteredStudentsQuery = { __typename?: 'Query', students?: Array<{ __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null }> | null };
 
 export type StudentsByIdQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentsByIdQuery = { student: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type StudentsByIdQuery = { __typename?: 'Query', student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type StudentsByClassQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentsByClassQuery = { students: Array<{ id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null }> | null };
+export type StudentsByClassQuery = { __typename?: 'Query', students?: Array<{ __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null }> | null };
 
 export type StudentSaveMutationVariables = Exact<{
   student: StudentCreateInput;
 }>;
 
 
-export type StudentSaveMutation = { student: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type StudentSaveMutation = { __typename?: 'Mutation', student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type StudentUpdateMutationVariables = Exact<{
   student: StudentUpdateInput;
 }>;
 
 
-export type StudentUpdateMutation = { student: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type StudentUpdateMutation = { __typename?: 'Mutation', student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type StudentDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentDeleteMutation = { deleteStudentById: boolean | null };
+export type StudentDeleteMutation = { __typename?: 'Mutation', deleteStudentById?: boolean | null };
 
 export type StudentsDeleteMutationVariables = Exact<{
-  ids: Array<unknown> | unknown;
+  ids: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
 }>;
 
 
-export type StudentsDeleteMutation = { studentDeleteByIds: boolean | null };
+export type StudentsDeleteMutation = { __typename?: 'Mutation', studentDeleteByIds?: boolean | null };
 
 export type StudentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StudentCreatedSubscription = { student: { id: unknown, lastName: string, firstName: string | null, displayName: string | null, gender: Gender | null, birthDate: string, birthplace: string, presumeBirthDate: boolean | null, registrationNumber: string, active: boolean | null, note: string | null, inscriptionMode: InscriptionMode | null, knownHealthProblem: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, bloodGroup: string | null, otherUsefulInfo: string | null, createdDate: string | null, origin: { countryOrigin: string | null, districtOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null } | null, address: { street: string | null, state: string | null, country: string | null, town: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, email: string | null, postOfficeBox: string | null, mobile: string | null, fax: string | null } | null } | null };
+export type StudentCreatedSubscription = { __typename?: 'Subscription', student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, presumeBirthDate?: boolean | null, registrationNumber: string, active?: boolean | null, note?: string | null, inscriptionMode?: InscriptionMode | null, knownHealthProblem?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, bloodGroup?: string | null, otherUsefulInfo?: string | null, createdDate?: string | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, districtOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null } | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, country?: string | null, town?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, email?: string | null, postOfficeBox?: string | null, mobile?: string | null, fax?: string | null } | null } | null };
 
 export type NewRegistrationNumberQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type NewRegistrationNumberQuery = { newRegistrationNumber: string | null };
+export type NewRegistrationNumberQuery = { __typename?: 'Query', newRegistrationNumber?: string | null };
 
-export type FrequentFieldsFragment = { id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null };
+export type FrequentFieldsFragment = { __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null };
 
-export type FrequentUnionFieldsFragment = { id: string, className: string, repeater: boolean, fullName: string, birthDate: string, birthplace: string, registrationNumber: string, sex: string | null, socialCase: boolean | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } };
+export type FrequentUnionFieldsFragment = { __typename?: 'FrequentUnion', id: string, className: string, repeater: boolean, fullName: string, birthDate: string, birthplace: string, registrationNumber: string, sex?: string | null, socialCase?: boolean | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } };
 
 export type FrequentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentsQuery = { frequents: Array<{ id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null }> | null };
+export type FrequentsQuery = { __typename?: 'Query', frequents?: Array<{ __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null }> | null };
 
 export type FrequentBySchoolQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentBySchoolQuery = { frequents: Array<{ id: string, className: string, repeater: boolean, fullName: string, birthDate: string, birthplace: string, registrationNumber: string, sex: string | null, socialCase: boolean | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } }> | null };
+export type FrequentBySchoolQuery = { __typename?: 'Query', frequents?: Array<{ __typename?: 'FrequentUnion', id: string, className: string, repeater: boolean, fullName: string, birthDate: string, birthplace: string, registrationNumber: string, sex?: string | null, socialCase?: boolean | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } }> | null };
 
 export type FrequentSaveMutationVariables = Exact<{
   frequent: FrequentInput;
 }>;
 
 
-export type FrequentSaveMutation = { frequent: boolean | null };
+export type FrequentSaveMutation = { __typename?: 'Mutation', frequent?: boolean | null };
 
 export type UpdateFrequentMutationVariables = Exact<{
-  frequent?: FrequentInput | null | undefined;
+  frequent?: InputMaybe<FrequentInput>;
   student: StudentUpdateInput;
 }>;
 
 
-export type UpdateFrequentMutation = { frequent: { id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null } | null };
+export type UpdateFrequentMutation = { __typename?: 'Mutation', frequent?: { __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null } | null };
 
 export type FrequentUpdateMutationVariables = Exact<{
   frequent: FrequentInput;
@@ -6378,799 +13869,799 @@ export type FrequentUpdateMutationVariables = Exact<{
 }>;
 
 
-export type FrequentUpdateMutation = { frequent: boolean | null };
+export type FrequentUpdateMutation = { __typename?: 'Mutation', frequent?: boolean | null };
 
 export type FrequentDeleteMutationVariables = Exact<{
   id: FrequentPkInput;
 }>;
 
 
-export type FrequentDeleteMutation = { deleteFrequentById: boolean | null };
+export type FrequentDeleteMutation = { __typename?: 'Mutation', deleteFrequentById?: boolean | null };
 
 export type FrequentsDeleteMutationVariables = Exact<{
   ids: Array<FrequentPkInput> | FrequentPkInput;
 }>;
 
 
-export type FrequentsDeleteMutation = { deleteFrequentByIds: boolean | null };
+export type FrequentsDeleteMutation = { __typename?: 'Mutation', deleteFrequentByIds?: boolean | null };
 
 export type FrequentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FrequentCreatedSubscription = { frequent: { id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null } | null };
+export type FrequentCreatedSubscription = { __typename?: 'Subscription', frequent?: { __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null } | null };
 
 export type StudentGuardiansQueryVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type StudentGuardiansQuery = { studentGuardians: Array<{ relation: Relation | null, studentGuardianPK: { studentId: unknown, guardianId: unknown } | null, guardian: { id: unknown, lastName: string, firstName: string | null, profession: string | null } | null }> | null };
+export type StudentGuardiansQuery = { __typename?: 'Query', studentGuardians?: Array<{ __typename?: 'StudentGuardian', relation?: Relation | null, studentGuardianPK?: { __typename?: 'StudentGuardianPK', studentId: any, guardianId: any } | null, guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, profession?: string | null } | null }> | null };
 
 export type FrequentSchoolNumberOrderMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentSchoolNumberOrderMutation = { buildAllFrequentNumberOrder: boolean | null };
+export type FrequentSchoolNumberOrderMutation = { __typename?: 'Mutation', buildAllFrequentNumberOrder?: boolean | null };
 
 export type DuplicatedStudentsQueryVariables = Exact<{
-  criteria?: DuplicatedStudentCriteria | null | undefined;
-  id: number;
+  criteria?: InputMaybe<DuplicatedStudentCriteria>;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DuplicatedStudentsQuery = { duplicates: Array<{ id: unknown, lastName: string | null, firstName: string | null, registrationNumber: string | null, gender: string | null, birthDate: string | null, birthplace: string | null, clazz: string | null, clazzId: number | null, repeater: boolean | null, schoolYearId: number | null }> | null };
+export type DuplicatedStudentsQuery = { __typename?: 'Query', duplicates?: Array<{ __typename?: 'DuplicatedStudent', id: any, lastName?: string | null, firstName?: string | null, registrationNumber?: string | null, gender?: string | null, birthDate?: string | null, birthplace?: string | null, clazz?: string | null, clazzId?: number | null, repeater?: boolean | null, schoolYearId?: number | null }> | null };
 
 export type PicturesSaveMutationVariables = Exact<{
-  path: string;
-  schoolId: number;
+  path: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type PicturesSaveMutation = { storeFromRegistrationNumbers: boolean | null };
+export type PicturesSaveMutation = { __typename?: 'Mutation', storeFromRegistrationNumbers?: boolean | null };
 
 export type StudentPictureByStudentQueryVariables = Exact<{
-  studentId: unknown;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentPictureByStudentQuery = { studentPicture: { image: string | null, studentPicturePK: { studentId: unknown, schoolYearId: number } | null } | null };
+export type StudentPictureByStudentQuery = { __typename?: 'Query', studentPicture?: { __typename?: 'StudentPicture', image?: string | null, studentPicturePK?: { __typename?: 'StudentPicturePK', studentId: any, schoolYearId: number } | null } | null };
 
 export type FrequentConnectionQueryVariables = Exact<{
-  schoolId: number;
-  searchText?: string | null | undefined;
-  first?: number | null | undefined;
-  after?: string | null | undefined;
-  classIds?: Array<number> | number | null | undefined;
-  orderBy?: FrequentOrder | null | undefined;
+  schoolId: Scalars['Int']['input'];
+  searchText?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  classIds?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+  orderBy?: InputMaybe<FrequentOrder>;
 }>;
 
 
-export type FrequentConnectionQuery = { frequents: { totalCount: number, edges: Array<{ node: { id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null } | null }> | null } | null };
+export type FrequentConnectionQuery = { __typename?: 'Query', frequents?: { __typename?: 'FrequentConnection', totalCount: number, edges?: Array<{ __typename?: 'FrequentEdge', node?: { __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null } | null }> | null } | null };
 
 export type FrequentByRegistrationNumberQueryVariables = Exact<{
-  registrationNumber: string;
-  schoolId: number;
+  registrationNumber: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentByRegistrationNumberQuery = { frequent: { numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null } | null };
+export type FrequentByRegistrationNumberQuery = { __typename?: 'Query', frequent?: { __typename?: 'Frequent', numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null } | null };
 
 export type FrequentByIdQueryVariables = Exact<{
   id: FrequentPkInput;
 }>;
 
 
-export type FrequentByIdQuery = { frequent: { id: string, numberOrder: number | null, repeater: boolean | null, formerStudent: boolean | null, external: boolean | null, apt: boolean | null, smsTo: Relation | null, mailTo: Relation | null, socialCase: boolean | null, scNature: string | null, scObservation: string | null, totalRequiredAmount: number | null, totalPaidAmount: number | null, lastPaymentDate: string | null, frequentPK: { id: string | null, studentId: unknown, schoolYearId: number, classId: number } | null, student: { id: unknown, lastName: string, firstName: string | null, gender: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz: { id: number, name: string, code: string | null } | null, oldSchool: { id: number, name: string } | null, paymentGroup: { id: number, name: string } | null, feeGroup: { id: number, name: string } | null } | null };
+export type FrequentByIdQuery = { __typename?: 'Query', frequent?: { __typename?: 'Frequent', id: string, numberOrder?: number | null, repeater?: boolean | null, formerStudent?: boolean | null, external?: boolean | null, apt?: boolean | null, smsTo?: Relation | null, mailTo?: Relation | null, socialCase?: boolean | null, scNature?: string | null, scObservation?: string | null, totalRequiredAmount?: number | null, totalPaidAmount?: number | null, lastPaymentDate?: string | null, frequentPK?: { __typename?: 'FrequentPK', id?: string | null, studentId: any, schoolYearId: number, classId: number } | null, student?: { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, gender?: Gender | null, birthDate: string, birthplace: string, registrationNumber: string } | null, clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null } | null, oldSchool?: { __typename?: 'OldSchool', id: number, name: string } | null, paymentGroup?: { __typename?: 'PaymentGroup', id: number, name: string } | null, feeGroup?: { __typename?: 'FeeGroup', id: number, name: string } | null } | null };
 
 export type FrequentByClassQueryVariables = Exact<{
-  classId: number;
+  classId: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentByClassQuery = { frequent: Array<{ studentId: unknown, lastName: string, firstName: string | null, registrationNumber: string, birthDate: unknown, birthplace: string }> | null };
+export type FrequentByClassQuery = { __typename?: 'Query', frequent?: Array<{ __typename?: 'FrequentBulkUpdate', studentId: any, lastName: string, firstName?: string | null, registrationNumber: string, birthDate: any, birthplace: string }> | null };
 
 export type FrequentBulkUpdateMutationVariables = Exact<{
   frequents: Array<FrequentBulkUpdateInput> | FrequentBulkUpdateInput;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type FrequentBulkUpdateMutation = { frequentBulkUpdate: boolean | null };
+export type FrequentBulkUpdateMutation = { __typename?: 'Mutation', frequentBulkUpdate?: boolean | null };
 
 export type StudentInvoiceCreateMutationVariables = Exact<{
-  studentId: unknown;
-  schoolYearId: number;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentInvoiceCreateMutation = { studentInvoiceCreate: boolean | null };
+export type StudentInvoiceCreateMutation = { __typename?: 'Mutation', studentInvoiceCreate?: boolean | null };
 
 export type StudentBirthplacesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentBirthplacesQuery = { studentBirthplaces: Array<string> | null };
+export type StudentBirthplacesQuery = { __typename?: 'Query', studentBirthplaces?: Array<string> | null };
 
 export type StudentReligionsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type StudentReligionsQuery = { studentReligions: Array<string> | null };
+export type StudentReligionsQuery = { __typename?: 'Query', studentReligions?: Array<string> | null };
 
 export type GuardiansOfStudentQueryVariables = Exact<{
-  studentId: unknown;
+  studentId: Scalars['Long']['input'];
 }>;
 
 
-export type GuardiansOfStudentQuery = { guardians: Array<{ relation: Relation | null, guardian: { id: unknown, lastName: string, firstName: string | null } | null }> | null };
+export type GuardiansOfStudentQuery = { __typename?: 'Query', guardians?: Array<{ __typename?: 'StudentGuardian', relation?: Relation | null, guardian?: { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null } | null }> | null };
 
 export type StudentImportMutationVariables = Exact<{
   students: Array<StudentImportInput> | StudentImportInput;
-  schoolId: number;
-  classId: number;
+  schoolId: Scalars['Int']['input'];
+  classId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentImportMutation = { studentImport: boolean | null };
+export type StudentImportMutation = { __typename?: 'Mutation', studentImport?: boolean | null };
 
 export type LoadPicturesFromRegistrationNumbersQueryVariables = Exact<{
-  folderName: string;
-  schoolId: number;
+  folderName: Scalars['String']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type LoadPicturesFromRegistrationNumbersQuery = { students: Array<{ studentId: unknown, lastName: string, firstName: string | null, registrationNumber: string, gender: string | null, picture: string, birthDate: string, birthplace: string }> | null };
+export type LoadPicturesFromRegistrationNumbersQuery = { __typename?: 'Query', students?: Array<{ __typename?: 'StudentPictureImportDTO', studentId: any, lastName: string, firstName?: string | null, registrationNumber: string, gender?: string | null, picture: string, birthDate: string, birthplace: string }> | null };
 
 export type StudentPicturesSaveMutationVariables = Exact<{
   pictures: Array<StudentPictureInput> | StudentPictureInput;
-  schoolId: number;
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentPicturesSaveMutation = { studentPicturesSave: boolean | null };
+export type StudentPicturesSaveMutation = { __typename?: 'Mutation', studentPicturesSave?: boolean | null };
 
 export type StudentPicturesImportCancelMutationVariables = Exact<{
-  schoolId: number;
-  pictures: Array<string> | string;
+  schoolId: Scalars['Int']['input'];
+  pictures: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
 
-export type StudentPicturesImportCancelMutation = { studentPicturesImportCancel: boolean | null };
+export type StudentPicturesImportCancelMutation = { __typename?: 'Mutation', studentPicturesImportCancel?: boolean | null };
 
 export type StudentInvoiceSyncMutationVariables = Exact<{
-  studentId: unknown;
-  schoolYearId: number;
-  schoolId: number;
+  studentId: Scalars['Long']['input'];
+  schoolYearId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
 }>;
 
 
-export type StudentInvoiceSyncMutation = { studentInvoiceSync: boolean | null };
+export type StudentInvoiceSyncMutation = { __typename?: 'Mutation', studentInvoiceSync?: boolean | null };
 
 export type FrequentExcludeMutationVariables = Exact<{
   input: FrequentExcludeInput;
 }>;
 
 
-export type FrequentExcludeMutation = { frequentExclude: boolean | null };
+export type FrequentExcludeMutation = { __typename?: 'Mutation', frequentExclude?: boolean | null };
 
-export type SubPeriodFieldsFragment = { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, coefficient: number | null, message: string | null, message2: string | null, period: { id: number, label: string } | null };
+export type SubPeriodFieldsFragment = { __typename?: 'SubPeriod', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, coefficient?: number | null, message?: string | null, message2?: string | null, period?: { __typename?: 'Period', id: number, label: string } | null };
 
 export type SubPeriodsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubPeriodsQuery = { subPeriods: Array<{ id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, coefficient: number | null, message: string | null, message2: string | null, period: { id: number, label: string } | null }> | null };
+export type SubPeriodsQuery = { __typename?: 'Query', subPeriods?: Array<{ __typename?: 'SubPeriod', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, coefficient?: number | null, message?: string | null, message2?: string | null, period?: { __typename?: 'Period', id: number, label: string } | null }> | null };
 
 export type SubPeriodSaveMutationVariables = Exact<{
-  subPeriod?: SubPeriodInput | null | undefined;
+  subPeriod?: InputMaybe<SubPeriodInput>;
 }>;
 
 
-export type SubPeriodSaveMutation = { subPeriod: { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, coefficient: number | null, message: string | null, message2: string | null, period: { id: number, label: string } | null } | null };
+export type SubPeriodSaveMutation = { __typename?: 'Mutation', subPeriod?: { __typename?: 'SubPeriod', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, coefficient?: number | null, message?: string | null, message2?: string | null, period?: { __typename?: 'Period', id: number, label: string } | null } | null };
 
 export type SubPeriodDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubPeriodDeleteMutation = { deleteSubPeriodById: boolean | null };
+export type SubPeriodDeleteMutation = { __typename?: 'Mutation', deleteSubPeriodById?: boolean | null };
 
 export type SubPeriodCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SubPeriodCreatedSubscription = { subPeriod: { id: number, numberOrder: number, label: string, label2: string | null, startDate: string | null, endDate: string | null, coefficient: number | null, message: string | null, message2: string | null } | null };
+export type SubPeriodCreatedSubscription = { __typename?: 'Subscription', subPeriod?: { __typename?: 'SubPeriod', id: number, numberOrder: number, label: string, label2?: string | null, startDate?: string | null, endDate?: string | null, coefficient?: number | null, message?: string | null, message2?: string | null } | null };
 
-export type SubjectDepartmentFieldsFragment = { id: number, name: string, code: string | null, active: boolean | null, note: string | null, schoolSection: { id: number, name: string } | null, school: { id: number, name: string } | null };
+export type SubjectDepartmentFieldsFragment = { __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null };
 
 export type SubjectDepartmentsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectDepartmentsQuery = { subjectDepartments: Array<{ id: number, name: string, code: string | null, active: boolean | null, note: string | null, schoolSection: { id: number, name: string } | null, school: { id: number, name: string } | null }> | null };
+export type SubjectDepartmentsQuery = { __typename?: 'Query', subjectDepartments?: Array<{ __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null }> | null };
 
 export type SaveSubjectDepartmentMutationVariables = Exact<{
-  department?: SubjectDepartmentInput | null | undefined;
+  department?: InputMaybe<SubjectDepartmentInput>;
 }>;
 
 
-export type SaveSubjectDepartmentMutation = { subjectDepartment: { id: number, name: string, code: string | null, active: boolean | null, note: string | null, schoolSection: { id: number, name: string } | null, school: { id: number, name: string } | null } | null };
+export type SaveSubjectDepartmentMutation = { __typename?: 'Mutation', subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
 export type DeleteSubjectDepartmentMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type DeleteSubjectDepartmentMutation = { deleteSubjectDepartmentById: boolean | null };
+export type DeleteSubjectDepartmentMutation = { __typename?: 'Mutation', deleteSubjectDepartmentById?: boolean | null };
 
 export type OnSubjectDepartmentSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type OnSubjectDepartmentSubscription = { subjectDepartment: { id: number, name: string, code: string | null, active: boolean | null, note: string | null, schoolSection: { id: number, name: string } | null, school: { id: number, name: string } | null } | null };
+export type OnSubjectDepartmentSubscription = { __typename?: 'Subscription', subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
-export type SubjectFieldsFragment = { id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null };
+export type SubjectFieldsFragment = { __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null };
 
 export type SubjectsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectsQuery = { subjects: Array<{ id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null }> | null };
+export type SubjectsQuery = { __typename?: 'Query', subjects?: Array<{ __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null }> | null };
 
 export type SubjectsByClassQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectsByClassQuery = { subjects: Array<{ id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null }> | null };
+export type SubjectsByClassQuery = { __typename?: 'Query', subjects?: Array<{ __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null }> | null };
 
 export type SubjectsForNotesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectsForNotesQuery = { subjects: Array<{ id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null }> | null };
+export type SubjectsForNotesQuery = { __typename?: 'Query', subjects?: Array<{ __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null }> | null };
 
 export type SubjectsNotInGroupQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectsNotInGroupQuery = { subjects: Array<{ id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null }> | null };
+export type SubjectsNotInGroupQuery = { __typename?: 'Query', subjects?: Array<{ __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null }> | null };
 
 export type SubjectSaveMutationVariables = Exact<{
-  subject?: SubjectInput | null | undefined;
+  subject?: InputMaybe<SubjectInput>;
 }>;
 
 
-export type SubjectSaveMutation = { subject: { id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null } | null };
+export type SubjectSaveMutation = { __typename?: 'Mutation', subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null } | null };
 
 export type BatchSubjectSaveMutationVariables = Exact<{
-  subjects?: Array<SubjectInput> | SubjectInput | null | undefined;
+  subjects?: InputMaybe<Array<SubjectInput> | SubjectInput>;
 }>;
 
 
-export type BatchSubjectSaveMutation = { subject: Array<{ id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null, subjectDepartment: { id: number, code: string | null, name: string, schoolSection: { id: number, name: string } | null } | null }> | null };
+export type BatchSubjectSaveMutation = { __typename?: 'Mutation', subject?: Array<{ __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, code?: string | null, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null }> | null };
 
 export type SubjectDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectDeleteMutation = { deleteSubjectById: boolean | null };
+export type SubjectDeleteMutation = { __typename?: 'Mutation', deleteSubjectById?: boolean | null };
 
 export type SubjectCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SubjectCreatedSubscription = { subject: { id: number, name: string, code: string | null, displayName: string | null, active: boolean | null, showInTimeTable: boolean | null, note: string | null } | null };
+export type SubjectCreatedSubscription = { __typename?: 'Subscription', subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null, displayName?: string | null, active?: boolean | null, showInTimeTable?: boolean | null, note?: string | null } | null };
 
 export type SubjectLanguageQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectLanguageQuery = { lang: { id: number, code: LanguageType, name: string } | null };
+export type SubjectLanguageQuery = { __typename?: 'Query', lang?: { __typename?: 'Language', id: number, code: LanguageType, name: string } | null };
 
 export type SubjectDepartmentSaveMutationVariables = Exact<{
-  department?: SubjectDepartmentInput | null | undefined;
+  department?: InputMaybe<SubjectDepartmentInput>;
 }>;
 
 
-export type SubjectDepartmentSaveMutation = { subjectDepartment: { id: number, name: string, code: string | null, active: boolean | null, note: string | null, schoolSection: { id: number, name: string } | null, school: { id: number, name: string } | null } | null };
+export type SubjectDepartmentSaveMutation = { __typename?: 'Mutation', subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null, school?: { __typename?: 'School', id: number, name: string } | null } | null };
 
 export type SubjectDepartmentDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectDepartmentDeleteMutation = { deleteSubjectDepartmentById: boolean | null };
+export type SubjectDepartmentDeleteMutation = { __typename?: 'Mutation', deleteSubjectDepartmentById?: boolean | null };
 
 export type SubjectDepartmentCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SubjectDepartmentCreatedSubscription = { subjectDepartment: { id: number, name: string, code: string | null, active: boolean | null, note: string | null } | null };
+export type SubjectDepartmentCreatedSubscription = { __typename?: 'Subscription', subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, code?: string | null, active?: boolean | null, note?: string | null } | null };
 
-export type SubjectGroupFieldsFragment = { id: number, name: string, numberOrder: number, note: string | null, branch: { id: number, name: string } | null, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string, code: string | null, subjectDepartment: { id: number, name: string, schoolSection: { id: number, name: string } | null } | null } | null }> | null };
+export type SubjectGroupFieldsFragment = { __typename?: 'SubjectGroup', id: number, name: string, numberOrder: number, note?: string | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null } | null }> | null };
 
-export type SubjectGroupsFieldsFragment = { id: number, branch: { id: number, name: string } | null, subjectGroups: Array<{ id: number, numberOrder: number, name: string, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string } | null }> | null }> | null };
+export type SubjectGroupsFieldsFragment = { __typename?: 'SubjectGroups', id: number, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroups?: Array<{ __typename?: 'SubjectGroup', id: number, numberOrder: number, name: string, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string } | null }> | null }> | null };
 
 export type SubjectGroupsQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectGroupsQuery = { subjectGroups: Array<{ id: number, name: string, numberOrder: number, note: string | null, branch: { id: number, name: string } | null, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string, code: string | null, subjectDepartment: { id: number, name: string, schoolSection: { id: number, name: string } | null } | null } | null }> | null }> | null };
+export type SubjectGroupsQuery = { __typename?: 'Query', subjectGroups?: Array<{ __typename?: 'SubjectGroup', id: number, name: string, numberOrder: number, note?: string | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null } | null }> | null }> | null };
 
 export type SubjectGroupSaveMutationVariables = Exact<{
   group: SubjectGroupInput;
 }>;
 
 
-export type SubjectGroupSaveMutation = { subjectGroup: { id: number, name: string, numberOrder: number, note: string | null, branch: { id: number, name: string } | null, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string, code: string | null, subjectDepartment: { id: number, name: string, schoolSection: { id: number, name: string } | null } | null } | null }> | null } | null };
+export type SubjectGroupSaveMutation = { __typename?: 'Mutation', subjectGroup?: { __typename?: 'SubjectGroup', id: number, name: string, numberOrder: number, note?: string | null, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string, code?: string | null, subjectDepartment?: { __typename?: 'SubjectDepartment', id: number, name: string, schoolSection?: { __typename?: 'SchoolSection', id: number, name: string } | null } | null } | null }> | null } | null };
 
 export type BranchSubjectGroupSaveMutationVariables = Exact<{
   group: SubjectGroupsInput;
 }>;
 
 
-export type BranchSubjectGroupSaveMutation = { subjectGroup: { id: number, branch: { id: number, name: string } | null, subjectGroups: Array<{ id: number, numberOrder: number, name: string, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string } | null }> | null }> | null } | null };
+export type BranchSubjectGroupSaveMutation = { __typename?: 'Mutation', subjectGroup?: { __typename?: 'SubjectGroups', id: number, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroups?: Array<{ __typename?: 'SubjectGroup', id: number, numberOrder: number, name: string, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string } | null }> | null }> | null } | null };
 
 export type BranchSubjectGroupUpdateMutationVariables = Exact<{
   group: SubjectGroupsUpdateInput;
 }>;
 
 
-export type BranchSubjectGroupUpdateMutation = { subjectGroup: { id: number, branch: { id: number, name: string } | null, subjectGroups: Array<{ id: number, numberOrder: number, name: string, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string } | null }> | null }> | null } | null };
+export type BranchSubjectGroupUpdateMutation = { __typename?: 'Mutation', subjectGroup?: { __typename?: 'SubjectGroups', id: number, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroups?: Array<{ __typename?: 'SubjectGroup', id: number, numberOrder: number, name: string, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string } | null }> | null }> | null } | null };
 
 export type SubjectGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectGroupDeleteMutation = { deleteSubjectGroupById: boolean | null };
+export type SubjectGroupDeleteMutation = { __typename?: 'Mutation', deleteSubjectGroupById?: boolean | null };
 
 export type BranchSubjectGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type BranchSubjectGroupDeleteMutation = { deleteSubjectGroupByBranch: boolean | null };
+export type BranchSubjectGroupDeleteMutation = { __typename?: 'Mutation', deleteSubjectGroupByBranch?: boolean | null };
 
 export type SubjectGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SubjectGroupCreatedSubscription = { subjectGroup: { id: number, name: string, numberOrder: number, note: string | null } | null };
+export type SubjectGroupCreatedSubscription = { __typename?: 'Subscription', subjectGroup?: { __typename?: 'SubjectGroup', id: number, name: string, numberOrder: number, note?: string | null } | null };
 
 export type BranchSubjectGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BranchSubjectGroupCreatedSubscription = { subjectGroup: { id: number } | null };
+export type BranchSubjectGroupCreatedSubscription = { __typename?: 'Subscription', subjectGroup?: { __typename?: 'SubjectGroups', id: number } | null };
 
 export type SubjectGroupByBranchQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type SubjectGroupByBranchQuery = { subjectGroups: Array<{ id: number, branch: { id: number, name: string } | null, subjectGroups: Array<{ id: number, numberOrder: number, name: string, subjectGroupItemCollection: Array<{ position: number | null, subjectGroupItemPK: { subjectId: number | null, subjectGroupId: number | null } | null, subject: { id: number, name: string } | null }> | null }> | null }> | null };
+export type SubjectGroupByBranchQuery = { __typename?: 'Query', subjectGroups?: Array<{ __typename?: 'SubjectGroups', id: number, branch?: { __typename?: 'Branch', id: number, name: string } | null, subjectGroups?: Array<{ __typename?: 'SubjectGroup', id: number, numberOrder: number, name: string, subjectGroupItemCollection?: Array<{ __typename?: 'SubjectGroupItem', position?: number | null, subjectGroupItemPK?: { __typename?: 'SubjectGroupItemPK', subjectId?: number | null, subjectGroupId?: number | null } | null, subject?: { __typename?: 'Subject', id: number, name: string } | null }> | null }> | null }> | null };
 
-export type PersonnelFieldsFragment = { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, gender: Gender | null, active: boolean | null, note: string | null, code: string, civility: Civility | null, birthDate: string | null, birthplace: string | null, status: PersonnelStatus | null, personnelType: PersonnelType | null, bloodGroup: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, departureDate: string | null, maritalStatus: MaritalStatus | null, fatherName: string | null, fatherProfession: string | null, motherName: string | null, motherProfession: string | null, childrenCount: number | null, rank: string | null, registrationNumber: string | null, grading: string | null, category: string | null, clazz: string | null, administrationEntryDate: string | null, firstServiceDate: string | null, firstServicePlace: string | null, schoolServiceDate: string | null, function: string | null, currentPost: string | null, spouseProfession: string | null, schoolCharge: boolean | null, numberAssignment: string | null, cniNumber: string | null, currentPicture: string | null, address: { street: string | null, state: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, postOfficeBox: string | null, fax: string | null } | null, origin: { countryOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null, districtOrigin: string | null } | null };
+export type PersonnelFieldsFragment = { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null };
 
-export type TeacherFieldsFragment = { dueHours: number | null, speciality: string | null, academicDiploma: string | null, academicYear: string | null, academicPlace: string | null, professionalYear: string | null, professionalPlace: string | null, professionalDiploma: string | null, subjectDepartmentCollection: Array<{ id: number, name: string } | null> | null };
+export type TeacherFieldsFragment = { __typename?: 'Teacher', dueHours?: number | null, speciality?: string | null, academicDiploma?: string | null, academicYear?: string | null, academicPlace?: string | null, professionalYear?: string | null, professionalPlace?: string | null, professionalDiploma?: string | null, subjectDepartmentCollection?: Array<{ __typename?: 'SubjectDepartment', id: number, name: string } | null> | null };
 
 export type PersonnelQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PersonnelQuery = { personnels: Array<{ __typename: 'Teacher', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, gender: Gender | null, active: boolean | null, note: string | null, code: string, civility: Civility | null, birthDate: string | null, birthplace: string | null, status: PersonnelStatus | null, personnelType: PersonnelType | null, bloodGroup: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, departureDate: string | null, maritalStatus: MaritalStatus | null, fatherName: string | null, fatherProfession: string | null, motherName: string | null, motherProfession: string | null, childrenCount: number | null, rank: string | null, registrationNumber: string | null, grading: string | null, category: string | null, clazz: string | null, administrationEntryDate: string | null, firstServiceDate: string | null, firstServicePlace: string | null, schoolServiceDate: string | null, function: string | null, currentPost: string | null, spouseProfession: string | null, schoolCharge: boolean | null, numberAssignment: string | null, cniNumber: string | null, currentPicture: string | null, dueHours: number | null, speciality: string | null, academicDiploma: string | null, academicYear: string | null, academicPlace: string | null, professionalYear: string | null, professionalPlace: string | null, professionalDiploma: string | null, address: { street: string | null, state: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, postOfficeBox: string | null, fax: string | null } | null, origin: { countryOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null, districtOrigin: string | null } | null, subjectDepartmentCollection: Array<{ id: number, name: string } | null> | null }> | null };
+export type PersonnelQuery = { __typename?: 'Query', personnels?: Array<{ __typename: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, dueHours?: number | null, speciality?: string | null, academicDiploma?: string | null, academicYear?: string | null, academicPlace?: string | null, professionalYear?: string | null, professionalPlace?: string | null, professionalDiploma?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null, subjectDepartmentCollection?: Array<{ __typename?: 'SubjectDepartment', id: number, name: string } | null> | null }> | null };
 
 export type TeacherSaveMutationVariables = Exact<{
   teacher: TeacherCreateInput;
 }>;
 
 
-export type TeacherSaveMutation = { personnel: { __typename: 'Teacher', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, gender: Gender | null, active: boolean | null, note: string | null, code: string, civility: Civility | null, birthDate: string | null, birthplace: string | null, status: PersonnelStatus | null, personnelType: PersonnelType | null, bloodGroup: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, departureDate: string | null, maritalStatus: MaritalStatus | null, fatherName: string | null, fatherProfession: string | null, motherName: string | null, motherProfession: string | null, childrenCount: number | null, rank: string | null, registrationNumber: string | null, grading: string | null, category: string | null, clazz: string | null, administrationEntryDate: string | null, firstServiceDate: string | null, firstServicePlace: string | null, schoolServiceDate: string | null, function: string | null, currentPost: string | null, spouseProfession: string | null, schoolCharge: boolean | null, numberAssignment: string | null, cniNumber: string | null, currentPicture: string | null, dueHours: number | null, speciality: string | null, academicDiploma: string | null, academicYear: string | null, academicPlace: string | null, professionalYear: string | null, professionalPlace: string | null, professionalDiploma: string | null, address: { street: string | null, state: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, postOfficeBox: string | null, fax: string | null } | null, origin: { countryOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null, districtOrigin: string | null } | null, subjectDepartmentCollection: Array<{ id: number, name: string } | null> | null } | null };
+export type TeacherSaveMutation = { __typename?: 'Mutation', personnel?: { __typename: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, dueHours?: number | null, speciality?: string | null, academicDiploma?: string | null, academicYear?: string | null, academicPlace?: string | null, professionalYear?: string | null, professionalPlace?: string | null, professionalDiploma?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null, subjectDepartmentCollection?: Array<{ __typename?: 'SubjectDepartment', id: number, name: string } | null> | null } | null };
 
 export type TeacherUpdateMutationVariables = Exact<{
   teacher: TeacherUpdateInput;
 }>;
 
 
-export type TeacherUpdateMutation = { personnel: { __typename: 'Teacher', id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, gender: Gender | null, active: boolean | null, note: string | null, code: string, civility: Civility | null, birthDate: string | null, birthplace: string | null, status: PersonnelStatus | null, personnelType: PersonnelType | null, bloodGroup: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, departureDate: string | null, maritalStatus: MaritalStatus | null, fatherName: string | null, fatherProfession: string | null, motherName: string | null, motherProfession: string | null, childrenCount: number | null, rank: string | null, registrationNumber: string | null, grading: string | null, category: string | null, clazz: string | null, administrationEntryDate: string | null, firstServiceDate: string | null, firstServicePlace: string | null, schoolServiceDate: string | null, function: string | null, currentPost: string | null, spouseProfession: string | null, schoolCharge: boolean | null, numberAssignment: string | null, cniNumber: string | null, currentPicture: string | null, dueHours: number | null, speciality: string | null, academicDiploma: string | null, academicYear: string | null, academicPlace: string | null, professionalYear: string | null, professionalPlace: string | null, professionalDiploma: string | null, address: { street: string | null, state: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, postOfficeBox: string | null, fax: string | null } | null, origin: { countryOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null, districtOrigin: string | null } | null, subjectDepartmentCollection: Array<{ id: number, name: string } | null> | null } | null };
+export type TeacherUpdateMutation = { __typename?: 'Mutation', personnel?: { __typename: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, dueHours?: number | null, speciality?: string | null, academicDiploma?: string | null, academicYear?: string | null, academicPlace?: string | null, professionalYear?: string | null, professionalPlace?: string | null, professionalDiploma?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null, subjectDepartmentCollection?: Array<{ __typename?: 'SubjectDepartment', id: number, name: string } | null> | null } | null };
 
 export type TeacherDeleteMutationVariables = Exact<{
-  id: unknown;
+  id: Scalars['Long']['input'];
 }>;
 
 
-export type TeacherDeleteMutation = { deleteTeacherById: boolean | null };
+export type TeacherDeleteMutation = { __typename?: 'Mutation', deleteTeacherById?: boolean | null };
 
 export type TeachersDeleteMutationVariables = Exact<{
-  ids: Array<unknown> | unknown;
+  ids: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
 }>;
 
 
-export type TeachersDeleteMutation = { teacherDeleteByIds: boolean | null };
+export type TeachersDeleteMutation = { __typename?: 'Mutation', teacherDeleteByIds?: boolean | null };
 
 export type TeacherCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TeacherCreatedSubscription = { personnel: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null } | null };
+export type TeacherCreatedSubscription = { __typename?: 'Subscription', personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null } | null };
 
 export type PersonnelCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PersonnelCreatedSubscription = { personnel: { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null } | null };
+export type PersonnelCreatedSubscription = { __typename?: 'Subscription', personnel?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null } | null };
 
 export type NewCodeQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type NewCodeQuery = { newCode: string | null };
+export type NewCodeQuery = { __typename?: 'Query', newCode?: string | null };
 
 export type TeacherByDepartmentQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type TeacherByDepartmentQuery = { teachers: Array<{ id: unknown, lastName: string | null, firstName: string | null, code: string, gender: Gender | null }> | null };
+export type TeacherByDepartmentQuery = { __typename?: 'Query', teachers?: Array<{ __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string, gender?: Gender | null }> | null };
 
 export type NonEmployeePersonnelQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type NonEmployeePersonnelQuery = { personnel: Array<{ id: unknown, lastName: string | null, firstName: string | null, displayName: string | null, gender: Gender | null, active: boolean | null, note: string | null, code: string, civility: Civility | null, birthDate: string | null, birthplace: string | null, status: PersonnelStatus | null, personnelType: PersonnelType | null, bloodGroup: string | null, rhesus: string | null, religion: string | null, ethnicGroup: string | null, departureDate: string | null, maritalStatus: MaritalStatus | null, fatherName: string | null, fatherProfession: string | null, motherName: string | null, motherProfession: string | null, childrenCount: number | null, rank: string | null, registrationNumber: string | null, grading: string | null, category: string | null, clazz: string | null, administrationEntryDate: string | null, firstServiceDate: string | null, firstServicePlace: string | null, schoolServiceDate: string | null, function: string | null, currentPost: string | null, spouseProfession: string | null, schoolCharge: boolean | null, numberAssignment: string | null, cniNumber: string | null, currentPicture: string | null, address: { street: string | null, state: string | null, town: string | null, country: string | null, zipCode: string | null } | null, contactInfo: { telephone: string | null, mobile: string | null, email: string | null, postOfficeBox: string | null, fax: string | null } | null, origin: { countryOrigin: string | null, departmentOrigin: string | null, regionOrigin: string | null, districtOrigin: string | null } | null }> | null };
+export type NonEmployeePersonnelQuery = { __typename?: 'Query', personnel?: Array<{ __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null }> | null };
 
-export type UserGroupFieldsFragment = { id: number, name: string, isActive: boolean | null, description: string | null, roleCollection: Array<{ id: number, name: string }> | null };
+export type UserGroupFieldsFragment = { __typename?: 'UserGroup', id: number, name: string, isActive?: boolean | null, description?: string | null, roleCollection?: Array<{ __typename?: 'Role', id: number, name: string }> | null };
 
 export type UserGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserGroupsQuery = { userGroups: Array<{ id: number, name: string, isActive: boolean | null, description: string | null, roleCollection: Array<{ id: number, name: string }> | null }> | null };
+export type UserGroupsQuery = { __typename?: 'Query', userGroups?: Array<{ __typename?: 'UserGroup', id: number, name: string, isActive?: boolean | null, description?: string | null, roleCollection?: Array<{ __typename?: 'Role', id: number, name: string }> | null }> | null };
 
 export type UserGroupSaveMutationVariables = Exact<{
-  group?: UserGroupInput | null | undefined;
+  group?: InputMaybe<UserGroupInput>;
 }>;
 
 
-export type UserGroupSaveMutation = { userGroup: { id: number, name: string, isActive: boolean | null, description: string | null, roleCollection: Array<{ id: number, name: string }> | null } | null };
+export type UserGroupSaveMutation = { __typename?: 'Mutation', userGroup?: { __typename?: 'UserGroup', id: number, name: string, isActive?: boolean | null, description?: string | null, roleCollection?: Array<{ __typename?: 'Role', id: number, name: string }> | null } | null };
 
 export type UserGroupDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type UserGroupDeleteMutation = { deleteUserGroupById: boolean | null };
+export type UserGroupDeleteMutation = { __typename?: 'Mutation', deleteUserGroupById?: boolean | null };
 
 export type UserGroupCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserGroupCreatedSubscription = { userGroup: { id: number, name: string, isActive: boolean | null, description: string | null } | null };
+export type UserGroupCreatedSubscription = { __typename?: 'Subscription', userGroup?: { __typename?: 'UserGroup', id: number, name: string, isActive?: boolean | null, description?: string | null } | null };
 
 export type LoginHistoryUsernameQueryVariables = Exact<{
-  username: string;
+  username: Scalars['String']['input'];
 }>;
 
 
-export type LoginHistoryUsernameQuery = { loginHistories: Array<{ id: number, loginDate: string, logoutDate: string | null, user: { id: number, username: string | null, person:
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-       } | null, browserInfo: { name: string | null, version: string | null, versionNumber: string | null, mobile: boolean | null, os: string | null } | null }> | null };
+export type LoginHistoryUsernameQuery = { __typename?: 'Query', loginHistories?: Array<{ __typename?: 'LoginHistory', id: number, loginDate: string, logoutDate?: string | null, user?: { __typename?: 'User', id: number, username?: string | null, person:
+        | { __typename?: 'Administrator', id: any, displayName?: string | null }
+        | { __typename?: 'Customer', id: any, displayName?: string | null }
+        | { __typename?: 'Guardian', id: any, displayName?: string | null }
+        | { __typename?: 'Student', id: any, displayName?: string | null }
+        | { __typename?: 'Supplier', id: any, displayName?: string | null }
+        | { __typename?: 'Teacher', id: any, displayName?: string | null }
+       } | null, browserInfo?: { __typename?: 'BrowserInfo', name?: string | null, version?: string | null, versionNumber?: string | null, mobile?: boolean | null, os?: string | null } | null }> | null };
 
 export type LoginHistoriesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type LoginHistoriesQuery = { loginHistories: Array<{ id: number, loginDate: string, logoutDate: string | null, user: { id: number, username: string | null, person:
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-        | { id: unknown, displayName: string | null }
-       } | null, browserInfo: { name: string | null, version: string | null, versionNumber: string | null, mobile: boolean | null, os: string | null } | null }> | null };
+export type LoginHistoriesQuery = { __typename?: 'Query', loginHistories?: Array<{ __typename?: 'LoginHistory', id: number, loginDate: string, logoutDate?: string | null, user?: { __typename?: 'User', id: number, username?: string | null, person:
+        | { __typename?: 'Administrator', id: any, displayName?: string | null }
+        | { __typename?: 'Customer', id: any, displayName?: string | null }
+        | { __typename?: 'Guardian', id: any, displayName?: string | null }
+        | { __typename?: 'Student', id: any, displayName?: string | null }
+        | { __typename?: 'Supplier', id: any, displayName?: string | null }
+        | { __typename?: 'Teacher', id: any, displayName?: string | null }
+       } | null, browserInfo?: { __typename?: 'BrowserInfo', name?: string | null, version?: string | null, versionNumber?: string | null, mobile?: boolean | null, os?: string | null } | null }> | null };
 
 export type LoginHistoryDeleteByIdsMutationVariables = Exact<{
-  ids: Array<unknown> | unknown;
+  ids: Array<Scalars['Long']['input']> | Scalars['Long']['input'];
 }>;
 
 
-export type LoginHistoryDeleteByIdsMutation = { loginHistoryDeleteByIds: boolean | null };
+export type LoginHistoryDeleteByIdsMutation = { __typename?: 'Mutation', loginHistoryDeleteByIds?: boolean | null };
 
-export type PermissionFieldsFragment = { id: number, code: string, description: string | null, active: boolean };
+export type PermissionFieldsFragment = { __typename?: 'Permission', id: number, code: string, description?: string | null, active: boolean };
 
 export type PermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PermissionsQuery = { permissions: Array<{ id: number, code: string, description: string | null, active: boolean }> | null };
+export type PermissionsQuery = { __typename?: 'Query', permissions?: Array<{ __typename?: 'Permission', id: number, code: string, description?: string | null, active: boolean }> | null };
 
 export type PermissionSelectQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PermissionSelectQuery = { permissions: Array<{ value: number, label: string }> | null };
+export type PermissionSelectQuery = { __typename?: 'Query', permissions?: Array<{ __typename?: 'Permission', value: number, label: string }> | null };
 
 export type PermissionSaveMutationVariables = Exact<{
   permission: PermissionCreateInput;
 }>;
 
 
-export type PermissionSaveMutation = { permission: { id: number, code: string, description: string | null, active: boolean } | null };
+export type PermissionSaveMutation = { __typename?: 'Mutation', permission?: { __typename?: 'Permission', id: number, code: string, description?: string | null, active: boolean } | null };
 
 export type PermissionUpdateMutationVariables = Exact<{
   permission: PermissionUpdateInput;
 }>;
 
 
-export type PermissionUpdateMutation = { permission: { id: number, code: string, description: string | null, active: boolean } | null };
+export type PermissionUpdateMutation = { __typename?: 'Mutation', permission?: { __typename?: 'Permission', id: number, code: string, description?: string | null, active: boolean } | null };
 
 export type PermissionDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PermissionDeleteMutation = { permissionDeleteById: boolean | null };
+export type PermissionDeleteMutation = { __typename?: 'Mutation', permissionDeleteById?: boolean | null };
 
 export type PermissionSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PermissionSubscriptionSubscription = { permission: { id: number, code: string, description: string | null, active: boolean } | null };
+export type PermissionSubscriptionSubscription = { __typename?: 'Subscription', permission?: { __typename?: 'Permission', id: number, code: string, description?: string | null, active: boolean } | null };
 
 export type PermissionGroups2QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PermissionGroups2Query = { groups: Array<{ groupName: string, items: Array<{ id: number, code: string, checked: boolean }> }> };
+export type PermissionGroups2Query = { __typename?: 'Query', groups: Array<{ __typename?: 'PermissionItem2', groupName: string, items: Array<{ __typename?: 'PermissionItemItem', id: number, code: string, checked: boolean }> }> };
 
 export type PermissionsOfRole2QueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PermissionsOfRole2Query = { permissions: Array<{ groupName: string, items: Array<{ id: number, code: string, checked: boolean }> }> };
+export type PermissionsOfRole2Query = { __typename?: 'Query', permissions: Array<{ __typename?: 'PermissionItem2', groupName: string, items: Array<{ __typename?: 'PermissionItemItem', id: number, code: string, checked: boolean }> }> };
 
 export type InitPermissionsMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type InitPermissionsMutation = { initPermissions: boolean | null };
+export type InitPermissionsMutation = { __typename?: 'Mutation', initPermissions?: boolean | null };
 
-export type RoleNewFragmentFragment = { id: number, name: string, description: string | null, active: boolean, enterpriseId: number, permissions: Array<{ id: number, code: string }> | null };
+export type RoleNewFragmentFragment = { __typename?: 'RoleNew', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number, permissions?: Array<{ __typename?: 'Permission', id: number, code: string }> | null };
 
 export type RolesQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type RolesQuery = { roles: Array<{ id: number, name: string, description: string | null, active: boolean, enterpriseId: number, permissions: Array<{ id: number, code: string }> | null }> | null };
+export type RolesQuery = { __typename?: 'Query', roles?: Array<{ __typename?: 'RoleNew', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number, permissions?: Array<{ __typename?: 'Permission', id: number, code: string }> | null }> | null };
 
 export type RoleNewSaveMutationVariables = Exact<{
   role: RoleNewCreateInput;
 }>;
 
 
-export type RoleNewSaveMutation = { role: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number, permissions: Array<{ id: number, code: string }> | null } | null };
+export type RoleNewSaveMutation = { __typename?: 'Mutation', role?: { __typename?: 'RoleNew', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number, permissions?: Array<{ __typename?: 'Permission', id: number, code: string }> | null } | null };
 
 export type RoleNewUpdateMutationVariables = Exact<{
   role: RoleNewUpdateInput;
 }>;
 
 
-export type RoleNewUpdateMutation = { role: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number, permissions: Array<{ id: number, code: string }> | null } | null };
+export type RoleNewUpdateMutation = { __typename?: 'Mutation', role?: { __typename?: 'RoleNew', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number, permissions?: Array<{ __typename?: 'Permission', id: number, code: string }> | null } | null };
 
 export type RoleNewDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type RoleNewDeleteMutation = { roleNewDeleteById: boolean | null };
+export type RoleNewDeleteMutation = { __typename?: 'Mutation', roleNewDeleteById?: boolean | null };
 
 export type RoleNewCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RoleNewCreatedSubscription = { role: { id: number, name: string, description: string | null, active: boolean, enterpriseId: number, permissions: Array<{ id: number, code: string }> | null } | null };
+export type RoleNewCreatedSubscription = { __typename?: 'Subscription', role?: { __typename?: 'RoleNew', id: number, name: string, description?: string | null, active: boolean, enterpriseId: number, permissions?: Array<{ __typename?: 'Permission', id: number, code: string }> | null } | null };
 
 export type LoginMutationVariables = Exact<{
   authRequest: AuthRequestInput;
 }>;
 
 
-export type LoginMutation = { loginUser: { token: string | null, mfa: boolean | null, user: { username: string, authorities: Array<string> | null, schoolCategory: SchoolCategory | null, schoolFeeCompulsory: boolean | null, enterprise: { id: number, name: string }, person:
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
+export type LoginMutation = { __typename?: 'Mutation', loginUser?: { __typename?: 'AuthRequest', token?: string | null, mfa?: boolean | null, user?: { __typename?: 'JwtUser', username: string, authorities?: Array<string> | null, schoolCategory?: SchoolCategory | null, schoolFeeCompulsory?: boolean | null, enterprise: { __typename?: 'Enterprise', id: number, name: string }, person?:
+        | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
        | null } | null } | null };
 
 export type VerifyMutationVariables = Exact<{
-  username: string;
-  code: string;
+  username: Scalars['String']['input'];
+  code: Scalars['String']['input'];
 }>;
 
 
-export type VerifyMutation = { verify: { token: string | null, user: { username: string, authorities: Array<string> | null, enterprise: { id: number, name: string }, person:
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
-        | { id: unknown, lastName: string | null, firstName: string | null, displayName: string | null }
+export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'AuthRequest', token?: string | null, user?: { __typename?: 'JwtUser', username: string, authorities?: Array<string> | null, enterprise: { __typename?: 'Enterprise', id: number, name: string }, person?:
+        | { __typename?: 'Administrator', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Customer', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Guardian', id: any, lastName: string, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Student', id: any, lastName: string, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Supplier', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
+        | { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null }
        | null } | null } | null };
 
-export type UserFieldsFragment = { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-    | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-    | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-    | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-  , roles: Array<{ id: number, name: string }> | null };
+export type UserFieldsFragment = { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+    | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+    | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+    | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+  , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null };
 
 export type UsersQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type UsersQuery = { users: Array<{ id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null> | null };
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null> | null };
 
 export type UserByIdQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type UserByIdQuery = { findUserById: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserByIdQuery = { __typename?: 'Query', findUserById?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UserByUsernameQueryVariables = Exact<{
-  username: string;
+  username: Scalars['String']['input'];
 }>;
 
 
-export type UserByUsernameQuery = { user: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserByUsernameQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UserSaveMutationVariables = Exact<{
   user: UserCreateInput;
 }>;
 
 
-export type UserSaveMutation = { user: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserSaveMutation = { __typename?: 'Mutation', user?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UserUpdateMutationVariables = Exact<{
   user: UserUpdateInput;
 }>;
 
 
-export type UserUpdateMutation = { user: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserUpdateMutation = { __typename?: 'Mutation', user?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UserDeleteMutationVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type UserDeleteMutation = { deleteUserById: boolean | null };
+export type UserDeleteMutation = { __typename?: 'Mutation', deleteUserById?: boolean | null };
 
 export type UserDeleteManyMutationVariables = Exact<{
-  ids: Array<number> | number;
+  ids: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
 }>;
 
 
-export type UserDeleteManyMutation = { deleteUserByIds: boolean | null };
+export type UserDeleteManyMutation = { __typename?: 'Mutation', deleteUserByIds?: boolean | null };
 
 export type UserCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserCreatedSubscription = { user: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null } | null };
+export type UserCreatedSubscription = { __typename?: 'Subscription', user?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null } | null };
 
 export type UserPasswordUpdateMutationVariables = Exact<{
-  username: string;
+  username: Scalars['String']['input'];
   updatePasswordInput: UpdatePasswordInput;
 }>;
 
 
-export type UserPasswordUpdateMutation = { updateUserPassword: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserPasswordUpdateMutation = { __typename?: 'Mutation', updateUserPassword?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type MfaUpdateMutationVariables = Exact<{
-  username: string;
-  mfa: boolean;
+  username: Scalars['String']['input'];
+  mfa: Scalars['Boolean']['input'];
 }>;
 
 
-export type MfaUpdateMutation = { updateMfa: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type MfaUpdateMutation = { __typename?: 'Mutation', updateMfa?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UserToggleStatusMutationVariables = Exact<{
-  userId: number;
+  userId: Scalars['Int']['input'];
 }>;
 
 
-export type UserToggleStatusMutation = { userToggleStatus: { id: number, username: string | null, email: string | null, creationDate: string | null, lastLogin: string | null, isEnabled: boolean | null, secretImageUri: string | null, mfa: boolean | null, person:
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-      | { id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    , roles: Array<{ id: number, name: string }> | null } | null };
+export type UserToggleStatusMutation = { __typename?: 'Mutation', userToggleStatus?: { __typename?: 'User', id: number, username?: string | null, email?: string | null, creationDate?: string | null, lastLogin?: string | null, isEnabled?: boolean | null, secretImageUri?: string | null, mfa?: boolean | null, person:
+      | { __typename?: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+      | { __typename?: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+      | { __typename?: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    , roles?: Array<{ __typename?: 'RoleNew', id: number, name: string }> | null } | null };
 
 export type UsersChangeStatusMutationVariables = Exact<{
-  ids: Array<number> | number;
-  status: boolean;
+  ids: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+  status: Scalars['Boolean']['input'];
 }>;
 
 
-export type UsersChangeStatusMutation = { usersChangeStatus: boolean | null };
+export type UsersChangeStatusMutation = { __typename?: 'Mutation', usersChangeStatus?: boolean | null };
 
 export type PeopleWithoutAccountQueryVariables = Exact<{
-  id: number;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type PeopleWithoutAccountQuery = { people: Array<
-    | { __typename: 'Administrator', id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { __typename: 'Customer', id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { __typename: 'Guardian', id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-    | { __typename: 'Student', id: unknown, displayName: string | null, lastName: string, firstName: string | null }
-    | { __typename: 'Supplier', id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
-    | { __typename: 'Teacher', id: unknown, displayName: string | null, lastName: string | null, firstName: string | null }
+export type PeopleWithoutAccountQuery = { __typename?: 'Query', people?: Array<
+    | { __typename: 'Administrator', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename: 'Customer', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename: 'Guardian', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+    | { __typename: 'Student', id: any, displayName?: string | null, lastName: string, firstName?: string | null }
+    | { __typename: 'Supplier', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
+    | { __typename: 'Teacher', id: any, displayName?: string | null, lastName?: string | null, firstName?: string | null }
   > | null };
 
 export const AccountFieldsFragmentDoc = gql`
