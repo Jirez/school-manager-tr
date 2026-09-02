@@ -1,9 +1,19 @@
 import { emptyStringToNull } from '@/utils/helpers'
-import { string, object, boolean } from 'yup'
+import { z } from 'zod'
 
-export const departmentValidation = object({
-  name: string().required('validation-name-required').min(2).max(50),
-  manager: string().nullable(),
-  active: boolean().required(),
-  note: string().optional().min(5).max(255).transform(emptyStringToNull),
+export const departmentValidation = z.object({
+  name: z.string('validation-name-required').min(2).max(50),
+  manager: z.string().nullable(),
+  active: z.boolean(),
+  note: z
+    .string()
+    .max(255)
+    .refine((val) => !val || val.length >= 5, {
+      message: 'String must contain at least 5 character(s)',
+    })
+    .transform(emptyStringToNull)
+    .optional()
+    .nullable(),
 })
+
+export type DepartmentSchemaType = z.input<typeof departmentValidation>

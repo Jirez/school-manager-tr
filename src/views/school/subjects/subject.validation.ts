@@ -1,13 +1,15 @@
 import { emptyStringToNull } from '@/utils/helpers'
-import { string, object, boolean, number } from 'yup'
+import { z } from 'zod'
 
-export const validationSchema = object({
-  name: string().required('validation-name-required').min(2).max(120),
-  displayName: string().required(),
-  subjectDepartmentId: object().required(),
-  active: boolean().required(),
-  showInTimeTable: boolean().required(),
-  code: string().optional().transform(emptyStringToNull),
-  id: number().optional(),
-  note: string().optional().transform(emptyStringToNull),
+export const subjectSchema = z.object({
+  name: z.string('validation-name-required').min(2).max(120),
+  displayName: z.string(),
+  subjectDepartmentId: z.any(),
+  active: z.boolean(),
+  showInTimeTable: z.boolean(),
+  code: z.string().transform(emptyStringToNull).optional(),
+  id: z.number().optional(),
+  note: z.string().transform(emptyStringToNull).optional(),
 })
+
+export type SubjectSchemaType = z.input<typeof subjectSchema>

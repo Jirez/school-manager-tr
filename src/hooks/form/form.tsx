@@ -3,16 +3,20 @@ import type { SubmitEventHandler } from 'react'
 import { lazy } from 'react'
 import { fieldContext, formContext, useFormContext } from './form-context'
 
-const Input = lazy(() => import('@components/ui/ts-form/input'))
-const Switch = lazy(() => import('@components/ui/ts-form/switch'))
+const Input = lazy(() => import('@/@core/components/ui/ts-form/input'))
+const Switch = lazy(() => import('@/@core/components/ui/ts-form/switch'))
 const ControlledSelect = lazy(
-  () => import('@components/ui/ts-form/controlled-select'),
+  () => import('@/@core/components/ui/ts-form/controlled-select'),
 )
-const NumericInput = lazy(() => import('@components/ui/ts-form/numeric-input'))
+const NumericInput = lazy(
+  () => import('@/@core/components/ui/ts-form/numeric-input'),
+)
 const InputPasswordToggle = lazy(
-  () => import('@components/ui/ts-form/input-password-toggle'),
+  () => import('@/@core/components/ui/ts-form/input-password-toggle'),
 )
-const ActionButtons = lazy(() => import('@components/ui/forms/action-buttons'))
+const ActionButtons = lazy(
+  () => import('@/@core/components/ui/forms/action-buttons'),
+)
 
 function SubmitButton({
   cancelAction,

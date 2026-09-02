@@ -1,13 +1,10 @@
 import Button from '@/@core/components/button'
 import { useContext, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import type { SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 // import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useLocation, useNavigate, Link } from '@tanstack/react-router'
 import { Form } from 'reactstrap'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { z } from 'zod'
 import { toast, Slide } from 'react-toastify'
 import { useDebounceFn, useLocalStorageState } from 'ahooks'
 import browserDetect from 'browser-detect'
@@ -20,16 +17,11 @@ import TokenStorage from '@/utils/TokenStorage'
 import { ToastContent } from '@/@core/components/toast'
 import { authenticationVar } from '../../ApiClient'
 import { Eye, EyeOff, User, Lock, ArrowRight } from 'lucide-react'
-import Input from '@/@core/components/ui/forms/input'
+import { useAppForm } from '#/hooks/form/form'
 
-interface FormValues {
-  username: string
-  password: string
-}
-
-const loginSchema = yup.object().shape({
-  username: yup.string().required().min(5),
-  password: yup.string().required(),
+const loginSchema = z.object({
+  username: z.string().min(5),
+  password: z.string(),
 })
 
 export default function LoginForm() {
@@ -56,7 +48,7 @@ export default function LoginForm() {
   )
 
   // console.log(location?.state?.returnUrl)
-  const {
+  /* const {
     control,
     // setError,
     handleSubmit,
@@ -67,6 +59,93 @@ export default function LoginForm() {
       username: '',
     },
     resolver: yupResolver(loginSchema),
+  }) */
+
+  const { handleSubmit, AppField } = useAppForm({
+    defaultValues: {
+      password: '',
+      username: '',
+    },
+    validators: {
+      onChange: loginSchema,
+    },
+    onSubmit({ value }) {
+      loginUser({
+        variables: {
+          authRequest: {
+            username: value.username,
+            password: value.password,
+            browserInfo: {
+              name: browserInfo.name,
+              versionNumber: String(browserInfo.versionNumber),
+              version: browserInfo.version,
+              mobile: browserInfo.mobile,
+              os: browserInfo.os,
+            },
+          },
+        },
+      })
+        .then(async ({ data }) => {
+          if (data?.loginUser?.mfa) {
+            authenticationVar({
+              ...authenticationVar(),
+              isAuthenticated: false,
+            })
+            // setUsername(values.username);
+            // setRedirect(VERIFY_CODE);
+            // navigate(VERIFY_CODE, { state: { username: username } })
+            navigate({ to: VERIFY_CODE, state: { username: value.username } })
+          } else {
+            authenticationVar(dataToAuthentication(data))
+            TokenStorage.write(data?.loginUser?.token!)
+            localStorage.setItem(
+              TokenStorage.authUserKey(),
+              JSON.stringify(data?.loginUser),
+            )
+            // props.loginUserSuccess(data.loginUser);
+            ability.update(abilitiesFromAuthorities())
+            setSchoolFeeCompulsory(
+              data?.loginUser?.user?.schoolFeeCompulsory ?? false,
+            )
+            //                    navigate(location?.state?.returnUrl || DASHBOARD);
+            run() // redirect
+            toast.success(
+              <ToastContent
+                title={`${t('text-welcome')} ${data?.loginUser?.user?.username}`}
+                type="success"
+              />,
+              {
+                icon: false,
+                transition: Slide,
+                hideProgressBar: true,
+                autoClose: 2000,
+              },
+            )
+          }
+        })
+        .catch((error) => {
+          // message.error(`Impossible de se connecter : ${formatError(error)}`, 10);
+          if (error.networkError) {
+            toast.error(
+              <ToastContent title={t('label-networkError')} type="danger" />,
+              {
+                icon: false,
+                transition: Slide,
+                hideProgressBar: true,
+                autoClose: 10000,
+              },
+            )
+            return
+          }
+
+          toast.error(<ToastContent title={error.message} type="danger" />, {
+            icon: false,
+            transition: Slide,
+            hideProgressBar: true,
+            autoClose: 5000,
+          })
+        })
+    },
   })
 
   /* const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
@@ -104,81 +183,6 @@ export default function LoginForm() {
 
   const [loginUser, { loading }] = useLoginMutation()
 
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
-    loginUser({
-      variables: {
-        authRequest: {
-          username: values.username,
-          password: values.password,
-          browserInfo: {
-            name: browserInfo.name,
-            versionNumber: String(browserInfo.versionNumber),
-            version: browserInfo.version,
-            mobile: browserInfo.mobile,
-            os: browserInfo.os,
-          },
-        },
-      },
-    })
-      .then(async ({ data }) => {
-        if (data?.loginUser?.mfa) {
-          authenticationVar({ ...authenticationVar(), isAuthenticated: false })
-          // setUsername(values.username);
-          // setRedirect(VERIFY_CODE);
-          // navigate(VERIFY_CODE, { state: { username: username } })
-          navigate({ to: VERIFY_CODE, state: { username: values.username } })
-        } else {
-          authenticationVar(dataToAuthentication(data))
-          TokenStorage.write(data?.loginUser?.token!)
-          localStorage.setItem(
-            TokenStorage.authUserKey(),
-            JSON.stringify(data?.loginUser),
-          )
-          // props.loginUserSuccess(data.loginUser);
-          ability.update(abilitiesFromAuthorities())
-          setSchoolFeeCompulsory(
-            data?.loginUser?.user?.schoolFeeCompulsory ?? false,
-          )
-          //                    navigate(location?.state?.returnUrl || DASHBOARD);
-          run() // redirect
-          toast.success(
-            <ToastContent
-              title={`${t('text-welcome')} ${data?.loginUser?.user?.username}`}
-              type="success"
-            />,
-            {
-              icon: false,
-              transition: Slide,
-              hideProgressBar: true,
-              autoClose: 2000,
-            },
-          )
-        }
-      })
-      .catch((error) => {
-        // message.error(`Impossible de se connecter : ${formatError(error)}`, 10);
-        if (error.networkError) {
-          toast.error(
-            <ToastContent title={t('label-networkError')} type="danger" />,
-            {
-              icon: false,
-              transition: Slide,
-              hideProgressBar: true,
-              autoClose: 10000,
-            },
-          )
-          return
-        }
-
-        toast.error(<ToastContent title={error.message} type="danger" />, {
-          icon: false,
-          transition: Slide,
-          hideProgressBar: true,
-          autoClose: 5000,
-        })
-      })
-  }
-
   /* if (redirect) {
     return (
       <Navigate to={{ pathname: redirect }} state={{ username: username }} />
@@ -187,17 +191,26 @@ export default function LoginForm() {
 
   return (
     <div>
-      <Form className="auth-login-form mt-2" onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        className="auth-login-form mt-2"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleSubmit()
+        }}
+      >
         <div className="flex justify-between items-center mb-0.5">
           <label className="form-label mb-0">{t('text-username')}</label>
         </div>
-        <Input
+        <AppField
           name="username"
           // label={t("text-username")}
-          control={control}
-          autoFocus
-          prepend={<User size={16} />}
-          placeholder={t('label-username')}
+          children={(field) => (
+            <field.Input
+              autoFocus
+              prepend={<User size={16} />}
+              placeholder={t('label-username')}
+            />
+          )}
         />
 
         <div className="mb-1 mt-1">
@@ -207,18 +220,22 @@ export default function LoginForm() {
               <small>{t('text-forgot-password')}</small>
             </Link>
           </div>
-          <Input
+
+          <AppField
             name="password"
-            type={showPassword ? 'text' : 'password'}
-            control={control}
-            prepend={<Lock size={16} />}
-            append={
-              <span onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-              </span>
-            }
-            placeholder={t('label-password')}
-            className="mb-0"
+            children={(field) => (
+              <field.Input
+                type={showPassword ? 'text' : 'password'}
+                prepend={<Lock size={16} />}
+                append={
+                  <span onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </span>
+                }
+                placeholder={t('label-password')}
+                className="mb-0"
+              />
+            )}
           />
         </div>
         {/* <div className='form-check mb-1'>

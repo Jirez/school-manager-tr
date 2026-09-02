@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as NotAuthorizedRouteImport } from './routes/not-authorized'
 import { Route as QrcodeRouteImport } from './routes/qrcode'
 import { Route as VerifyRouteImport } from './routes/verify'
+import { Route as miscForgotPasswordRouteImport } from './routes/(misc)/forgot-password'
 import { Route as PrivateLayoutCleanLayoutRouteImport } from './routes/_privateLayout/_cleanLayout'
 import { Route as PrivateLayoutVerticalRouteImport } from './routes/_privateLayout/_vertical'
 import { Route as PaymentStatusReferenceRouteImport } from './routes/payment-status/$reference'
@@ -227,6 +228,11 @@ const QrcodeRoute = QrcodeRouteImport.update({
 const VerifyRoute = VerifyRouteImport.update({
   id: '/verify',
   path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const miscForgotPasswordRoute = miscForgotPasswordRouteImport.update({
+  id: '/(misc)/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivateLayoutCleanLayoutRoute =
@@ -1304,6 +1310,7 @@ export interface FileRoutesByFullPath {
   '/not-authorized': typeof NotAuthorizedRoute
   '/qrcode': typeof QrcodeRoute
   '/verify': typeof VerifyRoute
+  '/forgot-password': typeof miscForgotPasswordRoute
   '/payment-status/$reference': typeof PaymentStatusReferenceRoute
   '/tuition/$identifier': typeof TuitionIdentifierRoute
   '/account_list': typeof PrivateLayoutCleanLayoutAccount_listRoute
@@ -1488,6 +1495,7 @@ export interface FileRoutesByTo {
   '/not-authorized': typeof NotAuthorizedRoute
   '/qrcode': typeof QrcodeRoute
   '/verify': typeof VerifyRoute
+  '/forgot-password': typeof miscForgotPasswordRoute
   '/payment-status/$reference': typeof PaymentStatusReferenceRoute
   '/tuition/$identifier': typeof TuitionIdentifierRoute
   '/account_list': typeof PrivateLayoutCleanLayoutAccount_listRoute
@@ -1674,6 +1682,7 @@ export interface FileRoutesById {
   '/not-authorized': typeof NotAuthorizedRoute
   '/qrcode': typeof QrcodeRoute
   '/verify': typeof VerifyRoute
+  '/(misc)/forgot-password': typeof miscForgotPasswordRoute
   '/_privateLayout/_cleanLayout': typeof PrivateLayoutCleanLayoutRouteWithChildren
   '/_privateLayout/_vertical': typeof PrivateLayoutVerticalRouteWithChildren
   '/payment-status/$reference': typeof PaymentStatusReferenceRoute
@@ -1862,6 +1871,7 @@ export interface FileRouteTypes {
     | '/not-authorized'
     | '/qrcode'
     | '/verify'
+    | '/forgot-password'
     | '/payment-status/$reference'
     | '/tuition/$identifier'
     | '/account_list'
@@ -2046,6 +2056,7 @@ export interface FileRouteTypes {
     | '/not-authorized'
     | '/qrcode'
     | '/verify'
+    | '/forgot-password'
     | '/payment-status/$reference'
     | '/tuition/$identifier'
     | '/account_list'
@@ -2231,6 +2242,7 @@ export interface FileRouteTypes {
     | '/not-authorized'
     | '/qrcode'
     | '/verify'
+    | '/(misc)/forgot-password'
     | '/_privateLayout/_cleanLayout'
     | '/_privateLayout/_vertical'
     | '/payment-status/$reference'
@@ -2419,6 +2431,7 @@ export interface RootRouteChildren {
   NotAuthorizedRoute: typeof NotAuthorizedRoute
   QrcodeRoute: typeof QrcodeRoute
   VerifyRoute: typeof VerifyRoute
+  miscForgotPasswordRoute: typeof miscForgotPasswordRoute
   PaymentStatusReferenceRoute: typeof PaymentStatusReferenceRoute
   TuitionIdentifierRoute: typeof TuitionIdentifierRoute
 }
@@ -2472,6 +2485,13 @@ declare module '@tanstack/react-router' {
       path: '/verify'
       fullPath: '/verify'
       preLoaderRoute: typeof VerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(misc)/forgot-password': {
+      id: '/(misc)/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof miscForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_privateLayout/_cleanLayout': {
@@ -4285,6 +4305,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotAuthorizedRoute: NotAuthorizedRoute,
   QrcodeRoute: QrcodeRoute,
   VerifyRoute: VerifyRoute,
+  miscForgotPasswordRoute: miscForgotPasswordRoute,
   PaymentStatusReferenceRoute: PaymentStatusReferenceRoute,
   TuitionIdentifierRoute: TuitionIdentifierRoute,
 }
