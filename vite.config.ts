@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { defineConfig } from 'vite'
 // import { devtools } from '@tanstack/devtools-vite'
 import * as path from 'path'
@@ -10,6 +11,11 @@ import viteReact from '@vitejs/plugin-react'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
+    paraglideVitePlugin({
+      project: './project.inlang',
+      outdir: './src/paraglide',
+      cookieName: 'SCHOOL_PARAGLIDE_COOKIE',
+    }),
     // devtools(),
     // tailwindcss(),
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),

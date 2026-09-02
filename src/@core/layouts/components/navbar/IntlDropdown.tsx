@@ -1,6 +1,7 @@
 // ** Third Party Components
-import { useTranslation } from "react-i18next";
-import ReactCountryFlag from "react-country-flag";
+import { useTranslation } from 'react-i18next'
+import ReactCountryFlag from 'react-country-flag'
+import { setLocale } from '#/paraglide/runtime'
 
 // ** Reactstrap Imports
 import {
@@ -8,23 +9,25 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-} from "reactstrap";
+} from 'reactstrap'
 
 const IntlDropdown = () => {
   // ** Hooks
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
 
   // ** Vars
   const langObj: any = {
-    en: "English",
-    fr: "Français",
-  };
+    en: 'English',
+    fr: 'Français',
+  }
 
   // ** Function to switch Language
   const handleLangUpdate = (e: any, lang: any) => {
-    e.preventDefault();
-    i18n.changeLanguage(lang);
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    setLocale(lang, { reload: false })
+    i18n.changeLanguage(lang)
+  }
 
   return (
     <UncontrolledDropdown
@@ -41,7 +44,7 @@ const IntlDropdown = () => {
         <ReactCountryFlag
           svg
           className="country-flag flag-icon"
-          countryCode={i18n.language === "en" ? "us" : i18n.language}
+          countryCode={i18n.language === 'en' ? 'us' : i18n.language}
         />
         <span className="selected-language text-sm">
           {langObj[i18n.language]}
@@ -51,7 +54,7 @@ const IntlDropdown = () => {
         <DropdownItem
           href="/"
           tag="a"
-          onClick={(e) => handleLangUpdate(e, "en")}
+          onClick={(e) => handleLangUpdate(e, 'en')}
         >
           <ReactCountryFlag className="country-flag" countryCode="us" svg />
           <span className="ms-1 text-sm">English</span>
@@ -59,14 +62,14 @@ const IntlDropdown = () => {
         <DropdownItem
           href="/"
           tag="a"
-          onClick={(e) => handleLangUpdate(e, "fr")}
+          onClick={(e) => handleLangUpdate(e, 'fr')}
         >
           <ReactCountryFlag className="country-flag" countryCode="fr" svg />
           <span className="ms-1 text-sm">Français</span>
         </DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>
-  );
-};
+  )
+}
 
-export default IntlDropdown;
+export default IntlDropdown

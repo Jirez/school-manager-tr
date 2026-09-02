@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
-import { Card } from 'reactstrap'
 import type { ColumnDef } from '@tanstack/react-table'
 
 import { showDisplayedRowCount } from '@/utils/helpers'
@@ -86,7 +85,7 @@ const LoginHistoryTable: FC<CommonTableProps> = (props) => {
           />
         </div>
       )}
-      <Card>
+      <div>
         <CommonTable
           data={props.dataSource!}
           columns={columns}
@@ -96,7 +95,7 @@ const LoginHistoryTable: FC<CommonTableProps> = (props) => {
           onRowSelected={(row) => setCheckedRows(row)}
           loading={props.loading}
         />
-      </Card>
+      </div>
     </>
   )
 }

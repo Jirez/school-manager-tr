@@ -1,0 +1,7 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Bonjour {username}",
+  "department": "Département",
+  "code": "Code",
+  "subject_name": "Nom de la matière"
+}

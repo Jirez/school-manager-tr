@@ -33,6 +33,7 @@ import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { useSelector } from '@tanstack/react-form'
 import { subjectSchema, type SubjectSchemaType } from './subject.validation'
+import { m } from '@/paraglide/messages'
 
 interface SubjectFormProps extends BaseFormProps {
   subject?: Subject
@@ -168,7 +169,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
                     name="subjectDepartmentId"
                     children={(field) => (
                       <field.ControlledSelect
-                        label={t('label-department')}
+                        label={m.department()}
                         required={true}
                         onChange={(value) =>
                           setFieldValue('subjectDepartmentId', value)
@@ -195,10 +196,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
               <AppField
                 name="code"
                 children={(field) => (
-                  <field.Input
-                    label={t('label-code')}
-                    prepend={<Hash size={16} />}
-                  />
+                  <field.Input label={m.code()} prepend={<Hash size={16} />} />
                 )}
               />
             </div>
@@ -209,7 +207,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
                 name="name"
                 children={(field) => (
                   <field.Input
-                    label={t('label-name')}
+                    label={m.subject_name()}
                     required={true}
                     prepend={<Tag size={16} />}
                     onChange={(event) => {

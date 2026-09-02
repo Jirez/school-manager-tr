@@ -17,7 +17,8 @@
     "lint": "eslint",
     "format": "prettier --write . && eslint --fix",
     "check": "prettier --check .",
-    "codegen2": "graphql-codegen --config codegen.yml"
+    "codegen2": "graphql-codegen --config codegen.yml",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@apollo/client": "^3.14.1",
@@ -118,7 +119,9 @@
     "sass": "1.77.5",
     "tailwindcss": "^3.4.19",
     "typescript": "^6.0.3",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "@inlang/paraglide-js": "^2.25.0",
+    "@inlang/cli": "^3.0.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
