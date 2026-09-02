@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
+// import { devtools } from '@tanstack/devtools-vite'
 import * as path from 'path'
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
@@ -10,8 +10,8 @@ import viteReact from '@vitejs/plugin-react'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
-    devtools(),
-    //tailwindcss(),
+    // devtools(),
+    // tailwindcss(),
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     viteReact(),
   ],

@@ -11,6 +11,7 @@ import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import StudentDelete from '@/views/school/students/StudentDelete'
 import StudentsDelete from './StudentsDelete'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 export type TStudent = {
   id: number
@@ -26,7 +27,7 @@ const StudentTable: FC<CommonTableProps> = (props) => {
   const [checkedRows, setCheckedRows] = useState<any[]>([])
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TStudent>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TStudent>[]>(
     () => [
       {
         accessorFn: (row) => `${row.lastName} ${row.firstName}`,

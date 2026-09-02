@@ -9,11 +9,12 @@ import type { SpecialAccountType } from './SpecialAccount.type'
 import { Tag, Wallet, Star, Hash } from 'lucide-react'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<SpecialAccountType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, SpecialAccountType>> = useMemo(
     () => [
       {
         id: 'specialAccountType',

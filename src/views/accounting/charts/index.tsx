@@ -64,8 +64,8 @@ const ChartOfAccounts = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ chartOfAccounts }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

@@ -9,6 +9,7 @@ import { showDisplayedRowCount } from '@/utils/helpers'
 import type { Subject } from './Subject.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
+import type { AppFeatures } from '#/hooks/table'
 
 const NameContainer = styled.div`
   display: flex;
@@ -84,7 +85,7 @@ interface Props extends CommonTableProps {
 const SubjectTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<Subject>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, Subject>[]>(
     () => [
       {
         id: 'name',

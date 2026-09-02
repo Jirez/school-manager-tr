@@ -155,6 +155,7 @@ import { Route as PrivateLayoutVerticalsaleDiscountsRouteImport } from './routes
 import { Route as PrivateLayoutVerticalsaleFeeGroupsRouteImport } from './routes/_privateLayout/_vertical/(sale)/fee-groups'
 import { Route as PrivateLayoutVerticalsaleFeeStructuresRouteImport } from './routes/_privateLayout/_vertical/(sale)/fee-structures'
 import { Route as PrivateLayoutVerticalsaleInstallmentsRouteImport } from './routes/_privateLayout/_vertical/(sale)/installments'
+import { Route as PrivateLayoutVerticalsaleMobileOperationsRouteImport } from './routes/_privateLayout/_vertical/(sale)/mobile-operations'
 import { Route as PrivateLayoutVerticalsalePaymentConditionsRouteImport } from './routes/_privateLayout/_vertical/(sale)/payment-conditions'
 import { Route as PrivateLayoutVerticalsaleProductCategoriesRouteImport } from './routes/_privateLayout/_vertical/(sale)/product-categories'
 import { Route as PrivateLayoutVerticalsaleProductsRouteImport } from './routes/_privateLayout/_vertical/(sale)/products'
@@ -190,7 +191,7 @@ import { Route as PrivateLayoutVerticaluserProfileRouteImport } from './routes/_
 import { Route as PrivateLayoutVerticaluserRolesRouteImport } from './routes/_privateLayout/_vertical/(user)/roles'
 import { Route as PrivateLayoutVerticaluserUsersRouteImport } from './routes/_privateLayout/_vertical/(user)/users'
 import { Route as PrivateLayoutVerticalsaleOperationsIndexRouteImport } from './routes/_privateLayout/_vertical/(sale)/operations/index'
-import { Route as PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport } from './routes/_privateLayout/_vertical/(sale)/operations/mobile-operations'
+import { Route as PrivateLayoutVerticalsalePurchasesIndexRouteImport } from './routes/_privateLayout/_vertical/(sale)/purchases/index'
 import { Route as PrivateLayoutVerticalstudentFrequentsIndexRouteImport } from './routes/_privateLayout/_vertical/(student)/frequents/index'
 import { Route as PrivateLayoutVerticalstudentFrequentsIdRouteImport } from './routes/_privateLayout/_vertical/(student)/frequents/$id'
 
@@ -1061,6 +1062,12 @@ const PrivateLayoutVerticalsaleInstallmentsRoute =
     path: '/installments',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
+const PrivateLayoutVerticalsaleMobileOperationsRoute =
+  PrivateLayoutVerticalsaleMobileOperationsRouteImport.update({
+    id: '/(sale)/mobile-operations',
+    path: '/mobile-operations',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
 const PrivateLayoutVerticalsalePaymentConditionsRoute =
   PrivateLayoutVerticalsalePaymentConditionsRouteImport.update({
     id: '/(sale)/payment-conditions',
@@ -1271,10 +1278,10 @@ const PrivateLayoutVerticalsaleOperationsIndexRoute =
     path: '/operations/',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
-const PrivateLayoutVerticalsaleOperationsMobileOperationsRoute =
-  PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport.update({
-    id: '/(sale)/operations/mobile-operations',
-    path: '/operations/mobile-operations',
+const PrivateLayoutVerticalsalePurchasesIndexRoute =
+  PrivateLayoutVerticalsalePurchasesIndexRouteImport.update({
+    id: '/(sale)/purchases/',
+    path: '/purchases/',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
 const PrivateLayoutVerticalstudentFrequentsIndexRoute =
@@ -1434,6 +1441,7 @@ export interface FileRoutesByFullPath {
   '/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
   '/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
   '/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/mobile-operations': typeof PrivateLayoutVerticalsaleMobileOperationsRoute
   '/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
   '/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
   '/products': typeof PrivateLayoutVerticalsaleProductsRoute
@@ -1468,9 +1476,9 @@ export interface FileRoutesByFullPath {
   '/profile': typeof PrivateLayoutVerticaluserProfileRoute
   '/roles': typeof PrivateLayoutVerticaluserRolesRoute
   '/users': typeof PrivateLayoutVerticaluserUsersRoute
-  '/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
   '/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
   '/operations/': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/purchases/': typeof PrivateLayoutVerticalsalePurchasesIndexRoute
   '/frequents/': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -1617,6 +1625,7 @@ export interface FileRoutesByTo {
   '/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
   '/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
   '/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/mobile-operations': typeof PrivateLayoutVerticalsaleMobileOperationsRoute
   '/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
   '/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
   '/products': typeof PrivateLayoutVerticalsaleProductsRoute
@@ -1651,9 +1660,9 @@ export interface FileRoutesByTo {
   '/profile': typeof PrivateLayoutVerticaluserProfileRoute
   '/roles': typeof PrivateLayoutVerticaluserRolesRoute
   '/users': typeof PrivateLayoutVerticaluserUsersRoute
-  '/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
   '/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
   '/operations': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/purchases': typeof PrivateLayoutVerticalsalePurchasesIndexRoute
   '/frequents': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRoutesById {
@@ -1804,6 +1813,7 @@ export interface FileRoutesById {
   '/_privateLayout/_vertical/(sale)/fee-groups': typeof PrivateLayoutVerticalsaleFeeGroupsRoute
   '/_privateLayout/_vertical/(sale)/fee-structures': typeof PrivateLayoutVerticalsaleFeeStructuresRoute
   '/_privateLayout/_vertical/(sale)/installments': typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  '/_privateLayout/_vertical/(sale)/mobile-operations': typeof PrivateLayoutVerticalsaleMobileOperationsRoute
   '/_privateLayout/_vertical/(sale)/payment-conditions': typeof PrivateLayoutVerticalsalePaymentConditionsRoute
   '/_privateLayout/_vertical/(sale)/product-categories': typeof PrivateLayoutVerticalsaleProductCategoriesRoute
   '/_privateLayout/_vertical/(sale)/products': typeof PrivateLayoutVerticalsaleProductsRoute
@@ -1838,9 +1848,9 @@ export interface FileRoutesById {
   '/_privateLayout/_vertical/(user)/profile': typeof PrivateLayoutVerticaluserProfileRoute
   '/_privateLayout/_vertical/(user)/roles': typeof PrivateLayoutVerticaluserRolesRoute
   '/_privateLayout/_vertical/(user)/users': typeof PrivateLayoutVerticaluserUsersRoute
-  '/_privateLayout/_vertical/(sale)/operations/mobile-operations': typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
   '/_privateLayout/_vertical/(student)/frequents/$id': typeof PrivateLayoutVerticalstudentFrequentsIdRoute
   '/_privateLayout/_vertical/(sale)/operations/': typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  '/_privateLayout/_vertical/(sale)/purchases/': typeof PrivateLayoutVerticalsalePurchasesIndexRoute
   '/_privateLayout/_vertical/(student)/frequents/': typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 export interface FileRouteTypes {
@@ -1989,6 +1999,7 @@ export interface FileRouteTypes {
     | '/fee-groups'
     | '/fee-structures'
     | '/installments'
+    | '/mobile-operations'
     | '/payment-conditions'
     | '/product-categories'
     | '/products'
@@ -2023,9 +2034,9 @@ export interface FileRouteTypes {
     | '/profile'
     | '/roles'
     | '/users'
-    | '/operations/mobile-operations'
     | '/frequents/$id'
     | '/operations/'
+    | '/purchases/'
     | '/frequents/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -2172,6 +2183,7 @@ export interface FileRouteTypes {
     | '/fee-groups'
     | '/fee-structures'
     | '/installments'
+    | '/mobile-operations'
     | '/payment-conditions'
     | '/product-categories'
     | '/products'
@@ -2206,9 +2218,9 @@ export interface FileRouteTypes {
     | '/profile'
     | '/roles'
     | '/users'
-    | '/operations/mobile-operations'
     | '/frequents/$id'
     | '/operations'
+    | '/purchases'
     | '/frequents'
   id:
     | '__root__'
@@ -2358,6 +2370,7 @@ export interface FileRouteTypes {
     | '/_privateLayout/_vertical/(sale)/fee-groups'
     | '/_privateLayout/_vertical/(sale)/fee-structures'
     | '/_privateLayout/_vertical/(sale)/installments'
+    | '/_privateLayout/_vertical/(sale)/mobile-operations'
     | '/_privateLayout/_vertical/(sale)/payment-conditions'
     | '/_privateLayout/_vertical/(sale)/product-categories'
     | '/_privateLayout/_vertical/(sale)/products'
@@ -2392,9 +2405,9 @@ export interface FileRouteTypes {
     | '/_privateLayout/_vertical/(user)/profile'
     | '/_privateLayout/_vertical/(user)/roles'
     | '/_privateLayout/_vertical/(user)/users'
-    | '/_privateLayout/_vertical/(sale)/operations/mobile-operations'
     | '/_privateLayout/_vertical/(student)/frequents/$id'
     | '/_privateLayout/_vertical/(sale)/operations/'
+    | '/_privateLayout/_vertical/(sale)/purchases/'
     | '/_privateLayout/_vertical/(student)/frequents/'
   fileRoutesById: FileRoutesById
 }
@@ -3434,6 +3447,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateLayoutVerticalsaleInstallmentsRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
+    '/_privateLayout/_vertical/(sale)/mobile-operations': {
+      id: '/_privateLayout/_vertical/(sale)/mobile-operations'
+      path: '/mobile-operations'
+      fullPath: '/mobile-operations'
+      preLoaderRoute: typeof PrivateLayoutVerticalsaleMobileOperationsRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
     '/_privateLayout/_vertical/(sale)/payment-conditions': {
       id: '/_privateLayout/_vertical/(sale)/payment-conditions'
       path: '/payment-conditions'
@@ -3679,11 +3699,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateLayoutVerticalsaleOperationsIndexRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
-    '/_privateLayout/_vertical/(sale)/operations/mobile-operations': {
-      id: '/_privateLayout/_vertical/(sale)/operations/mobile-operations'
-      path: '/operations/mobile-operations'
-      fullPath: '/operations/mobile-operations'
-      preLoaderRoute: typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRouteImport
+    '/_privateLayout/_vertical/(sale)/purchases/': {
+      id: '/_privateLayout/_vertical/(sale)/purchases/'
+      path: '/purchases'
+      fullPath: '/purchases/'
+      preLoaderRoute: typeof PrivateLayoutVerticalsalePurchasesIndexRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
     '/_privateLayout/_vertical/(student)/frequents/': {
@@ -3967,6 +3987,7 @@ interface PrivateLayoutVerticalRouteChildren {
   PrivateLayoutVerticalsaleFeeGroupsRoute: typeof PrivateLayoutVerticalsaleFeeGroupsRoute
   PrivateLayoutVerticalsaleFeeStructuresRoute: typeof PrivateLayoutVerticalsaleFeeStructuresRoute
   PrivateLayoutVerticalsaleInstallmentsRoute: typeof PrivateLayoutVerticalsaleInstallmentsRoute
+  PrivateLayoutVerticalsaleMobileOperationsRoute: typeof PrivateLayoutVerticalsaleMobileOperationsRoute
   PrivateLayoutVerticalsalePaymentConditionsRoute: typeof PrivateLayoutVerticalsalePaymentConditionsRoute
   PrivateLayoutVerticalsaleProductCategoriesRoute: typeof PrivateLayoutVerticalsaleProductCategoriesRoute
   PrivateLayoutVerticalsaleProductsRoute: typeof PrivateLayoutVerticalsaleProductsRoute
@@ -4001,9 +4022,9 @@ interface PrivateLayoutVerticalRouteChildren {
   PrivateLayoutVerticaluserProfileRoute: typeof PrivateLayoutVerticaluserProfileRoute
   PrivateLayoutVerticaluserRolesRoute: typeof PrivateLayoutVerticaluserRolesRoute
   PrivateLayoutVerticaluserUsersRoute: typeof PrivateLayoutVerticaluserUsersRoute
-  PrivateLayoutVerticalsaleOperationsMobileOperationsRoute: typeof PrivateLayoutVerticalsaleOperationsMobileOperationsRoute
   PrivateLayoutVerticalstudentFrequentsIdRoute: typeof PrivateLayoutVerticalstudentFrequentsIdRoute
   PrivateLayoutVerticalsaleOperationsIndexRoute: typeof PrivateLayoutVerticalsaleOperationsIndexRoute
+  PrivateLayoutVerticalsalePurchasesIndexRoute: typeof PrivateLayoutVerticalsalePurchasesIndexRoute
   PrivateLayoutVerticalstudentFrequentsIndexRoute: typeof PrivateLayoutVerticalstudentFrequentsIndexRoute
 }
 
@@ -4160,6 +4181,8 @@ const PrivateLayoutVerticalRouteChildren: PrivateLayoutVerticalRouteChildren = {
     PrivateLayoutVerticalsaleFeeStructuresRoute,
   PrivateLayoutVerticalsaleInstallmentsRoute:
     PrivateLayoutVerticalsaleInstallmentsRoute,
+  PrivateLayoutVerticalsaleMobileOperationsRoute:
+    PrivateLayoutVerticalsaleMobileOperationsRoute,
   PrivateLayoutVerticalsalePaymentConditionsRoute:
     PrivateLayoutVerticalsalePaymentConditionsRoute,
   PrivateLayoutVerticalsaleProductCategoriesRoute:
@@ -4225,12 +4248,12 @@ const PrivateLayoutVerticalRouteChildren: PrivateLayoutVerticalRouteChildren = {
   PrivateLayoutVerticaluserProfileRoute: PrivateLayoutVerticaluserProfileRoute,
   PrivateLayoutVerticaluserRolesRoute: PrivateLayoutVerticaluserRolesRoute,
   PrivateLayoutVerticaluserUsersRoute: PrivateLayoutVerticaluserUsersRoute,
-  PrivateLayoutVerticalsaleOperationsMobileOperationsRoute:
-    PrivateLayoutVerticalsaleOperationsMobileOperationsRoute,
   PrivateLayoutVerticalstudentFrequentsIdRoute:
     PrivateLayoutVerticalstudentFrequentsIdRoute,
   PrivateLayoutVerticalsaleOperationsIndexRoute:
     PrivateLayoutVerticalsaleOperationsIndexRoute,
+  PrivateLayoutVerticalsalePurchasesIndexRoute:
+    PrivateLayoutVerticalsalePurchasesIndexRoute,
   PrivateLayoutVerticalstudentFrequentsIndexRoute:
     PrivateLayoutVerticalstudentFrequentsIndexRoute,
 }

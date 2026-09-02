@@ -9,11 +9,12 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import AccountingEntryDelete from './AccountingEntryDelete'
 import type { AccountingEntryType } from './AccountingEntry.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 const AccountingEntryTable: FC<CommonTableProps> = (props) => {
   const { t, i18n } = useTranslation()
 
-  const columns = useMemo<ColumnDef<AccountingEntryType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, AccountingEntryType>[]>(
     () => [
       {
         accessorKey: 'operationDate',

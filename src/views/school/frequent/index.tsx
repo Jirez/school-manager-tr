@@ -198,7 +198,7 @@ const Frequents = () => {
         </CardTitle>
         <CardBody className="!p-0 mt-0">
           {isMount && (
-            <CustomTable modal={modal} table={table} loading={loading} />
+            <CustomTable modal={modal} table={table as any} loading={loading} />
           )}
         </CardBody>
       </div>

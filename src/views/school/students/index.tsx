@@ -21,20 +21,18 @@ const Students = () => {
 
   useTitle(t('sidebar.students'))
 
-  const { data, error, loading, subscribeToMore, refetch } =
-    useUnregisteredStudentsQuery({
-      variables: { id: enterpriseId },
-      fetchPolicy: 'no-cache',
-      pollInterval: 0,
-    })
+  const { data, error, loading, refetch } = useUnregisteredStudentsQuery({
+    variables: { id: enterpriseId },
+    fetchPolicy: 'no-cache',
+    pollInterval: 0,
+  })
 
   const { columns } = useTableColumns(modal, refetch)
 
-  const { table, globalFilter, setGlobalFilter, totalCount, setRowSelection } =
-    useTable<any>({
-      data: data?.students || [],
-      columns,
-    })
+  const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
+    data: data?.students || [],
+    columns,
+  })
 
   useMount(() => {
     setMount(true)
@@ -60,7 +58,7 @@ const Students = () => {
       {/* Table here */}
       <div className="!text-sm">
         {isMount && (
-          <CustomTable table={table} modal={modal} loading={loading} />
+          <CustomTable table={table as any} modal={modal} loading={loading} />
         )}
       </div>
     </div>

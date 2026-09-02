@@ -9,11 +9,12 @@ import type { ProductCategoryType } from './product.category.type'
 import ProductCategoryDelete from './ProductCategoryDelete'
 import { Tag, Layers, FileText, CheckCircle } from 'lucide-react'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<ProductCategoryType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, ProductCategoryType>> = useMemo(
     () => [
       {
         id: 'name',

@@ -145,9 +145,13 @@ const Products = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ products }) => (
+          {() => (
             <div className="mt-1 text-sm">
-              <CustomTable table={table} modal={modal} loading={loading} />
+              <CustomTable
+                table={table as any}
+                modal={modal}
+                loading={loading}
+              />
             </div>
           )}
         </LiveView>

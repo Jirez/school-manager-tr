@@ -13,6 +13,7 @@ import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type { UserType } from './User.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import { useUserToggleStatusMutation } from '@/gql/graphql'
+import type { AppFeatures } from '#/hooks/table'
 
 interface UserTableProps extends CommonTableProps {}
 
@@ -20,7 +21,7 @@ const UserTable: FC<UserTableProps> = (props) => {
   const { t } = useTranslation()
   const [toggle, { loading }] = useUserToggleStatusMutation()
 
-  const columns = useMemo<ColumnDef<UserType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, UserType>[]>(
     () => [
       {
         accessorKey: 'username',

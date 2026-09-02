@@ -9,11 +9,12 @@ import type { AccountModelType } from './AccountModel.type'
 import { Hash, Globe, Tag, CheckCircle, Star } from 'lucide-react'
 import { SkuText } from '@/@core/components/ui/table/table.style'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<AccountModelType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, AccountModelType>> = useMemo(
     () => [
       {
         id: 'code',

@@ -2,8 +2,8 @@ import type { GlobalFilterApi } from '@/@core/components/base-table/base-react-t
 import QuickFilter from '@/@core/components/base-table/quick-filter'
 import Loader from '@/@core/components/spinner/loader'
 import ErrorComponent from '@/@core/components/ui/error-component'
-import type { HeaderGroup, Row, RowData, Table } from '@tanstack/react-table'
-import { flexRender } from '@tanstack/react-table'
+import type { RowData, ReactTable } from '@tanstack/react-table'
+// import { flexRender } from '@tanstack/react-table'
 import React from 'react'
 import { Table as BootstrapTable } from 'reactstrap'
 import Button from '@/@core/components/button'
@@ -15,7 +15,7 @@ import { ChevronUp, ChevronDown, Plus, Search } from 'lucide-react'
 
 type TableGroup = 'center' | 'left' | 'right'
 
-function getTableHeaderGroups<T extends RowData>(
+/* function getTableHeaderGroups<T extends RowData>(
   table: Table<T>,
   tg?: TableGroup,
 ): [HeaderGroup<T>[], HeaderGroup<T>[]] {
@@ -32,17 +32,17 @@ function getTableHeaderGroups<T extends RowData>(
   }
 
   return [table.getHeaderGroups(), table.getFooterGroups()]
-}
+} */
 
-function getRowGroup<T extends RowData>(row: Row<T>, tg?: TableGroup) {
+/* function getRowGroup<T extends RowData>(row: Row<T>, tg?: TableGroup) {
   if (tg === 'left') return row.getLeftVisibleCells()
   if (tg === 'right') return row.getRightVisibleCells()
   if (tg === 'center') return row.getCenterVisibleCells()
   return row.getVisibleCells()
-}
+} */
 
 type Props<T extends RowData> = {
-  table: Table<T>
+  table: ReactTable<any, T>
   tableGroup?: TableGroup
   onRowClicked?: (row: T) => void
   loading?: boolean
@@ -56,19 +56,17 @@ type Props<T extends RowData> = {
 
 export function CustomTable<T extends RowData>({
   table,
-  tableGroup,
   onRowClicked,
   loading = false,
-  onGlobalFilterChanged,
   showQuickFilter,
   showAddButton,
   onAddButtonClick,
   modal,
   serverOperations = false,
 }: Props<T>) {
-  const [headerGroups] = getTableHeaderGroups(table, tableGroup)
+  // const [headerGroups] = getTableHeaderGroups(table, tableGroup)
   const [globalFilter, setGlobalFilter] = React.useState('')
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   // Sort indicator component
   const SortIndicator = ({ direction }: { direction: string | false }) => {
@@ -118,7 +116,7 @@ export function CustomTable<T extends RowData>({
               responsive
             >
               <thead>
-                {headerGroups.map((headerGroup) => (
+                {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
                     className="
@@ -153,9 +151,11 @@ export function CustomTable<T extends RowData>({
                                 : 'text-left'
                             }
                           `}
-                          style={{
-                            width: header.getSize(),
-                          }}
+                          style={
+                            {
+                              // width: header.getSize(),
+                            }
+                          }
                           colSpan={header.colSpan}
                         >
                           {header.isPlaceholder ? null : (
@@ -171,7 +171,7 @@ export function CustomTable<T extends RowData>({
                               `}
                               onClick={header.column.getToggleSortingHandler()}
                             >
-                              <span
+                              {/* <span
                                 className={
                                   meta?.align === 'right' ? '' : 'flex-1'
                                 }
@@ -180,7 +180,8 @@ export function CustomTable<T extends RowData>({
                                   header.column.columnDef.header,
                                   header.getContext(),
                                 )}
-                              </span>
+                              </span> */}
+                              <table.FlexRender header={header} />
                               <SortIndicator
                                 direction={header.column.getIsSorted()}
                               />
@@ -196,8 +197,8 @@ export function CustomTable<T extends RowData>({
                               cursor-col-resize
                               transition-colors
                             "
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
+                            // onMouseDown={header.getResizeHandler()}
+                            // onTouchStart={header.getResizeHandler()}
                           />
                         </th>
                       )
@@ -221,7 +222,7 @@ export function CustomTable<T extends RowData>({
                     `}
                     onClick={() => onRowClicked?.(row.original)}
                   >
-                    {getRowGroup(row, tableGroup).map((cell) => {
+                    {row.getAllCells().map((cell) => {
                       const meta = cell.column.columnDef.meta as any
                       const alignment =
                         meta?.align === 'right'
@@ -241,14 +242,17 @@ export function CustomTable<T extends RowData>({
                             font-medium
                             ${alignment}
                           `}
-                          style={{
-                            width: cell.column.getSize(),
-                          }}
+                          style={
+                            {
+                              // width: cell.column.getSize(),
+                            }
+                          }
                         >
-                          {flexRender(
+                          {/* {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
-                          )}
+                          )} */}
+                          <table.FlexRender cell={cell} />
                         </td>
                       )
                     })}

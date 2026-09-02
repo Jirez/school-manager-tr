@@ -10,6 +10,7 @@ import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import EvalTypeDelete from './EvaltypeDelete'
 import type { EvalTypeType } from './evaltype.type'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked?: (row: any) => void
@@ -19,7 +20,7 @@ interface Props extends CommonTableProps {
 const EvalTypeTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<EvalTypeType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, EvalTypeType>[]>(
     () => [
       {
         accessorKey: 'name',

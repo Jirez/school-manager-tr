@@ -64,8 +64,8 @@ const SpecialAccounts = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ specialAccounts }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

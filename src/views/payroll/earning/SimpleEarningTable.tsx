@@ -5,6 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import type { EarningType } from './earning.type'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -15,7 +16,7 @@ interface Props extends CommonTableProps {
 const SimpleEarningTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<EarningType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, EarningType>[]>(
     () => [
       {
         header: `${t('label-name')}`,

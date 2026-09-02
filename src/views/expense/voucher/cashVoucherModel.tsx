@@ -26,13 +26,14 @@ import {
   AlignLeft,
 } from 'lucide-react'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler, refetch?: any) {
   const { t } = useTranslation()
   const [approve] = useCashVoucherApproveMutation()
   const { username } = useAuthentication()
 
-  const columns: Array<ColumnDef<CashVoucherType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, CashVoucherType>> = useMemo(
     () => [
       {
         id: 'number',

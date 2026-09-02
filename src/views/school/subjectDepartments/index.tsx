@@ -76,8 +76,8 @@ const SubjectDepartments = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ subjectDepartments }) => (
-            <CustomTable table={table} loading={loading} modal={modal} />
+          {() => (
+            <CustomTable table={table as any} loading={loading} modal={modal} />
           )}
         </LiveView>
       </div>

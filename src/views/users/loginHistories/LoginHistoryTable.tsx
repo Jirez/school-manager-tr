@@ -8,6 +8,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { showDisplayedRowCount } from '@/utils/helpers'
 import LoginHistoriesDelete from './LoginHistoriesDelete'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 type TLoginHistory = {
   user: {
@@ -31,7 +32,7 @@ const LoginHistoryTable: FC<CommonTableProps> = (props) => {
   const [checkedRows, setCheckedRows] = useState<any[]>([])
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TLoginHistory>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TLoginHistory>[]>(
     () => [
       {
         accessorFn: (row) => row.user.username,

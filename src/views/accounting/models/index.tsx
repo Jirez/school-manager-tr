@@ -60,8 +60,8 @@ const AccountModels = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ accountModels }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

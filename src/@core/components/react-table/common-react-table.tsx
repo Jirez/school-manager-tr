@@ -7,16 +7,10 @@ import type {
   RowSelectionState,
   OnChangeFn,
   ColumnDef,
-  VisibilityState,
+  // VisibilityState,
 } from '@tanstack/react-table'
-import {
-  getCoreRowModel,
-  getSortedRowModel,
-  getPaginationRowModel,
-  getFilteredRowModel,
-  useReactTable,
-  flexRender,
-} from '@tanstack/react-table'
+import { flexRender } from '@tanstack/react-table'
+import { useAppTable, type AppFeatures } from '@/hooks/table'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useKeyPress, useMount, useUpdateEffect } from 'ahooks'
 import { useTranslation } from 'react-i18next'
@@ -134,16 +128,16 @@ const StyledTable = styled.table`
 `
 
 export interface TableProps {
-  columns: any[] // ColumnDef<typeof table.generics>[]
+  columns: ColumnDef<AppFeatures, any>[]
   data: any[]
   onGlobalFilterChanged?: (filterApi: GlobalFilterApi) => void
   onModelUpdate?: (rows: any[], preGlobalFilteredRows: any[]) => void
   showCheckbox?: boolean
-  hiddenColumns?: VisibilityState
+  hiddenColumns?: any // VisibilityState
   showQuickFilter?: boolean
   showAddButton?: boolean
   onAddButtonClick?: () => void
-  globalFilterFn?: FilterFnOption<any, any>
+  globalFilterFn?: FilterFnOption<AppFeatures, any>
   modal?: NiceModalHandler
   onRowClicked?: (rowData: any) => void
   onRowSelected?: (data: any[]) => void // when checkbox are selected
@@ -183,7 +177,7 @@ const CommonTable: React.FC<TableProps> = ({
     {},
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>(hiddenColumns)
+    React.useState<any>(hiddenColumns)
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: pageSize || Number(localStorage.getItem('PageSize')) || 15,
@@ -211,7 +205,7 @@ const CommonTable: React.FC<TableProps> = ({
     }, 0)
   }
 
-  const checkboxColumn: ColumnDef<any, any> = {
+  const checkboxColumn: ColumnDef<AppFeatures, any> = {
     id: 'selection',
     header: ({ table }) => (
       <IndeterminateCheckbox
@@ -248,7 +242,7 @@ const CommonTable: React.FC<TableProps> = ({
     enableHiding: false,
   }
 
-  const table = useReactTable({
+  const table = useAppTable({
     data,
     columns: showCheckbox ? [checkboxColumn, ...columns] : columns,
     state: {
@@ -264,12 +258,6 @@ const CommonTable: React.FC<TableProps> = ({
     onPaginationChange: setPagination,
     onRowSelectionChange: serverOperations ? setRowSelection : setRowSelection1,
     onColumnVisibilityChange: setColumnVisibility,
-    // Pipeline
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    //
     manualSorting: serverOperations,
     manualPagination: serverOperations,
     manualFiltering: serverOperations,
@@ -281,7 +269,7 @@ const CommonTable: React.FC<TableProps> = ({
     dispatchSorting([])
   })
 
-  const rows = table.getPrePaginationRowModel().rows
+  const rows = table.getPrePaginatedRowModel().rows
 
   useUpdateEffect(() => {
     onModelUpdate?.(rows, [])
@@ -550,7 +538,7 @@ const CommonTable: React.FC<TableProps> = ({
         )}
 
         {!serverOperations && table.getRowModel().rows.length > 0 && (
-          <TablePagination table={table} />
+          <TablePagination table={table as any} />
         )}
       </StyledTableContainer>
     </>

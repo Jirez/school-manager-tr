@@ -11,11 +11,12 @@ import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import type { CompetenceType } from './competence.type'
 import CompetenceDelete from './CompetenceDelete'
+import type { AppFeatures } from '#/hooks/table'
 
 const CompetenceTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<CompetenceType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, CompetenceType>[]>(
     () => [
       {
         accessorKey: 'numberOrder',

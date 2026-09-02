@@ -37,6 +37,7 @@ import {
   TypeBadge,
   CompactDate,
 } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -92,7 +93,7 @@ export function useTableColumns(
     }
   }
 
-  const columns = useMemo<ColumnDef<InvoiceType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, InvoiceType>[]>(
     () => [
       {
         id: 'operationDate',

@@ -9,6 +9,7 @@ import CommonTable from '@/@core/components/react-table/common-react-table'
 import type { TuitionType } from './tuition.type'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 const NameContainer = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ interface Props extends CommonTableProps {
 const TuitionTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TuitionType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TuitionType>[]>(
     () => [
       {
         id: 'numberOrder',

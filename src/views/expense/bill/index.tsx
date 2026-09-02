@@ -66,14 +66,13 @@ const Bills = () => {
 
   const period = methods.watch('period') || []
 
-  const { data, error, refetch, loading, subscribeToMore } =
-    useVendorOperationsQuery({
-      variables: {
-        id: enterpriseId,
-        startDate: dayjs().add(-30, 'days').format(INPUT_DATE_FORMAT),
-        endDate: dayjs().format(INPUT_DATE_FORMAT),
-      },
-    })
+  const { data, error, refetch, loading } = useVendorOperationsQuery({
+    variables: {
+      id: enterpriseId,
+      startDate: dayjs().add(-30, 'days').format(INPUT_DATE_FORMAT),
+      endDate: dayjs().format(INPUT_DATE_FORMAT),
+    },
+  })
 
   const { columns } = useTableColumns(modal, refetch)
 
@@ -196,7 +195,11 @@ const Bills = () => {
               paidCount={paymentInfo?.paidCount || 0}
             />
             <div className="mt-1 text-[0.8rem]">
-              <CustomTable table={table} modal={modal} loading={loading} />
+              <CustomTable
+                table={table as any}
+                modal={modal}
+                loading={loading}
+              />
             </div>
           </>
         )}

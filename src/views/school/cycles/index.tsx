@@ -60,8 +60,8 @@ const Cycles = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ cycles }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

@@ -8,6 +8,7 @@ import { showDisplayedRowCount } from '@/utils/helpers'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import SubjectGroupDelete from '@/views/school/subjectGroups/SubjectGroupDelete'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 type TSubjectGroup = {
   branch: {
@@ -20,7 +21,7 @@ type TSubjectGroup = {
 const SubjectGroupTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TSubjectGroup>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TSubjectGroup>[]>(
     () => [
       {
         accessorFn: (row) => row.branch.name,

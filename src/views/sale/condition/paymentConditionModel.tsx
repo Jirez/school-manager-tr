@@ -6,11 +6,12 @@ import { useMemo } from 'react'
 import PaymentConditionDelete from './PaymentConditionDelete'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { PaymentConditionType } from './payment.condition.type'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<PaymentConditionType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, PaymentConditionType>> = useMemo(
     () => [
       {
         header: `${t('label-name')}`,

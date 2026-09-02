@@ -18,11 +18,12 @@ import {
   SkuText,
   PriceText,
 } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<BranchType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, BranchType>> = useMemo(
     () => [
       {
         id: 'name',

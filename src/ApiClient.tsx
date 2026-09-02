@@ -16,7 +16,7 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { setContext } from '@apollo/client/link/context'
 
-import possibleTypes from './possibleTypes.json'
+// import possibleTypes from './possibleTypes.json'
 import TokenStorage from '@/utils/TokenStorage'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
@@ -90,7 +90,7 @@ export const authenticationVar: ReactiveVar<AuthenticationType> = makeVar(
 )
 
 const cache = new InMemoryCache({
-  possibleTypes,
+  // possibleTypes,
   typePolicies: {
     Query: {
       fields: {
@@ -122,16 +122,6 @@ function configureApolloClient(config?: TConfiguration) {
     uri: `${config?.httpProtocol}://${config?.serverAddress}:${config?.serverPort}/graphql`,
     // credentials: 'same-origin'
   })
-
-  /*  const wsLink = new WebSocketLink({
-         uri: `${config?.wsProtocol}://${config?.serverAddress}:${config?.serverPort}/school-manager/subscriptions`,
-         options: {
-             reconnect: true,
-             connectionParams: {
-                 authToken: TokenStorage.read(),
-             }
-         }
-     }); */
 
   const wsLink = new GraphQLWsLink(
     createClient({

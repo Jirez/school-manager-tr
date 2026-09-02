@@ -7,11 +7,12 @@ import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import OfficialFunctionDelete from './OfficialFunctionDelete'
 import type { OfficialFunctionType } from './OfficialFunction.type'
 import { Type, Hash, FileText, Activity } from 'lucide-react'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<OfficialFunctionType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, OfficialFunctionType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

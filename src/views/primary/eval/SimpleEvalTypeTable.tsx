@@ -8,6 +8,7 @@ import { showDisplayedRowCount } from '@/utils/helpers'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import type { EvalTypeType } from './evaltype.type'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -18,7 +19,7 @@ interface Props extends CommonTableProps {
 const SimpleEvalTypeTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<EvalTypeType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, EvalTypeType>[]>(
     () => [
       {
         accessorKey: 'name',

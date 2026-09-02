@@ -16,6 +16,7 @@ import { toast } from 'react-toastify'
 import { formatError } from '@/utils/ErrorHelper'
 import Avatar from '@/@core/components/avatar'
 import { FileText, Wallet, CreditCard, Clock, ChevronDown } from 'lucide-react'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -120,7 +121,7 @@ export function useTableColumns(
     }
   }
 
-  const columns = useMemo<ColumnDef<MobileOperationType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, MobileOperationType>[]>(
     () => [
       {
         header: `${t('label-date')}`,

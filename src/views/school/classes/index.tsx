@@ -60,7 +60,7 @@ const Classes = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ clazzes }) => <CustomTable table={table} modal={modal} />}
+          {() => <CustomTable table={table as any} modal={modal} />}
         </LiveView>
       </div>
     </Scrollbar>

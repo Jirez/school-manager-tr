@@ -11,11 +11,12 @@ import type { RoleType } from '@/views/users/role/role.type'
 import Avatar from '@/@core/components/avatar'
 import { Shield, ShieldCheck, FileText } from 'lucide-react'
 import { Badge } from 'reactstrap'
+import type { AppFeatures } from '#/hooks/table'
 
 const RoleTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<RoleType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, RoleType>[]>(
     () => [
       {
         header: `${t('label-name')}`,

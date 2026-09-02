@@ -9,11 +9,12 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import PayrollPeriodDelete from './PayrollPeriodDelete'
 import type { PayrollPeriodType } from './payroll.period.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 const PayrollPeriodTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<PayrollPeriodType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, PayrollPeriodType>[]>(
     () => [
       {
         accessorFn: (row) => row.exercise.designation,

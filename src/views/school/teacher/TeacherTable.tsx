@@ -7,6 +7,7 @@ import { concat, showDisplayedRowCount } from '@/utils/helpers'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type TeacherType from './Teacher.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -15,7 +16,7 @@ interface Props extends CommonTableProps {
 const TeacherTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TeacherType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TeacherType>[]>(
     () => [
       {
         accessorFn: (row) => `${row.lastName} ${row.firstName}`,

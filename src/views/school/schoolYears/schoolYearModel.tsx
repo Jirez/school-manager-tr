@@ -1,32 +1,27 @@
-import type { ColumnDef } from "@tanstack/react-table";
-import { useTranslation } from "react-i18next";
-import type { SchoolYearType } from "./SchoolYear.type";
-import SchoolYearDelete from "./SchoolYearDelete";
-import ActiveRenderer from "@/@core/components/base-table/active-renderer";
-import ActionRenderer from "@/@core/components/base-table/action-renderer";
-import type { NiceModalHandler } from "@ebay/nice-modal-react";
-import { useMemo } from "react";
-import dayjs from "dayjs";
-import {
-  Calendar,
-  Tag,
-  Archive,
-  Hash,
-  Activity,
-} from "lucide-react";
-import { SkuText, CompactDate } from "@/@core/components/ui/table/table.style";
+import type { ColumnDef } from '@tanstack/react-table'
+import { useTranslation } from 'react-i18next'
+import type { SchoolYearType } from './SchoolYear.type'
+import SchoolYearDelete from './SchoolYearDelete'
+import ActiveRenderer from '@/@core/components/base-table/active-renderer'
+import ActionRenderer from '@/@core/components/base-table/action-renderer'
+import type { NiceModalHandler } from '@ebay/nice-modal-react'
+import { useMemo } from 'react'
+import dayjs from 'dayjs'
+import { Calendar, Tag, Archive, Hash, Activity } from 'lucide-react'
+import { SkuText, CompactDate } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<SchoolYearType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, SchoolYearType>> = useMemo(
     () => [
       {
-        accessorKey: "label",
+        accessorKey: 'label',
         header: () => (
           <div className="flex items-center gap-1">
             <Tag size={14} className="text-primary" />
-            {t("label-designation")}
+            {t('label-designation')}
           </div>
         ),
         cell: (info) => (
@@ -36,41 +31,41 @@ export function useTableColumns(modal?: NiceModalHandler) {
         ),
       },
       {
-        accessorKey: "startDate",
+        accessorKey: 'startDate',
         header: () => (
           <div className="flex items-center gap-1">
             <Calendar size={14} />
-            {t("label-startDate")}
+            {t('label-startDate')}
           </div>
         ),
         cell: (info) => (
           <CompactDate>
             <Calendar size={12} />
-            {dayjs(info.getValue() as string).format("DD MMM YYYY")}
+            {dayjs(info.getValue() as string).format('DD MMM YYYY')}
           </CompactDate>
         ),
       },
       {
-        accessorKey: "endDate",
+        accessorKey: 'endDate',
         header: () => (
           <div className="flex items-center gap-1">
             <Calendar size={14} />
-            {t("label-endDate")}
+            {t('label-endDate')}
           </div>
         ),
         cell: (info) => (
           <CompactDate>
             <Calendar size={12} />
-            {dayjs(info.getValue() as string).format("DD MMM YYYY")}
+            {dayjs(info.getValue() as string).format('DD MMM YYYY')}
           </CompactDate>
         ),
       },
       {
-        accessorKey: "current",
+        accessorKey: 'current',
         header: () => (
           <div className="flex items-center gap-1 justify-center w-full">
             <Activity size={14} />
-            {t("label-default")}
+            {t('label-default')}
           </div>
         ),
         cell: (info) => (
@@ -85,11 +80,11 @@ export function useTableColumns(modal?: NiceModalHandler) {
         size: 100,
       },
       {
-        accessorKey: "archived",
+        accessorKey: 'archived',
         header: () => (
           <div className="flex items-center gap-1 justify-center w-full">
             <Archive size={14} />
-            {t("label-archived")}
+            {t('label-archived')}
           </div>
         ),
         cell: (info) => (
@@ -104,7 +99,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         size: 100,
       },
       {
-        accessorKey: "id",
+        accessorKey: 'id',
         header: () => (
           <div className="flex items-center gap-1 justify-center w-full">
             <Hash size={14} />
@@ -119,9 +114,9 @@ export function useTableColumns(modal?: NiceModalHandler) {
         size: 80,
       },
       {
-        id: "actions",
+        id: 'actions',
         header: () => (
-          <div className="text-right w-full">{t("label-actions")}</div>
+          <div className="text-right w-full">{t('label-actions')}</div>
         ),
         cell: (info) => (
           <div className="flex justify-end">
@@ -137,8 +132,8 @@ export function useTableColumns(modal?: NiceModalHandler) {
         size: 80,
       },
     ],
-    [modal, t]
-  );
+    [modal, t],
+  )
 
-  return { columns };
+  return { columns }
 }

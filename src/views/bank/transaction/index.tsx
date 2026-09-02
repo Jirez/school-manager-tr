@@ -66,8 +66,8 @@ const BankTransactions = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ bankTransactions }) => (
-            <CustomTable modal={modal} table={table} loading={loading} />
+          {() => (
+            <CustomTable modal={modal} table={table as any} loading={loading} />
           )}
         </LiveView>
       </div>

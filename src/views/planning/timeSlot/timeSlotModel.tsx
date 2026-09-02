@@ -8,6 +8,7 @@ import { Coffee, Settings, Type, Timer, TimerOff, Activity } from 'lucide-react'
 import TimeSlotDelete from './TimeSlotDelete'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { TimeSlotType } from './time.slot.type'
+import type { AppFeatures } from '#/hooks/table'
 
 const TimeCell = ({ value, icon: Icon }: { value: string; icon: any }) => (
   <div className="flex items-center gap-2">
@@ -21,7 +22,7 @@ const TimeCell = ({ value, icon: Icon }: { value: string; icon: any }) => (
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<TimeSlotType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, TimeSlotType>> = useMemo(
     () => [
       {
         header: () => (

@@ -15,14 +15,14 @@ import {
   Activity,
   Hash,
   CheckCircle,
-  Type,
 } from 'lucide-react'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<TeacherType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, TeacherType>> = useMemo(
     () => [
       {
         accessorFn: (row) => `${row.lastName} ${row.firstName}`,
@@ -42,8 +42,8 @@ export function useTableColumns(modal?: NiceModalHandler) {
 
           return (
             <TextWithAvatar
-              letter={name!.charAt(0)}
-              title={name!}
+              letter={name?.charAt(0)}
+              title={name}
               subtitle={registrationNumber}
               titleClassName="!font-semibold"
             />
@@ -62,7 +62,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         cell: (info) => (
           <div className="flex justify-center">
             <span className="font-bold text-gray-800 dark:text-gray-200 uppercase">
-              {(info.getValue() as string).charAt(0)}
+              {(info.getValue() as string)?.charAt(0)}
             </span>
           </div>
         ),

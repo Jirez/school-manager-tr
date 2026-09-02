@@ -7,11 +7,12 @@ import type { FeeGroupType } from './fee.group.type'
 import FeeGroupDelete from './FeeGroupDelete'
 import { Type, Users, Globe, Settings, Hash, AlertCircle } from 'lucide-react'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<FeeGroupType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, FeeGroupType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

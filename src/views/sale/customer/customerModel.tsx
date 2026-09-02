@@ -13,6 +13,7 @@ import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type { CustomerType } from './customer.type'
 import CustomerDelete from './CustomerDelete'
 import { User, Phone, Mail, MapPin, CheckCircle } from 'lucide-react'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -20,7 +21,7 @@ export function useTableColumns(
 ) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<CustomerType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, CustomerType>> = useMemo(
     () => [
       {
         id: 'name',

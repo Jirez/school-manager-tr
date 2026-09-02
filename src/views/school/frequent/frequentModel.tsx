@@ -48,6 +48,7 @@ import {
   AgeBadge,
 } from '@/@core/components/ui/table/table.style'
 import FrequentExcludeModal from './FrequentExcludeModal'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -74,7 +75,7 @@ export function useTableColumns(
 
   const excludeModal = useModal(FrequentExcludeModal)
 
-  const columns: Array<ColumnDef<any>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, any>> = useMemo(
     () => [
       {
         accessorFn: (row) => `${row.fullName} ${row.registrationNumber}`,
@@ -421,7 +422,9 @@ export function useTableColumns(
               <MyMenuItem
                 label={t('label-see')}
                 onClick={() =>
-                  navigate(`/frequents/${original.frequentPK.studentId}`)
+                  navigate({
+                    to: `/frequents/${original.frequentPK.studentId}`,
+                  })
                 }
                 icon={<Eye size={14} className="text-info" />}
               />

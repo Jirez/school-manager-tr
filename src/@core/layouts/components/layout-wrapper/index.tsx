@@ -82,7 +82,7 @@ const LayoutWrapper = (props: any) => {
       <div className="header-navbar-shadow" />
       <div
         className={classnames({
-          'content-wrapper': routeMeta && !routeMeta.appLayout,
+          'content-wrapper': !routeMeta || !routeMeta.appLayout,
           'content-area-wrapper': routeMeta && routeMeta.appLayout,
           'container-xxl p-0': contentWidth === 'boxed',
           [`animate__animated animate__${transition}`]:

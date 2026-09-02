@@ -8,11 +8,12 @@ import PeriodDelete from './PeriodDelete'
 import type { PeriodType } from './Period.type'
 import { Calendar, Tag, Hash, Layers, ListOrdered } from 'lucide-react'
 import { SkuText, CompactDate } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<PeriodType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, PeriodType>> = useMemo(
     () => [
       {
         accessorKey: 'numberOrder',

@@ -3,10 +3,10 @@ import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import type {
-  relationOptions,
   StudentGuardian,
   StudentType,
 } from '@/views/school/students/Student.type'
+import { relationOptions } from '@/views/school/students/Student.type'
 import Input from '@/@core/components/ui/forms/input'
 import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import Switch from '@/@core/components/ui/forms/swith'

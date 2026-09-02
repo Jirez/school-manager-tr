@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import styled from 'styled-components'
 import { SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 const ManagerText = styled.span`
   display: flex;
@@ -32,7 +33,7 @@ const ManagerText = styled.span`
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<DepartmentType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, DepartmentType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

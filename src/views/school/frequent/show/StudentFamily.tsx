@@ -1,3 +1,4 @@
+import type { AppFeatures } from '#/hooks/table'
 import GraphQLError from '@/@core/components/errors/graphql-error'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import { useGuardiansOfStudentQuery } from '@/gql/graphql'
@@ -23,7 +24,7 @@ const StudentFamily: React.FC<Props> = ({ id, ...props }) => {
     skip: !id,
   })
 
-  const columns = useMemo<ColumnDef<StudentFamilyType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, StudentFamilyType>[]>(
     () => [
       {
         header: `${t('label-name')}`,

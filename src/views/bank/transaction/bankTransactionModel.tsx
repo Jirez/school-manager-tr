@@ -6,11 +6,12 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
 import { toCurrency } from '@/utils/helpers'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<BankTransactionType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, BankTransactionType>> = useMemo(
     () => [
       {
         header: () => t('label-transactionNumber'),

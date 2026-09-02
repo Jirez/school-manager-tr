@@ -1,6 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
-import type { NiceModalHandler, useModal } from '@ebay/nice-modal-react'
+import { useModal } from '@ebay/nice-modal-react'
+import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
 import MyDropdown, {
   DeleteMenuItem,
@@ -32,6 +33,7 @@ import {
   TypeBadge,
   CompactDate,
 } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -87,7 +89,7 @@ export function useTableColumns(
     }
   }
 
-  const columns = useMemo<ColumnDef<BillType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, BillType>[]>(
     () => [
       {
         id: 'operationDate',

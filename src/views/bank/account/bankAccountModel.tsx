@@ -5,11 +5,12 @@ import BankAccountDelete from './BankAccountDelete'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<BankAccountType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, BankAccountType>> = useMemo(
     () => [
       {
         header: () => t('label-name'),

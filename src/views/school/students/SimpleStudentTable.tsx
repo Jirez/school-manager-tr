@@ -8,6 +8,7 @@ import { concat } from '@/utils/helpers'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type { TStudent } from './StudentTable'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -18,7 +19,7 @@ const SimpleStudentTable: FC<Props> = (props) => {
   const [currentRows, setCurrentRows] = useState<number>(0)
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TStudent>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TStudent>[]>(
     () => [
       {
         accessorKey: 'registrationNumber',

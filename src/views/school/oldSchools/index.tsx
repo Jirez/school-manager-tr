@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Card } from 'reactstrap'
 import { useModal } from '@ebay/nice-modal-react'
 import type { GlobalFilterApi } from '@/@core/components/base-table/base-react-table'
 import { useAuthentication } from '@/hooks/useAuthentication'
@@ -45,7 +44,7 @@ const OldSchools = () => {
       />
 
       {/* Table here */}
-      <Card className="text-sm">
+      <div className="text-sm">
         <LiveView
           document={OldSchoolCreatedDocument}
           data={data}
@@ -65,7 +64,7 @@ const OldSchools = () => {
             />
           )}
         </LiveView>
-      </Card>
+      </div>
     </Scrollbar>
   )
 }

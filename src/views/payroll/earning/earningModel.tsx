@@ -18,11 +18,12 @@ import {
   Hash,
 } from 'lucide-react'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<EarningType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, EarningType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

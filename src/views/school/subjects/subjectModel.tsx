@@ -7,11 +7,12 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<Subject>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, Subject>> = useMemo(
     () => [
       {
         accessorKey: 'name',

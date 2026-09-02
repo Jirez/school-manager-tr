@@ -60,8 +60,8 @@ const Periods = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ periods }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

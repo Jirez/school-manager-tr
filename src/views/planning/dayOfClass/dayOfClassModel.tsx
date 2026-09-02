@@ -8,6 +8,7 @@ import { Calendar, Timer, TimerOff, Activity, Settings } from 'lucide-react'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { DayOfClassType } from './day.of.class.type'
 import DayOfClassDelete from './DayOfClassDelete'
+import type { AppFeatures } from '#/hooks/table'
 
 const TimeCell = ({ value, icon: Icon }: { value?: string; icon: any }) => (
   <div className="flex items-center gap-2">
@@ -21,7 +22,7 @@ const TimeCell = ({ value, icon: Icon }: { value?: string; icon: any }) => (
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<DayOfClassType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, DayOfClassType>> = useMemo(
     () => [
       {
         header: () => (

@@ -1,42 +1,38 @@
 //'use no memo'
 import { useState } from 'react'
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  type FilterFnOption,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getGroupedRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type GroupingState,
-  type PaginationState,
-  type TableOptions,
-  type TableState,
-  useReactTable,
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  FilterFn,
+  PaginationState,
+  RowData,
+  RowSelectionState,
+  TableOptions,
+  TableState,
+  ColumnVisibilityState,
 } from '@tanstack/react-table'
+import { useAppTable, type AppFeatures } from '#/hooks/table'
 import checkboxColumn from '@/@core/components/react-table/checkbox-column'
 import { matchWord } from '@/utils/SearchFn'
 
-export interface UseTableOptions<TData> extends Partial<TableOptions<TData>> {
+export interface UseTableOptions<TData extends RowData> extends Partial<
+  TableOptions<AppFeatures, TData>
+> {
   enableColumnResizing?: boolean
   columnResizeMode?: 'onChange' | 'onEnd'
   debugTable?: boolean
   debugHeaders?: boolean
   debugColumns?: boolean
-  initialState?: Partial<TableState>
+  initialState?: Partial<TableState<AppFeatures>>
   showCheckbox?: boolean
-  globalFilterFn?: FilterFnOption<any>
+  globalFilterFn?: FilterFn<AppFeatures, TData>
   pageSize?: number
 }
 
-export function useTable<TData>(
+export function useTable<TData extends RowData>(
   options: UseTableOptions<TData> & {
     data: TData[]
-    columns: ColumnDef<TData, any>[]
+    columns: ColumnDef<AppFeatures, TData, any>[]
   },
 ) {
   'use no memo'
@@ -50,81 +46,82 @@ export function useTable<TData>(
     debugColumns = false,
     showCheckbox = true,
     globalFilterFn = matchWord,
-    pageSize = 15,
+    pageSize,
+    initialState = {},
+    state: externalState,
     ...restOptions
   } = options
-  const [columnVisibility, setColumnVisibility] = useState({})
-  const [grouping, setGrouping] = useState<GroupingState>([])
-  const [rowSelection, setRowSelection] = useState({})
-  const [columnPinning, setColumnPinning] = useState({})
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: pageSize || Number(localStorage.getItem('PageSize')) || 15,
-  })
 
-  const table = useReactTable({
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    () => initialState.columnFilters ?? [],
+  )
+  const [globalFilter, setGlobalFilter] = useState(
+    () => initialState.globalFilter ?? '',
+  )
+  const [pagination, setPagination] = useState<PaginationState>(() => ({
+    pageIndex: initialState.pagination?.pageIndex ?? 0,
+    pageSize:
+      pageSize ??
+      getStoredPageSize() ??
+      initialState.pagination?.pageSize ??
+      15,
+  }))
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>(
+    () => initialState.rowSelection ?? {},
+  )
+  const [columnVisibility, setColumnVisibility] =
+    useState<ColumnVisibilityState>(() => initialState.columnVisibility ?? {})
+
+  const table = useAppTable({
+    ...restOptions,
     data,
-    //@ts-ignore
+    // @ts-ignore
     columns: showCheckbox ? [checkboxColumn, ...columns] : columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getGroupedRowModel: getGroupedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
+    onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: setColumnVisibility,
     enableColumnResizing,
     columnResizeMode,
-    onColumnVisibilityChange: setColumnVisibility,
-    onGroupingChange: setGrouping,
-    onColumnPinningChange: setColumnPinning,
-    onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
     globalFilterFn,
+    initialState,
     state: {
-      grouping,
+      ...externalState,
       columnFilters,
       globalFilter,
-      columnVisibility,
-      columnPinning,
-      rowSelection,
       pagination,
-      ...restOptions.initialState,
+      rowSelection,
+      columnVisibility,
     },
     debugTable,
     debugHeaders,
     debugColumns,
-    ...restOptions,
   })
 
   const totalCount = table.getFilteredRowModel().rows.length
   const selectedFlatRows = table.getSelectedRowModel().flatRows
 
-  // Optional: Add any table-specific effects here
-  /* useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === "fullName") {
-      if (table.getState().sorting[0]?.id !== "fullName") {
-        table.setSorting([{ id: "fullName", desc: false }]);
-      }
-    }
-  }, [table.getState().columnFilters[0]?.id]); */
-
   return {
     table,
     globalFilter,
     setGlobalFilter,
-    columnVisibility,
-    setColumnVisibility,
     rowSelection,
     setRowSelection,
+    columnVisibility,
+    setColumnVisibility,
     totalCount,
     columnFilters,
     setColumnFilters,
     selectedFlatRows,
   }
+}
+
+function getStoredPageSize(): number | undefined {
+  if (typeof window === 'undefined') return undefined
+
+  const storedPageSize = Number(window.localStorage.getItem('PageSize'))
+  return Number.isInteger(storedPageSize) && storedPageSize > 0
+    ? storedPageSize
+    : undefined
 }

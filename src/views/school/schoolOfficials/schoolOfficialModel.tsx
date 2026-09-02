@@ -7,11 +7,12 @@ import SchoolOfficialDelete from './SchoolOfficialDelete'
 import type { SchoolOfficialType } from './SchoolOfficial.type'
 import { Type, Mail, UserCog, Calendar } from 'lucide-react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<SchoolOfficialType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, SchoolOfficialType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

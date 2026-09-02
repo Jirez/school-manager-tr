@@ -5,14 +5,14 @@ import QuickFilter from '@/@core/components/base-table/quick-filter'
 import GridCount from '@/@core/components/base-table/grid-count'
 import { Plus, RefreshCw, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
-import type { Table } from '@tanstack/react-table'
+import type { ReactTable } from '@tanstack/react-table'
 import { useAbility } from '@/context/Can'
 import type { Subjects } from '@/configs/acl/ability'
 import styled, { css, keyframes } from 'styled-components'
 
 interface ToolbarProps {
   title: ReactNode | string
-  globalFilter: string | undefined
+  globalFilter: string | undefined | any
   setGlobalFilter?: (filter: string) => void
   setDefaultGlobalFilter?: (filter: string) => void
   actionLabel?: string
@@ -20,7 +20,7 @@ interface ToolbarProps {
   extraButton?: React.ReactNode
   totalCount?: number
   refetch?: () => void
-  table?: Table<any>
+  table?: ReactTable<any, any>
   abilitySubject?: Subjects
   isRefetching?: boolean
 }
@@ -233,7 +233,7 @@ const Toolbar: FC<ToolbarProps> = ({
   const { t } = useTranslation()
   const ability = useAbility()
   const rowCount =
-    totalCount ?? table?.getPrePaginationRowModel()?.rows.length ?? 0
+    totalCount ?? table?.getPrePaginatedRowModel()?.rows.length ?? 0
 
   const canWrite = !!abilitySubject
     ? ability.can('write', abilitySubject)

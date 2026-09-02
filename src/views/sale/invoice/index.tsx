@@ -264,7 +264,7 @@ const Invoices = () => {
             paidCount={paymentInfo?.paidCount || 0}
           />
           <TableWrapper>
-            <CustomTable table={table} modal={modal} loading={loading} />
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           </TableWrapper>
         </ContentSection>
       )}

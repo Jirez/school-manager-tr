@@ -8,11 +8,12 @@ import type { DepartmentType } from './Department.type'
 import SubjectDepartmentDelete from './SubjectDepartmentDelete'
 import { Type, Activity, Grid } from 'lucide-react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<DepartmentType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, DepartmentType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

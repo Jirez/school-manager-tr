@@ -118,7 +118,11 @@ const MobileOperations = () => {
         {isMounted && (
           <>
             <div className="mt-1 text-[0.8rem]">
-              <CustomTable table={table} modal={modal} loading={loading} />
+              <CustomTable
+                table={table as any}
+                modal={modal}
+                loading={loading}
+              />
             </div>
           </>
         )}

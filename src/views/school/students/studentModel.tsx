@@ -15,6 +15,7 @@ import {
   LocationText,
   RegistrationBadge,
 } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export type TStudent = {
   id: number
@@ -32,7 +33,7 @@ export function useTableColumns(
 ) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<TStudent>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, TStudent>> = useMemo(
     () => [
       {
         accessorFn: (row) =>

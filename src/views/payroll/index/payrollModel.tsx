@@ -31,6 +31,7 @@ import MyDropdown, {
 } from '@/@core/components/dropdown'
 import { usePayrollMarkAsPaidMutation } from '@/gql/graphql'
 import { SkuText } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 const StatusBadge = ({ status }: { status: string }) => {
   const statusConfig: Record<
@@ -128,7 +129,7 @@ export function useTableColumns(
   const receiptModal = useModal(PayrollReceiptModal)
   const [markAsPaid] = usePayrollMarkAsPaidMutation()
 
-  const columns: Array<ColumnDef<PayrollType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, PayrollType>> = useMemo(
     () => [
       {
         accessorKey: 'operationDate',

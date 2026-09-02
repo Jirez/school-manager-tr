@@ -1,4 +1,4 @@
-// ** React Imports
+import React from 'react'
 import { Link as NavLink } from '@tanstack/react-router'
 
 // ** Third Party Components
@@ -25,27 +25,21 @@ const VerticalNavMenuLink = ({ item, activeItem }: any) => {
       })}
     >
       <LinkTag
-        // @ts-ignore desc
         className="d-flex align-items-center"
         target={item.newTab ? '_blank' : undefined}
-        /*eslint-disable */
         {...(item.externalLink === true
           ? {
               href: item.navLink || '/',
             }
           : {
               to: item.navLink || '/',
-              className: ({ isActive }: any) => {
-                if (isActive && !item.disabled) {
-                  return 'd-flex align-items-center active'
-                } else {
-                  return 'd-flex align-items-center'
-                }
+              activeProps: {
+                className: 'active',
               },
             })}
-
-        onClick={(e) => {
+        onClick={(e: React.MouseEvent) => {
           if (
+            !item.navLink ||
             item.navLink.length === 0 ||
             item.navLink === '#' ||
             item.disabled === true

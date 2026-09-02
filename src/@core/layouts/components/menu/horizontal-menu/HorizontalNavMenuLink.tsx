@@ -26,37 +26,21 @@ const HorizontalNavMenuLink = ({ item, isChild, setMenuOpen }: any) => {
       })}
     >
       <LinkTag
-        // @ts-ignore desc
         className={classnames('d-flex align-items-center', {
           'dropdown-item': isChild,
           'nav-link': !isChild,
         })}
         target={item.newTab ? '_blank' : undefined}
-        /*eslint-disable */
         {...(item.externalLink === true
           ? {
               href: item.navLink || '/',
             }
           : {
               to: item.navLink || '/',
-              className: ({ isActive }: any) => {
-                const commonClass = 'd-flex align-items-center'
-                if (isActive && !item.disabled && item.navLink !== '#') {
-                  if (isChild) {
-                    return `${commonClass} dropdown-item active`
-                  } else {
-                    return `${commonClass} nav-link active`
-                  }
-                } else {
-                  if (isChild) {
-                    return `${commonClass} dropdown-item`
-                  } else {
-                    return `${commonClass} nav-link`
-                  }
-                }
+              activeProps: {
+                className: 'active',
               },
             })}
-        /* eslint-enable */
       >
         {item.icon}
         <span>{t(item.title)}</span>

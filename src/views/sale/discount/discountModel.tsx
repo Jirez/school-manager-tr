@@ -7,11 +7,12 @@ import { useMemo } from 'react'
 import { cutText } from '@/utils/helpers'
 import DiscountDelete from './DiscountDelete'
 import type { DiscountType } from './discount.type'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<DiscountType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, DiscountType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

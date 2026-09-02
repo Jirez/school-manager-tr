@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import { useModal } from '@ebay/nice-modal-react'
-import type { GlobalFilterApi } from '@/@core/components/base-table/base-react-table'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
@@ -17,7 +15,6 @@ import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 
 const Payrolls = () => {
-  const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
   const { enterpriseId } = useAuthentication()
   const modal = useModal(PayrollModal)
   const { t } = useTranslation()
@@ -70,8 +67,8 @@ const Payrolls = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ payrolls }) => (
-            <CustomTable table={table} modal={modal} loading={loading} />
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
           )}
         </LiveView>
       </div>

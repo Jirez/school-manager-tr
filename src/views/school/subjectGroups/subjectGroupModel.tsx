@@ -4,8 +4,9 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useMemo } from 'react'
 import SubjectGroupDelete from './SubjectGroupDelete'
-import { GitBranch, Layers, Hash, List } from 'lucide-react'
+import { GitBranch, Layers, Hash } from 'lucide-react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 type TSubjectGroup = {
   branch: {
@@ -18,7 +19,7 @@ type TSubjectGroup = {
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<TSubjectGroup>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, TSubjectGroup>> = useMemo(
     () => [
       {
         accessorFn: (row) => row.branch?.name,

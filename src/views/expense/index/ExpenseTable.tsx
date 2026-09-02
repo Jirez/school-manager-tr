@@ -16,11 +16,12 @@ import {
   FileText,
   MoreVertical,
 } from 'lucide-react'
+import type { AppFeatures } from '#/hooks/table'
 
 const ExpenseTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<ExpenseType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, ExpenseType>[]>(
     () => [
       {
         id: 'operationDate',

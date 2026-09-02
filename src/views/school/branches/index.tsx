@@ -59,8 +59,8 @@ const Branches = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {({ branches }) => (
-            <CustomTable modal={modal} table={table} loading={loading} />
+          {() => (
+            <CustomTable modal={modal} table={table as any} loading={loading} />
           )}
         </LiveView>
       </div>

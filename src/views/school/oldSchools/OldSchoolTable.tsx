@@ -11,6 +11,7 @@ import CommonTable from '@/@core/components/react-table/common-react-table'
 import { Building2, MapPin, Phone, Mail } from 'lucide-react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
 import styled from 'styled-components'
+import type { AppFeatures } from '#/hooks/table'
 
 const ContactText = styled.span`
   display: flex;
@@ -33,7 +34,7 @@ const ContactText = styled.span`
 const OldSchoolTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<OldSchoolType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, OldSchoolType>[]>(
     () => [
       {
         accessorKey: 'name',

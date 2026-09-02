@@ -1,5 +1,5 @@
 import ReactPaginate from 'react-paginate'
-import type { Table, RowData } from '@tanstack/react-table'
+import type { ReactTable, RowData } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import styled from 'styled-components'
@@ -114,7 +114,7 @@ const PageSizeSelector = styled.div`
 `
 
 interface TablePaginationProps<T extends RowData> {
-  table: Table<T>
+  table: ReactTable<any, T>
 }
 
 export function TablePagination<T extends RowData>({
@@ -130,7 +130,7 @@ export function TablePagination<T extends RowData>({
       <PageSizeSelector>
         <span className="hidden sm:inline">{t('Afficher')}</span>
         <select
-          value={table.getState().pagination.pageSize}
+          value={table.state.pagination.pageSize}
           onChange={(e) => {
             const size = Number(e.target.value)
             localStorage.setItem('PageSize', String(size))
@@ -154,7 +154,7 @@ export function TablePagination<T extends RowData>({
         nextLabel={<ArrowRight size={16} />}
         pageCount={table.getPageCount()}
         activeClassName="active"
-        forcePage={table.getState().pagination.pageIndex}
+        forcePage={table.state.pagination.pageIndex}
         onPageChange={(page: { selected: number }) => {
           table.setPageIndex(page.selected)
         }}

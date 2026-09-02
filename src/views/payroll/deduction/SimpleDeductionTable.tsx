@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { ColumnDef } from '@tanstack/react-table'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import type { DeductionType } from './deduction.type'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -14,7 +15,7 @@ interface Props extends CommonTableProps {
 const SimpleDeductionTable: FC<Props> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<DeductionType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, DeductionType>[]>(
     () => [
       {
         header: `${t('label-name')}`,

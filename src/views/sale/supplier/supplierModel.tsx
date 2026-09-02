@@ -13,6 +13,7 @@ import type { SupplierType } from './supplier.type'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import SupplierDelete from './SupplierDelete'
 import { User, Mail, Phone, MapPin, CheckCircle } from 'lucide-react'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(
   modal?: NiceModalHandler,
@@ -20,7 +21,7 @@ export function useTableColumns(
 ) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<SupplierType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, SupplierType>> = useMemo(
     () => [
       {
         id: 'name',

@@ -10,11 +10,12 @@ import type { ExpenseCategoryType } from './expense.category.type'
 import { Tag, Wallet, DollarSign, CheckCircle } from 'lucide-react'
 import { SkuText, PriceText } from '@/@core/components/ui/table/table.style'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<ExpenseCategoryType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, ExpenseCategoryType>> = useMemo(
     () => [
       {
         id: 'name',

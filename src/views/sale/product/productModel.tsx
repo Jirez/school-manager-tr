@@ -1,4 +1,3 @@
-import { createColumnHelper } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
@@ -33,8 +32,9 @@ import {
   StockBadge,
   SkuText,
 } from '@/@core/components/ui/table/table.style'
+import { createAppColumnHelper } from '#/hooks/table'
 
-const columnHelper = createColumnHelper<ProductType>()
+const columnHelper = createAppColumnHelper<ProductType>()
 
 interface TextWithPictureProps {
   picture: string

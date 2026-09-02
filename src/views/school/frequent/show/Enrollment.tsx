@@ -6,13 +6,12 @@ import { TabNav } from '@/@core/components/tabs'
 import PageHeader from '@/@core/components/ui/page-header'
 import { useStudentsByIdQuery } from '@/gql/graphql'
 import { useEffect, useState } from 'react'
-import { useParams } from '@tanstack/react-router'
 import { TabPane } from 'reactstrap'
 import EnrollmentHistory from '../EnrollmentHistory'
 import StudentFamily from './StudentFamily'
 
-const ProductView = () => {
-  const { id } = useParams()
+const ProductView = ({ id }: { id: string }) => {
+  // const { id } = useParams()
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
   const [filterApi1, setFilterApi1] = useState<GlobalFilterApi>()
   const [filterApi2, setFilterApi2] = useState<GlobalFilterApi>()

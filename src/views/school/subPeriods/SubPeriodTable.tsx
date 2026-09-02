@@ -9,11 +9,12 @@ import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import SubPeriodDelete from '@/views/school/subPeriods/SubPeriodDelete'
 import type { SubPeriodType } from './SubPeriod.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 const SubPeriodTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<SubPeriodType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, SubPeriodType>[]>(
     () => [
       {
         accessorKey: 'numberOrder',

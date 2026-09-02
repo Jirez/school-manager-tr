@@ -23,6 +23,7 @@ import {
 } from '@/@core/components/ui/table/table.style'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
+import type { AppFeatures } from '#/hooks/table'
 
 interface GuardianTableProps {
   dataSource?: GuardianType[]
@@ -34,7 +35,7 @@ interface GuardianTableProps {
 const GuardianTable: FC<GuardianTableProps> = (props) => {
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<GuardianType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, GuardianType>[]>(
     () => [
       {
         id: 'name',

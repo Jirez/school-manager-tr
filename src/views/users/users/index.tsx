@@ -18,10 +18,10 @@ import {
 import { useAbility } from '@/context/Can'
 import { useTitle } from 'ahooks'
 import { useTableColumns } from './userModel'
-import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import { useState } from 'react'
 import { useMount } from 'ahooks'
+import { useTable } from '#/@core/components/react-table/useTable'
 
 const Users = () => {
   const { enterpriseId } = useAuthentication()
@@ -42,10 +42,8 @@ const Users = () => {
 
   const {
     table,
-    globalFilter,
-    setGlobalFilter,
     totalCount,
-    selectedFlatRows: checkedRows,
+    // selectedFlatRows: checkedRows,
   } = useTable<any>({
     columns,
     data: data?.users || [],
@@ -68,8 +66,8 @@ const Users = () => {
       <Navs links={UserLinks} />
       <Toolbar
         title={t('sidebar.users')}
-        globalFilter={globalFilter}
-        setGlobalFilter={setGlobalFilter}
+        globalFilter={table.globalFilter}
+        setGlobalFilter={table.setGlobalFilter}
         actionLabel={ability.can('write', 'user') ? 'action.add_user' : ''}
         onClick={() => modal.show()}
         refetch={refetch}
@@ -80,7 +78,7 @@ const Users = () => {
       {/* Bulk Actions Bar */}
       <div className="px-">
         <BulkActionsBar
-          selectedCount={checkedRows.length}
+          selectedCount={table.getSelectedRowIds().length}
           itemLabel="utilisateur"
           itemLabelPlural="utilisateurs"
           onClearSelection={() => table.resetRowSelection()}
@@ -91,8 +89,10 @@ const Users = () => {
               variant: 'danger',
               render: (
                 <UsersDelete
-                  ids={checkedRows.map(({ original }) => original.id)}
-                  count={checkedRows.length}
+                  ids={table
+                    .getSelectedRowModel()
+                    .flatRows.map(({ original }) => original.id)}
+                  count={table.getSelectedRowModel().flatRows.length}
                 />
               ),
             },
@@ -105,7 +105,9 @@ const Users = () => {
               onClick: () =>
                 activate({
                   variables: {
-                    ids: checkedRows.map(({ original }) => original.id),
+                    ids: table
+                      .getSelectedRowModel()
+                      .flatRows.map(({ original }) => original.id),
                     status: true,
                   },
                   onCompleted: (data) => {
@@ -124,7 +126,9 @@ const Users = () => {
               onClick: () =>
                 deactivate({
                   variables: {
-                    ids: checkedRows.map(({ original }) => original.id),
+                    ids: table
+                      .getSelectedRowModel()
+                      .flatRows.map(({ original }) => original.id),
                     status: false,
                   },
                   onCompleted: (data) => {
@@ -151,7 +155,9 @@ const Users = () => {
           loading={loading}
           enterpriseId={enterpriseId}
         >
-          {() => <CustomTable table={table} modal={modal} loading={loading} />}
+          {() => (
+            <CustomTable table={table as any} modal={modal} loading={loading} />
+          )}
         </LiveView>
       </div>
     </Scrollbar>

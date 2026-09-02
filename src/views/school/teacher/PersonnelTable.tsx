@@ -11,12 +11,13 @@ import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import type TeacherType from './Teacher.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import TeachersDelete from './TeachersDelete'
+import type { AppFeatures } from '#/hooks/table'
 
 const PersonnelTable: FC<CommonTableProps> = (props) => {
   const [checkedRows, setCheckedRows] = useState<any[]>([])
   const { t } = useTranslation()
 
-  const columns = useMemo<ColumnDef<TeacherType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, TeacherType>[]>(
     () => [
       {
         accessorFn: (row) => `${row.lastName} ${row.firstName}`,

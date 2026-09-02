@@ -10,11 +10,12 @@ import { BookOpen, Tag, CheckCircle, FileText, Hash } from 'lucide-react'
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import { cutText } from '@/utils/helpers'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<LogCodeType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, LogCodeType>> = useMemo(
     () => [
       {
         id: 'name',

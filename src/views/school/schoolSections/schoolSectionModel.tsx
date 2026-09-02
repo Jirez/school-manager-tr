@@ -8,11 +8,12 @@ import SchoolSectionDelete from './SchoolSectionDelete'
 import type { SchoolSectionType } from './SchoolSectionType'
 import { Type, Globe, Activity } from 'lucide-react'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<SchoolSectionType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, SchoolSectionType>> = useMemo(
     () => [
       {
         accessorKey: 'name',

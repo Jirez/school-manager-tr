@@ -9,11 +9,12 @@ import CustomerCategoryDelete from './CustomerCategoryDelete'
 import type { CustomerCategoryType } from './customer.category.type'
 import { Tag, Layers, CheckCircle } from 'lucide-react'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
+import type { AppFeatures } from '#/hooks/table'
 
 export function useTableColumns(modal?: NiceModalHandler) {
   const { t } = useTranslation()
 
-  const columns: Array<ColumnDef<CustomerCategoryType>> = useMemo(
+  const columns: Array<ColumnDef<AppFeatures, CustomerCategoryType>> = useMemo(
     () => [
       {
         id: 'name',

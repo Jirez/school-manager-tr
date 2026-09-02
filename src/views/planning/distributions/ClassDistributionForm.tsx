@@ -6,7 +6,7 @@ import type { ClassDistribution } from '@/views/planning/distributions/ClassDist
 import type { SubmitHandler } from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-//import {useReactive} from "ahooks";
+// import {useReactive} from "ahooks";
 import { XCircle } from 'react-feather'
 import SimpleInput from '@/@core/components/ui/simple-input'
 import Button from '@/@core/components/button'
@@ -79,7 +79,7 @@ const ClassDistributionForm: FC<ClassDistributionFormProps> = ({
         classId: Number(classId),
       },
     })
-      .then(async ({ data }) => {
+      .then(async () => {
         //form.resetFields();
         toast.success(`Répartition des enseignants enregistrée`, {
           ...TOAST_OPTIONS,
