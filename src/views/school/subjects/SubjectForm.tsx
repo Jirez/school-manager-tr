@@ -227,7 +227,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
                 name="displayName"
                 children={(field) => (
                   <field.Input
-                    label={t('label-displayName')}
+                    label={m.label_displayName()}
                     prepend={<Type size={16} />}
                   />
                 )}
@@ -246,7 +246,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             <ToggleOption
               icon={<CheckCircle className="w-4 h-4" />}
-              title={t('label-active')}
+              title={m.label_active()}
               description="Disponible pour l'évaluation"
               isActive={active}
             >
@@ -258,7 +258,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
 
             <ToggleOption
               icon={<CalendarDays className="w-4 h-4" />}
-              title={t('label-showInTimeTable')}
+              title={m.label_showInTimeTable()}
               description="Afficher dans l'horaire"
               isActive={showInTimeTable}
             >
@@ -273,7 +273,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
         {/* Notes Section */}
         <FormSection
           icon={<FileText className="w-4 h-4" />}
-          title="Notes"
+          title={m.label_notes()}
           description="Description additionnelle"
           color="#00cfe8"
         >

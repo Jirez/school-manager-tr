@@ -2,9 +2,7 @@ import type { FC } from 'react'
 import { Form } from 'reactstrap'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import { useForm } from 'react-hook-form'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import { yupResolver } from '@hookform/resolvers/yup'
 import {
   School,
   Repeat,
@@ -15,21 +13,21 @@ import {
   Layers,
 } from 'lucide-react'
 
-import { default as FormItem } from '@/@core/components/ui/forms/input'
 import type { CycleType } from '@/views/school/cycles/Cycle.Type'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import LiveView from '@/utils/LiveView'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import {
   schoolSectionOptions,
   schoolYearOptions,
 } from '@/utils/select/selectComponents'
 import SchoolYearAdd from '@/views/school/schoolYears/SchoolYearAdd'
 import SchoolSectionAdd from '@/views/school/schoolSections/SchoolSectionAdd'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import { cycleValidationSchema } from '@/views/school/cycles/cycle.validation'
+import {
+  cycleSchema,
+  type CycleSchemaType,
+} from '@/views/school/cycles/cycle.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   SchoolSectionCreatedDocument,
@@ -39,20 +37,12 @@ import {
 } from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
 
 interface CycleFormProps extends BaseFormProps {
   cycle?: CycleType
   modal?: NiceModalHandler
   loading: boolean
-}
-
-const initialValues: Partial<CycleType> = {
-  numberOrder: undefined,
-  name: '',
-  name2: '',
-  levelCount: undefined,
-  schoolSection: undefined,
-  schoolYear: undefined,
 }
 
 const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
@@ -73,12 +63,13 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
   })
 
   const {
-    control,
-    setValue,
+    setFieldValue,
     handleSubmit,
-    formState: { isDirty },
     reset,
-  } = useForm<CycleType>({
+    AppField,
+    AppForm,
+    SubmitButton,
+  } = useAppForm({
     defaultValues: {
       numberOrder: cycle?.numberOrder || '',
       name: cycle?.name || '',
@@ -86,19 +77,13 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
       levelCount: cycle?.levelCount || '',
       schoolYearId: cycle ? cycle.schoolYear : null,
       schoolSectionId: cycle ? cycle.schoolSection : null,
+    } as CycleSchemaType,
+    onSubmitMeta: defaultMeta,
+    validators: {
+      onChange: cycleSchema,
     },
-    resolver: yupResolver(cycleValidationSchema),
-    mode: 'onBlur',
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmit({ value, meta }) {
+      const values = cycleSchema.parse(value)
       const id = cycle ? Number(cycle.id) : undefined
 
       action({
@@ -112,7 +97,7 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
         },
       })
         .then(async ({ data }) => {
-          reset(initialValues)
+          reset()
           toast.success(`Cycle ${data.cycle.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
@@ -121,18 +106,24 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
             messageService.sendMessage('cycle', data.cycle)
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
         .catch((error) => {
           toast.error(`Impossible d'ajouter le cycle: ${formatError(error)}`)
         })
-    })(event)
-  }
+    },
+  })
 
   return (
-    <Form onSubmit={onSubmit} className="space-y-6">
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit()
+      }}
+      className="space-y-6"
+    >
       {/* School Information Section */}
       <FormSection
         icon={<School className="w-5 h-5" />}
@@ -154,21 +145,24 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
               enterpriseId={enterpriseId}
             >
               {({ schoolYears }) => (
-                <ControlledSelect
+                <AppField
                   name="schoolYearId"
-                  label={t('label-schoolYear')}
-                  control={control}
-                  loading={loading}
-                  onChange={(val) => setValue('schoolYearId', val)}
-                  options={schoolYears || undefined}
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option.id}
-                  components={{ Option: schoolYearOptions }}
-                  form={<SchoolYearAdd />}
-                  formId="schoolYear"
-                  optionLabel="label"
-                  formTitle={t('action.add_schoolYear')}
-                  prepend={<Calendar size={16} />}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={t('label-schoolYear')}
+                      loading={loading}
+                      onChange={(val) => setFieldValue('schoolYearId', val)}
+                      options={schoolYears || undefined}
+                      getOptionLabel={(option) => option.label}
+                      getOptionValue={(option) => option.id}
+                      components={{ Option: schoolYearOptions }}
+                      form={<SchoolYearAdd />}
+                      formId="schoolYear"
+                      optionLabel="label"
+                      formTitle={t('action.add_schoolYear')}
+                      prepend={<Calendar size={16} />}
+                    />
+                  )}
                 />
               )}
             </LiveView>
@@ -185,21 +179,24 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
               enterpriseId={enterpriseId}
             >
               {({ schoolSections }) => (
-                <ControlledSelect
+                <AppField
                   name="schoolSectionId"
-                  label={t('label-schoolSection')}
-                  control={control}
-                  loading={loadingSection}
-                  onChange={(val) => setValue('schoolSectionId', val)}
-                  options={schoolSections || undefined}
-                  getOptionLabel={(option) => option.name}
-                  getOptionValue={(option) => option.id}
-                  components={{ Option: schoolSectionOptions }}
-                  form={<SchoolSectionAdd />}
-                  formId="schoolSection"
-                  optionLabel="name"
-                  formTitle={t('action.add_schoolSection')}
-                  prepend={<Grid size={16} />}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={t('label-schoolSection')}
+                      loading={loadingSection}
+                      onChange={(val) => setFieldValue('schoolSectionId', val)}
+                      options={schoolSections || undefined}
+                      getOptionLabel={(option) => option.name}
+                      getOptionValue={(option) => option.id}
+                      components={{ Option: schoolSectionOptions }}
+                      form={<SchoolSectionAdd />}
+                      formId="schoolSection"
+                      optionLabel="name"
+                      formTitle={t('action.add_schoolSection')}
+                      prepend={<Grid size={16} />}
+                    />
+                  )}
                 />
               )}
             </LiveView>
@@ -216,47 +213,60 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
       >
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-            <FormItem
+            <AppField
               name="numberOrder"
-              label={t('label-numberOrder')}
-              control={control}
-              required
-              prepend={<Hash size={16} />}
+              children={(field) => (
+                <field.Input
+                  label={t('label-numberOrder')}
+                  required
+                  prepend={<Hash size={16} />}
+                />
+              )}
             />
 
-            <FormItem
+            <AppField
               name="name"
-              label={t('label-designation')}
-              control={control}
-              required
-              prepend={<Type size={16} />}
+              children={(field) => (
+                <field.Input
+                  label={t('label-designation')}
+                  required
+                  prepend={<Type size={16} />}
+                />
+              )}
             />
 
-            <FormItem
+            <AppField
               name="name2"
-              label={t('label-designation2')}
-              control={control}
-              prepend={<Type size={16} />}
+              children={(field) => (
+                <field.Input
+                  label={t('label-designation2')}
+                  prepend={<Type size={16} />}
+                />
+              )}
             />
 
-            <FormItem
+            <AppField
               name="levelCount"
-              label={t('label-levelCount')}
-              control={control}
-              prepend={<Layers size={16} />}
+              children={(field) => (
+                <field.Input
+                  label={t('label-levelCount')}
+                  prepend={<Layers size={16} />}
+                />
+              )}
             />
           </div>
         </div>
       </FormSection>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )

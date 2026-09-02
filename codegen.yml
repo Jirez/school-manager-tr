@@ -6,7 +6,8 @@ generates:
   './src/gql/graphql.ts':
     #src/gql/:
     #preset: "client"
-    plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo']
+    plugins: ['typescript-operations', 'typescript-react-apollo']
 #"typescript-compatibility",
 config:
   addDocBlocks: false
+  reactApolloVersion: 3

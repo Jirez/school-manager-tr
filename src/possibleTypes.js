@@ -1,12 +1,12 @@
-const fetch = require('node-fetch');
-const fs = require('fs');
+const fetch = require('node-fetch')
+const fs = require('fs')
 
-fetch(`http://localhost:8080/school-manager/graphql`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        variables: {},
-        query: `
+fetch(`http://localhost:8080/graphql`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    variables: {},
+    query: `
       {
         __schema {
           types {
@@ -19,23 +19,29 @@ fetch(`http://localhost:8080/school-manager/graphql`, {
         }
       }
     `,
-    }),
-}).then(result => result.json())
-    .then(result => {
-        const possibleTypes = {};
+  }),
+})
+  .then((result) => result.json())
+  .then((result) => {
+    const possibleTypes = {}
 
-        result.data.__schema.types.forEach(supertype => {
-            if (supertype.possibleTypes) {
-                possibleTypes[supertype.name] =
-                    supertype.possibleTypes.map(subtype => subtype.name);
-            }
-        });
+    result.data.__schema.types.forEach((supertype) => {
+      if (supertype.possibleTypes) {
+        possibleTypes[supertype.name] = supertype.possibleTypes.map(
+          (subtype) => subtype.name,
+        )
+      }
+    })
 
-        fs.writeFile('./src/possibleTypes.json', JSON.stringify(possibleTypes), err => {
-            if (err) {
-                console.error('Error writing possibleTypes.json', err);
-            } else {
-                console.log('Fragment types successfully extracted!');
-            }
-        });
-    });
+    fs.writeFile(
+      './src/possibleTypes.json',
+      JSON.stringify(possibleTypes),
+      (err) => {
+        if (err) {
+          console.error('Error writing possibleTypes.json', err)
+        } else {
+          console.log('Fragment types successfully extracted!')
+        }
+      },
+    )
+  })

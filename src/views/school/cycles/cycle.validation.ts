@@ -1,12 +1,20 @@
 import { emptyStringToNull } from '@/utils/helpers'
-import { string, object, number } from 'yup'
+import { z } from 'zod'
 
-export const cycleValidationSchema = object({
-  name: string().required('validation-name-required').min(2).max(30),
-  schoolYearId: object().required().typeError('Field required'),
-  schoolSectionId: object().required().typeError('Field required'),
-  numberOrder: number().required(),
-  levelCount: number().optional().transform(emptyStringToNull),
-  name2: string().optional().min(2).max(30).transform(emptyStringToNull),
-  id: number().optional(),
+export const cycleSchema = z.object({
+  name: z.string('validation-name-required').min(2).max(30),
+  schoolYearId: z.any(),
+  schoolSectionId: z.any(),
+  numberOrder: z.number(),
+  levelCount: z.coerce.number().optional().nullable(),
+  name2: z
+    .string()
+    .min(2)
+    .max(30)
+    .transform(emptyStringToNull)
+    .optional()
+    .nullable(),
+  id: z.number().optional(),
 })
+
+export type CycleSchemaType = z.input<typeof cycleSchema>

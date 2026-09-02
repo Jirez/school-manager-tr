@@ -16,7 +16,7 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { setContext } from '@apollo/client/link/context'
 
-// import possibleTypes from './possibleTypes.json'
+import possibleTypes from './possibleTypes.json'
 import TokenStorage from '@/utils/TokenStorage'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
@@ -90,7 +90,7 @@ export const authenticationVar: ReactiveVar<AuthenticationType> = makeVar(
 )
 
 const cache = new InMemoryCache({
-  // possibleTypes,
+  possibleTypes,
   typePolicies: {
     Query: {
       fields: {
