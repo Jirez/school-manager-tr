@@ -1,12 +1,12 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { defineConfig } from 'vite'
-// import { devtools } from '@tanstack/devtools-vite'
+import { devtools } from '@tanstack/devtools-vite'
 import * as path from 'path'
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
-// import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -18,8 +18,8 @@ const config = defineConfig({
       outputStructure: 'message-modules',
       strategy: ['cookie', 'preferredLanguage', 'baseLocale'],
     }),
-    // devtools(),
-    // tailwindcss(),
+    devtools(),
+    tailwindcss(),
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     viteReact(),
   ],
