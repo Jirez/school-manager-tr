@@ -2034,5 +2034,10 @@
   "action_update_period": "Update period",
   "action_add_subPeriod": "Add sub-period",
   "action_update_subPeriod": "Update sub-period",
-  "label_subPeriodSettingsDesc": "Advanced configuration of the sub-period"
+  "label_subPeriodSettingsDesc": "Advanced configuration of the sub-period",
+  "title_2fa": "Two-Factor Authentication",
+  "label_2faDesc": "Use two-factor authentication to strengthen your security",
+  "label_profile": "Profile",
+  "label_enable2fa": "Enable two-factor authentication",
+  "label_disable2fa": "Disable two-factor authentication"
 }

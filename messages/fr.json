@@ -2038,5 +2038,10 @@
   "action_update_period": "Modifier période",
   "action_add_subPeriod": "Ajouter sous-période",
   "action_update_subPeriod": "Modifier sous-période",
-  "label_subPeriodSettingsDesc": "Configuration avancée de la sous-période"
+  "label_subPeriodSettingsDesc": "Configuration avancée de la sous-période",
+  "title_2fa": "Authentification à deux facteurs",
+  "label_2faDesc": "Utiliser l'authentification à 2 facteurs pour renforcer votre sécurité",
+  "label_profile": "Profil",
+  "label_enable2fa": "Activer l'authentification à 2 facteurs",
+  "label_disable2fa": "Désactiver l'authentification à 2 facteurs"
 }

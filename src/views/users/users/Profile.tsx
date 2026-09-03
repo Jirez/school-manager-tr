@@ -3,33 +3,28 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Power } from 'react-feather'
 import { Navigate } from '@tanstack/react-router'
-import { Card, Form, Label } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
-import { yupResolver } from '@hookform/resolvers/yup'
-import type { SubmitHandler } from 'react-hook-form'
-import { useForm, Controller } from 'react-hook-form'
-
+import { Card, Form } from 'reactstrap'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { useLogout } from '@/hooks/useLogout'
 import { formatError } from '@/utils/ErrorHelper'
 import Button from '@/@core/components/button'
 import { useUser } from '@/views/users/users/useUser'
-import Switch from '@/@core/components/ui/forms/swith'
 import { Box } from '@/@core/components/box/Box'
 import Loader from '@/@core/components/spinner/loader'
 import PageHeader from '@/@core/components/ui/page-header'
-import InputPasswordToggle from '@/@core/components/input-password-toggle'
-import { passwordChangeValidationSchema } from '@/views/users/users/user.validation'
+import { passwordChangeSchema } from '@/views/users/users/user.validation'
 import {
   useMfaUpdateMutation,
   useUserPasswordUpdateMutation,
 } from '@/gql/graphql'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import { useTitle } from 'ahooks'
+import { useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
 
 interface TwoStepAuthFormProps {
   user?: any
-  onSubmit: SubmitHandler<any>
+  onSubmit: (values: { mfa: boolean }) => void
   isSubmitting: boolean
 }
 
@@ -38,27 +33,29 @@ const TwoStepAuthForm: FC<TwoStepAuthFormProps> = ({
   onSubmit,
   isSubmitting,
 }) => {
-  const { t } = useTranslation()
   useTitle('Profil')
-  const { control, handleSubmit, getValues } = useForm({
+
+  const { handleSubmit, AppField } = useAppForm({
     defaultValues: {
       mfa: user ? user.mfa : false,
+    },
+    onSubmit({ value }) {
+      onSubmit({ mfa: value.mfa })
     },
   })
 
   return (
-    <Box
-      title={'Authentification en 2 étapes'}
-      description={
-        "Utiliser l'authentification à 2 facteurs pour renforcer votre sécurité"
-      }
-    >
-      <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-        <Switch
+    <Box title={m.title_2fa()} description={m.label_2faDesc()}>
+      <Form
+        layout="vertical"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleSubmit()
+        }}
+      >
+        <AppField
           name="mfa"
-          control={control}
-          label={"Activer l'authentification en 2 étapes"}
-          defaultChecked={getValues('mfa')}
+          children={(field) => <field.Switch label={m.label_enable2fa()} />}
         />
 
         <div className="mt-2 flex justify-end">
@@ -68,7 +65,7 @@ const TwoStepAuthForm: FC<TwoStepAuthFormProps> = ({
             loading={isSubmitting}
             className="round"
           >
-            {t('label-update')}
+            {m.label_update()}
           </Button>
         </div>
       </Form>
@@ -84,25 +81,23 @@ interface PasswordFormValues {
 
 interface PasswordFormProps {
   user?: any
-  onSubmit: SubmitHandler<any>
+  onSubmit: (values: PasswordFormValues, callback: () => void) => void
   isSubmitting: boolean
 }
 
 const PasswordForm: FC<PasswordFormProps> = ({ onSubmit, isSubmitting }) => {
-  const { t } = useTranslation()
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PasswordFormValues>({
+  const { handleSubmit, AppField, reset } = useAppForm({
     defaultValues: {
       originalPassword: '',
       newPassword: '',
       confirm: '',
     },
-    resolver: yupResolver(passwordChangeValidationSchema),
-    mode: 'all',
+    validators: {
+      onChange: passwordChangeSchema,
+    },
+    onSubmit({ value }) {
+      onSubmit(value, reset)
+    },
   })
 
   return (
@@ -112,50 +107,47 @@ const PasswordForm: FC<PasswordFormProps> = ({ onSubmit, isSubmitting }) => {
         'Changez le mot de passe de votre compte souvent pour prévenir les accès non autorisés à votre compte.'
       }
     >
-      <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        layout="vertical"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleSubmit()
+        }}
+      >
         <div className="mb-1">
-          <Label className="form-label">{t('label-originalPassword')}</Label>
-          <Controller
-            control={control}
+          <AppField
             name="originalPassword"
-            render={({ field }) => (
-              <InputPasswordToggle
+            children={(field) => (
+              <field.InputPasswordToggle
                 className="input-group-merge"
-                placeholder={t('label-originalPassword')}
-                invalid={errors.originalPassword && true}
-                {...field}
+                placeholder={m.label_originalPassword()}
+                label={m.label_originalPassword()}
               />
             )}
           />
         </div>
 
         <div className="mb-1">
-          <Label className="form-label">{t('label-newPassword')}</Label>
-          <Controller
-            control={control}
+          <AppField
             name="newPassword"
-            render={({ field }) => (
-              <InputPasswordToggle
+            children={(field) => (
+              <field.InputPasswordToggle
                 className="input-group-merge"
-                placeholder={t('label-newPassword')}
-                invalid={errors.newPassword && true}
-                {...field}
+                placeholder={m.label_newPassword()}
+                label={m.label_newPassword()}
               />
             )}
           />
         </div>
 
         <div className="mb-1">
-          <Label className="form-label">{t('label-confirmNewPassword')}</Label>
-          <Controller
-            control={control}
+          <AppField
             name="confirm"
-            render={({ field }) => (
-              <InputPasswordToggle
+            children={(field) => (
+              <field.InputPasswordToggle
                 className="input-group-merge"
-                placeholder={t('label-confirmNewPassword')}
-                invalid={errors.confirm && true}
-                {...field}
+                placeholder={m.label_confirmNewPassword()}
+                label={m.label_confirmNewPassword()}
               />
             )}
           />
@@ -168,7 +160,7 @@ const PasswordForm: FC<PasswordFormProps> = ({ onSubmit, isSubmitting }) => {
             loading={isSubmitting}
             className="round"
           >
-            {t('label-update')}
+            {m.label_update()}
           </Button>
         </div>
       </Form>
@@ -185,9 +177,11 @@ const Profile = () => {
   const [updateUserMfa, { loading: isSubmittingMfa }] = useMfaUpdateMutation()
   const { logout } = useLogout()
   const { user } = useUser(username)
-  const { t } = useTranslation()
 
-  const onPasswordFinish: SubmitHandler<any> = (values) => {
+  const onPasswordFinish: (
+    values: PasswordFormValues,
+    callback: () => void,
+  ) => void = (values, callback) => {
     updatePassword({
       variables: {
         username: username,
@@ -197,8 +191,8 @@ const Profile = () => {
         },
       },
     })
-      .then(async ({ data }) => {
-        //form.resetFields();
+      .then(async () => {
+        callback()
         toast.success('Mot de passe changé avec succès', { ...TOAST_OPTIONS })
       })
       .catch((error) => {
@@ -208,8 +202,8 @@ const Profile = () => {
       })
   }
 
-  const onMfaFinish: SubmitHandler<any> = (values) => {
-    //setDisabled(true);
+  const onMfaFinish = (values: any) => {
+    // setDisabled(true);
     updateUserMfa({
       variables: {
         username: username,
@@ -217,19 +211,19 @@ const Profile = () => {
       },
     })
       .then(async ({ data }) => {
-        //setDisabled(false);
-        //form.resetFields();
+        // setDisabled(false);
+        // form.resetFields();
         toast.success('Authentification en 2 étapes modifiée', {
           ...TOAST_OPTIONS,
         })
-        //console.log(data)
+        // console.log(data)
         if (data?.updateMfa?.mfa) {
-          setQrImageUrl(data?.updateMfa?.secretImageUri as any)
+          setQrImageUrl(data.updateMfa.secretImageUri as any)
           setRedirect('/qrcode')
         }
       })
       .catch((error) => {
-        //setDisabled(false);
+        // setDisabled(false);
         toast.error(`Opération non effectuée : ${formatError(error)}`)
       })
   }
@@ -251,29 +245,14 @@ const Profile = () => {
   return (
     <div className="flex flex-col w-full">
       <div className="w-full">
-        <PageHeader title={t('text-profile')} />
+        <PageHeader title={m.label_profile()} />
       </div>
 
       <div className="w-full md:w-8/12 lg:w-6/12 mx-auto">
         <Card
-          //style={{ width: 820, border: "1px solid #e1e0e0", position: "relative"}}
+          // style={{ width: 820, border: "1px solid #e1e0e0", position: "relative"}}
           actions={[<Power onClick={logoutHandler} />]}
         >
-          {/*<Meta
-                        avatar={
-                            <Avatar
-                                src={""}
-                                className="user-avatar-circle0"
-                                style={{
-                                    width: "150px !important",
-                                    height: "150px !important",
-                                    cursor: "pointer"
-                                }}
-                            />
-                        }
-                        title={displayName}
-                        description={"@" + username}
-                    />*/}
           {username}
         </Card>
 
