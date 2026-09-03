@@ -677,6 +677,7 @@
   "label_useModel": "Utiliser le modèle",
   "label_officialType": "Fonction",
   "label_officialFunction": "Fonction",
+  "label_officialFunctionDesc": "Sélectionnez la fonction du responsable",
   "label_prefix": "Préfixe",
   "label_autoInclusion": "Inclusion automatique des élèves",
   "label_includeFormerStudent": "Inclure des anciens élèves",
@@ -2017,5 +2018,12 @@
   "action_add_schoolSection": "Ajouter une section",
   "action_update_schoolSection": "Modifier une section",
   "action_add_language": "Ajouter une langue",
-  "action_update_language": "Modifier une langue"
+  "action_update_language": "Modifier une langue",
+  "action_add_schoolOfficial": "Ajouter un responsable",
+  "action_update_schoolOfficial": "Modifier un responsable",
+  "action_add_officialFunction": "Ajouter une fonction",
+  "action_update_officialFunction": "Modifier une fonction",
+  "label_personalInformationDesc": "Nom et email du responsable",
+  "label_signatureDesc": "Signature numérique du responsable",
+  "label_functionDetailsDesc": "Nom et préfixe de la fonction"
 }

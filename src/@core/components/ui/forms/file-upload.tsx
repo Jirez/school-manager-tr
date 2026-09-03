@@ -10,7 +10,7 @@ import Button from '@/@core/components/button'
 
 interface UploaderProps {
   imageURL?: string
-  onChange: () => void
+  onChange: (data: any) => void
   multiple?: boolean
   showActionButtons?: boolean
   accept?: string

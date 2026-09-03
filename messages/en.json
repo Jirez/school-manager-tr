@@ -2013,5 +2013,13 @@
   "action_add_schoolSection": "Add a section",
   "action_update_schoolSection": "Update a section",
   "action_add_language": "Add a language",
-  "action_update_language": "Update a language"
+  "action_update_language": "Update a language",
+  "action_add_schoolOfficial": "Add a school official",
+  "action_update_schoolOfficial": "Update a school official",
+  "label_officialFunctionDesc": "Select the function of the official",
+  "action_add_officialFunction": "Add a official function",
+  "action_update_officialFunction": "Update a official function",
+  "label_personalInformationDesc": "Name and email of the official",
+  "label_signatureDesc": "Digital signature of the official",
+  "label_functionDetailsDesc": "Name and prefix of the function"
 }

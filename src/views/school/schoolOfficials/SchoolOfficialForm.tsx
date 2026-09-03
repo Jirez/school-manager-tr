@@ -1,7 +1,5 @@
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { Form } from 'reactstrap'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { toast } from 'react-toastify'
@@ -9,12 +7,11 @@ import { UserCog, User, PenTool, Type, Mail } from 'lucide-react'
 import type { SchoolOfficialType } from '@/views/school/schoolOfficials/SchoolOfficial.type'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import LiveView from '@/utils/LiveView'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import OfficialFunctionAdd from '@/views/school/officialFunctions/OfficialFunctionAdd'
-import { default as FormItem } from '@/@core/components/ui/forms/input'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { schoolOfficialValidationSchema } from '@/views/school/schoolOfficials/schoolOfficial.validation'
+import {
+  schoolOfficialValidation,
+  type SchoolOfficialSchemaType,
+} from '@/views/school/schoolOfficials/schoolOfficial.validation'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { TOAST_OPTIONS } from '@/utils/constants'
@@ -27,19 +24,15 @@ import {
 } from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
+
+const config = await fetch('/configuration.json').then((res) => res.json())
 
 interface SchoolOfficialFormProps extends BaseFormProps {
   schoolOfficial?: SchoolOfficialType
   modal?: NiceModalHandler
 }
-
-const initialValues: Partial<SchoolOfficialType> = {
-  name: '',
-  email: '',
-  liableTypeId: null,
-}
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 const SchoolOfficialForm: FC<SchoolOfficialFormProps> = ({
   schoolOfficial,
@@ -47,53 +40,47 @@ const SchoolOfficialForm: FC<SchoolOfficialFormProps> = ({
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
-  const [values, setValues] = useState<{ file: any; picture: string | null }>({
-    file: null,
-    picture: schoolOfficial ? schoolOfficial.signature : null,
-  })
+  const [picture, setPicture] = useState<string | null>(
+    schoolOfficial ? schoolOfficial.signature : null,
+  )
 
   const { data, loading, subscribeToMore } = useOfficialTypesQuery()
 
   const {
-    control,
     handleSubmit,
-    formState: { isDirty },
+    AppField,
     reset,
-    setValue,
-  } = useForm<SchoolOfficialType>({
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
       name: schoolOfficial?.name || '',
       email: schoolOfficial?.email || '',
       signature: schoolOfficial?.signature || '',
       liableTypeId: schoolOfficial ? schoolOfficial.liableType : null,
+    } as SchoolOfficialSchemaType,
+    validators: {
+      onChange: schoolOfficialValidation,
     },
-    resolver: yupResolver(schoolOfficialValidationSchema),
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = schoolOfficial ? Number(schoolOfficial.id) : undefined
+      const parsed = schoolOfficialValidation.parse(value)
 
       action({
         variables: {
           liable: {
-            ...values,
+            ...parsed,
             id,
-            liableTypeId: Number(values.liableTypeId.id),
+            liableTypeId: Number(parsed.liableTypeId?.id),
             schoolId: enterpriseId,
           },
         },
       })
         .then(async ({ data }) => {
-          reset(initialValues)
+          reset()
           toast.success(`Responsable ${data.schoolOfficial.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
@@ -102,7 +89,7 @@ const SchoolOfficialForm: FC<SchoolOfficialFormProps> = ({
             messageService.sendMessage('schoolOfficial', data.schoolOfficial)
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
@@ -111,17 +98,7 @@ const SchoolOfficialForm: FC<SchoolOfficialFormProps> = ({
             `Impossible d'ajouter le responsable: ${formatError(error)}`,
           )
         })
-    })(event)
-  }
-
-  useEffect(() => {
-    messageService.getMessage().subscribe((message) => {
-      if (message) {
-        if (message.name === 'officialFunction') {
-          setValue('liableTypeId', message.value)
-        }
-      }
-    })
+    },
   })
 
   const handleUpload = (file: any) => {
@@ -135,134 +112,148 @@ const SchoolOfficialForm: FC<SchoolOfficialFormProps> = ({
     const callback = async (datum: any) => {
       toast.info('Importation terminée avec succès')
       if (datum) {
-        setValue('signature', datum.fileName)
-        setValues({ ...values, picture: datum.fileName })
+        setFieldValue('signature', datum.fileName)
+        setPicture(datum.fileName)
       }
     }
 
     dataSource.upload(`upload/file`, formData, callback).catch((error) => {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         toast.error(error.response.data.message)
-        // console.log(error.response.status);
-        // console.log(error.response.headers);
       } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the
-        // browser and an instance of
-        // http.ClientRequest in node.js
         console.log(error.request)
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.log('Error', error.message)
       }
     })
   }
 
   return (
-    <Form onSubmit={onSubmit} className="space-y-">
-      <FormSection
-        icon={<UserCog className="w-5 h-5" />}
-        title={t('label-officialFunction') || 'Fonction'}
-        description="Sélectionnez la fonction du responsable"
-        color="#7367f0"
-      >
-        <div className="space-y-1">
-          <LiveView
-            document={OfficialTypeCreatedDocument}
-            singleVar="officialType"
-            data={data}
-            loading={loading}
-            listVar="officialTypes"
-            subscribeToMore={subscribeToMore}
-            sortField="name"
-            triggerUpdate={true}
-            enterpriseId={enterpriseId}
-          >
-            {({ officialTypes }) => (
-              <ControlledSelect
-                name="liableTypeId"
-                label={t('label-officialFunction')}
-                control={control}
-                loading={loading}
-                onChange={(val) => setValue('liableTypeId', val)}
-                options={officialTypes || undefined}
-                getOptionLabel={(option) => option.name}
-                getOptionValue={(option) => option.id}
-                form={<OfficialFunctionAdd />}
-                formId="officialFunction"
-                optionLabel="name"
-                formTitle={t('action.add_officialFunction')}
-                prepend={<UserCog size={16} />}
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        // handleSubmit()
+      }}
+    >
+      <div className="space-y-4">
+        <FormSection
+          icon={<UserCog className="w-5 h-5" />}
+          title={m.label_officialFunction()}
+          description={m.label_officialFunctionDesc()}
+          color="#7367f0"
+        >
+          <div className="space-y-1">
+            <LiveView
+              document={OfficialTypeCreatedDocument}
+              singleVar="officialType"
+              data={data}
+              loading={loading}
+              listVar="officialTypes"
+              subscribeToMore={subscribeToMore}
+              sortField="name"
+              triggerUpdate={true}
+              enterpriseId={enterpriseId}
+            >
+              {({ officialTypes }) => (
+                <AppField
+                  name="liableTypeId"
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_officialFunction()}
+                      required={true}
+                      loading={loading}
+                      options={officialTypes || undefined}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      form={<OfficialFunctionAdd />}
+                      formId="officialFunction"
+                      optionLabel="name"
+                      formTitle={m.action_add_officialFunction()}
+                      prepend={<UserCog size={16} />}
+                      onChange={(val: any) =>
+                        setFieldValue('liableTypeId', val)
+                      }
+                    />
+                  )}
+                />
+              )}
+            </LiveView>
+          </div>
+        </FormSection>
+
+        <FormSection
+          icon={<User className="w-5 h-5" />}
+          title={m.label_personalInformation()}
+          description={
+            m.label_personalInformationDesc() || 'Nom et email du responsable'
+          }
+          color="#28c76f"
+        >
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+              <AppField
+                name="name"
+                children={(field) => (
+                  <field.Input
+                    label={m.label_name()}
+                    required={true}
+                    prepend={<Type size={16} />}
+                  />
+                )}
+              />
+
+              <AppField
+                name="email"
+                children={(field) => (
+                  <field.Input
+                    label={m.label_email()}
+                    prepend={<Mail size={16} />}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </FormSection>
+
+        <FormSection
+          icon={<PenTool className="w-5 h-5" />}
+          title={m.label_signature()}
+          description={m.label_signatureDesc()}
+          color="#ea5455"
+        >
+          <div className="space-y-4">
+            {!picture && (
+              <FileUpload
+                accept="image/*"
+                onChange={(data: any) => {
+                  handleUpload(data[0])
+                }}
               />
             )}
-          </LiveView>
-        </div>
-      </FormSection>
 
-      <FormSection
-        icon={<User className="w-5 h-5" />}
-        title={t('label-personalInformation') || 'Informations personnelles'}
-        description="Nom et email du responsable"
-        color="#28c76f"
-      >
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-            <FormItem
-              name="name"
-              label={t('label-name')}
-              control={control}
-              required
-              prepend={<Type size={16} />}
-            />
-
-            <FormItem
-              name="email"
-              label={t('label-email')}
-              control={control}
-              prepend={<Mail size={16} />}
-            />
+            {picture && (
+              <ImagePreview
+                url={picture}
+                deleteAction={() => {
+                  setPicture(null)
+                  setFieldValue('signature', null)
+                }}
+              />
+            )}
           </div>
-        </div>
-      </FormSection>
-
-      <FormSection
-        icon={<PenTool className="w-5 h-5" />}
-        title={t('label-signature') || 'Signature'}
-        description="Signature numérique du responsable"
-        color="#ea5455"
-      >
-        <div className="space-y-4">
-          {!values.picture && (
-            <FileUpload
-              accept="image/*"
-              onChange={(data: any) => {
-                handleUpload(data[0])
-              }}
-            />
-          )}
-
-          {values.picture && (
-            <ImagePreview
-              url={values.picture}
-              deleteAction={() => {
-                setValues({ ...values, file: null, picture: null })
-                setValue('signature', null)
-              }}
-            />
-          )}
-        </div>
-      </FormSection>
+        </FormSection>
+      </div>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )
