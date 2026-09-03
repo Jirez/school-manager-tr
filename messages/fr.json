@@ -536,6 +536,8 @@
   "label_numberOrder": "Numéro d'ordre",
   "label_schoolYear": "Année scolaire",
   "label_schoolSection": "Section",
+  "label_sectionInfo": "Informations de la section",
+  "label_sectionInfoDesc": "Nom et statut de la section",
   "label_designation": "Désignation",
   "label_startDate": "Date de début",
   "label_endDate": "Date de fin",
@@ -547,6 +549,8 @@
   "label_cycleCount": "Nombre de cycles",
   "label_mainLanguage": "Langue principale",
   "label_description": "Description",
+  "label_languageInfo": "Informations de la langue",
+  "label_languageInfoDesc": "Code et nom de la langue",
   "label_add": "Ajouter",
   "label_saveClose": "Enregistrer & Fermer",
   "label_levelCount": "Nombre de niveau",
@@ -2008,5 +2012,10 @@
   "label_selectCategories": "Sélectionnez les catégories",
   "string_min": "Ce champ doit avoir au moins {min} caractères",
   "string_max": "Ce champ doit avoir au plus {max} caractères",
-  "login": "Connexion"
+  "login": "Connexion",
+  "validation_required": "Ce champ est obligatoire",
+  "action_add_schoolSection": "Ajouter une section",
+  "action_update_schoolSection": "Modifier une section",
+  "action_add_language": "Ajouter une langue",
+  "action_update_language": "Modifier une langue"
 }

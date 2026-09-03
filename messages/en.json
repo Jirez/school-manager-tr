@@ -2006,5 +2006,12 @@
   "label_selectCategories": "Select categories",
   "string_min": "This field must have at least {min} characters",
   "string_max": "This field must have at most {max} characters",
-  "login": "Login"
+  "login": "Login",
+  "validation_required": "This field is required",
+  "label_sectionInfo": "Section information",
+  "label_sectionInfoDesc": "Name and status of the section",
+  "action_add_schoolSection": "Add a section",
+  "action_update_schoolSection": "Update a section",
+  "action_add_language": "Add a language",
+  "action_update_language": "Update a language"
 }

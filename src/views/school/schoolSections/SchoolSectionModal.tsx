@@ -1,21 +1,18 @@
 import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import ModalForm from '@/@core/components/ui/modal-form'
 import SchoolSectionAdd from '@/views/school/schoolSections/SchoolSectionAdd'
-import { useTranslation } from 'react-i18next'
 import { Suspense } from 'react'
+import { m } from '@/paraglide/messages'
 
 export default NiceModal.create(({ schoolSection, update }: any) => {
   const modal = useModal()
-  const { t } = useTranslation()
 
   return (
     <ModalForm
       modal={modal}
-      className="modal-lg"
+      className="max-w-4xl"
       title={
-        update
-          ? t('action.update_schoolSection')
-          : t('action.add_schoolSection')
+        update ? m.action_update_schoolSection() : m.action_add_schoolSection()
       }
     >
       <Suspense>

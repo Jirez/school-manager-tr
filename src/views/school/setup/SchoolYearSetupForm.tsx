@@ -18,7 +18,7 @@ import {
 import DatePicker from '@/@core/components/ui/forms/date-picker'
 import Input from '@/@core/components/ui/forms/input'
 import WizardButtons from './WizardButtons'
-import { validationSchema } from '@/views/school/schoolYears/SchoolYear.validation'
+// import { schoolYearSchema } from '@/views/school/schoolYears/SchoolYear.validation'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { formatError } from '@/utils/ErrorHelper'
 import { TOAST_OPTIONS } from '@/utils/constants'
@@ -58,7 +58,7 @@ const SchoolYearSetupForm: React.FC<Props> = ({ stepper }) => {
       ageMax: '',
       ageMin: '',
     },
-    resolver: yupResolver(validationSchema),
+    // resolver: yupResolver(validationSchema),
   })
 
   const [schoolYearSave, { loading }] = useSchoolYearSetupSaveMutation()

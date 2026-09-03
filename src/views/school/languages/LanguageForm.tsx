@@ -1,19 +1,23 @@
-import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useForm, useFormState } from 'react-hook-form'
-import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { toast } from 'react-toastify'
 import { Form } from 'reactstrap'
-import { yupResolver } from '@hookform/resolvers/yup'
+import type { NiceModalHandler } from '@ebay/nice-modal-react'
+import type { FC } from 'react'
+import { Globe, CheckCircle, FileText } from 'lucide-react'
 
-import type { LanguageType } from '@/views/school/languages/Language.type'
-import Input from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
-import { languageValidationSchema } from '@/views/school/languages/language.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
+import type { LanguageType } from './Language.type'
+import {
+  languageValidation,
+  type LanguageSchemaType,
+} from './language.validation'
+import FormSection from '@/@core/components/ui/forms/form-section'
+import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import ToggleOption from '@/@core/components/ui/forms/toggle-option'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { m } from '@/paraglide/messages'
 
 interface LanguageFormProps extends BaseFormProps {
   language?: LanguageType
@@ -22,35 +26,44 @@ interface LanguageFormProps extends BaseFormProps {
 
 const LanguageForm: FC<LanguageFormProps> = ({
   language,
-  modal,
   action,
+  modal,
   ...props
 }) => {
-  // ** Hooks
-  const { t } = useTranslation()
-
-  const { control, getValues, handleSubmit } = useForm<LanguageType>({
+  const {
+    handleSubmit,
+    AppField,
+    reset,
+    store,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
-      code: language?.code || '',
+      code: language?.code || {},
       name: language?.name || '',
-      description: language?.description || '',
       active: language ? language.active : true,
+      description: language?.description || '',
+    } as LanguageSchemaType,
+    validators: {
+      onChange: languageValidation,
     },
-    resolver: yupResolver(languageValidationSchema),
-  })
-
-  const { isDirty } = useFormState({ control })
-
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault()
-    event?.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = language?.id
+      const values = languageValidation.parse(value)
 
-      action({ variables: { language: { ...values, id } } })
+      action({
+        variables: {
+          language: {
+            ...values,
+            id,
+            description: values.description || null,
+          },
+        },
+      })
         .then(async ({ data }) => {
-          //form.resetFields();
+          reset()
           toast.success(`Langue ${data.language.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
@@ -59,54 +72,108 @@ const LanguageForm: FC<LanguageFormProps> = ({
             messageService.sendMessage('language', data.language)
             props.onModalClose?.()
           }
-          /* if (close) {
-                        props.onCloseModal();
-                    }*/
+          if (meta.close) {
+            modal?.hide()
+          }
         })
         .catch((error) => {
           toast.error(`Impossible d'ajouter la langue: ${formatError(error)}`)
-          // console.log(error.message)
         })
-    })(event)
-  }
+    },
+  })
+
+  const active = useSelector(store, (state) => state.values.active)
 
   return (
-    <Form onSubmit={onSubmit}>
-      <>
-        <Input name="code" label={t('label-code')} control={control} required>
-          <option value="">{t('label-select')}</option>
-          <option value="EN">{t('label-english')}</option>
-          <option value="FR">{t('label-french')}</option>
-        </Input>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit()
+      }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-x-1 gap-y-1">
+        <FormSection
+          title={m.label_languageInfo()}
+          description={m.label_languageInfoDesc()}
+          icon={<Globe size={18} />}
+          color="#7367f0"
+        >
+          <div className="space-y-3">
+            <AppField
+              name="code"
+              children={(field) => (
+                <field.ControlledSelect
+                  label={m.label_code()}
+                  required={true}
+                  prepend={<Globe size={16} />}
+                  options={[
+                    { value: 'EN', label: m.label_english() },
+                    { value: 'FR', label: m.label_french() },
+                  ]}
+                  onChange={(value) => {
+                    setFieldValue('code', value)
+                  }}
+                />
+              )}
+            />
 
-        <Input
-          name="name"
-          label={t('label-name')}
-          control={control}
-          required={true}
-        />
+            <AppField
+              name="name"
+              children={(field) => (
+                <field.Input
+                  label={m.label_name()}
+                  required={true}
+                  prepend={<Globe size={16} />}
+                />
+              )}
+            />
 
-        <Switch
-          name="active"
-          label={t('label-active')}
-          control={control}
-          defaultChecked={getValues('active')}
-        />
+            <ToggleOption
+              icon={<CheckCircle size={16} />}
+              title={m.label_active()}
+              description={m.label_activeDesc()}
+              isActive={active}
+            >
+              <AppField
+                name="active"
+                children={(field) => <field.Switch label="" />}
+              />
+            </ToggleOption>
+          </div>
+        </FormSection>
 
-        <Input
-          name="description"
-          label={t('label-description')}
-          control={control}
-          type="textarea"
-        />
+        <FormSection
+          title={m.label_additionalInfo()}
+          description={m.label_additionalInfoDesc()}
+          icon={<FileText size={18} />}
+          color="#28c76f"
+        >
+          <div className="">
+            <AppField
+              name="description"
+              children={(field) => (
+                <field.Input
+                  label={m.label_description()}
+                  type="textarea"
+                  rows={5}
+                  prepend={<FileText size={16} />}
+                />
+              )}
+            />
+          </div>
+        </FormSection>
+      </div>
 
-        <ActionButtons
-          cancelAction={props.popover ? props.onModalClose : modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-        />
-      </>
+      <StickyActions>
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
+      </StickyActions>
     </Form>
   )
 }
