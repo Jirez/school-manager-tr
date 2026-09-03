@@ -2028,5 +2028,15 @@
   "label_functionDetailsDesc": "Nom et préfixe de la fonction",
   "label_levelDetailsDesc": "Informations d'identification du niveau",
   "action_add_cycle": "Ajouter cycle",
-  "action_update_cycle": "Modifier cycle"
+  "action_update_cycle": "Modifier cycle",
+  "label_periodInfo": "Année scolaire et ordre de la période",
+  "label_designationDesc": "Libellés de la période dans les deux langues",
+  "label_periodSettingsDesc": "Configuration avancée de la période",
+  "label_messageDesc": "Messages à afficher sur les bulletins",
+  "label_subPeriodInfo": "Période parente et ordre de la sous-période",
+  "action_add_period": "Ajouter période",
+  "action_update_period": "Modifier période",
+  "action_add_subPeriod": "Ajouter sous-période",
+  "action_update_subPeriod": "Modifier sous-période",
+  "label_subPeriodSettingsDesc": "Configuration avancée de la sous-période"
 }

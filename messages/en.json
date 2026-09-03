@@ -2024,5 +2024,15 @@
   "label_functionDetailsDesc": "Name and prefix of the function",
   "label_levelDetailsDesc": "Level identification information",
   "action_add_cycle": "Add cycle",
-  "action_update_cycle": "Update cycle"
+  "action_update_cycle": "Update cycle",
+  "label_periodInfo": "School year and order of the period",
+  "label_designationDesc": "Designation of the period in both languages",
+  "label_periodSettingsDesc": "Advanced configuration of the period",
+  "label_messageDesc": "Messages to display on the reports",
+  "label_subPeriodInfo": "Parent period and order of the sub-period",
+  "action_add_period": "Add period",
+  "action_update_period": "Update period",
+  "action_add_subPeriod": "Add sub-period",
+  "action_update_subPeriod": "Update sub-period",
+  "label_subPeriodSettingsDesc": "Advanced configuration of the sub-period"
 }

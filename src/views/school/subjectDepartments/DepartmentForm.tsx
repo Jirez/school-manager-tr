@@ -5,10 +5,8 @@ import { toast } from 'react-toastify'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 import { Form } from 'reactstrap'
-import {
-  subjectDepartmentSchema,
-  type SubjectDepartmentSchemaType,
-} from '@/views/school/subjectDepartments/department.validation'
+import { subjectDepartmentSchema } from '@/views/school/subjectDepartments/department.validation'
+import type { SubjectDepartmentSchemaType } from '@/views/school/subjectDepartments/department.validation'
 import LiveView from '@/utils/LiveView'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import SchoolSectionAdd from '@/views/school/schoolSections/SchoolSectionAdd'
@@ -71,20 +69,21 @@ const DepartmentForm: FC<DepartmentFormProps> = ({
             },
           },
         })
-          .then(async ({ data }) => {
-            //form.resetFields();
+          .then(async ({ data: result }) => {
+            // form.resetFields();
             toast.success(
-              `Département ${data.subjectDepartment.name} enregistrée`,
+              `Département ${result.subjectDepartment.name} enregistrée`,
               { ...TOAST_OPTIONS },
             )
 
             if (props.popover) {
               messageService.sendMessage(
                 'subjectDepartment',
-                data.subjectDepartment,
+                result.subjectDepartment,
               )
               props.onModalClose?.()
             }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (meta.close) {
               modal?.hide()
             }
@@ -127,7 +126,7 @@ const DepartmentForm: FC<DepartmentFormProps> = ({
             document={SchoolSectionCreatedDocument}
             singleVar="schoolSection"
             data={data}
-            //loading={loading}
+            // loading={loading}
             listVar="schoolSections"
             subscribeToMore={subscribeToMore}
             sortField="name"

@@ -8,10 +8,8 @@ import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import type { LanguageType } from './Language.type'
-import {
-  languageValidation,
-  type LanguageSchemaType,
-} from './language.validation'
+import { languageValidation } from './language.validation'
+import type { LanguageSchemaType } from './language.validation'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
@@ -72,6 +70,7 @@ const LanguageForm: FC<LanguageFormProps> = ({
             messageService.sendMessage('language', data.language)
             props.onModalClose?.()
           }
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (meta.close) {
             modal?.hide()
           }
@@ -88,7 +87,8 @@ const LanguageForm: FC<LanguageFormProps> = ({
     <Form
       onSubmit={(e) => {
         e.preventDefault()
-        handleSubmit()
+        e.stopPropagation()
+        // handleSubmit()
       }}
     >
       <div className="grid grid-cols-1 md:grid-cols-1 gap-x-1 gap-y-1">

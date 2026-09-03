@@ -1,14 +1,25 @@
 import { emptyStringToNull } from '@/utils/helpers'
-import { string, object, number, date } from 'yup'
+import { z } from 'zod'
+import { m } from '@/paraglide/messages'
 
-export const periodValidationSchema = object({
-  label: string().required('validation-name-required').min(2).max(50),
-  schoolYearId: object().required().typeError('Field required'),
-  startDate: date().required().typeError('Field required'),
-  endDate: date().required().typeError('Field required'),
-  numberOrder: number().required().transform(emptyStringToNull),
-  coefficient: number().required(),
-  id: number().optional(),
-  message: string().optional().transform(emptyStringToNull),
-  message2: string().optional().transform(emptyStringToNull),
+export const periodSchema = z.object({
+  label: z
+    .string()
+    .min(2, m.string_min({ min: 2 }))
+    .max(50, m.string_max({ max: 50 })),
+  label2: z
+    .string()
+    .min(2, m.string_min({ min: 2 }))
+    .max(50, m.string_max({ max: 50 })),
+  schoolYearId: z.any().refine((val) => val !== null && val !== undefined, {
+    message: m.validation_required(),
+  }),
+  startDate: z.array(z.date()).or(z.date()),
+  endDate: z.array(z.date()).or(z.date()),
+  numberOrder: z.coerce.number().min(1).max(3).positive().int(),
+  coefficient: z.coerce.number().optional().nullable(),
+  message: z.string().transform(emptyStringToNull).optional().nullable(),
+  message2: z.string().transform(emptyStringToNull).optional().nullable(),
 })
+
+export type PeriodSchemaType = z.input<typeof periodSchema>
