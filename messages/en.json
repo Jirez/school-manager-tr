@@ -2021,5 +2021,8 @@
   "action_update_officialFunction": "Update a official function",
   "label_personalInformationDesc": "Name and email of the official",
   "label_signatureDesc": "Digital signature of the official",
-  "label_functionDetailsDesc": "Name and prefix of the function"
+  "label_functionDetailsDesc": "Name and prefix of the function",
+  "label_levelDetailsDesc": "Level identification information",
+  "action_add_cycle": "Add cycle",
+  "action_update_cycle": "Update cycle"
 }

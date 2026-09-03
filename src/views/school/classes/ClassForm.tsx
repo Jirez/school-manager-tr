@@ -1,7 +1,5 @@
 import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useAuthentication } from '@/hooks/useAuthentication'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import type { ClassType } from '@/views/school/classes/Class.type'
 import { Form } from 'reactstrap'
@@ -18,21 +16,17 @@ import {
   Target,
 } from 'lucide-react'
 import LiveView from '@/utils/LiveView'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import {
   branchOptions,
   teacherFilterOptions,
   teacherOptions,
   teacherSingleValue,
 } from '@/utils/select/selectComponents'
-import Input from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { classValidationSchema } from '@/views/school/classes/class.validation'
+import { classValidation } from '@/views/school/classes/class.validation'
+// import type { ClassSchemaType } from '@/views/school/classes/class.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   BranchCreatedDocument,
@@ -43,23 +37,16 @@ import {
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { m } from '@/paraglide/messages'
 
 interface ClassFormProps extends BaseFormProps {
   clazz?: ClassType
   modal?: NiceModalHandler
 }
 
-const initialValues: Partial<ClassType> = {
-  code: '',
-  name: '',
-  branchId: null,
-  headTeacherId: null,
-  autoTimeTable: true,
-  examClass: false,
-}
-
 const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useBranchesQuery({
@@ -75,15 +62,14 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
   })
 
   const {
-    control,
     handleSubmit,
-    formState: { isDirty },
+    AppField,
     reset,
-    setValue,
-    getValues,
-    watch,
-  } = useForm<ClassType>({
-    mode: 'onBlur',
+    store,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
       code: clazz?.code || '',
       name: clazz?.name || '',
@@ -93,65 +79,70 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
       autoTimeTable: clazz ? clazz.autoTimeTable : true,
       competenceClass: clazz ? clazz.competenceClass : false,
     },
-    resolver: yupResolver(classValidationSchema),
-  })
-
-  // Watch toggle values for visual feedback
-  const examClass = watch('examClass')
-  const autoTimeTable = watch('autoTimeTable')
-  const competenceClass = watch('competenceClass')
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    validators: {
+      // @ts-ignore desc
+      onChange: classValidation,
+    },
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = clazz ? Number(clazz.id) : undefined
+      const parsed = classValidation.parse(value)
 
       action({
         variables: {
           clazz: {
-            ...values,
+            ...parsed,
             id,
-            branchId: Number(values.branchId.id),
-            headTeacherId: values.headTeacherId
-              ? Number(values.headTeacherId.id)
+            branchId: Number(parsed.branchId?.id),
+            headTeacherId: parsed.headTeacherId
+              ? Number(parsed.headTeacherId?.id)
               : null,
           },
         },
       })
-        .then(async ({ data }) => {
-          reset(initialValues)
-          toast.success(`Classe ${data.clazz.name} enregistrée`, {
+        .then(async ({ data: result }) => {
+          reset()
+          toast.success(`Classe ${result.clazz.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
 
           if (props.popover) {
-            messageService.sendMessage('clazz', data.clazz)
+            messageService.sendMessage('clazz', result.clazz)
             props.onModalClose?.()
           }
-          if (close) {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          if (meta.close) {
             modal?.hide()
           }
         })
         .catch((error) => {
           toast.error(`Impossible d'ajouter la classe: ${formatError(error)}`)
         })
-    })(event)
-  }
+    },
+  })
+
+  const examClass = useSelector(store, (state) => state.values.examClass)
+  const autoTimeTable = useSelector(
+    store,
+    (state) => state.values.autoTimeTable,
+  )
+  const competenceClass = useSelector(
+    store,
+    (state) => state.values.competenceClass,
+  )
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit()
+      }}
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
         {/* Basic Information Section */}
         <FormSection
-          title={t('label-classInfo') || 'Informations de la classe'}
-          description={
-            t('label-classInfoDesc') || 'Détails généraux de la classe'
-          }
+          title={m.label_classInfo()}
+          description={m.label_classInfoDesc()}
           icon={<BookOpen size={18} />}
           color="#7367f0"
         >
@@ -169,39 +160,47 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
               enterpriseId={enterpriseId}
             >
               {({ branches }) => (
-                <ControlledSelect
+                <AppField
                   name="branchId"
-                  label={t('label-branch')}
-                  control={control}
-                  loading={loading}
-                  required={true}
-                  prepend={<Layers size={16} />}
-                  onChange={(val) => setValue('branchId', val)}
-                  options={branches || undefined}
-                  getOptionLabel={(option) => option.name}
-                  getOptionValue={(option) => option.id}
-                  components={{ Option: branchOptions }}
-                  formId="branch"
-                  optionLabel="name"
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_branch()}
+                      required={true}
+                      loading={loading}
+                      prepend={<Layers size={16} />}
+                      options={branches || undefined}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      components={{ Option: branchOptions }}
+                      optionLabel="name"
+                      onChange={(val: any) => setFieldValue('branchId', val)}
+                    />
+                  )}
                 />
               )}
             </LiveView>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-              <Input
+              <AppField
                 name="code"
-                label={t('label-code')}
-                control={control}
-                prepend={<Hash size={16} />}
-                placeholder="Ex: 6EME-A"
+                children={(field) => (
+                  <field.Input
+                    label={m.label_code()}
+                    prepend={<Hash size={16} />}
+                    placeholder="Ex: 6EME-A"
+                  />
+                )}
               />
-              <Input
+              <AppField
                 name="name"
-                label={t('label-name')}
-                control={control}
-                required={true}
-                prepend={<Type size={16} />}
-                placeholder="Ex: Sixième A"
+                children={(field) => (
+                  <field.Input
+                    label={m.label_name()}
+                    required={true}
+                    prepend={<Type size={16} />}
+                    placeholder="Ex: Sixième A"
+                  />
+                )}
               />
             </div>
           </div>
@@ -209,10 +208,8 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
 
         {/* Head Teacher Section */}
         <FormSection
-          title={t('label-headTeacher') || 'Titulaire'}
-          description={
-            t('label-headTeacherDesc') || 'Enseignant responsable de la classe'
-          }
+          title={m.label_headTeacher()}
+          description={m.label_headTeacherDesc()}
           icon={<UserCheck size={18} />}
           color="#28c76f"
         >
@@ -229,23 +226,27 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
               enterpriseId={enterpriseId}
             >
               {({ personnels }) => (
-                <ControlledSelect
+                <AppField
                   name="headTeacherId"
-                  label={t('label-headTeacher')}
-                  control={control}
-                  loading={loadingPersonnel}
-                  prepend={<User size={16} />}
-                  onChange={(val) => setValue('headTeacherId', val)}
-                  options={personnels || undefined}
-                  getOptionLabel={(option) => option.lastName}
-                  getOptionValue={(option) => option.id}
-                  components={{
-                    Option: teacherOptions,
-                    SingleValue: teacherSingleValue,
-                  }}
-                  filterOption={teacherFilterOptions}
-                  formId="teacher"
-                  optionLabel="lastName"
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_headTeacher()}
+                      loading={loadingPersonnel}
+                      prepend={<User size={16} />}
+                      options={personnels || undefined}
+                      getOptionLabel={(option: any) => option.lastName}
+                      getOptionValue={(option: any) => option.id}
+                      components={{
+                        Option: teacherOptions,
+                        SingleValue: teacherSingleValue,
+                      }}
+                      filterOption={teacherFilterOptions}
+                      optionLabel="lastName"
+                      onChange={(val: any) =>
+                        setFieldValue('headTeacherId', val)
+                      }
+                    />
+                  )}
                 />
               )}
             </LiveView>
@@ -254,10 +255,8 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
 
         {/* Class Settings Section */}
         <FormSection
-          title={t('label-classSettings') || 'Paramètres'}
-          description={
-            t('label-classSettingsDesc') || 'Options et configurations avancées'
-          }
+          title={m.label_classSettings()}
+          description={m.label_classSettingsDesc()}
           icon={<Settings size={18} />}
           color="#ff9f43"
           className="col-span-full"
@@ -265,62 +264,37 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             <ToggleOption
               icon={<Award size={16} />}
-              title={t('label-examClass')}
-              description={
-                t('label-examClassDesc') || 'Classe à examen officiel'
-              }
+              title={m.label_examClass()}
+              description={m.label_examClassDesc()}
               isActive={examClass}
             >
-              <Switch
+              <AppField
                 name="examClass"
-                control={control}
-                defaultChecked={getValues('examClass')}
-                label=""
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setValue('examClass', e.target.checked, { shouldDirty: true })
-                }
+                children={(field) => <field.Switch label="" />}
               />
             </ToggleOption>
 
             <ToggleOption
               icon={<Calendar size={16} />}
-              title={t('label-autoTimeTable')}
-              description={
-                t('label-autoTimeTableDesc') || 'Génération automatique'
-              }
+              title={m.label_autoTimeTable()}
+              description={m.label_autoTimeTableDesc()}
               isActive={autoTimeTable}
             >
-              <Switch
+              <AppField
                 name="autoTimeTable"
-                control={control}
-                defaultChecked={getValues('autoTimeTable')}
-                label=""
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setValue('autoTimeTable', e.target.checked, {
-                    shouldDirty: true,
-                  })
-                }
+                children={(field) => <field.Switch label="" />}
               />
             </ToggleOption>
 
             <ToggleOption
               icon={<Target size={16} />}
-              title={t('label-competenceClass')}
-              description={
-                t('label-competenceClassDesc') || 'Approche par compétences'
-              }
+              title={m.label_competenceClass()}
+              description={m.label_competenceClassDesc()}
               isActive={competenceClass}
             >
-              <Switch
+              <AppField
                 name="competenceClass"
-                control={control}
-                defaultChecked={getValues('competenceClass')}
-                label=""
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setValue('competenceClass', e.target.checked, {
-                    shouldDirty: true,
-                  })
-                }
+                children={(field) => <field.Switch label="" />}
               />
             </ToggleOption>
           </div>
@@ -329,13 +303,14 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
 
       {/* Action Buttons */}
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )

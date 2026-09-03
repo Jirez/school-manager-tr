@@ -11,7 +11,7 @@ export default NiceModal.create(({ level, update }: any) => {
   return (
     <ModalForm
       modal={modal}
-      className="modal-md"
+      className="max-w-3xl"
       title={update ? t('action.update_level') : t('action.add_level')}
     >
       <Suspense>

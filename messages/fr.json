@@ -2025,5 +2025,8 @@
   "action_update_officialFunction": "Modifier une fonction",
   "label_personalInformationDesc": "Nom et email du responsable",
   "label_signatureDesc": "Signature numérique du responsable",
-  "label_functionDetailsDesc": "Nom et préfixe de la fonction"
+  "label_functionDetailsDesc": "Nom et préfixe de la fonction",
+  "label_levelDetailsDesc": "Informations d'identification du niveau",
+  "action_add_cycle": "Ajouter cycle",
+  "action_update_cycle": "Modifier cycle"
 }

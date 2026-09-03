@@ -24,10 +24,8 @@ import SchoolYearAdd from '@/views/school/schoolYears/SchoolYearAdd'
 import SchoolSectionAdd from '@/views/school/schoolSections/SchoolSectionAdd'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import {
-  cycleSchema,
-  type CycleSchemaType,
-} from '@/views/school/cycles/cycle.validation'
+import { cycleSchema } from '@/views/school/cycles/cycle.validation'
+import type { CycleSchemaType } from '@/views/school/cycles/cycle.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   SchoolSectionCreatedDocument,
@@ -96,14 +94,14 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
           },
         },
       })
-        .then(async ({ data }) => {
+        .then(async ({ data: result }) => {
           reset()
-          toast.success(`Cycle ${data.cycle.name} enregistrée`, {
+          toast.success(`Cycle ${result.cycle.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
 
           if (props.popover) {
-            messageService.sendMessage('cycle', data.cycle)
+            messageService.sendMessage('cycle', result.cycle)
             props.onModalClose?.()
           }
           if (meta.close) {
