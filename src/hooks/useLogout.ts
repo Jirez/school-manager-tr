@@ -27,6 +27,7 @@ export function useLogout() {
         client.resetStore()
         setDone(true)
         logout(false)
+        
         navigate({
           to: LOGIN,
           search: {

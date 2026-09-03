@@ -314,7 +314,7 @@ const StyledForm = styled(Form)`
   width: 100%;
 `
 
-const VerifyCode = (props: any) => {
+const VerifyCode = () => {
   const [code, setCode] = useState<string>()
   const [complete, setComplete] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -353,7 +353,7 @@ const VerifyCode = (props: any) => {
       enterprise: name,
       token,
       mfa,
-      returnUrl: '/',
+      returnUrl: location?.state?.returnUrl || '/',
     }
   }
 
@@ -374,7 +374,7 @@ const VerifyCode = (props: any) => {
         localStorage.setItem('schoolAuthUser', JSON.stringify(data?.verify))
         setLoading(false)
         ability.update(abilitiesFromAuthorities())
-        navigate(location?.state?.returnUrl || DASHBOARD)
+        navigate({ to: location?.state?.returnUrl || DASHBOARD })
       })
       .catch((error) => {
         //console.log(error)
@@ -434,7 +434,9 @@ const VerifyCode = (props: any) => {
 
           <ButtonGroup>
             <Button
-              onClick={() => navigate({ to: '/login' })}
+              onClick={() =>
+                navigate({ to: '/login', search: { returnUrl: '' } })
+              }
               className="round flex flex-row items-center gap-2"
               size="large"
               color="danger"

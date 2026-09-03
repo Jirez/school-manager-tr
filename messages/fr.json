@@ -2005,5 +2005,8 @@
   "text-pageLayoutSettings": "Paramètres de mise en page",
   "label_expenseReport": "Rapport des dépenses",
   "label_expenseSummary": "Rapport de synthèse des dépenses",
-  "label_selectCategories": "Sélectionnez les catégories"
+  "label_selectCategories": "Sélectionnez les catégories",
+  "string_min": "Ce champ doit avoir au moins {min} caractères",
+  "string_max": "Ce champ doit avoir au plus {max} caractères",
+  "login": "Connexion"
 }

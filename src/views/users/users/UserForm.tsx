@@ -126,7 +126,8 @@ const UserForm: FC<UserFormProps> = ({ user, action, modal, ...props }) => {
             ...TOAST_OPTIONS,
           })
           if (data.user.mfa) {
-            navigate('/qrcode', {
+            navigate({
+              to: '/qrcode',
               state: { imageUrl: data.user.secretImageUri },
             })
           }

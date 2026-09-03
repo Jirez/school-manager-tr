@@ -14,6 +14,9 @@ const NumericInput = lazy(
 const InputPasswordToggle = lazy(
   () => import('@/@core/components/ui/ts-form/input-password-toggle'),
 )
+const DatePicker = lazy(
+  () => import('@/@core/components/ui/ts-form/date-picker'),
+)
 const ActionButtons = lazy(
   () => import('@/@core/components/ui/forms/action-buttons'),
 )
@@ -55,6 +58,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     ControlledSelect,
     NumericInput,
     InputPasswordToggle,
+    DatePicker,
   },
   fieldContext,
   formContext,

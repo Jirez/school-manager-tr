@@ -1,8 +1,12 @@
 import Button from '@/@core/components/button'
 import { useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-// import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useLocation, useNavigate, Link } from '@tanstack/react-router'
+import {
+  useLocation,
+  useNavigate,
+  Link,
+  useSearch,
+} from '@tanstack/react-router'
 import { Form } from 'reactstrap'
 import { z } from 'zod'
 import { toast, Slide } from 'react-toastify'
@@ -18,10 +22,11 @@ import { ToastContent } from '@/@core/components/toast'
 import { authenticationVar } from '../../ApiClient'
 import { Eye, EyeOff, User, Lock, ArrowRight } from 'lucide-react'
 import { useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
 
 const loginSchema = z.object({
-  username: z.string().min(5),
-  password: z.string(),
+  username: z.string().min(5, m.string_min({ min: 5 })),
+  password: z.string().min(8, m.string_min({ min: 8 })),
 })
 
 export default function LoginForm() {
@@ -33,6 +38,13 @@ export default function LoginForm() {
 
   const ability = useContext(AbilityContext)
   const location: any = useLocation()
+  const search = useSearch({ strict: false }) as { returnUrl?: string }
+  const returnUrl = search?.returnUrl || location?.state?.returnUrl
+  const targetUrl =
+    returnUrl && returnUrl !== LOGIN && returnUrl !== '/'
+      ? returnUrl
+      : DASHBOARD
+
   const browserInfo = browserDetect()
   const [_, setSchoolFeeCompulsory] = useLocalStorageState<boolean>(
     'schoolFeeCompulsory',
@@ -42,24 +54,10 @@ export default function LoginForm() {
   )
   const { run } = useDebounceFn(
     () => {
-      navigate({ to: location?.state?.returnUrl || DASHBOARD })
+      navigate({ to: targetUrl })
     },
     { wait: 20 },
   )
-
-  // console.log(location?.state?.returnUrl)
-  /* const {
-    control,
-    // setError,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm<FormValues>({
-    defaultValues: {
-      password: '',
-      username: '',
-    },
-    resolver: yupResolver(loginSchema),
-  }) */
 
   const { handleSubmit, AppField } = useAppForm({
     defaultValues: {
@@ -91,10 +89,10 @@ export default function LoginForm() {
               ...authenticationVar(),
               isAuthenticated: false,
             })
-            // setUsername(values.username);
-            // setRedirect(VERIFY_CODE);
-            // navigate(VERIFY_CODE, { state: { username: username } })
-            navigate({ to: VERIFY_CODE, state: { username: value.username } })
+            navigate({
+              to: VERIFY_CODE,
+              state: { username: value.username, returnUrl: targetUrl },
+            })
           } else {
             authenticationVar(dataToAuthentication(data))
             TokenStorage.write(data?.loginUser?.token!)
@@ -164,8 +162,6 @@ export default function LoginForm() {
         },
       },
     } = data
-    const returnUrl = location?.state?.returnUrl
-
     return {
       displayName: displayName ? displayName : concat(firstName, lastName),
       username,
@@ -176,7 +172,7 @@ export default function LoginForm() {
       enterprise: name,
       token,
       mfa,
-      returnUrl: returnUrl === LOGIN ? '/' : returnUrl,
+      returnUrl: targetUrl,
       schoolCategory: data?.loginUser?.user?.schoolCategory,
     }
   }
@@ -199,7 +195,7 @@ export default function LoginForm() {
         }}
       >
         <div className="flex justify-between items-center mb-0.5">
-          <label className="form-label mb-0">{t('text-username')}</label>
+          <label className="form-label mb-0">{m.label_username()}</label>
         </div>
         <AppField
           name="username"
@@ -208,14 +204,14 @@ export default function LoginForm() {
             <field.Input
               autoFocus
               prepend={<User size={16} />}
-              placeholder={t('label-username')}
+              placeholder={m.label_username()}
             />
           )}
         />
 
         <div className="mb-1 mt-1">
           <div className="flex justify-between items-center mb-0.5">
-            <label className="form-label mb-0">{t('text-password')}</label>
+            <label className="form-label mb-0">{m.label_password()}</label>
             <Link to="/forgot-password" tabIndex={-1}>
               <small>{t('text-forgot-password')}</small>
             </Link>
@@ -232,7 +228,7 @@ export default function LoginForm() {
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </span>
                 }
-                placeholder={t('label-password')}
+                placeholder={m.label_password()}
                 className="mb-0"
               />
             )}
@@ -252,7 +248,7 @@ export default function LoginForm() {
           loading={loading}
           className="mt-2"
         >
-          <span className="mr-1">{t('app.userAuth.login')}</span>
+          <span className="mr-1">{m.login()}</span>
           <ArrowRight size={16} className="inline-block" />
         </Button>
       </Form>

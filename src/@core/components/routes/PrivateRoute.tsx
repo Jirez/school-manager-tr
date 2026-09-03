@@ -5,7 +5,7 @@ import { useContext, useEffect, Suspense } from 'react'
 // ** Context Imports
 import { AbilityContext } from '@/context/Can'
 import { useAuthentication } from '@/hooks/useAuthentication'
-import { LOGIN } from '@/utils/constants'
+import { DASHBOARD, LOGIN } from '@/utils/constants'
 
 const PrivateRoute = ({ children, route }: any) => {
   // ** Hooks & Vars
@@ -30,10 +30,12 @@ const PrivateRoute = ({ children, route }: any) => {
     if (!route) return
 
     if (!isAuthenticated) {
+      if (location.pathname === LOGIN) return
+
       navigate({
         to: LOGIN,
         search: {
-          returnUrl: location.pathname !== LOGIN ? location.pathname : '/',
+          returnUrl: location.pathname !== '/' ? location.pathname : DASHBOARD,
         },
         replace: true,
       })

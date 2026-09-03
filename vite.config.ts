@@ -15,6 +15,8 @@ const config = defineConfig({
       project: './project.inlang',
       outdir: './src/paraglide',
       cookieName: 'SCHOOL_PARAGLIDE_COOKIE',
+      outputStructure: 'message-modules',
+      strategy: ['cookie', 'preferredLanguage', 'baseLocale'],
     }),
     // devtools(),
     // tailwindcss(),

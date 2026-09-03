@@ -2003,5 +2003,8 @@
   "text-pageLayoutSettings": "Page Layout Settings",
   "label_expenseReport": "Expense Report",
   "label_expenseSummary": "Expense Summary Report",
-  "label_selectCategories": "Select categories"
+  "label_selectCategories": "Select categories",
+  "string_min": "This field must have at least {min} characters",
+  "string_max": "This field must have at most {max} characters",
+  "login": "Login"
 }
