@@ -82,6 +82,7 @@ import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_product_student_sum
 import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary'
 import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary'
 import { Route as PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport } from './routes/_privateLayout/_cleanLayout/(payment)/fee_payment_summary'
+import { Route as PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRouteImport } from './routes/_privateLayout/_cleanLayout/(report_card)/annual_report_card'
 import { Route as PrivateLayoutVerticalaccountingAccountCategoriesRouteImport } from './routes/_privateLayout/_vertical/(accounting)/account-categories'
 import { Route as PrivateLayoutVerticalaccountingAccountGroupsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/account-groups'
 import { Route as PrivateLayoutVerticalaccountingAccountsRouteImport } from './routes/_privateLayout/_vertical/(accounting)/accounts'
@@ -622,6 +623,12 @@ const PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute =
   PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport.update({
     id: '/(payment)/fee_payment_summary',
     path: '/fee_payment_summary',
+    getParentRoute: () => PrivateLayoutCleanLayoutRoute,
+  } as any)
+const PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute =
+  PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRouteImport.update({
+    id: '/(report_card)/annual_report_card',
+    path: '/annual_report_card',
     getParentRoute: () => PrivateLayoutCleanLayoutRoute,
   } as any)
 const PrivateLayoutVerticalaccountingAccountCategoriesRoute =
@@ -1374,6 +1381,7 @@ export interface FileRoutesByFullPath {
   '/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
   '/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
   '/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/annual_report_card': typeof PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute
   '/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
   '/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
   '/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
@@ -1559,6 +1567,7 @@ export interface FileRoutesByTo {
   '/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
   '/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
   '/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/annual_report_card': typeof PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute
   '/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
   '/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
   '/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
@@ -1748,6 +1757,7 @@ export interface FileRoutesById {
   '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
   '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
   '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary': typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  '/_privateLayout/_cleanLayout/(report_card)/annual_report_card': typeof PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute
   '/_privateLayout/_vertical/(accounting)/account-categories': typeof PrivateLayoutVerticalaccountingAccountCategoriesRoute
   '/_privateLayout/_vertical/(accounting)/account-groups': typeof PrivateLayoutVerticalaccountingAccountGroupsRoute
   '/_privateLayout/_vertical/(accounting)/accounts': typeof PrivateLayoutVerticalaccountingAccountsRoute
@@ -1935,6 +1945,7 @@ export interface FileRouteTypes {
     | '/fee_payment_product_summary'
     | '/fee_payment_slice_summary'
     | '/fee_payment_summary'
+    | '/annual_report_card'
     | '/account-categories'
     | '/account-groups'
     | '/accounts'
@@ -2120,6 +2131,7 @@ export interface FileRouteTypes {
     | '/fee_payment_product_summary'
     | '/fee_payment_slice_summary'
     | '/fee_payment_summary'
+    | '/annual_report_card'
     | '/account-categories'
     | '/account-groups'
     | '/accounts'
@@ -2308,6 +2320,7 @@ export interface FileRouteTypes {
     | '/_privateLayout/_cleanLayout/(payment)/fee_payment_product_summary'
     | '/_privateLayout/_cleanLayout/(payment)/fee_payment_slice_summary'
     | '/_privateLayout/_cleanLayout/(payment)/fee_payment_summary'
+    | '/_privateLayout/_cleanLayout/(report_card)/annual_report_card'
     | '/_privateLayout/_vertical/(accounting)/account-categories'
     | '/_privateLayout/_vertical/(accounting)/account-groups'
     | '/_privateLayout/_vertical/(accounting)/accounts'
@@ -2947,6 +2960,13 @@ declare module '@tanstack/react-router' {
       path: '/fee_payment_summary'
       fullPath: '/fee_payment_summary'
       preLoaderRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRouteImport
+      parentRoute: typeof PrivateLayoutCleanLayoutRoute
+    }
+    '/_privateLayout/_cleanLayout/(report_card)/annual_report_card': {
+      id: '/_privateLayout/_cleanLayout/(report_card)/annual_report_card'
+      path: '/annual_report_card'
+      fullPath: '/annual_report_card'
+      preLoaderRoute: typeof PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRouteImport
       parentRoute: typeof PrivateLayoutCleanLayoutRoute
     }
     '/_privateLayout/_vertical/(accounting)/account-categories': {
@@ -3802,6 +3822,7 @@ interface PrivateLayoutCleanLayoutRouteChildren {
   PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_product_summaryRoute
   PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute
   PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute: typeof PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute
+  PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute: typeof PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute
 }
 
 const PrivateLayoutCleanLayoutRouteChildren: PrivateLayoutCleanLayoutRouteChildren =
@@ -3922,6 +3943,8 @@ const PrivateLayoutCleanLayoutRouteChildren: PrivateLayoutCleanLayoutRouteChildr
       PrivateLayoutCleanLayoutpaymentFee_payment_slice_summaryRoute,
     PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute:
       PrivateLayoutCleanLayoutpaymentFee_payment_summaryRoute,
+    PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute:
+      PrivateLayoutCleanLayoutreport_cardAnnual_report_cardRoute,
   }
 
 const PrivateLayoutCleanLayoutRouteWithChildren =
