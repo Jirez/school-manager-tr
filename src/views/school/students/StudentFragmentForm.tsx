@@ -61,14 +61,15 @@ import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import { styled } from 'styled-components'
 import { FieldGrid, FieldGroup } from '../configuration/config-form-helper'
+import { m } from '@/paraglide/messages'
 
 interface StudentFragmentFormProps {
   student?: StudentType | any
 }
 
 export const genderOptions = [
-  { label: 'label-male', value: 'MALE' },
-  { label: 'label-female', value: 'FEMALE' },
+  { label: m.label_male(), value: 'MALE' },
+  { label: m.label_female(), value: 'FEMALE' },
 ]
 
 // const config = await fetch('/configuration.json').then((res) => res.json())

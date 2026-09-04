@@ -17,6 +17,9 @@ const InputPasswordToggle = lazy(
 const DatePicker = lazy(
   () => import('@/@core/components/ui/ts-form/date-picker'),
 )
+const PhoneInput = lazy(
+  () => import('@/@core/components/ui/ts-form/phone-input'),
+)
 const ActionButtons = lazy(
   () => import('@/@core/components/ui/forms/action-buttons'),
 )
@@ -59,13 +62,14 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     NumericInput,
     InputPasswordToggle,
     DatePicker,
+    PhoneInput,
   },
   fieldContext,
   formContext,
 })
 
 export type FormMeta = {
-  close: Boolean
+  close: boolean
 }
 
 export const defaultMeta: FormMeta = {

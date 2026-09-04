@@ -2039,5 +2039,9 @@
   "label_2faDesc": "Use two-factor authentication to strengthen your security",
   "label_profile": "Profile",
   "label_enable2fa": "Enable two-factor authentication",
-  "label_disable2fa": "Disable two-factor authentication"
+  "label_disable2fa": "Disable two-factor authentication",
+  "label_logout": "Logout",
+  "label_userInfo": "User Information",
+  "label_userInfoDesc": "Details of your account and profile",
+  "validation_password_match": "The password and confirmation must match"
 }

@@ -1,9 +1,7 @@
 import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import type { GuardianType } from './Guardian.type'
+// import type { GuardianType } from './Guardian.type'
 import { Form, TabPane } from 'reactstrap'
 import {
   User,
@@ -23,58 +21,28 @@ import {
   Info,
   Activity,
 } from 'lucide-react'
-import Input from '@/@core/components/ui/forms/input'
 import LiveView from '@/utils/LiveView'
 import { useAuthentication } from '@/hooks/useAuthentication'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import { genderOptions } from '../students/StudentFragmentForm'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import { TabNav } from '@/@core/components/tabs'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import { guardianValidationSchema } from './guardian.validation'
-import { yupResolver } from '@hookform/resolvers/yup'
-import PhoneInput from '@/@core/components/ui/forms/phone-input'
+import { guardianZodSchema } from './guardian.validation'
+import type { GuardianZodSchemaType } from './guardian.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import { LanguageCreatedDocument, useLanguagesQuery } from '@/gql/graphql'
 import GuardianStreetAutocomplete from '@/utils/GuardianStreetAutocomplete'
 import GuardianReligionAutocomplete from '@/utils/GuardianReligionAutocomplete'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import FormSection from '@/@core/components/ui/forms/form-section'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
 
 interface GuardianFormProps extends BaseFormProps {
-  guardian?: GuardianType
+  guardian?: GuardianZodSchemaType
   modal?: NiceModalHandler
   relation?: any
   currentIndex?: number
-}
-
-const initialValues: Partial<GuardianType> = {
-  languageId: null,
-  lastName: '',
-  firstName: '',
-  gender: '',
-  active: true,
-  profession: '',
-  note: '',
-  job: '',
-  religion: '',
-  regionOrigin: '',
-  departmentOrigin: '',
-  districtOrigin: '',
-  address: {
-    country: '',
-    state: '',
-    street: '',
-    town: '',
-  },
-  contactInfo: {
-    telephone: '',
-    mobile: '',
-    email: '',
-    fax: '',
-    postOfficeBox: '',
-  },
 }
 
 const GuardianForm: FC<GuardianFormProps> = ({
@@ -83,33 +51,29 @@ const GuardianForm: FC<GuardianFormProps> = ({
   modal,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useLanguagesQuery()
 
-  const getSelectedGender = (): string | Record<string, any> => {
+  const getSelectedGender = () => {
     if (!guardian) {
-      return ''
+      return null
     }
-
-    return genderOptions
-      .filter(({ value }) => value === guardian.gender)
-      .map(({ label, value }) => ({ label: t(label), value }))[0]
+    return genderOptions.find(({ value }) => value === guardian.gender) || null
   }
 
   const {
-    control,
     handleSubmit,
-    formState: { isDirty },
-    setValue,
+    AppField,
     reset,
-    watch,
-  } = useForm<GuardianType>({
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
       lastName: guardian?.lastName || '',
       firstName: guardian?.firstName || '',
-      gender: guardian ? getSelectedGender() : '',
+      gender: getSelectedGender(),
       address: {
         zipCode: guardian?.address?.zipCode || '',
         country: guardian?.address?.country || '',
@@ -132,26 +96,23 @@ const GuardianForm: FC<GuardianFormProps> = ({
       departmentOrigin: guardian?.departmentOrigin || '',
       districtOrigin: guardian?.districtOrigin || '',
       note: guardian?.note || '',
+      active: guardian?.active ?? true,
     },
-    resolver: yupResolver(guardianValidationSchema),
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    validators: {
+      // @ts-ignore validators are not typed yet
+      onChange: guardianZodSchema,
+    },
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = guardian?.id
+      const values = guardianZodSchema.parse(value)
 
       action({
         variables: {
           guardian: {
             ...values,
             id,
-            gender: values.gender.value,
+            gender: values.gender?.value || values.gender,
             languageId: values.languageId ? values.languageId.id : null,
             schoolId: enterpriseId,
             enterpriseId: enterpriseId,
@@ -164,9 +125,9 @@ const GuardianForm: FC<GuardianFormProps> = ({
           },
         },
       })
-        .then(async ({ data }) => {
-          reset(initialValues)
-          toast.success(`Parent ${data.guardian.lastName} enregistré`, {
+        .then(async ({ data: result }) => {
+          reset()
+          toast.success(`Parent ${result.guardian.lastName} enregistré`, {
             ...TOAST_OPTIONS,
           })
 
@@ -188,37 +149,37 @@ const GuardianForm: FC<GuardianFormProps> = ({
 
             if (props.currentIndex) {
               messageService.sendMessage(name, {
-                ...data.guardian,
+                ...result.guardian,
                 currentIndex: props.currentIndex,
               })
             } else {
-              messageService.sendMessage(name, data.guardian)
+              messageService.sendMessage(name, result.guardian)
             }
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
         .catch((error) => {
           toast.error(`Impossible d'ajouter le parent: ${formatError(error)}`)
-          //console.log(error.message)
         })
-    })(event)
-  }
+    },
+  })
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+    >
       <div className="pb-1">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
           {/* Personal Information Section */}
           <FormSection
-            title={
-              t('label-personalInformation') || 'Informations personnelles'
-            }
-            description={
-              t('label-personalInfoDesc') || "Détails d'identification"
-            }
+            title={m.label_personalInformation()}
+            description={m.label_personalInfoDesc()}
             icon={<User size={18} />}
             color="#7367f0"
           >
@@ -236,52 +197,66 @@ const GuardianForm: FC<GuardianFormProps> = ({
                   enterpriseId={enterpriseId}
                 >
                   {({ languages }) => (
-                    <ControlledSelect
+                    <AppField
                       name="languageId"
-                      label={t('label-spokenLanguage')}
-                      control={control}
-                      required
-                      loading={loading}
-                      prepend={<Languages size={14} />}
-                      onChange={(val: any) => setValue('languageId', val)}
-                      options={languages || undefined}
-                      getOptionLabel={(option: any) => option.name}
-                      getOptionValue={(option: any) => option.id}
-                      autoFocus
+                      children={(field) => (
+                        <field.ControlledSelect
+                          label={m.label_spokenLanguage()}
+                          required
+                          loading={loading}
+                          prepend={<Languages size={14} />}
+                          options={languages || undefined}
+                          getOptionLabel={(option: any) => option.name}
+                          getOptionValue={(option: any) => option.id}
+                          onChange={(val: any) =>
+                            setFieldValue('languageId', val)
+                          }
+                          autoFocus
+                        />
+                      )}
                     />
                   )}
                 </LiveView>
               </div>
 
-              <ControlledSelect
+              <AppField
                 name="gender"
-                control={control}
-                label={t('label-gender')}
-                prepend={<Users size={14} />}
-                onChange={(value) => setValue('gender', value)}
-                options={genderOptions.map(({ label, value }) => ({
-                  label: t(label),
-                  value,
-                }))}
-                required
+                children={(field) => (
+                  <field.ControlledSelect
+                    label={m.label_gender()}
+                    prepend={<Users size={14} />}
+                    options={genderOptions.map(({ label, value }) => ({
+                      label,
+                      value,
+                    }))}
+                    required
+                    onChange={(value: any) => setFieldValue('gender', value)}
+                  />
+                )}
               />
 
               <div className="md:col-span-2">
-                <Input
+                <AppField
                   name="lastName"
-                  label={t('label-lastName')}
-                  control={control}
-                  required
-                  prepend={<User size={14} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_lastName()}
+                      required
+                      prepend={<User size={14} />}
+                    />
+                  )}
                 />
               </div>
 
               <div className="md:col-span-2">
-                <Input
+                <AppField
                   name="firstName"
-                  label={t('label-firstName')}
-                  control={control}
-                  prepend={<Info size={14} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_firstName()}
+                      prepend={<Info size={14} />}
+                    />
+                  )}
                 />
               </div>
             </div>
@@ -289,87 +264,98 @@ const GuardianForm: FC<GuardianFormProps> = ({
 
           {/* Professional Information Section */}
           <FormSection
-            title={
-              t('label-professionalInformation') ||
-              'Informations professionnelles'
-            }
-            description={
-              t('label-professionalInfoDesc') || 'Carrière et croyances'
-            }
+            title={m.label_professionalInformation()}
+            description={m.label_professionalInfoDesc()}
             icon={<Briefcase size={18} />}
             color="#28c76f"
           >
             <div className="grid grid-cols-1 gap-1">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                <Input
+                <AppField
                   name="profession"
-                  label={t('label-profession')}
-                  control={control}
-                  prepend={<Briefcase size={14} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_profession()}
+                      prepend={<Briefcase size={14} />}
+                    />
+                  )}
                 />
-                <Input
+                <AppField
                   name="job"
-                  label={t('label-job')}
-                  control={control}
-                  prepend={<Activity size={14} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_job()}
+                      prepend={<Activity size={14} />}
+                    />
+                  )}
                 />
               </div>
 
               <div className="col-span-full">
-                <Input
+                <AppField
                   name="religion"
-                  label={t('label-religion')}
-                  control={control}
-                  className="hidden"
+                  children={(field) => <field.Input className="hidden" />}
                 />
                 <GuardianReligionAutocomplete
                   onFill={(value: string) => {
-                    setValue('religion', value)
+                    setFieldValue('religion', value)
                   }}
                   canRefetch={false}
-                  label={t('label-religion')}
+                  label={m.label_religion()}
                   id="religionF"
                   value={guardian?.religion}
                 />
               </div>
 
-              <Input
+              <AppField
                 name="note"
-                label={t('label-note')}
-                control={control}
-                type="textarea"
-                rows={2}
-                prepend={<StickyNote size={14} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_note()}
+                    type="textarea"
+                    rows={2}
+                    prepend={<StickyNote size={14} />}
+                  />
+                )}
               />
             </div>
           </FormSection>
 
           {/* Origin Section */}
           <FormSection
-            title={t('label-origin') || 'Origine'}
-            description={t('label-originDesc') || 'Détails géographiques'}
+            title={m.label_origin()}
+            description={m.label_originDesc()}
             icon={<MapPin size={18} />}
             color="#00cfe8"
             className="col-span-2"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
-              <Input
+              <AppField
                 name="regionOrigin"
-                label={t('label-regionOrigin')}
-                control={control}
-                prepend={<Flag size={14} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_regionOrigin()}
+                    prepend={<Flag size={14} />}
+                  />
+                )}
               />
-              <Input
+              <AppField
                 name="departmentOrigin"
-                label={t('label-departmentOrigin')}
-                control={control}
-                prepend={<Navigation size={14} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_departmentOrigin()}
+                    prepend={<Navigation size={14} />}
+                  />
+                )}
               />
-              <Input
+              <AppField
                 name="districtOrigin"
-                label={t('label-districtOrigin')}
-                control={control}
-                prepend={<MapPin size={14} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_districtOrigin()}
+                    prepend={<MapPin size={14} />}
+                  />
+                )}
               />
             </div>
           </FormSection>
@@ -384,50 +370,60 @@ const GuardianForm: FC<GuardianFormProps> = ({
             >
               <TabPane tabId="1">
                 <FormSection
-                  title={t('label-address') || 'Adresse'}
-                  description={t('label-addressDesc') || 'Lieu de résidence'}
+                  title={m.label_address()}
+                  description={m.label_addressDesc()}
                   icon={<Home size={18} />}
                   color="#ff9f43"
                   className="mt-2"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                    <Input
+                    <AppField
                       name="address.zipCode"
-                      label={t('label-zipCode')}
-                      control={control}
-                      prepend={<Hash size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_zipCode()}
+                          prepend={<Hash size={14} />}
+                        />
+                      )}
                     />
-                    <Input
+                    <AppField
                       name="address.country"
-                      label={t('label-country')}
-                      control={control}
-                      prepend={<Globe size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_country()}
+                          prepend={<Globe size={14} />}
+                        />
+                      )}
                     />
-                    <Input
+                    <AppField
                       name="address.town"
-                      label={t('label-town')}
-                      control={control}
-                      prepend={<Navigation size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_town()}
+                          prepend={<Navigation size={14} />}
+                        />
+                      )}
                     />
-                    <Input
+                    <AppField
                       name="address.state"
-                      label={t('label-state')}
-                      control={control}
-                      prepend={<MapPin size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_state()}
+                          prepend={<MapPin size={14} />}
+                        />
+                      )}
                     />
                     <div className="md:col-span-2">
-                      <Input
+                      <AppField
                         name="address.street"
-                        label={t('label-street')}
-                        control={control}
-                        className="hidden"
+                        children={(field) => <field.Input className="hidden" />}
                       />
                       <GuardianStreetAutocomplete
                         onFill={(value: string) => {
-                          setValue('address.street', value)
+                          setFieldValue('address.street', value)
                         }}
                         canRefetch={false}
-                        label={t('label-street')}
+                        label={m.label_street()}
                         id="streetF"
                         value={guardian?.address?.street}
                       />
@@ -438,43 +434,52 @@ const GuardianForm: FC<GuardianFormProps> = ({
 
               <TabPane tabId="2">
                 <FormSection
-                  title={t('label-contact') || 'Contact'}
-                  description={
-                    t('label-contactDesc') || 'Moyens de communication'
-                  }
+                  title={m.label_contact()}
+                  description={m.label_contactDesc()}
                   icon={<Phone size={18} />}
                   color="#28c76f"
                   className="mt-2"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-                    <PhoneInput
+                    <AppField
                       name="contactInfo.telephone"
-                      label={t('label-telephone')}
-                      control={control}
+                      children={(field) => (
+                        <field.PhoneInput label={m.label_telephone()} />
+                      )}
                     />
-                    <PhoneInput
+                    <AppField
                       name="contactInfo.mobile"
-                      label={t('label-mobileTelephone')}
-                      control={control}
+                      children={(field) => (
+                        <field.PhoneInput label={m.label_mobileTelephone()} />
+                      )}
                     />
-                    <Input
+                    <AppField
                       name="contactInfo.email"
-                      label={t('label-email')}
-                      control={control}
-                      prepend={<Mail size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_email()}
+                          prepend={<Mail size={14} />}
+                        />
+                      )}
                     />
-                    <Input
+                    <AppField
                       name="contactInfo.fax"
-                      label={t('label-fax')}
-                      control={control}
-                      prepend={<Printer size={14} />}
+                      children={(field) => (
+                        <field.Input
+                          label={m.label_fax()}
+                          prepend={<Printer size={14} />}
+                        />
+                      )}
                     />
                     <div className="md:col-span-2">
-                      <Input
+                      <AppField
                         name="contactInfo.postOfficeBox"
-                        label={t('label-postOfficeBox')}
-                        control={control}
-                        prepend={<Hash size={14} />}
+                        children={(field) => (
+                          <field.Input
+                            label={m.label_postOfficeBox()}
+                            prepend={<Hash size={14} />}
+                          />
+                        )}
                       />
                     </div>
                   </div>
@@ -486,15 +491,14 @@ const GuardianForm: FC<GuardianFormProps> = ({
       </div>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-          disabled={props.loading}
-          fixed={false}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )

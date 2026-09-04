@@ -2043,5 +2043,9 @@
   "label_2faDesc": "Utiliser l'authentification à 2 facteurs pour renforcer votre sécurité",
   "label_profile": "Profil",
   "label_enable2fa": "Activer l'authentification à 2 facteurs",
-  "label_disable2fa": "Désactiver l'authentification à 2 facteurs"
+  "label_disable2fa": "Désactiver l'authentification à 2 facteurs",
+  "label_logout": "Déconnexion",
+  "label_userInfo": "Informations de l'utilisateur",
+  "label_userInfoDesc": "Détails de votre compte et de votre profil",
+  "validation_password_match": "Le mot de passe et la confirmation doivent correspondre"
 }

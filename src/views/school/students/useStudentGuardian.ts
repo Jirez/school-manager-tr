@@ -9,7 +9,9 @@ import { StudentGuardiansDocument } from '@/gql/graphql'
 
 export const useStudentGuardian = (studentId: number | null) => {
   const client = useApolloClient()
-  const [studentGuardians, setGuardians] = useState<StudentGuardian[]>([])
+  const [studentGuardians, setGuardians] = useState<StudentGuardian[] | null>(
+    null,
+  )
 
   const findStudentGuardians = async (studentId: number) => {
     const { data } = await client.query({

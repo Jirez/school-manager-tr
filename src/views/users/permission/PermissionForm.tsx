@@ -17,10 +17,8 @@ import { TOAST_OPTIONS } from '@/utils/constants'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
-import {
-  permissionSchema,
-  type PermissionSchemaType,
-} from '@/views/users/permission/permission.validation'
+import { permissionSchema } from '@/views/users/permission/permission.validation'
+import type { PermissionSchemaType } from '@/views/users/permission/permission.validation'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { useSelector } from '@tanstack/react-form'
 import { m } from '@/paraglide/messages'
@@ -42,7 +40,7 @@ const PermissionForm: FC<FormProps> = ({
         description: permission?.description || '',
         code: permission?.code || '',
         active: permission ? permission.active : true,
-      } as PermissionSchemaType,
+      } as any,
       validators: {
         onChange: permissionSchema,
       },
@@ -67,6 +65,7 @@ const PermissionForm: FC<FormProps> = ({
               messageService.sendMessage('permission', data.permission)
               props.onModalClose?.()
             }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (meta.close) {
               modal?.hide()
             }
