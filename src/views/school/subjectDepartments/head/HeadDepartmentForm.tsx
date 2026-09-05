@@ -1,13 +1,9 @@
 import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Form, Table } from 'reactstrap'
 import { useApolloClient } from '@apollo/client'
-import { useFieldArray, useForm } from 'react-hook-form'
-import type { SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import { XCircle } from 'react-feather'
+import { XCircle } from 'lucide-react'
 import SimpleInput from '@/@core/components/ui/simple-input'
-import Button from '@/@core/components/button'
 import { useModal } from '@ebay/nice-modal-react'
 import TeacherTableModal from '@/views/school/teacher/TeacherTableModal'
 import { concat } from '@/utils/helpers'
@@ -17,10 +13,43 @@ import { TOAST_OPTIONS } from '@/utils/constants'
 import { TeacherByDepartmentDocument } from '@/gql/graphql'
 import type { HeadDepartmentType } from './head.department.type'
 import { useAuthentication } from '@/hooks/useAuthentication'
+import { useAppForm } from '#/hooks/form/form'
+// import { z } from 'zod'
+import { m } from '@/paraglide/messages'
+import Button from '#/@core/components/button'
 
-interface FormValues {
-  items: HeadDepartmentType[]
-}
+/* const headDepartmentItemSchema = z.object({
+  headDepartmentPK: z.object({
+    schoolYearId: z.number(),
+    departmentId: z.number(),
+  }),
+  teacher: z
+    .object({
+      id: z.number().nullable(),
+      firstName: z.string().optional(),
+      lastName: z.string(),
+      code: z.string(),
+    })
+    .optional()
+    .nullable(),
+  department: z
+    .object({
+      id: z.number(),
+      name: z.string(),
+    })
+    .optional()
+    .nullable(),
+  teacherId: z.number().optional(),
+  lastName: z.string().optional(),
+})
+
+const headDepartmentSchema = z.object({
+  items: z
+    .array(headDepartmentItemSchema)
+    .min(0, 'Au moins un animateur pédagogique est requis'),
+}) */
+
+// type HeadDepartmentSchemaType = z.input<typeof headDepartmentSchema>
 
 interface HeadDepartmentFormProps extends BaseFormProps {
   classId: number
@@ -33,74 +62,71 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const client = useApolloClient()
   const tableModal = useModal(TeacherTableModal)
   const { enterpriseId } = useAuthentication()
 
-  const { control, register, handleSubmit, setValue, watch } =
-    useForm<FormValues>({
-      defaultValues: {
-        items: headDepartments,
-      },
-    })
+  const { handleSubmit, AppField, setFieldValue } = useAppForm({
+    defaultValues: {
+      items: headDepartments || [],
+    } as any,
+    validators: {
+      // onChange: headDepartmentSchema,
+    },
+    onSubmit({ value }) {
+      const values = value // headDepartmentSchema.parse(value)
 
-  const { fields } = useFieldArray({ control, name: 'items' })
-
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
-    // formatting items
-    console.log(values.items)
-    const items = values.items
-      .filter((item: any) => itemValid(item))
-      .map((item: any) => {
-        return {
-          headDepartmentPK: {
-            schoolYearId: Number(item.headDepartmentPK.schoolYearId),
-            departmentId: Number(item.headDepartmentPK.departmentId),
-          },
-          teacherId: Number(item.teacher.id),
-        }
-      })
-
-    if (items.length === 0) {
-      toast.error('Données invalides, rien à enregistrer')
-      return
-    }
-
-    action({
-      variables: {
-        headDepartments: items,
-        schoolId: enterpriseId,
-      },
-    })
-      .then(async ({ data }) => {
-        // form.resetFields();
-        toast.success(`Animateurs pédagogiques enregistrés`, {
-          ...TOAST_OPTIONS,
+      const items = values.items
+        .filter((item: any) => itemValid(item))
+        .map((item: any) => {
+          return {
+            headDepartmentPK: {
+              schoolYearId: Number(item.headDepartmentPK.schoolYearId),
+              departmentId: Number(item.headDepartmentPK.departmentId),
+            },
+            teacherId: Number(item.teacher?.id),
+          }
         })
-        messageService.sendMessage('headDepartment', true)
+
+      if (items.length === 0) {
+        toast.error('Données invalides, rien à enregistrer')
+        return
+      }
+
+      action({
+        variables: {
+          headDepartments: items,
+          schoolId: enterpriseId,
+        },
       })
-      .catch((error) => {
-        toast.error(
-          `Impossible d'enregistrer les animateurs pédagogiques : ${formatError(
-            error,
-          )}`,
-        )
-      })
-  }
+        .then(async () => {
+          toast.success(`Animateurs pédagogiques enregistrés`, {
+            ...TOAST_OPTIONS,
+          })
+          messageService.sendMessage('headDepartment', true)
+        })
+        .catch((error) => {
+          toast.error(
+            `Impossible d'enregistrer les animateurs pédagogiques : ${formatError(
+              error,
+            )}`,
+          )
+        })
+    },
+  })
 
   const itemValid = (item: any) => {
-    const { id } = item.teacher
+    const { id } = item.teacher || {}
     return id
   }
 
   const onSelectionChanged = (
     selectedRow: any,
     selectedIndex: number,
-    coTeacher: boolean,
+    _coTeacher: boolean,
   ) => {
-    setValue(`items.${selectedIndex}.teacher.id`, selectedRow.id)
-    setValue(
+    setFieldValue(`items.${selectedIndex}.teacher.id`, selectedRow.id)
+    setFieldValue(
       `items.${selectedIndex}.lastName`,
       concat(selectedRow.lastName, selectedRow.firstName),
     )
@@ -108,7 +134,7 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
     tableModal.hide()
   }
 
-  const onTeacherClick = async (selectedIndex: number, coTeacher: boolean) => {
+  const onTeacherClick = async (selectedIndex: number, _coTeacher: boolean) => {
     const department = headDepartments?.[selectedIndex]?.department?.id
 
     const { data } = await client.query({
@@ -120,81 +146,121 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
     if (data && data.teachers) {
       tableModal.show({
         teachers: data.teachers,
-        onRowClicked: (data: any) =>
-          onSelectionChanged(data, selectedIndex, coTeacher),
+        onRowClicked: (row: any) =>
+          onSelectionChanged(row, selectedIndex, _coTeacher),
       })
     }
   }
 
-  // console.log(distributions)
+  const clearTeacher = (index: number) => {
+    setFieldValue(`items.${index}.teacher.id`, null)
+    setFieldValue(`items.${index}.lastName`, '')
+  }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        handleSubmit()
+      }}
+    >
       <Table className="table table-bordered table-condensed table-hover responsive tableur tableFixHead">
         <thead>
           <tr>
             <th style={{ width: '10px' }}>#</th>
-            <th>{t('label-departments')}</th>
-            <th style={{ width: '45%' }}>{t('label-teacher')}</th>
+            <th>{m.label_departments()}</th>
+            <th style={{ width: '45%' }}>{m.label_teacher()}</th>
           </tr>
         </thead>
         <tbody>
-          {fields.map((field, index) => (
-            <tr key={field.id}>
-              <td style={{ textAlign: 'center' }}>{index + 1}</td>
-              <td style={{ display: 'none' }}>
-                <SimpleInput
-                  {...register(`items.${index}.headDepartmentPK.schoolYearId`)}
-                  readOnly={true}
-                />
-              </td>
-              <td style={{ display: 'none' }}>
-                <SimpleInput
-                  {...register(`items.${index}.headDepartmentPK.departmentId`)}
-                  readOnly={true}
-                />
-              </td>
+          <AppField name="items" mode="array">
+            {(fieldArray) => {
+              return (
+                <>
+                  {fieldArray.state.value.map((_: any, index: number) => (
+                    <tr key={index}>
+                      <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                      <td style={{ display: 'none' }}>
+                        <AppField
+                          name={`items[${index}].headDepartmentPK.schoolYearId`}
+                        >
+                          {(field) => (
+                            <SimpleInput
+                              value={field.state.value || ''}
+                              readOnly={true}
+                            />
+                          )}
+                        </AppField>
+                      </td>
+                      <td style={{ display: 'none' }}>
+                        <AppField
+                          name={`items[${index}].headDepartmentPK.departmentId`}
+                        >
+                          {(field) => (
+                            <SimpleInput
+                              value={field.state.value || ''}
+                              readOnly={true}
+                            />
+                          )}
+                        </AppField>
+                      </td>
 
-              <td>
-                <SimpleInput
-                  {...register(`items.${index}.department.name`)}
-                  readOnly={true}
-                />
-              </td>
+                      <td>
+                        <AppField name={`items[${index}].department.name`}>
+                          {(field) => (
+                            <SimpleInput
+                              value={field.state.value || ''}
+                              readOnly={true}
+                            />
+                          )}
+                        </AppField>
+                      </td>
 
-              <td>
-                <span className="flex flex-row items-center">
-                  <SimpleInput
-                    {...register(`items.${index}.lastName`)}
-                    // readOnly={true}
-                    onClick={() => onTeacherClick(index, false)}
-                    className="w-11/12"
-                    defaultValue={concat(
-                      field.teacher?.lastName || '',
-                      field.teacher?.firstName || '',
-                    )}
-                  />
-                  {watch(`items.${index}.teacher.id`) && (
-                    <XCircle
-                      className="w-1/12"
-                      size={20}
-                      onClick={() => {
-                        setValue(`items.${index}.teacher.id`, null)
-                        setValue(`items.${index}.lastName`, '')
-                      }}
-                    />
-                  )}
-                </span>
-              </td>
+                      <td>
+                        <span className="flex flex-row items-center">
+                          <AppField name={`items[${index}].lastName`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                                onClick={() => onTeacherClick(index, false)}
+                                className="w-11/12"
+                              />
+                            )}
+                          </AppField>
+                          <AppField name={`items[${index}].teacher.id`}>
+                            {(field) =>
+                              field.state.value && (
+                                <XCircle
+                                  className="w-1/12 cursor-pointer"
+                                  size={20}
+                                  onClick={() => clearTeacher(index)}
+                                />
+                              )
+                            }
+                          </AppField>
+                        </span>
+                      </td>
 
-              <td style={{ display: 'none' }}>
-                <SimpleInput
-                  {...register(`items.${index}.teacher.id`)}
-                  readOnly={true}
-                />
-              </td>
-            </tr>
-          ))}
+                      <td style={{ display: 'none' }}>
+                        <AppField name={`items[${index}].teacher.id`}>
+                          {(field) => (
+                            <SimpleInput
+                              value={field.state.value || ''}
+                              readOnly={true}
+                            />
+                          )}
+                        </AppField>
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )
+            }}
+          </AppField>
         </tbody>
       </Table>
 
@@ -205,7 +271,7 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
           color="primary"
           className="round"
         >
-          {t('label-save')}
+          {m.label_save()}
         </Button>
       </div>
     </Form>

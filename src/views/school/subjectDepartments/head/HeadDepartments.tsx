@@ -8,6 +8,7 @@ import PageHeader from '@/@core/components/ui/page-header'
 import LoadingSpinner from '@/@core/components/spinner/Loading-spinner'
 import { useHeadDepartmentQuery } from '@/gql/graphql'
 import HeadDepartmentAdd from './HeadDepartmentAdd'
+import { concat } from '#/utils/helpers'
 
 const HeadDepartments = () => {
   const { t } = useTranslation()
@@ -44,7 +45,13 @@ const HeadDepartments = () => {
               <LoadingSpinner />
             ) : (
               <HeadDepartmentAdd
-                headDepartments={dataPlanning?.headDepartments}
+                headDepartments={dataPlanning?.headDepartments?.map((item) => ({
+                  ...item,
+                  lastName: concat(
+                    item?.teacher?.lastName || '',
+                    item?.teacher?.firstName || '',
+                  ),
+                }))}
               />
             )}
           </div>
