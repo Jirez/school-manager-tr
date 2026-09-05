@@ -1,13 +1,12 @@
 import React, { Component, cloneElement, Fragment, Suspense } from 'react'
 import Select from 'react-select'
-import type { Props, StylesConfig } from 'react-select'
+import type { StylesConfig } from 'react-select'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 import { selectThemeColors } from '@/utils/Utils'
 import cs from 'classnames'
 import { enhancedStyles } from '@/@core/components/select/select.style'
 
-// @ts-ignore desc
-export interface MySelectProps extends Props<{ [key: string]: any }, boolean> {
+export interface MySelectProps {
   value?: any
   loading?: boolean
   options?: any
@@ -21,6 +20,14 @@ export interface MySelectProps extends Props<{ [key: string]: any }, boolean> {
   error?: boolean
   formTitle?: string
   ref?: any
+  placeholder?: string
+  isClearable?: boolean
+  isMulti?: boolean
+  isDisabled?: boolean
+  autoFocus?: boolean
+  className?: string
+  classNamePrefix?: string
+  [key: string]: any
 }
 
 interface MySelectState {
@@ -28,25 +35,45 @@ interface MySelectState {
   visible: boolean
 }
 
+// Props to exclude from spreading to Select
+const EXCLUDED_PROPS = new Set([
+  'value',
+  'onChange',
+  'form',
+  'modalClassName',
+  'modalWidth',
+  'formId',
+  'optionLabel',
+  'error',
+  'formTitle',
+  'ref',
+  'loading',
+  'styles',
+])
+
 class MySelect extends Component<MySelectProps, MySelectState> {
-  mergedStyles: StylesConfig<Record<string, any>, boolean>
-  constructor(props: any) {
+  constructor(props: MySelectProps) {
     super(props)
 
     this.state = {
       selectValue: null,
       visible: false,
     }
+  }
 
-    this.mergedStyles = this.props.styles
-      ? { ...enhancedStyles, ...this.props.styles }
-      : enhancedStyles
+  getMergedStyles = () => {
+    const { styles, error } = this.props
+    const baseControl = styles?.control || enhancedStyles.control
 
-    // Override border color for error state
-    if (this.props.error && true) {
-      this.mergedStyles.control = (provided: any, state: any) => ({
-        ...enhancedStyles.control!(provided, state),
-        borderColor: state.isFocused ? '#ea5455' : '#ea5455',
+    const merged: StylesConfig<Record<string, any>, boolean> = {
+      ...enhancedStyles,
+      ...(styles || {}),
+    }
+
+    if (error) {
+      merged.control = (provided: any, state: any) => ({
+        ...(baseControl ? baseControl(provided, state) : provided),
+        borderColor: '#ea5455',
         boxShadow: state.isFocused
           ? '0 0 0 3px rgba(234, 84, 85, 0.1)'
           : 'none',
@@ -55,6 +82,8 @@ class MySelect extends Component<MySelectProps, MySelectState> {
         },
       })
     }
+
+    return merged
   }
 
   handleChange = (value: any) => {
@@ -66,11 +95,31 @@ class MySelect extends Component<MySelectProps, MySelectState> {
     }
   }
 
+  getSelectProps() {
+    const { props } = this
+    const selectProps: Record<string, any> = {}
+
+    // Only spread non-excluded props
+    for (const key in props) {
+      if (Object.prototype.hasOwnProperty.call(props, key) && !EXCLUDED_PROPS.has(key)) {
+        selectProps[key] = props[key]
+      }
+    }
+
+    return selectProps
+  }
+
   render() {
+    const { props, state } = this
     const buttonOption = {
       addButton: -1,
-      [this.props.optionLabel!]: 'Ajouter',
+      [props.optionLabel || 'label']: 'Ajouter',
     }
+
+    const options =
+      props.form && props.options
+        ? [buttonOption, ...props.options]
+        : props.options
 
     return (
       <Fragment>
@@ -78,67 +127,43 @@ class MySelect extends Component<MySelectProps, MySelectState> {
         <Select
           placeholder="Sélectionnez"
           isClearable
-          // theme={this.props.error ? selectThemeErrorColors : selectThemeColors}
           theme={selectThemeColors}
           className={cs('react-select', {
-            'is-invalid': this.props.error,
+            'is-invalid': props.error,
           })}
-          {...this.props}
-          options={
-            this.props.form && this.props.options
-              ? [buttonOption, ...this.props.options]
-              : this.props.options
-          }
+          {...this.getSelectProps()}
+          options={options}
           onChange={this.handleChange}
-          value={this.props.value || this.state.selectValue}
-          // value={this.props.reset ? null : this.props.value || this.state.selectValue || this.props.initialValue}
-          // styles={customStyles}
-          /* styles={{
-                        // Fixes the overlapping problem of the component
-                        menu: provided => ({ ...provided, zIndex: 9999 })
-                    }}*/
+          value={props.value ?? state.selectValue}
           menuPortalTarget={document.body}
-          styles={this.mergedStyles}
-          // classNamePrefix="my-className-prefix"
+          styles={this.getMergedStyles()}
           classNamePrefix="select"
-          // ref={this.ref}
         />
         <Modal
-          // width={this.props.modalWidth ? this.props.modalWidth: 520}
-          isOpen={this.state.visible}
+          isOpen={state.visible}
           onClosed={() => this.setState({ visible: false })}
-          className={`${
-            this.props.modalClassName ? this.props.modalClassName : 'modal-lg'
-          }`}
+          className={props.modalClassName || 'modal-lg'}
           unmountOnClose
           zIndex="1060"
-          // okText="Ajouter"
-          // onOk={() => document.getElementById(this.props.formId!)?.click()}
         >
           <ModalHeader
             tag="h2"
             toggle={() => this.setState({ visible: false })}
-            // className='bg-transparent'
             className={cs('text-2xl font-bold', {
-              'bg-transparent': this.props.formTitle == null,
+              'bg-transparent': props.formTitle == null,
             })}
           >
-            {this.props.formTitle}
+            {props.formTitle}
           </ModalHeader>
           <ModalBody>
             <Suspense>
-              {this.props.form &&
-                cloneElement(this.props.form, {
+              {props.form &&
+                cloneElement(props.form, {
                   popover: true,
                   onModalClose: () => this.setState({ visible: false }),
                 })}
             </Suspense>
           </ModalBody>
-          {/* <ModalFooter>
-                        <Button color='primary' onClick={() => document.getElementById(this.props.formId!)?.click()}>
-                            Ajouter
-                        </Button>
-                    </ModalFooter>*/}
         </Modal>
       </Fragment>
     )

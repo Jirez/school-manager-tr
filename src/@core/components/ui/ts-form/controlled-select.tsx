@@ -68,12 +68,13 @@ const ControlledSelect = ({
   const { t } = useTranslation()
 
   const hasError = errors.length > 0
+  const fieldName = name || field.name
 
   return (
     <div className={className}>
       {label && (
         <StyledLabel
-          for={name}
+          for={fieldName}
           $error={hasError}
           $customClassName={labelClassName}
           className={labelClassName}
@@ -85,18 +86,29 @@ const ControlledSelect = ({
       <SelectWrapper $hasPrepend={!!prepend}>
         {prepend && <PrependWrapper>{prepend}</PrependWrapper>}
         <MySelect
-          id={name}
+          id={fieldName}
+          name={fieldName}
           error={hasError}
           value={field.state.value}
-          onChange={(value) => field.handleChange(value)}
+          onChange={(value) => {
+            field.handleChange(value)
+            onChange?.(value)
+          }}
+          onBlur={field.handleBlur}
           {...props}
         />
       </SelectWrapper>
 
       {hasError &&
-        errors.map((error) => (
-          <StyledFormFeedback key={error}>{t(error)}</StyledFormFeedback>
-        ))}
+        errors.map((error: any, index: number) => {
+          const message =
+            typeof error === 'string'
+              ? error
+              : error?.message || String(error)
+          return (
+            <StyledFormFeedback key={index}>{t(message)}</StyledFormFeedback>
+          )
+        })}
     </div>
   )
 }

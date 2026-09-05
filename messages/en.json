@@ -2043,5 +2043,17 @@
   "label_logout": "Logout",
   "label_userInfo": "User Information",
   "label_userInfoDesc": "Details of your account and profile",
-  "validation_password_match": "The password and confirmation must match"
+  "validation_password_match": "The password and confirmation must match",
+  "label_totalPoints": "Total points",
+  "label_branchInfoDesc": "Details of the branch",
+  "action_add_level": "Add level",
+  "action_update_level": "Update level",
+  "label_branchNamePlaceholder": "Enter branch name",
+  "label_branchStatsDesc": "Capacity and count",
+  "label_branchSubjectsDesc": "Subjects taught in the branch",
+  "label_branchSubjects": "Branch Subjects",
+  "label_refresh": "Refresh",
+  "label_subjectPlaceholder": "Enter subject name... (CTRL + Q to return to this field)",
+  "action_add_branch": "Add branch",
+  "action_update_branch": "Update branch"
 }

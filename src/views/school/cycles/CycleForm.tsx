@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import { useEffect } from 'react'
 import { Form } from 'reactstrap'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
@@ -25,12 +26,13 @@ import SchoolSectionAdd from '@/views/school/schoolSections/SchoolSectionAdd'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { cycleSchema } from '@/views/school/cycles/cycle.validation'
-import type { CycleSchemaType } from '@/views/school/cycles/cycle.validation'
+// import type { CycleSchemaType } from '@/views/school/cycles/cycle.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   SchoolSectionCreatedDocument,
   SchoolYearCreatedDocument,
   useSchoolSectionsQuery,
+  useSchoolYearActiveQuery,
   useSchoolYearsQuery,
 } from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
@@ -47,6 +49,10 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
   // ** Hooks
   const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
+
+  const { data: schoolYearData } = useSchoolYearActiveQuery({
+    variables: { schoolId: enterpriseId },
+  })
 
   const { data, loading, subscribeToMore } = useSchoolYearsQuery({
     variables: { id: enterpriseId },
@@ -75,7 +81,7 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
       levelCount: cycle?.levelCount || '',
       schoolYearId: cycle ? cycle.schoolYear : null,
       schoolSectionId: cycle ? cycle.schoolSection : null,
-    } as CycleSchemaType,
+    } as any,
     onSubmitMeta: defaultMeta,
     validators: {
       onChange: cycleSchema,
@@ -113,6 +119,12 @@ const CycleForm: FC<CycleFormProps> = ({ cycle, action, modal, ...props }) => {
         })
     },
   })
+
+  useEffect(() => {
+    if (!cycle?.id && schoolYearData?.schoolYear) {
+      setFieldValue('schoolYearId', schoolYearData.schoolYear)
+    }
+  }, [schoolYearData, setFieldValue])
 
   return (
     <Form

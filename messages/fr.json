@@ -2047,5 +2047,17 @@
   "label_logout": "Déconnexion",
   "label_userInfo": "Informations de l'utilisateur",
   "label_userInfoDesc": "Détails de votre compte et de votre profil",
-  "validation_password_match": "Le mot de passe et la confirmation doivent correspondre"
+  "validation_password_match": "Le mot de passe et la confirmation doivent correspondre",
+  "label_totalPoints": "Total points",
+  "label_branchInfoDesc": "Détails de la série",
+  "action_add_level": "Ajouter niveau",
+  "action_update_level": "Modifier niveau",
+  "label_branchNamePlaceholder": "Nom de la série",
+  "label_branchStatsDesc": "Capacité et comptage",
+  "label_branchSubjectsDesc": "Matières enseignées dans la série",
+  "label_branchSubjects": "Matières de la série",
+  "label_refresh": "Actualiser",
+  "label_subjectPlaceholder": "Entrez le nom d'une matière... (CTRL + Q pour revenir sur ce champ)",
+  "action_add_branch": "Ajouter série",
+  "action_update_branch": "Modifier série"
 }

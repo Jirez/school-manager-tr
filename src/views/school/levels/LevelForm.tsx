@@ -17,9 +17,7 @@ import { TOAST_OPTIONS } from '@/utils/constants'
 import { CycleCreatedDocument, useCyclesQuery } from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
-import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
-import { useSelector } from '@tanstack/react-form'
 import { m } from '@/paraglide/messages'
 
 interface LevelFormProps extends BaseFormProps {

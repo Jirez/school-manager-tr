@@ -13,7 +13,7 @@ export default NiceModal.create(({ productCategory, update }: any) => {
   return (
     <ModalForm
       modal={modal}
-      className="max-w-4xl"
+      className="max-w-3xl"
       title={
         update
           ? t('action.update_productCategory')

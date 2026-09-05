@@ -36,15 +36,17 @@ const ControlledSelect: FC<ControlledSelectProps> = ({
   // const ref = useRef<SelectInstance>(null);
   // const {ref, ... rest} = props
 
-  const mergedStyles = styles
-    ? { ...enhancedStyles, ...styles }
-    : enhancedStyles
+  const baseControl = styles?.control || enhancedStyles.control
+  const mergedStyles = {
+    ...enhancedStyles,
+    ...(styles || {}),
+  }
 
   // Override border color for error state
   if (errors[name] && true) {
     mergedStyles.control = (provided: any, state: any) => ({
-      ...enhancedStyles.control!(provided, state),
-      borderColor: state.isFocused ? '#ea5455' : '#ea5455',
+      ...(baseControl ? baseControl(provided, state) : provided),
+      borderColor: '#ea5455',
       boxShadow: state.isFocused ? '0 0 0 3px rgba(234, 84, 85, 0.1)' : 'none',
       '&:hover': {
         borderColor: '#ea5455',

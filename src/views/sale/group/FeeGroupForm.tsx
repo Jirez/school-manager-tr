@@ -1,11 +1,7 @@
 import type { FC } from 'react'
-import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Form } from 'reactstrap'
 import {
   FileText,
@@ -26,48 +22,25 @@ import {
 } from 'lucide-react'
 
 import LiveView from '@/utils/LiveView'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import { levelOptions } from '@/utils/select/selectComponents'
-import Input from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import { setOffcanvasSize } from '@/utils/helpers'
 import { INPUT_DATE_FORMAT, TOAST_OPTIONS } from '@/utils/constants'
 import { LevelCreatedDocument, useLevelsQuery } from '@/gql/graphql'
 import type { FeeGroupType } from './fee.group.type'
-import { feeGroupValidation } from './fee.group.validation'
-import DatePicker from '@/@core/components/ui/forms/date-picker'
+import { feeGroupZodSchema } from './fee.group.validation'
+import type { FeeGroupZodSchemaType } from './fee.group.validation'
 import dayjs from 'dayjs'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { m } from '@/paraglide/messages'
 
 interface FeeGroupFormProps extends BaseFormProps {
   feeGroup?: FeeGroupType
   modal?: NiceModalHandler
-}
-
-const initialValues: Partial<FeeGroupType> = {
-  name: '',
-  name2: '',
-  registrationDateAfter: '',
-  registrationDateBefore: '',
-  birthDateAfter: '',
-  birthDateBefore: '',
-  gender: '',
-  levelId: null,
-  familyOfXAndAboveChildren: '',
-  oneTimePayment: false,
-  isAlumni: false,
-  isExternalStudent: false,
-  hasScholarship: false,
-  isSocialCase: false,
-  isStaffStudent: false,
-  useAsFallback: false,
-  isActive: false,
-  note: '',
 }
 
 const FeeGroupForm: FC<FeeGroupFormProps> = ({
@@ -76,7 +49,6 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useLevelsQuery({
@@ -84,13 +56,14 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
   })
 
   const {
-    control,
     handleSubmit,
-    formState: { isDirty },
+    AppField,
     reset,
-    getValues,
-    setValue,
-  } = useForm<FeeGroupType>({
+    store,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
       name: feeGroup?.name || '',
       name2: feeGroup?.name2 || '',
@@ -128,19 +101,14 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
       useAsFallback: feeGroup ? feeGroup.useAsFallback : false,
       isActive: feeGroup ? feeGroup.isActive : true,
       note: feeGroup?.note || '',
+    } as FeeGroupZodSchemaType,
+    validators: {
+      onChange: feeGroupZodSchema,
     },
-    resolver: yupResolver(feeGroupValidation),
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = feeGroup ? Number(feeGroup.id) : undefined
+      const values = feeGroupZodSchema.parse(value)
 
       action({
         variables: {
@@ -164,17 +132,20 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
           },
         },
       })
-        .then(async ({ data }) => {
-          reset(initialValues)
-          toast.success(`Groupe de paiement ${data.feeGroup.name} enregistré`, {
-            ...TOAST_OPTIONS,
-          })
+        .then(async ({ data: result }) => {
+          reset()
+          toast.success(
+            `Groupe de paiement ${result.feeGroup.name} enregistré`,
+            {
+              ...TOAST_OPTIONS,
+            },
+          )
 
           if (props.popover) {
-            messageService.sendMessage('feeGroup', data.feeGroup)
+            messageService.sendMessage('feeGroup', result.feeGroup)
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
@@ -183,43 +154,75 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
             `Impossible d'ajouter le groupe de paiement: ${formatError(error)}`,
           )
         })
-    })(event)
-  }
+    },
+  })
 
-  useEffect(() => {
-    setOffcanvasSize('50%')
-  }, [])
+  const useAsFallback = useSelector(
+    store,
+    (state) => state.values.useAsFallback,
+  )
+  const isAlumni = useSelector(store, (state) => state.values.isAlumni)
+  const isExternalStudent = useSelector(
+    store,
+    (state) => state.values.isExternalStudent,
+  )
+  const hasScholarship = useSelector(
+    store,
+    (state) => state.values.hasScholarship,
+  )
+  const isSocialCase = useSelector(store, (state) => state.values.isSocialCase)
+  const isStaffStudent = useSelector(
+    store,
+    (state) => state.values.isStaffStudent,
+  )
+  const oneTimePayment = useSelector(
+    store,
+    (state) => state.values.oneTimePayment,
+  )
+  const isActive = useSelector(store, (state) => state.values.isActive)
 
   return (
-    <Form onSubmit={onSubmit} className="p-0">
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+      className="p-0"
+    >
       <div className="pb-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
           {/* Basic Information Section */}
           <FormSection
-            title={t('label-basicInformation') || 'Informations de base'}
-            description={t('label-feeGroupInfoDesc') || 'Nom et configuration'}
+            title={m.label_basicInformation()}
+            description={m.label_feeGroupInfoDesc()}
             icon={<CreditCard size={18} />}
             color="#7367f0"
             className="md:col-span-2"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
-              <Input
+              <AppField
                 name="name"
-                label={t('label-name')}
-                control={control}
-                required={true}
-                prepend={<FileText size={14} />}
-                placeholder={
-                  t('label-namePlaceholder') || 'Ex: Groupe Standard'
-                }
+                children={(field) => (
+                  <field.Input
+                    label={m.label_name()}
+                    required={true}
+                    prepend={<FileText size={14} />}
+                    placeholder={
+                      m.label_namePlaceholder() || 'Ex: Groupe Standard'
+                    }
+                  />
+                )}
               />
 
-              <Input
+              <AppField
                 name="name2"
-                label={t('label-name2')}
-                control={control}
-                prepend={<FileText size={14} />}
-                placeholder={t('label-name2Placeholder') || 'Nom alternatif'}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_name2()}
+                    prepend={<FileText size={14} />}
+                    placeholder={m.label_name2Placeholder()}
+                  />
+                )}
               />
 
               <LiveView
@@ -234,19 +237,21 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
                 enterpriseId={enterpriseId}
               >
                 {({ levels }) => (
-                  <ControlledSelect
+                  <AppField
                     name="levelId"
-                    label={t('label-level')}
-                    control={control}
-                    required={false}
-                    loading={loading}
-                    prepend={<Layers size={14} />}
-                    onChange={(val) => setValue('levelId', val)}
-                    options={levels || undefined}
-                    getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id}
-                    components={{ Option: levelOptions }}
-                    formId="level"
+                    children={(field) => (
+                      <field.ControlledSelect
+                        label={m.label_level()}
+                        required={false}
+                        loading={loading}
+                        prepend={<Layers size={14} />}
+                        options={levels || undefined}
+                        getOptionLabel={(option: any) => option.name}
+                        getOptionValue={(option: any) => option.id}
+                        components={{ Option: levelOptions }}
+                        onChange={(val: any) => setFieldValue('levelId', val)}
+                      />
+                    )}
                   />
                 )}
               </LiveView>
@@ -255,189 +260,171 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
 
           {/* Student Criteria Section */}
           <FormSection
-            title={t('label-selectionCriteria') || 'Critères de sélection'}
-            description={
-              t('label-selectionCriteriaDesc') || "Règles d'attribution"
-            }
+            title={m.label_selectionCriteria()}
+            description={m.label_selectionCriteriaDesc()}
             icon={<Target size={18} />}
             color="#00cfe8"
             className="col-span-2"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-              <Input
+              <AppField
                 name="gender"
-                label={t('label-gender')}
-                control={control}
-                type="select"
-                //prepend={<User size={14} />}
-              >
-                <option value="">{t('label-selectGender')}</option>
-                <option value="MALE">{t('label-male')}</option>
-                <option value="FEMALE">{t('label-female')}</option>
-              </Input>
+                children={(field) => (
+                  <field.ControlledSelect
+                    label={m.label_gender()}
+                    options={[
+                      { value: '', label: m.label_selectGender() },
+                      { value: 'MALE', label: m.label_male() },
+                      { value: 'FEMALE', label: m.label_female() },
+                    ]}
+                    onChange={(val: any) => setFieldValue('gender', val)}
+                  />
+                )}
+              />
 
-              <Input
+              <AppField
                 name="familyOfXAndAboveChildren"
-                label={t('label-familyOfXAndAboveChildren')}
-                control={control}
-                prepend={<Users size={14} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_familyOfXAndAboveChildren()}
+                    prepend={<Users size={14} />}
+                  />
+                )}
               />
 
-              <DatePicker
+              <AppField
                 name="registrationDateAfter"
-                label={t('label-registrationDateAfter')}
-                control={control}
+                children={(field) => (
+                  <field.DatePicker label={m.label_registrationDateAfter()} />
+                )}
               />
 
-              <DatePicker
+              <AppField
                 name="registrationDateBefore"
-                label={t('label-registrationDateBefore')}
-                control={control}
+                children={(field) => (
+                  <field.DatePicker label={m.label_registrationDateBefore()} />
+                )}
               />
 
-              <DatePicker
+              <AppField
                 name="birthDateAfter"
-                label={t('label-birthDateAfter')}
-                control={control}
+                children={(field) => (
+                  <field.DatePicker label={m.label_birthDateAfter()} />
+                )}
               />
 
-              <DatePicker
+              <AppField
                 name="birthDateBefore"
-                label={t('label-birthDateBefore')}
-                control={control}
+                children={(field) => (
+                  <field.DatePicker label={m.label_birthDateBefore()} />
+                )}
               />
             </div>
           </FormSection>
 
           {/* Options Section */}
           <FormSection
-            title={t('label-groupOptions') || 'Options du groupe'}
-            description={
-              t('label-groupOptionsDesc') || 'Drapeaux et comportements'
-            }
+            title={m.label_groupOptions()}
+            description={m.label_groupOptionsDesc()}
             icon={<Settings size={18} />}
             color="#28c76f"
             className="col-span-2"
           >
             <div className="grid grid-cols-1 gap-1">
               <ToggleOption
-                title={t('label-useAsFallback')}
-                description={
-                  t('label-useAsFallbackDesc') || 'Utiliser par défaut'
-                }
+                title={m.label_useAsFallback()}
+                description={m.label_useAsFallbackDesc()}
                 icon={<RefreshCw size={18} />}
-                isActive={getValues('useAsFallback')}
+                isActive={useAsFallback}
               >
-                <Switch
+                <AppField
                   name="useAsFallback"
-                  control={control}
-                  label=""
-                  defaultChecked={getValues('useAsFallback')}
+                  children={(field) => <field.Switch label="" />}
                 />
               </ToggleOption>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 <ToggleOption
-                  title={t('label-isAlumni')}
-                  description={t('label-isAlumniDesc') || 'Anciens élèves'}
+                  title={m.label_isAlumni()}
+                  description={m.label_isAlumniDesc()}
                   icon={<GraduationCap size={18} />}
-                  isActive={getValues('isAlumni')}
+                  isActive={isAlumni}
                 >
-                  <Switch
+                  <AppField
                     name="isAlumni"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('isAlumni')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-isExternalStudent')}
-                  description={
-                    t('label-isExternalStudentDesc') || 'Élèves externes'
-                  }
+                  title={m.label_isExternalStudent()}
+                  description={m.label_isExternalStudentDesc()}
                   icon={<ExternalLink size={18} />}
-                  isActive={getValues('isExternalStudent')}
+                  isActive={isExternalStudent}
                 >
-                  <Switch
+                  <AppField
                     name="isExternalStudent"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('isExternalStudent')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-hasScholarship')}
-                  description={t('label-hasScholarshipDesc') || 'Boursiers'}
+                  title={m.label_hasScholarship()}
+                  description={m.label_hasScholarshipDesc()}
                   icon={<Award size={18} />}
-                  isActive={getValues('hasScholarship')}
+                  isActive={hasScholarship}
                 >
-                  <Switch
+                  <AppField
                     name="hasScholarship"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('hasScholarship')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-isSocialCase')}
-                  description={t('label-isSocialCaseDesc') || 'Cas sociaux'}
+                  title={m.label_isSocialCase()}
+                  description={m.label_isSocialCaseDesc()}
                   icon={<Heart size={18} />}
-                  isActive={getValues('isSocialCase')}
+                  isActive={isSocialCase}
                 >
-                  <Switch
+                  <AppField
                     name="isSocialCase"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('isSocialCase')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-isStaffStudent')}
-                  description={
-                    t('label-isStaffStudentDesc') || 'Enfants personnels'
-                  }
+                  title={m.label_isStaffStudent()}
+                  description={m.label_isStaffStudentDesc()}
                   icon={<Briefcase size={18} />}
-                  isActive={getValues('isStaffStudent')}
+                  isActive={isStaffStudent}
                 >
-                  <Switch
+                  <AppField
                     name="isStaffStudent"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('isStaffStudent')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-oneTimePayment')}
-                  description={
-                    t('label-oneTimePaymentDesc') || 'Paiement unique'
-                  }
+                  title={m.label_oneTimePayment()}
+                  description={m.label_oneTimePaymentDesc()}
                   icon={<CreditCard size={18} />}
-                  isActive={getValues('oneTimePayment')}
+                  isActive={oneTimePayment}
                 >
-                  <Switch
+                  <AppField
                     name="oneTimePayment"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('oneTimePayment')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
 
                 <ToggleOption
-                  title={t('label-active')}
-                  description={t('label-activeDesc') || 'Groupe actif'}
+                  title={m.label_active()}
+                  description={m.label_activeDesc()}
                   icon={<Power size={18} />}
-                  isActive={getValues('isActive')}
+                  isActive={isActive}
                 >
-                  <Switch
+                  <AppField
                     name="isActive"
-                    control={control}
-                    label=""
-                    defaultChecked={getValues('isActive')}
+                    children={(field) => <field.Switch label="" />}
                   />
                 </ToggleOption>
               </div>
@@ -446,36 +433,37 @@ const FeeGroupForm: FC<FeeGroupFormProps> = ({
 
           {/* Additional Notes Section */}
           <FormSection
-            title={t('label-additionalNotes') || 'Notes complémentaires'}
-            description={t('label-notesDesc') || 'Observations internes'}
+            title={m.label_additionalNotes()}
+            description={m.label_notesDesc()}
             icon={<StickyNote size={18} />}
             color="#ff9f43"
             className="md:col-span-2"
           >
-            <Input
+            <AppField
               name="note"
-              label={''}
-              control={control}
-              type="textarea"
-              rows={3}
-              prepend={<Info size={14} />}
-              placeholder={
-                t('label-notePlaceholder') || 'Saisir vos notes ici...'
-              }
+              children={(field) => (
+                <field.Input
+                  label={''}
+                  type="textarea"
+                  rows={3}
+                  prepend={<Info size={14} />}
+                  placeholder={m.label_notePlaceholder()}
+                />
+              )}
             />
           </FormSection>
         </div>
       </div>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-          fixed={false}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )

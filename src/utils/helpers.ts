@@ -48,9 +48,9 @@ export function stopPropagate(callback: () => void) {
   }
 }
 
-export const buildOptions = (values: any) => {
+export const buildOptions = (values: any[]) => {
   const options: number[] = values.map((val: any) => val.id)
-  return options ? options.join('-') : null
+  return options.length > 0 ? options.join('-') : null
 }
 
 export const preventSubmitting = (e: any, callback?: Function) => {
@@ -206,7 +206,7 @@ export const computeTotalFn = (
   field2: string,
   callback?: Function,
 ) => {
-  if (fields && fields[0]) {
+  if (fields.length > 0 && fields[0]) {
     const totals = fields
       .filter((item: any) => item !== undefined)
       .filter(

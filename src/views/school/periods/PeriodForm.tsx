@@ -95,7 +95,6 @@ const PeriodForm: FC<PeriodFormProps> = ({
             messageService.sendMessage('period', result.period)
             props.onModalClose?.()
           }
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (meta.close) {
             modal?.hide()
           }

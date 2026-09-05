@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { EventEmitter } from 'ahooks/lib/useEventEmitter'
+import type { EventEmitter } from 'ahooks/lib/useEventEmitter'
 import type { HintOption } from '@/utils/libraries/autocompleteHint/HintOption'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import LiveView from '@/utils/LiveView'
@@ -8,9 +8,8 @@ import { SubjectCreatedDocument, useSubjectsQuery } from '@/gql/graphql'
 import { useModal } from '@ebay/nice-modal-react'
 import SubjectTableModal from '@/views/school/subjects/SubjectTableModal'
 import { useEventEmitter, useKeyPress } from 'ahooks'
-import { useTranslation } from 'react-i18next'
 import { RefreshCw, Search } from 'react-feather'
-import SubjectFormModal from '@/views/school/subjects/SubjectFormModal'
+// import SubjectFormModal from '@/views/school/subjects/SubjectFormModal'
 import {
   AppendAction,
   ContentArea,
@@ -21,11 +20,12 @@ import {
   SearchIconBox,
 } from './autocomplete.style'
 import { FolderOpen, Loader2 } from 'lucide-react'
+import { m } from '@/paraglide/messages'
 
 interface SubjectAutocompleteHintProps {
-  onFill(value: string | HintOption): void
+  onFill: (value: string | HintOption) => void
   focus$?: EventEmitter<void>
-  onOpenTable?(value: string | HintOption): void
+  onOpenTable?: (value: string | HintOption) => void
   reload$?: EventEmitter<void>
   canRefetch?: boolean
 }
@@ -34,10 +34,9 @@ const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
   canRefetch = true,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
   const subjectModal = useModal(SubjectTableModal)
-  const subjectAddModal = useModal(SubjectFormModal)
+  // const subjectAddModal = useModal(SubjectFormModal)
 
   const [text, setText] = useState('')
   const [isFocused, setIsFocused] = useState(false)
@@ -111,7 +110,7 @@ const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
             <PrependAction
               onClick={refetch}
               $isLoading={isRefetching}
-              title={t('label-refresh')}
+              title={m.label_refresh()}
               type="button"
             >
               {isRefetching ? <Loader2 size={16} /> : <RefreshCw size={16} />}
@@ -130,7 +129,7 @@ const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
                 allowTabFill={true}
                 getOptionLabel={() => ['name']}
                 uniqueKey="id"
-                placeholder={t('text-subjectPlaceholder')}
+                placeholder={m.label_subjectPlaceholder()}
                 focus$={props.focus$}
                 onChange={setText}
                 text$={text$}

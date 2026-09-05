@@ -1,18 +1,12 @@
-import { useTranslation } from 'react-i18next'
+import type { FC } from 'react'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { toast } from 'react-toastify'
 import { Form } from 'reactstrap'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Tag, Layers, FileText, Info } from 'lucide-react'
 
 import { useAuthentication } from '@/hooks/useAuthentication'
 import type { ProductCategoryType } from './product.category.type'
-import Input from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import LiveView from '@/utils/LiveView'
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { TOAST_OPTIONS } from '@/utils/constants'
@@ -20,23 +14,26 @@ import {
   ProductCategoryCreatedDocument,
   useProductCategoriesQuery,
 } from '@/gql/graphql'
-import { productCategoryValidation } from './product.category.validation'
+import { productCategoryZodSchema } from './product.category.validation'
+// import type { ProductCategoryZodSchemaType } from './product.category.validation'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { m } from '@/paraglide/messages'
 
 interface FormProps extends BaseFormProps {
   productCategory?: ProductCategoryType
   modal?: NiceModalHandler
 }
 
-const ProductCategoryForm: React.FC<FormProps> = ({
+const ProductCategoryForm: FC<FormProps> = ({
   modal,
   productCategory,
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useProductCategoriesQuery({
@@ -44,31 +41,27 @@ const ProductCategoryForm: React.FC<FormProps> = ({
   })
 
   const {
-    control,
     handleSubmit,
-    getValues,
-    setValue,
-    formState: { isDirty },
+    AppField,
     reset,
-  } = useForm<ProductCategoryType>({
+    store,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
     defaultValues: {
       name: productCategory?.name || '',
       description: productCategory?.description || '',
       active: productCategory ? productCategory.active : true,
       parentId: productCategory ? productCategory.parent : null,
+    } as any,
+    validators: {
+      onChange: productCategoryZodSchema,
     },
-    resolver: yupResolver(productCategoryValidation),
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = productCategory ? Number(productCategory.id) : undefined
+      const values = productCategoryZodSchema.parse(value)
 
       action({
         variables: {
@@ -80,17 +73,20 @@ const ProductCategoryForm: React.FC<FormProps> = ({
           },
         },
       })
-        .then(async ({ data }) => {
+        .then(async ({ data: result }) => {
           reset()
-          toast.success(`Catégorie ${data.productCategory.name} ajoutée`, {
+          toast.success(`Catégorie ${result.productCategory.name} ajoutée`, {
             ...TOAST_OPTIONS,
           })
 
           if (props.popover) {
-            messageService.sendMessage('productCategory', data.productCategory)
+            messageService.sendMessage(
+              'productCategory',
+              result.productCategory,
+            )
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
@@ -99,31 +95,36 @@ const ProductCategoryForm: React.FC<FormProps> = ({
             `Impossible d'ajouter la catégorie: ${formatError(error)}`,
           )
         })
-    })(event)
-  }
+    },
+  })
+
+  const active = useSelector(store, (state) => state.values.active)
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+    >
       <div className="grid grid-cols-1 gap-1">
         {/* General Info Section */}
         <FormSection
-          title={t('label-generalInfo') || 'Informations générales'}
-          description={
-            t('label-productCategoryDetails') || 'Détails de la catégorie'
-          }
+          title={m.label_generalInfo()}
+          description={m.label_productCategoryDetails()}
           icon={<Tag size={18} />}
           color="#7367f0"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-            <Input
+            <AppField
               name="name"
-              control={control}
-              label={t('label-name')}
-              required
-              prepend={<Tag size={16} />}
-              placeholder={t(
-                'label-productCategoryName',
-                'Nom de la catégorie',
+              children={(field) => (
+                <field.Input
+                  label={m.label_name()}
+                  required
+                  prepend={<Tag size={16} />}
+                  placeholder={m.label_productCategoryName()}
+                />
               )}
             />
 
@@ -137,25 +138,25 @@ const ProductCategoryForm: React.FC<FormProps> = ({
               enterpriseId={enterpriseId}
             >
               {({ productCategories }) => (
-                <ControlledSelect
-                  control={control}
+                <AppField
                   name="parentId"
-                  label={t('label-parent')}
-                  prepend={<Layers size={16} />}
-                  options={
-                    productCategories
-                      ? productCategories.filter(
-                          (u: any) => u.id !== productCategory?.id,
-                        )
-                      : []
-                  }
-                  onChange={(val) => setValue('parentId', val)}
-                  getOptionLabel={(o) => o.name}
-                  getOptionValue={(o) => o.id}
-                  placeholder={
-                    t('label-selectParent') ||
-                    'Sélectionner une catégorie parente'
-                  }
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_parent()}
+                      prepend={<Layers size={16} />}
+                      options={
+                        productCategories
+                          ? productCategories.filter(
+                              (u: any) => u.id !== productCategory?.id,
+                            )
+                          : []
+                      }
+                      onChange={(val: any) => setFieldValue('parentId', val)}
+                      getOptionLabel={(o: any) => o.name}
+                      getOptionValue={(o: any) => o.id}
+                      placeholder={m.label_selectParent()}
+                    />
+                  )}
                 />
               )}
             </LiveView>
@@ -164,41 +165,34 @@ const ProductCategoryForm: React.FC<FormProps> = ({
 
         {/* Additional Details Section */}
         <FormSection
-          title={t('label-additionalDetails') || 'Détails additionnels'}
+          title={m.label_additionalDetails()}
           icon={<FileText size={18} />}
           color="#ff9f43"
         >
           <div className="space-y-1">
-            <Input
+            <AppField
               name="description"
-              control={control}
-              label={t('label-description')}
-              type="textarea"
-              rows={4}
-              prepend={<FileText size={16} />}
-              placeholder={
-                t('label-enterDescription') || 'Ajouter une description...'
-              }
+              children={(field) => (
+                <field.Input
+                  label={m.label_description()}
+                  type="textarea"
+                  rows={4}
+                  prepend={<FileText size={16} />}
+                  placeholder={m.label_enterDescription()}
+                />
+              )}
             />
 
             <div className="pt-0">
               <ToggleOption
                 icon={<Info size={16} />}
-                title={t('label-active')}
-                description={
-                  t('label-activeCategoryDesc') ||
-                  'La catégorie sera visible et utilisable'
-                }
-                isActive={getValues('active')}
+                title={m.label_active()}
+                description={m.label_activeCategoryDesc()}
+                isActive={active}
               >
-                <Switch
+                <AppField
                   name="active"
-                  control={control}
-                  defaultChecked={getValues('active')}
-                  label=""
-                  onChange={(e: any) =>
-                    setValue('active', e.target.checked, { shouldDirty: true })
-                  }
+                  children={(field) => <field.Switch label="" />}
                 />
               </ToggleOption>
             </div>
@@ -207,13 +201,14 @@ const ProductCategoryForm: React.FC<FormProps> = ({
       </div>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )
