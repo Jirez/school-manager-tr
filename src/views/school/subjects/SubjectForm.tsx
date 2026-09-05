@@ -32,7 +32,7 @@ import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { useSelector } from '@tanstack/react-form'
-import { subjectSchema, type SubjectSchemaType } from './subject.validation'
+import { subjectSchema } from './subject.validation'
 import { m } from '@/paraglide/messages'
 
 interface SubjectFormProps extends BaseFormProps {
@@ -75,7 +75,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
       subjectDepartmentId: subject ? subject.subjectDepartment : undefined,
       showInTimeTable: subject ? subject.showInTimeTable : true,
       note: subject?.note || '',
-    } as SubjectSchemaType,
+    } as any,
     validators: {
       onChange: subjectSchema,
     },
@@ -93,15 +93,15 @@ const SubjectForm: FC<SubjectFormProps> = ({
           },
         },
       })
-        .then(async ({ data }) => {
+        .then(async ({ data: _data }) => {
           reset()
-          toast.success(`Matière ${data.subject.name} enregistrée`, {
+          toast.success(`Matière ${_data.subject.name} enregistrée`, {
             ...TOAST_OPTIONS,
           })
           props.refetch?.()
 
           if (props.popover) {
-            messageService.sendMessage('subject', data.subject)
+            messageService.sendMessage('subject', _data.subject)
             props.onModalClose?.()
           }
 
@@ -183,7 +183,7 @@ const SubjectForm: FC<SubjectFormProps> = ({
                         optionLabel="name"
                         isLoading={loadingDepartment}
                         formTitle={t('action.add_department')}
-                        placeholder={t('label-selectPlaceholder')}
+                        placeholder={m.label_select()}
                       />
                     )}
                   />

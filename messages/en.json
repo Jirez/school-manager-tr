@@ -2055,5 +2055,10 @@
   "label_refresh": "Refresh",
   "label_subjectPlaceholder": "Enter subject name... (CTRL + Q to return to this field)",
   "action_add_branch": "Add branch",
-  "action_update_branch": "Update branch"
+  "action_update_branch": "Update branch",
+  "label_school_name": "Name of the school",
+  "label_schoolAddressDesc": "Address of the school",
+  "number_min": "This field must be greater than {min}",
+  "number_max": "This field must be less than {max}",
+  "label_supplierCategoryInfo": "Supplier Category Information"
 }

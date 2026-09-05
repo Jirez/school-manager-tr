@@ -1,24 +1,18 @@
 import type { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Form, Table } from 'reactstrap'
-import type { SubmitHandler } from 'react-hook-form'
-import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import SimpleInput from '@/@core/components/ui/simple-input'
-import Button from '@/@core/components/button'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { INPUT_DATE_FORMAT, TOAST_OPTIONS } from '@/utils/constants'
 import type { FrequentBulkUpdateType } from './Frequent.type'
-import SimpleDatePicker from '@/@core/components/ui/forms/simple-date-picker'
 import dayjs from 'dayjs'
 import { useAuthentication } from '@/hooks/useAuthentication'
-import { Save } from 'react-feather'
+import { Save } from 'lucide-react'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
-
-interface FormValues {
-  items: FrequentBulkUpdateType[]
-}
+import { useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
+import Button from '#/@core/components/button'
 
 interface Props extends BaseFormProps {
   classId: number
@@ -31,65 +25,60 @@ const FrequentBulkUpdateForm: FC<Props> = ({
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
-  const { control, register, handleSubmit } = useForm<FormValues>({
+  const { handleSubmit, AppField } = useAppForm({
     defaultValues: {
-      items: frequents?.map((item) => ({
-        studentId: item.studentId,
-        lastName: item.lastName,
-        firstName: item.firstName,
-        birthDate: dayjs(item.birthDate).toDate(),
-        birthplace: item.birthplace,
-        registrationNumber: item.registrationNumber,
-      })),
-    },
-  })
-
-  const { fields } = useFieldArray({ control, name: 'items' })
-
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
-    // formatting items
-    const items = values.items
-      .filter((item: any) => itemValid(item))
-      .map((item: any) => {
-        return {
-          studentId: Number(item.studentId),
+      items:
+        frequents?.map((item) => ({
+          studentId: item.studentId,
           lastName: item.lastName,
           firstName: item.firstName,
-          birthDate: dayjs(item.birthDate).format(INPUT_DATE_FORMAT),
+          birthDate: dayjs(item.birthDate).toDate(),
           birthplace: item.birthplace,
           registrationNumber: item.registrationNumber,
-        }
-      })
+        })) || [],
+    } as any,
+    onSubmit({ value }) {
+      const values = value
 
-    if (items.length === 0) {
-      toast.error('Données invalides, rien à enregistrer')
-      return
-    }
-
-    // console.log(items);
-
-    action({
-      variables: {
-        frequents: items,
-        schoolId: Number(enterpriseId),
-      },
-    })
-      .then(async ({ data }) => {
-        // form.resetFields();
-        toast.success(`Répartition des enseignants enregistrée`, {
-          ...TOAST_OPTIONS,
+      const items = values.items
+        .filter((item: any) => itemValid(item))
+        .map((item: any) => {
+          return {
+            studentId: Number(item.studentId),
+            lastName: item.lastName,
+            firstName: item.firstName,
+            birthDate: dayjs(item.birthDate).format(INPUT_DATE_FORMAT),
+            birthplace: item.birthplace,
+            registrationNumber: item.registrationNumber,
+          }
         })
-        messageService.sendMessage('classDistribution', true)
+
+      if (items.length === 0) {
+        toast.error('Données invalides, rien à enregistrer')
+        return
+      }
+
+      action({
+        variables: {
+          frequents: items,
+          schoolId: Number(enterpriseId),
+        },
       })
-      .catch((error) => {
-        toast.error(
-          `Impossible d'enregistrer la répartition : ${formatError(error)}`,
-        )
-      })
-  }
+        .then(async () => {
+          toast.success(`Répartition des enseignants enregistrée`, {
+            ...TOAST_OPTIONS,
+          })
+          messageService.sendMessage('classDistribution', true)
+        })
+        .catch((error) => {
+          toast.error(
+            `Impossible d'enregistrer la répartition : ${formatError(error)}`,
+          )
+        })
+    },
+  })
 
   const itemValid = (item: any) => {
     const { studentId, lastName, registrationNumber, birthDate, birthplace } =
@@ -100,62 +89,127 @@ const FrequentBulkUpdateForm: FC<Props> = ({
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        handleSubmit()
+      }}
+    >
       <div className="tableFixHead">
         <Table className="table table-bordered table-condensed table-hover responsive tableur ">
           <thead>
             <tr>
               <th style={{ width: '10px' }}>#</th>
-              <th style={{ width: '10%' }}>{t('label-registrationNumber')}</th>
-              <th style={{ width: '25%' }}>{t('label-lastName')}</th>
-              <th style={{ width: '20%' }}>{t('label-firstName')}</th>
-              <th>{t('label-birthDate')}</th>
-              <th>{t('label-birthplace')}</th>
+              <th style={{ width: '10%' }}>{m.label_registrationNumber()}</th>
+              <th style={{ width: '25%' }}>{m.label_lastName()}</th>
+              <th style={{ width: '20%' }}>{m.label_firstName()}</th>
+              <th>{m.label_birthDate()}</th>
+              <th>{m.label_birthplace()}</th>
             </tr>
           </thead>
           <tbody>
-            {fields.map((field, index) => (
-              <tr key={field.id}>
-                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                <td style={{ display: 'none' }}>
-                  <SimpleInput
-                    {...register(`items.${index}.studentId`)}
-                    readOnly={true}
-                  />
-                </td>
+            <AppField name="items" mode="array">
+              {(fieldArray) => {
+                return (
+                  <>
+                    {fieldArray.state.value.map((_: any, index: number) => (
+                      <tr key={index}>
+                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                        <td style={{ display: 'none' }}>
+                          <AppField name={`items[${index}].studentId`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                readOnly={true}
+                              />
+                            )}
+                          </AppField>
+                        </td>
 
-                <td>
-                  <SimpleInput
-                    {...register(`items.${index}.registrationNumber`)}
-                  />
-                </td>
-                <td>
-                  <SimpleInput {...register(`items.${index}.lastName`)} />
-                </td>
+                        <td>
+                          <AppField name={`items[${index}].registrationNumber`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                              />
+                            )}
+                          </AppField>
+                        </td>
+                        <td>
+                          <AppField name={`items[${index}].lastName`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                              />
+                            )}
+                          </AppField>
+                        </td>
 
-                <td>
-                  <SimpleInput {...register(`items.${index}.firstName`)} />
-                </td>
+                        <td>
+                          <AppField name={`items[${index}].firstName`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                              />
+                            )}
+                          </AppField>
+                        </td>
 
-                <td>
-                  {/* <SimpleInput {...register(`items.${index}.birthDate`)} /> */}
-                  <SimpleDatePicker
-                    name={`items.${index}.birthDate`}
-                    control={control}
-                  />
-                </td>
+                        <td>
+                          <AppField name={`items[${index}].birthDate`}>
+                            {(field) => (
+                              <input
+                                type="date"
+                                value={
+                                  field.state.value
+                                    ? dayjs(field.state.value).format(
+                                        'YYYY-MM-DD',
+                                      )
+                                    : ''
+                                }
+                                onChange={(e) =>
+                                  field.handleChange(new Date(e.target.value))
+                                }
+                                className="form-control"
+                              />
+                            )}
+                          </AppField>
+                        </td>
 
-                <td>
-                  <SimpleInput {...register(`items.${index}.birthplace`)} />
-                </td>
-              </tr>
-            ))}
+                        <td>
+                          <AppField name={`items[${index}].birthplace`}>
+                            {(field) => (
+                              <SimpleInput
+                                value={field.state.value || ''}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                              />
+                            )}
+                          </AppField>
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                )
+              }}
+            </AppField>
           </tbody>
         </Table>
       </div>
 
       <StickyActions>
-        <div className="flex justify-end mt-2 mb-2">
+        <div className="flex justify-end mt-1 mb-0">
           <Button
             type="submit"
             loading={props.loading}
@@ -163,7 +217,7 @@ const FrequentBulkUpdateForm: FC<Props> = ({
             className="round text-sm flex gap-0.5 md:!gap-1"
           >
             <Save size={15} />
-            {t('label-save')}
+            {m.label_save()}
           </Button>
         </div>
       </StickyActions>

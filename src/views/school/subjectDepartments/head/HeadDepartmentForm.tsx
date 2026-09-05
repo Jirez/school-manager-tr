@@ -218,7 +218,7 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
                       </td>
 
                       <td>
-                        <span className="flex flex-row items-center">
+                        <span className="grid grid-cols-12 items-center gap-">
                           <AppField name={`items[${index}].lastName`}>
                             {(field) => (
                               <SimpleInput
@@ -227,7 +227,7 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
                                   field.handleChange(e.target.value)
                                 }
                                 onClick={() => onTeacherClick(index, false)}
-                                className="w-11/12"
+                                className="col-span-11 block"
                               />
                             )}
                           </AppField>
@@ -235,7 +235,7 @@ const HeadDepartmentForm: FC<HeadDepartmentFormProps> = ({
                             {(field) =>
                               field.state.value && (
                                 <XCircle
-                                  className="w-1/12 cursor-pointer"
+                                  className="col-span-1 cursor-pointer text-red-800"
                                   size={20}
                                   onClick={() => clearTeacher(index)}
                                 />

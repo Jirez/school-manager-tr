@@ -60,7 +60,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     )
 
     return (
-      <span>
+      <>
         {label && (
           <label
             htmlFor={name}
@@ -86,7 +86,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         {error && (
           <p className="my-2 text-xs text-start text-red-500">{error}</p>
         )}
-      </span>
+      </>
     )
   },
 )

@@ -36,7 +36,6 @@ const LevelForm: FC<LevelFormProps> = ({ level, modal, action, ...props }) => {
     handleSubmit,
     AppField,
     reset,
-    store,
     AppForm,
     SubmitButton,
     setFieldValue,
@@ -47,7 +46,7 @@ const LevelForm: FC<LevelFormProps> = ({ level, modal, action, ...props }) => {
       note: level?.note || '',
       cycleId: level ? level.cycle : null,
       branchCount: level?.branchCount || '',
-    } as LevelSchemaType,
+    } as any,
     validators: {
       onChange: levelValidation,
     },
@@ -65,14 +64,14 @@ const LevelForm: FC<LevelFormProps> = ({ level, modal, action, ...props }) => {
           },
         },
       })
-        .then(async ({ data }) => {
+        .then(async ({ data: _data }) => {
           reset()
-          toast.success(`Niveau ${data.level.name} enregistré`, {
+          toast.success(`Niveau ${_data.level.name} enregistré`, {
             ...TOAST_OPTIONS,
           })
 
           if (props.popover) {
-            messageService.sendMessage('level', data.level)
+            messageService.sendMessage('level', _data.level)
             props.onModalClose?.()
           }
           if (meta.close) {
@@ -195,7 +194,7 @@ const LevelForm: FC<LevelFormProps> = ({ level, modal, action, ...props }) => {
               name="note"
               children={(field) => (
                 <field.Input
-                  label={m.label_note()}
+                  label={''}
                   type="textarea"
                   rows={5}
                   prepend={<FileText size={16} />}

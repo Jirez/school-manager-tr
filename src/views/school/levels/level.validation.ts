@@ -10,15 +10,13 @@ export const levelValidation = z.object({
   cycleId: z.any().refine((val) => val !== null && val !== undefined, {
     message: m.validation_required(),
   }),
-  numberOrder: z.coerce.number().min(1),
-  branchCount: z
-    .string()
-    .transform(emptyStringToNull)
+  numberOrder: z.coerce.number().min(1, m.number_min({ min: 1 })),
+  branchCount: z.coerce
+    .number()
+    .positive()
     .nullable()
     .optional()
-    .transform((val) =>
-      val === null || val === undefined ? null : Number(val),
-    ),
+    .transform((v) => v || null),
   note: z
     .string()
     .max(255, m.string_max({ max: 255 }))

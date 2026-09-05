@@ -2059,5 +2059,10 @@
   "label_refresh": "Actualiser",
   "label_subjectPlaceholder": "Entrez le nom d'une matière... (CTRL + Q pour revenir sur ce champ)",
   "action_add_branch": "Ajouter série",
-  "action_update_branch": "Modifier série"
+  "action_update_branch": "Modifier série",
+  "label_school_name": "Nom de l'établissement",
+  "label_schoolAddressDesc": "Localisation de l'établissement",
+  "number_min": "Ce champ doit être plus grand que {min}",
+  "number_max": "Ce champ doit être plus petit que {max}",
+  "label_supplierCategoryInfo": "Informations sur la catégorie"
 }

@@ -1,63 +1,72 @@
-import { useForm } from 'react-hook-form'
+import type { FC } from 'react'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { Form, TabPane } from 'reactstrap'
-import * as yup from 'yup'
+import { z } from 'zod'
 
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import { TabNav } from '@/@core/components/tabs'
-import Input from '@/@core/components/ui/forms/input'
-import PhoneInput from '@/@core/components/ui/forms/phone-input'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { formatError } from '@/utils/ErrorHelper'
 import { messageService } from '@/utils/message.service'
 
 import type { OldSchoolType } from './oldSchool.type'
-import { emptyStringToNull } from '@/utils/helpers'
 import { TOAST_OPTIONS } from '@/utils/constants'
-import { Building2, MapPin, Phone, Mail, FileText } from 'lucide-react'
+import {
+  Building2,
+  MapPin,
+  Phone,
+  Mail,
+  FileText,
+  Globe,
+  Navigation,
+  Printer,
+} from 'lucide-react'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { m } from '@/paraglide/messages'
+import { optionalString } from '#/utils/zod.helpers'
+
+const oldSchoolZodSchema = z.object({
+  name: z.string().min(1, m.validation_required()),
+  id: z.number().optional(),
+  address: z
+    .object({
+      zipCode: optionalString(),
+      country: optionalString(),
+      town: optionalString(),
+      state: optionalString(),
+      street: optionalString(),
+    })
+    .optional(),
+  contactInfo: z
+    .object({
+      telephone: optionalString(),
+      mobile: optionalString(),
+      email: optionalString(),
+      fax: optionalString(),
+      postOfficeBox: optionalString(),
+    })
+    .optional()
+    .nullable(),
+})
+
+type OldSchoolZodSchemaType = z.infer<typeof oldSchoolZodSchema>
 
 interface OldSchoolFormProps extends BaseFormProps {
-  oldSchool?: OldSchoolType
+  oldSchool?: OldSchoolZodSchemaType
   modal?: NiceModalHandler
 }
 
-const initialValues: Partial<OldSchoolType> = {
-  name: '',
-  address: {
-    country: '',
-    state: '',
-    street: '',
-    town: '',
-  },
-  contactInfo: {
-    telephone: '',
-    mobile: '',
-    email: '',
-    fax: '',
-    postOfficeBox: '',
-  },
-}
-
-const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
+const OldSchoolForm: FC<OldSchoolFormProps> = ({
   oldSchool,
   modal,
   action,
   ...props
 }) => {
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isDirty },
-    reset,
-  } = useForm<OldSchoolType>({
+  const { handleSubmit, AppField, reset, AppForm, SubmitButton } = useAppForm({
     defaultValues: {
       name: oldSchool?.name || '',
       address: {
@@ -74,87 +83,14 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
         telephone: oldSchool?.contactInfo?.telephone || '',
         postOfficeBox: oldSchool?.contactInfo?.postOfficeBox || '',
       },
+    } as any,
+    validators: {
+      onChange: oldSchoolZodSchema,
     },
-    resolver: yupResolver(
-      yup.object({
-        name: yup.string().required(),
-        contactInfo: yup.object({
-          telephone: yup
-            .string()
-            .optional()
-            .min(9)
-            .max(64)
-            .transform(emptyStringToNull),
-          fax: yup
-            .string()
-            .optional()
-            .min(9)
-            .max(64)
-            .transform(emptyStringToNull),
-          mobile: yup
-            .string()
-            .optional()
-            .min(9)
-            .max(64)
-            .transform(emptyStringToNull),
-          email: yup
-            .string()
-            .optional()
-            .min(6)
-            .max(60)
-            .transform(emptyStringToNull),
-          postOfficeBox: yup
-            .string()
-            .optional()
-            .min(2)
-            .max(64)
-            .transform(emptyStringToNull),
-        }),
-        address: yup.object({
-          town: yup
-            .string()
-            .optional()
-            .min(2)
-            .max(50)
-            .transform(emptyStringToNull),
-          state: yup
-            .string()
-            .optional()
-            .min(2)
-            .max(50)
-            .transform(emptyStringToNull),
-          street: yup
-            .string()
-            .optional()
-            .min(2)
-            .max(50)
-            .transform(emptyStringToNull),
-          country: yup
-            .string()
-            .optional()
-            .min(2)
-            .max(50)
-            .transform(emptyStringToNull),
-          zipCode: yup
-            .string()
-            .optional()
-            .min(3)
-            .max(5)
-            .transform(emptyStringToNull),
-        }),
-      }),
-    ),
-  })
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
       const id = oldSchool ? Number(oldSchool.id) : undefined
+      const values = oldSchoolZodSchema.parse(value)
 
       action({
         variables: {
@@ -166,7 +102,7 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
         },
       })
         .then(async ({ data }) => {
-          reset(initialValues)
+          reset()
           toast.success(
             `Ancien établissement ${data.oldSchool.name} enregistré`,
             { ...TOAST_OPTIONS },
@@ -176,7 +112,7 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
             messageService.sendMessage('oldSchool', data.oldSchool)
             props.onModalClose?.()
           }
-          if (close) {
+          if (meta.close) {
             modal?.hide()
           }
         })
@@ -185,23 +121,31 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
             `Impossible d'ajouter l'ancien établissement: ${formatError(error)}`,
           )
         })
-    })(event)
-  }
+    },
+  })
 
   return (
-    <Form onSubmit={onSubmit} className="space-y-6">
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+    >
       <FormSection
         icon={<Building2 className="w-5 h-5" />}
-        title="Informations générales"
-        description="Nom de l'établissement scolaire"
+        title={m.label_generalInfo()}
+        description={m.label_school_name()}
         color="#7367f0"
       >
-        <Input
+        <AppField
           name="name"
-          control={control}
-          label={t('label-name')}
-          required
-          prepend={<Building2 size={16} />}
+          children={(field) => (
+            <field.Input
+              label={m.label_name()}
+              required
+              prepend={<Building2 size={16} />}
+            />
+          )}
         />
       </FormSection>
 
@@ -216,52 +160,70 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
           <TabPane tabId="1">
             <FormSection
               icon={<MapPin className="w-5 h-5" />}
-              title="Adresse"
-              description="Localisation de l'établissement"
+              title={m.label_address()}
+              description={m.label_addressDesc()}
               color="#ff9f43"
             >
               <div className="flex flex-col md:flex-row gap-x-6 gap-y-2 mb-1">
-                <Input
-                  name="address.zipCode"
-                  label={t('label-zipCode')}
-                  control={control}
-                  className="w-full md:w-4/12"
-                  prepend={<MapPin size={16} />}
-                />
+                <div className="w-full md:w-4/12">
+                  <AppField
+                    name="address.zipCode"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_zipCode()}
+                        prepend={<MapPin size={16} />}
+                      />
+                    )}
+                  />
+                </div>
 
-                <Input
-                  name="address.country"
-                  label={t('label-country')}
-                  control={control}
-                  className="w-full md:w-8/12"
-                  prepend={<MapPin size={16} />}
-                />
+                <div className="w-full md:w-8/12">
+                  <AppField
+                    name="address.country"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_country()}
+                        prepend={<Globe size={16} />}
+                      />
+                    )}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col md:flex-row gap-x-6 gap-y-2 mb-1">
-                <Input
-                  name="address.town"
-                  label={t('label-town')}
-                  control={control}
-                  className="w-full md:w-6/12"
-                  prepend={<MapPin size={16} />}
-                />
+                <div className="w-full md:w-6/12">
+                  <AppField
+                    name="address.town"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_town()}
+                        prepend={<Navigation size={16} />}
+                      />
+                    )}
+                  />
+                </div>
 
-                <Input
-                  name="address.state"
-                  label={t('label-state')}
-                  control={control}
-                  className="w-full md:w-6/12"
-                  prepend={<MapPin size={16} />}
-                />
+                <div className="w-full md:w-6/12">
+                  <AppField
+                    name="address.state"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_state()}
+                        prepend={<MapPin size={16} />}
+                      />
+                    )}
+                  />
+                </div>
               </div>
 
-              <Input
+              <AppField
                 name="address.street"
-                label={t('label-street')}
-                control={control}
-                className="w-full"
-                prepend={<MapPin size={16} />}
+                children={(field) => (
+                  <field.Input
+                    label={m.label_street()}
+                    prepend={<MapPin size={16} />}
+                  />
+                )}
               />
             </FormSection>
           </TabPane>
@@ -269,50 +231,66 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
           <TabPane tabId="2">
             <FormSection
               icon={<Phone className="w-5 h-5" />}
-              title="Coordonnées"
-              description="Informations de contact de l'établissement"
-              color="#2f8724"
+              title={m.label_contact()}
+              description={m.label_contactDesc()}
+              color="#28c76f"
             >
               <div className="flex flex-col md:flex-row gap-x-6 gap-y-2 mb-1">
-                <PhoneInput
-                  name="contactInfo.telephone"
-                  label={t('label-telephone')}
-                  control={control}
-                  className="w-full md:w-6/12"
-                />
+                <div className="w-full md:w-6/12">
+                  <AppField
+                    name="contactInfo.telephone"
+                    children={(field) => (
+                      <field.PhoneInput label={m.label_telephone()} />
+                    )}
+                  />
+                </div>
 
-                <PhoneInput
-                  name="contactInfo.mobile"
-                  label={t('label-mobileTelephone')}
-                  control={control}
-                  className="w-full md:w-6/12"
-                />
+                <div className="w-full md:w-6/12">
+                  <AppField
+                    name="contactInfo.mobile"
+                    children={(field) => (
+                      <field.PhoneInput label={m.label_mobileTelephone()} />
+                    )}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col md:flex-row gap-x-6 gap-y-2 mb-1">
-                <Input
-                  name="contactInfo.email"
-                  label={t('label-email')}
-                  control={control}
-                  className="w-full md:w-4/12"
-                  prepend={<Mail size={16} />}
-                />
+                <div className="w-full md:w-4/12">
+                  <AppField
+                    name="contactInfo.email"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_email()}
+                        prepend={<Mail size={16} />}
+                      />
+                    )}
+                  />
+                </div>
 
-                <Input
-                  name="contactInfo.fax"
-                  label={t('label-fax')}
-                  control={control}
-                  className="w-full md:w-4/12"
-                  prepend={<Phone size={16} />}
-                />
+                <div className="w-full md:w-4/12">
+                  <AppField
+                    name="contactInfo.fax"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_fax()}
+                        prepend={<Printer size={16} />}
+                      />
+                    )}
+                  />
+                </div>
 
-                <Input
-                  name="contactInfo.postOfficeBox"
-                  label={t('label-postOfficeBox')}
-                  control={control}
-                  className="w-full md:w-4/12"
-                  prepend={<FileText size={16} />}
-                />
+                <div className="w-full md:w-4/12">
+                  <AppField
+                    name="contactInfo.postOfficeBox"
+                    children={(field) => (
+                      <field.Input
+                        label={m.label_postOfficeBox()}
+                        prepend={<FileText size={16} />}
+                      />
+                    )}
+                  />
+                </div>
               </div>
             </FormSection>
           </TabPane>
@@ -320,13 +298,14 @@ const OldSchoolForm: React.FC<OldSchoolFormProps> = ({
       </div>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )
