@@ -190,8 +190,8 @@ const BranchForm: FC<BranchFormProps> = ({
         const defaultValues = modelSubjectBranches.map((value) =>
           toSubjectBranch(value),
         )
-        for (let i = 0; i < defaultValues.length; i++) {
-          pushFieldValue('items', defaultValues[i])
+        for (const defaultValue of defaultValues) {
+          pushFieldValue('items', defaultValue)
         }
       }
     }
@@ -405,6 +405,9 @@ const BranchForm: FC<BranchFormProps> = ({
                 onFill={onSubjectFill}
                 focus$={focus$}
                 reload$={useEventEmitter()}
+                usedSubjects={getFieldValue('items').map(
+                  (item) => item.subjectName!,
+                )}
               />
             </div>
 

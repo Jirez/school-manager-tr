@@ -28,10 +28,12 @@ interface SubjectAutocompleteHintProps {
   onOpenTable?: (value: string | HintOption) => void
   reload$?: EventEmitter<void>
   canRefetch?: boolean
+  usedSubjects?: string[]
 }
 
 const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
   canRefetch = true,
+  usedSubjects = [],
   ...props
 }) => {
   const { enterpriseId } = useAuthentication()
@@ -78,7 +80,10 @@ const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
 
   const openModal = () => {
     subjectModal.show({
-      subjects: dataSubject?.subjects?.filter((p: any) => p.active) || [],
+      subjects:
+        dataSubject?.subjects
+          ?.filter((p: any) => p.active)
+          .filter((s: any) => !usedSubjects.includes(s.name)) || [],
       onRowClicked: onRowClicked,
       initialFilter: text,
     })
@@ -136,7 +141,9 @@ const SubjectAutocompleteHint: React.FC<SubjectAutocompleteHintProps> = ({
                 onOpenModal={(value) =>
                   subjectModal.show({
                     subjects: dataSubject?.subjects
-                      ? subjects.filter((p: any) => p.active)
+                      ? subjects
+                          .filter((p: any) => p.active)
+                          .filter((s: any) => !usedSubjects.includes(s.name))
                       : [],
                     onRowClicked: onRowClicked,
                     initialFilter: value,
