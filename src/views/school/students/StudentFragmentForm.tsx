@@ -166,8 +166,6 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
 
   const {
     data,
-    loading,
-    subscribeToMore,
     refetch: refetchGuardians,
   } = useGuardiansQuery({
     variables: { id: enterpriseId },
@@ -197,27 +195,37 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
       .map(({ label, value }) => ({ label: t(label), value }))[0]
   }
 
-  const getStudentGuardian = (rel: string): StudentGuardian => {
-    return studentGuardians.filter(({ relation }) => relation === rel)?.[0]
+  const getStudentGuardian = (
+    rel: string,
+  ): StudentGuardian | undefined => {
+    return (studentGuardians ?? []).find(({ relation }) => relation === rel)
+  }
+
+  const withGuardianDisplayName = (
+    studentGuardian: StudentGuardian,
+  ): StudentGuardian => {
+    const guardian = studentGuardian.guardian
+    if (!guardian) {
+      return studentGuardian
+    }
+
+    const name = concat(guardian.lastName, guardian.firstName || '')
+    return {
+      ...studentGuardian,
+      guardian: {
+        ...guardian,
+        displayName: guardian.profession
+          ? `${name} [${guardian.profession}]`
+          : name,
+      },
+    }
   }
 
   const initStudentGuardians = () => {
     const guardians: StudentGuardian[] = []
     const father = getStudentGuardian('FATHER')
     if (father) {
-      const name = concat(
-        father.guardian?.lastName ?? '',
-        father.guardian?.firstName || '',
-      )
-      guardians.push({
-        ...father,
-        guardian: {
-          ...father.guardian!,
-          displayName: father.guardian?.profession
-            ? name + ' [' + father.guardian.profession + '] '
-            : name,
-        },
-      })
+      guardians.push(withGuardianDisplayName(father))
     } else {
       guardians.push({
         studentGuardianPK: {
@@ -231,20 +239,7 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
     // adding mother
     const mother = getStudentGuardian('MOTHER')
     if (mother) {
-      // guardians.push(mother)
-      const name = concat(
-        mother.guardian?.lastName!,
-        mother.guardian?.firstName || '',
-      )
-      guardians.push({
-        ...mother,
-        guardian: {
-          ...mother.guardian!,
-          displayName: mother.guardian?.profession
-            ? name + ' [' + mother.guardian.profession + '] '
-            : name,
-        },
-      })
+      guardians.push(withGuardianDisplayName(mother))
     } else {
       guardians.push({
         studentGuardianPK: {
@@ -255,24 +250,14 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
       })
     }
 
-    const tutor = studentGuardians.filter(
+    const tutor = (studentGuardians ?? []).find(
       ({ relation }) => relation !== 'FATHER' && relation !== 'MOTHER',
-    )?.[0]
+    )
 
     if (tutor) {
       // guardians.push({...tutor, relation: {label: tutor.relation as string, value: tutor.relation as string}})
-      const name = concat(
-        tutor.guardian?.lastName!,
-        tutor.guardian?.firstName || '',
-      )
       guardians.push({
-        ...tutor,
-        guardian: {
-          ...tutor.guardian!,
-          displayName: tutor.guardian?.profession
-            ? name + ' [' + tutor.guardian.profession + '] '
-            : name,
-        },
+        ...withGuardianDisplayName(tutor),
         relation: {
           label: t(tutor.relation as string),
           value: tutor.relation as string,
@@ -389,10 +374,11 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
       gender = 'FEMALE'
     }
     tableModal.show({
-      guardians: !!gender
+      guardians: gender
         ? data?.guardians?.filter((g) => g.gender === gender) || []
         : data?.guardians || [],
-      onRowClicked: (data: any) => onSelectionChanged(data, selectedIndex),
+      onRowClicked: (guardian: any) =>
+        onSelectionChanged(guardian, selectedIndex),
       onAddButtonClick: (searchText?: string) => {
         formModal.show({
           popover: true,
@@ -458,7 +444,7 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
                 onChange={(value) => {
                   setValue('gender', value)
                   if (value) {
-                    document.getElementById('lastName')?.focus?.()
+                    document.getElementById('lastName')?.focus()
                   }
                 }}
                 options={genderOptions.map(({ label, value }) => ({
@@ -822,11 +808,10 @@ const StudentFragmentForm: FC<StudentFragmentFormProps> = ({
                         <Input
                           name={`items.${index}.guardian.displayName`}
                           control={control}
-                          //prepend={<User size={14} />}
                           placeholder={
                             t('label-chooseGuardian') || 'Choisir un parent'
                           }
-                          onClick={(e) => onGuardianClick(index)}
+                          onClick={() => onGuardianClick(index)}
                           readOnly
                         />
                       </GuardianInputWrapper>

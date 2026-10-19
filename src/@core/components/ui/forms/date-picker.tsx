@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import type { FC } from 'react'
 import { useController } from 'react-hook-form'
-import type { Control } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import Flatpickr from 'react-flatpickr'
 import type { DateTimePickerProps } from 'react-flatpickr'
 import { FormFeedback, Label } from 'reactstrap'
@@ -35,11 +34,11 @@ const formatDateInput = (value: string, prevValue: string): string => {
   return formatted
 }
 
-interface Props extends DateTimePickerProps {
-  name: string
+interface Props<TFieldValues extends FieldValues> extends DateTimePickerProps {
+  name: FieldPath<TFieldValues>
   label: string
   required?: boolean
-  control: Control<any>
+  control: Control<TFieldValues>
   className?: string
   showIcon?: boolean
 }
@@ -206,7 +205,7 @@ const StyledFormFeedback = styled(FormFeedback)`
   }
 `
 
-const DatePicker: FC<Props> = ({
+const DatePicker = <TFieldValues extends FieldValues,>({
   name,
   label,
   required = false,
@@ -214,7 +213,7 @@ const DatePicker: FC<Props> = ({
   className = 'mb-1',
   showIcon = true,
   ...props
-}) => {
+}: Props<TFieldValues>) => {
   const {
     field,
     formState: { errors },

@@ -2060,5 +2060,12 @@
   "label_schoolAddressDesc": "Address of the school",
   "number_min": "This field must be greater than {min}",
   "number_max": "This field must be less than {max}",
-  "label_supplierCategoryInfo": "Supplier Category Information"
+  "label_supplierCategoryInfo": "Supplier Category Information",
+  "sidebar_marks_bulkAnnualResult": "Annual results in batch",
+  "label_filters": "Filters",
+  "sidebar_students_studentProgression": "Student's progression",
+  "label_studentProgression": "Student's progression",
+  "label_currentSchoolYear": "Current school year",
+  "label_nextSchoolYear": "Next school year",
+  "label_enieg": "ENIEG"
 }

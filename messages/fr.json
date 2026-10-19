@@ -2064,5 +2064,12 @@
   "label_schoolAddressDesc": "Localisation de l'établissement",
   "number_min": "Ce champ doit être plus grand que {min}",
   "number_max": "Ce champ doit être plus petit que {max}",
-  "label_supplierCategoryInfo": "Informations sur la catégorie"
+  "label_supplierCategoryInfo": "Informations sur la catégorie",
+  "sidebar_marks_bulkAnnualResult": "Résultats annuels en lot",
+  "label_filters": "Filtres",
+  "sidebar_students_studentProgression": "Progression des élèves",
+  "label_studentProgression": "Progression des élèves",
+  "label_currentSchoolYear": "Année scolaire actuelle",
+  "label_nextSchoolYear": "Année scolaire prochaine",
+  "label_enieg":"ENIEG"
 }

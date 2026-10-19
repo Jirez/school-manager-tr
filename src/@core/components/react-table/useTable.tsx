@@ -1,4 +1,3 @@
-//'use no memo'
 import { useState } from 'react'
 import type {
   ColumnDef,
@@ -9,9 +8,9 @@ import type {
   RowSelectionState,
   TableOptions,
   TableState,
-  ColumnVisibilityState,
 } from '@tanstack/react-table'
-import { useAppTable, type AppFeatures } from '#/hooks/table'
+import { useAppTable } from '#/hooks/table'
+import type { AppFeatures } from '#/hooks/table'
 import checkboxColumn from '@/@core/components/react-table/checkbox-column'
 import { matchWord } from '@/utils/SearchFn'
 
@@ -69,30 +68,29 @@ export function useTable<TData extends RowData>(
   const [rowSelection, setRowSelection] = useState<RowSelectionState>(
     () => initialState.rowSelection ?? {},
   )
-  const [columnVisibility, setColumnVisibility] =
-    useState<ColumnVisibilityState>(() => initialState.columnVisibility ?? {})
 
   const table = useAppTable({
     ...restOptions,
     data,
-    // @ts-ignore
+    // @ts-ignore desc
     columns: showCheckbox ? [checkboxColumn, ...columns] : columns,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     onRowSelectionChange: setRowSelection,
-    onColumnVisibilityChange: setColumnVisibility,
     enableColumnResizing,
     columnResizeMode,
     onPaginationChange: setPagination,
     globalFilterFn,
     initialState,
+    atoms: {
+      ...restOptions.atoms,
+    },
     state: {
       ...externalState,
       columnFilters,
       globalFilter,
       pagination,
       rowSelection,
-      columnVisibility,
     },
     debugTable,
     debugHeaders,
@@ -108,8 +106,6 @@ export function useTable<TData extends RowData>(
     setGlobalFilter,
     rowSelection,
     setRowSelection,
-    columnVisibility,
-    setColumnVisibility,
     totalCount,
     columnFilters,
     setColumnFilters,

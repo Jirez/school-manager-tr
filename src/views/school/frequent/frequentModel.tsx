@@ -92,7 +92,7 @@ export function useTableColumns(
           return (
             <TextWithAvatar
               letter={name!.charAt(0)}
-              title={name!}
+              title={name}
               titleClassName="!font-semibold text-gray-800 dark:text-gray-200"
               subtitle={
                 <div className="flex items-center gap-0.5">
@@ -113,6 +113,7 @@ export function useTableColumns(
           )
         },
         size: 250,
+        enableHiding: false,
       },
       {
         accessorFn: (row) => row.sex,
@@ -123,9 +124,7 @@ export function useTableColumns(
           </div>
         ),
         cell: ({ getValue }) => (
-          <GenderBadge gender={getValue() as string}>
-            {getValue() as string}
-          </GenderBadge>
+          <GenderBadge gender={getValue() as string}>{getValue()}</GenderBadge>
         ),
         size: 60,
       },
@@ -167,7 +166,7 @@ export function useTableColumns(
         accessorKey: 'frequentPK.classId',
         id: 'classId',
         filterFn: inArrayFilterFn,
-        visibility: false,
+        // visibility: false,
       },
       {
         accessorKey: 'className',
@@ -222,6 +221,7 @@ export function useTableColumns(
           />
         ),
         size: 80,
+        id: 'socialCase',
       },
       {
         accessorKey: 'id',

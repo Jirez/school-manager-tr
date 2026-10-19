@@ -21,6 +21,7 @@ import SimpleDatePicker from '@/@core/components/ui/forms/simple-date-picker'
 import Button from '@/@core/components/button'
 import dayjs from 'dayjs'
 import { formatError } from '@/utils/ErrorHelper'
+import DatePicker from '#/@core/components/ui/forms/date-picker'
 
 interface FormValues {
   items: FrequentBulkImportType[]
@@ -79,10 +80,10 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
     const callback = (data: any) => {
       setValues((val) => ({ ...val, uploading: false }))
       toast.success('Chargement terminé avec succès', { ...TOAST_OPTIONS })
-      //refetch();
+      // refetch();
 
       setShowUpload(false)
-      //console.log(data);
+      // console.log(data);
       data.forEach((item: any) => {
         append({
           studentId: item.studentId,
@@ -105,7 +106,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
       )
       .catch((error) => {
         setValues((val) => ({ ...val, uploading: false }))
-        //console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(error));
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
@@ -130,7 +131,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
   }
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    //formatting items
+    // formatting items
     const items = data.items
       .filter((item: any) => itemValid(item))
       .map((item: any) => {
@@ -151,7 +152,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
       return
     }
 
-    //console.log(items);
+    // console.log(items);
     const clazz = values.clazz ? values.clazz.id : null
 
     if (!clazz) {
@@ -167,7 +168,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
       },
     })
       .then(async ({ data }) => {
-        //form.resetFields();
+        // form.resetFields();
         toast.success(`Import terminé avec succès`, {
           ...TOAST_OPTIONS,
         })
@@ -279,7 +280,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
 
                 <td>
                   {/* <SimpleInput {...register(`items.${index}.birthDate`)} /> */}
-                  <SimpleDatePicker
+                  <DatePicker
                     name={`items.${index}.birthDate`}
                     control={control}
                   />

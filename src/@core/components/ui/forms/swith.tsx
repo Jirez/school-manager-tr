@@ -1,25 +1,25 @@
 import { useController } from 'react-hook-form'
-import type { Control } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import type { InputProps } from 'reactstrap'
 import { useId } from 'react'
-import type { FC } from 'react'
 
-interface Props extends Omit<InputProps, 'type'> {
-  name: string
+interface Props<TFieldValues extends FieldValues>
+  extends Omit<InputProps, 'type'> {
+  name: FieldPath<TFieldValues>
   label: string
-  control: Control<any>
+  control: Control<TFieldValues>
   className?: string
   size?: 'sm' | 'md' | 'lg'
 }
 
-const Switch: FC<Props> = ({
+const Switch = <TFieldValues extends FieldValues,>({
   name,
   label,
   control,
   className = '',
   size = 'md',
   ...props
-}) => {
+}: Props<TFieldValues>) => {
   const uniqueId = useId()
   const inputId = `switch-${name}-${uniqueId}`
 

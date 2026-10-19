@@ -1,5 +1,4 @@
-import type { FC } from 'react'
-import type { Control } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { useController } from 'react-hook-form'
 import { FormFeedback, Label } from 'reactstrap'
 import { useTranslation } from 'react-i18next'
@@ -8,11 +7,12 @@ import MySelect from '@/@core/components/ui/forms/custom-select'
 import Required from '@/@core/components/ui/forms/required'
 import styled from 'styled-components'
 
-interface ControlledSelectProps extends MySelectProps {
-  name: string
+interface ControlledSelectProps<TFieldValues extends FieldValues>
+  extends MySelectProps {
+  name: FieldPath<TFieldValues>
   label?: string
   required?: boolean
-  control: Control<any>
+  control: Control<TFieldValues>
   className?: string
   prepend?: React.ReactNode
 }
@@ -55,7 +55,7 @@ const PrependWrapper = styled.div`
   }
 `
 
-const ControlledSelect: FC<ControlledSelectProps> = ({
+const ControlledSelect = <TFieldValues extends FieldValues,>({
   label,
   name,
   control,
@@ -63,7 +63,7 @@ const ControlledSelect: FC<ControlledSelectProps> = ({
   required = false,
   prepend,
   ...props
-}) => {
+}: ControlledSelectProps<TFieldValues>) => {
   const {
     field,
     formState: { errors },

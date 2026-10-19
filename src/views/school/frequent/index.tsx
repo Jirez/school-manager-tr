@@ -25,9 +25,19 @@ import { useTableColumns } from './frequentModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import FrequentsDelete from './FrequentsDelete'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Select from '@/@core/components/select'
 import StudentImportProcessModal from './StudentImportProcessModal'
+import type { ColumnVisibilityState } from '@tanstack/react-table'
+import { useCreateAtom } from '@tanstack/react-store'
+
+const getFrequentColumnVisibility = (schoolFeeCompulsory: boolean) => ({
+  classId: false,
+  totalRequiredAmount: schoolFeeCompulsory,
+  balance: schoolFeeCompulsory,
+  lastPaymentDate: schoolFeeCompulsory,
+  socialCase: !schoolFeeCompulsory,
+})
 
 const Frequents = () => {
   const { enterpriseId } = useAuthentication()
@@ -63,6 +73,14 @@ const Frequents = () => {
 
   const { columns } = useTableColumns(modal, refetch)
 
+  const columnVisibilityAtom = useCreateAtom<ColumnVisibilityState>(
+    getFrequentColumnVisibility(schoolFeeCompulsory),
+  )
+
+  useEffect(() => {
+    columnVisibilityAtom.set(getFrequentColumnVisibility(schoolFeeCompulsory))
+  }, [schoolFeeCompulsory, columnVisibilityAtom])
+
   const {
     table,
     globalFilter,
@@ -73,15 +91,8 @@ const Frequents = () => {
   } = useTable<any>({
     data: data?.frequents || [],
     columns,
-    initialState: {
-      columnVisibility: {
-        classId: false,
-        totalRequiredAmount: schoolFeeCompulsory,
-        totalPaidAmount: schoolFeeCompulsory,
-        balance: schoolFeeCompulsory,
-        lastPaymentDate: schoolFeeCompulsory,
-        socialCase: !schoolFeeCompulsory,
-      },
+    atoms: {
+      columnVisibility: columnVisibilityAtom,
     },
   })
 
@@ -167,7 +178,7 @@ const Frequents = () => {
       <div className="!text-[0.80rem]">
         <CardTitle className="p-1 mb-0 flex justify-between items-center">
           <div>
-            {isMount && selectedFlatRows?.length > 0 && (
+            {isMount && selectedFlatRows.length > 0 && (
               <div className="">
                 <FrequentsDelete
                   ids={selectedFlatRows.map(({ original }) => ({
@@ -175,7 +186,7 @@ const Frequents = () => {
                     classId: Number(original.frequentPK.classId),
                     schoolYearId: Number(original.frequentPK.schoolYearId),
                   }))}
-                  count={selectedFlatRows?.length}
+                  count={selectedFlatRows.length}
                   refetch={() => {
                     refetch()
                     setRowSelection({})

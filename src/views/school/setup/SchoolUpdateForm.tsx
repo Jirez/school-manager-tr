@@ -226,6 +226,7 @@ const SchoolUpdateForm: React.FC<Props> = ({ stepper }) => {
                   {t('label-technicalHighSchool')}
                 </option>
                 <option value="COLLEGE">{t('label-college')}</option>
+                <option value="ENIEG">{t('label_enieg')}</option>
                 <option value="UNIVERSITY">{t('label-university')}</option>
               </Input>
 

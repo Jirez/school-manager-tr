@@ -1,18 +1,17 @@
-import type { FC } from 'react'
 import Cleave from 'cleave.js/react'
 import 'cleave.js/dist/addons/cleave-phone.cm'
 import { useController } from 'react-hook-form'
-import type { Control } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Phone, AlertCircle } from 'lucide-react'
 import { FormFeedback, InputGroup, InputGroupText, Label } from 'reactstrap'
 import { styled } from 'styled-components'
 import Required from './required'
 
-interface PhoneInputProps {
+interface PhoneInputProps<TFieldValues extends FieldValues> {
   label?: string
-  name: string
-  control: Control<any>
+  name: FieldPath<TFieldValues>
+  control: Control<TFieldValues>
   className?: string
   required?: boolean
   id?: string
@@ -219,7 +218,7 @@ const StyledFormFeedback = styled(FormFeedback)`
   }
 `
 
-const PhoneInput: FC<PhoneInputProps> = ({
+const PhoneInput = <TFieldValues extends FieldValues,>({
   name,
   control,
   className = 'mb-1',
@@ -228,7 +227,7 @@ const PhoneInput: FC<PhoneInputProps> = ({
   id,
   labelClassName,
   hint,
-}) => {
+}: PhoneInputProps<TFieldValues>) => {
   const {
     field,
     formState: { errors },

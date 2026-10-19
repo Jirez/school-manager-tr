@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import * as yup from 'yup'
 import { useModal } from '@ebay/nice-modal-react'
-import type { SubmitHandler } from 'react-hook-form'
-import { useForm } from 'react-hook-form'
 import { Form } from 'reactstrap'
-import { yupResolver } from '@hookform/resolvers/yup'
 import styled from 'styled-components'
 import { Calendar, Filter, Settings, Users, Hash, List } from 'lucide-react'
+import { z } from 'zod'
 
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { messageService } from '@/utils/message.service'
@@ -23,9 +19,6 @@ import {
 import BulkAnnualResultAdd from './BulkAnnualResultAdd'
 import LoadingSpinner from '@/@core/components/spinner/Loading-spinner'
 import Button from '@/@core/components/button'
-import ControlledReactSelect from '@/@core/components/ui/forms/controlled-react-select'
-import { default as FormItem } from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
 import AnnualResultSummaryTableModal from './AnnualResultSummaryTableModal'
 import {
   useAnnualReportRankingLazyQuery,
@@ -40,6 +33,9 @@ import { SchoolYearCreatedDocument } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import GraphQLError from '@/@core/components/errors/graphql-error'
 import FormSection from '@/@core/components/ui/forms/form-section'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { m } from '@/paraglide/messages'
 
 const SearchContainer = styled.div`
   width: 100%;
@@ -125,94 +121,72 @@ const ButtonGroup = styled.div`
   flex-wrap: wrap;
 `
 
-interface FormValues {
-  gender?: string
-  currentSchoolYear: any
-  minAverage: any
-  maxAverage: any
-  clazz: any
-  level: any
-  branch: any
-  decision: any
-  name?: string //newBranch
-  limit: any
-  nextSchoolYear: any
-  shuffle: boolean
-  newClassIsNull: boolean
-  sortByMerit: boolean
-}
+const bulkAnnualResultsSchema = z.object({
+  gender: z.string().optional(),
+  currentSchoolYear: z.any().nullable(),
+  minAverage: z.coerce.number().min(0).max(20).optional().nullable(),
+  maxAverage: z.coerce.number().min(0).max(20).optional().nullable(),
+  clazz: z.any().nullable(),
+  level: z.any().nullable(),
+  branch: z.any().nullable(),
+  decision: z.any().nullable(),
+  name: z.string().optional(),
+  limit: z.any().optional(),
+  nextSchoolYear: z.any().nullable(),
+  shuffle: z.boolean(),
+  newClassIsNull: z.boolean(),
+  sortByMerit: z.boolean(),
+})
+
+type BulkAnnualResultsSchemaType = z.infer<typeof bulkAnnualResultsSchema>
 
 const BulkAnnualResults = () => {
-  const { t } = useTranslation()
-  useTitle(t('sidebar.marks.bulkAnnualResult'))
+  useTitle(m.sidebar_marks_bulkAnnualResult())
   const { enterpriseId } = useAuthentication()
   const [search, setSearch] = useState<string>('')
   const [hasNewResult, setHasNewResult] = useState(false)
   const tableModal = useModal(AnnualResultSummaryTableModal)
 
-  const { control, handleSubmit, watch, reset, setValue } = useForm<FormValues>(
-    {
-      defaultValues: {
-        newClassIsNull: false,
-        shuffle: false,
-        gender: '',
-        decision: null,
-        branch: null,
-        limit: '',
-        nextSchoolYear: null,
-        minAverage: '',
-        maxAverage: '',
-        currentSchoolYear: null,
-        clazz: null,
-        level: null,
-        name: '',
-        sortByMerit: true,
-      },
-      resolver: yupResolver(
-        yup.object({
-          minAverage: yup
-            .number()
-            .nullable()
-            .min(0)
-            .max(20)
-            .transform((v) => (v === '' || Number.isNaN(v) ? null : v)),
-          maxAverage: yup
-            .number()
-            .nullable()
-            .positive()
-            .max(20)
-            .transform((v) => (v === '' || Number.isNaN(v) ? null : v)),
-          nextSchoolYear: yup
-            .object()
-            .required()
-            .typeError('Value is required'),
-          currentSchoolYear: yup
-            .object()
-            .required()
-            .typeError('Value is required'),
-        }),
-      ) as any,
-      mode: 'onChange',
-    },
-  )
-
-  const values = watch()
-
   const {
-    data: dataSchoolYear,
-    //loading: loadingSchoolYear,
-    subscribeToMore: subscribeToMoreSchoolYear,
-  } = useSchoolYearsQuery({
-    variables: { id: enterpriseId },
+    handleSubmit,
+    AppField,
+    reset,
+    store,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+  } = useAppForm({
+    defaultValues: {
+      newClassIsNull: false,
+      shuffle: false,
+      gender: '',
+      decision: null,
+      branch: null,
+      limit: '',
+      nextSchoolYear: null,
+      minAverage: '',
+      maxAverage: '',
+      currentSchoolYear: null,
+      clazz: null,
+      level: null,
+      name: '',
+      sortByMerit: true,
+    } as any,
+    validators: {
+      onChange: bulkAnnualResultsSchema,
+    },
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
+      onSearch(value, meta)
+    },
   })
 
-  /* const { data: dataClasses } = useClassesQuery({
-    variables: { id: enterpriseId },
-  });
+  const values = useSelector(store, (state) => state.values)
 
-  const { data: dataBranches } = useBranchesQuery({
-    variables: { id: enterpriseId },
-  }); */
+  const { data: dataSchoolYear, subscribeToMore: subscribeToMoreSchoolYear } =
+    useSchoolYearsQuery({
+      variables: { id: enterpriseId },
+    })
 
   const { data: dataClasses } = useClassesBySchoolYearQuery({
     variables: { id: Number(values.currentSchoolYear?.id) },
@@ -233,30 +207,20 @@ const BulkAnnualResults = () => {
     variables: { id: enterpriseId },
   })
 
-  //const { data: dataAnnualRanking, loading: loadingAnnualRanking } =
   const [
     fetchResult,
     { data: dataAnnualRanking, loading: loadingAnnualRanking, error },
   ] = useAnnualReportRankingLazyQuery({
-    /* variables: {
-      search: search,
-      newClassIsNull: values.newClassIsNull,
-      shuffle: values.shuffle,
-      limit: values.limit !== "" ? Number(values.limit) : null,
-      sortByMerit: values.sortByMerit || false,
-    }, */
-    //skip: !search && /* !load && */ !values.newClassIsNull && !values.shuffle,
     fetchPolicy: 'no-cache',
   })
 
-  const { data: dataAnnualResultSummary, loading: loadingAnnualResultSummary } =
-    useAnnualResultSummaryQuery({
-      variables: { schoolYearId: Number(values.currentSchoolYear?.id) },
-      skip: !values.currentSchoolYear,
-      fetchPolicy: 'no-cache',
-    })
+  const { data: dataAnnualResultSummary } = useAnnualResultSummaryQuery({
+    variables: { schoolYearId: Number(values.currentSchoolYear?.id) },
+    skip: !values.currentSchoolYear,
+    fetchPolicy: 'no-cache',
+  })
 
-  const onSearch: SubmitHandler<FormValues> = (values) => {
+  const onSearch = (values: BulkAnnualResultsSchemaType, meta?: any) => {
     let str = `search=${
       values.currentSchoolYear
         ? `schoolYear:${values.currentSchoolYear.id}`
@@ -313,16 +277,6 @@ const BulkAnnualResults = () => {
     messageService.getMessage().subscribe((message) => {
       if (message) {
         if (message.name === 'annualResults') {
-          //reset({currentSchoolYear: null, nextSchoolYear: null, decision:null, clazz: null, branch: null, level: null, newClassIsNull: false, name: '', shuffle: false});
-          //form.resetFields();
-          //reset();
-          //reobserve();
-          //navigate("/bulk-annual-result");
-          /* client.refetchQueries({
-            updateCache(cache) {
-              cache.evict({ fieldName: "findAnnualReportSummary" });
-            },
-          }); */
           setHasNewResult(false)
         }
       }
@@ -333,15 +287,22 @@ const BulkAnnualResults = () => {
     <div className="flex flex-col w-full px-1 md:!px-0">
       <div className="w-full mb-0">
         <div id="displayStudentName"> </div>
-        <PageHeader title={t('sidebar.marks.bulkAnnualResult')} />
+        <PageHeader title={m.sidebar_marks_bulkAnnualResult()} />
       </div>
 
       <ReportOptions title="Paramètres de recherche">
         <SearchContainer>
-          <Form onSubmit={handleSubmit(onSearch)} className="space-y-4">
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              handleSubmit()
+            }}
+            className="space-y-4"
+          >
             <FormSection
               icon={<Calendar className="w-5 h-5" />}
-              title={t('label-schoolYear') || 'Années scolaires'}
+              title={m.label_schoolYear()}
               description="Sélectionnez les années scolaires"
               color="#7367f0"
             >
@@ -357,17 +318,20 @@ const BulkAnnualResults = () => {
                   enterpriseId={enterpriseId}
                 >
                   {({ schoolYears }) => (
-                    <ControlledReactSelect
+                    <AppField
                       name="currentSchoolYear"
-                      control={control}
-                      onChange={(val) => setValue('currentSchoolYear', val)}
-                      options={schoolYears || undefined}
-                      getOptionLabel={(option: any) => option.label}
-                      getOptionValue={(option: any) => option.id}
-                      components={{
-                        Option: schoolYearOptions,
-                      }}
-                      placeholder="Année scolaire en cours"
+                      children={(field) => (
+                        <field.ControlledSelect
+                          label={m.label_schoolYear()}
+                          options={schoolYears || []}
+                          getOptionLabel={(option: any) => option.label}
+                          getOptionValue={(option: any) => option.id}
+                          components={{
+                            Option: schoolYearOptions,
+                          }}
+                          placeholder="Année scolaire en cours"
+                        />
+                      )}
                     />
                   )}
                 </LiveView>
@@ -383,17 +347,20 @@ const BulkAnnualResults = () => {
                   enterpriseId={enterpriseId}
                 >
                   {({ schoolYears }) => (
-                    <ControlledReactSelect
+                    <AppField
                       name="nextSchoolYear"
-                      control={control}
-                      onChange={(val) => setValue('nextSchoolYear', val)}
-                      options={schoolYears || undefined}
-                      getOptionLabel={(option: any) => option.label}
-                      getOptionValue={(option: any) => option.id}
-                      components={{
-                        Option: schoolYearOptions,
-                      }}
-                      placeholder="Année scolaire prochaine"
+                      children={(field) => (
+                        <field.ControlledSelect
+                          label={m.label_schoolYear()}
+                          options={schoolYears || []}
+                          getOptionLabel={(option: any) => option.label}
+                          getOptionValue={(option: any) => option.id}
+                          components={{
+                            Option: schoolYearOptions,
+                          }}
+                          placeholder="Année scolaire prochaine"
+                        />
+                      )}
                     />
                   )}
                 </LiveView>
@@ -402,132 +369,163 @@ const BulkAnnualResults = () => {
 
             <FormSection
               icon={<Filter className="w-5 h-5" />}
-              title={t('label-filters') || 'Filtres'}
+              title={m.label_filters()}
               description="Critères de recherche des élèves"
               color="#28c76f"
             >
               <CompactGrid>
-                <FormItem
+                <AppField
                   name="minAverage"
-                  control={control}
-                  label={t('label-minAverage')}
-                  //prepend={<Hash size={16} />}
-                  placeholder="0"
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_minAverage()}
+                      type="number"
+                      placeholder="0"
+                    />
+                  )}
                 />
 
-                <FormItem
+                <AppField
                   name="maxAverage"
-                  control={control}
-                  label={t('label-maxAverage')}
-                  //prepend={<Hash size={16} />}
-                  placeholder="20"
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_maxAverage()}
+                      type="number"
+                      placeholder="20"
+                    />
+                  )}
                 />
 
-                <ControlledReactSelect
+                <AppField
                   name="clazz"
-                  control={control}
-                  label={t('label-oldClass')}
-                  onChange={(val: any) => setValue('clazz', val)}
-                  options={dataClasses?.clazzes || undefined}
-                  getOptionLabel={(option: any) => option.name}
-                  getOptionValue={(option: any) => option.id}
-                  components={{ Option: classOptions }}
-                  placeholder={t('label-selectClass')}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_oldClass()}
+                      options={dataClasses?.clazzes || []}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      components={{ Option: classOptions }}
+                      placeholder={m.label_selectClass()}
+                      onChange={(val) => setFieldValue('clazz', val)}
+                    />
+                  )}
                 />
 
-                <ControlledReactSelect
+                <AppField
                   name="branch"
-                  control={control}
-                  label={t('label-oldBranch')}
-                  onChange={(val: any) => setValue('branch', val)}
-                  options={dataBranches?.branches || undefined}
-                  getOptionLabel={(option: any) => option.name}
-                  getOptionValue={(option: any) => option.id}
-                  components={{ Option: branchOptions }}
-                  placeholder={t('label-selectBranch')}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_oldBranch()}
+                      options={dataBranches?.branches || []}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      components={{ Option: branchOptions }}
+                      placeholder={m.label_selectBranch()}
+                      onChange={(val) => setFieldValue('branch', val)}
+                    />
+                  )}
                 />
 
-                <ControlledReactSelect
+                <AppField
                   name="level"
-                  control={control}
-                  label={t('label-oldLevel')}
-                  onChange={(val: any) => setValue('level', val)}
-                  options={dataLevels?.levels || undefined}
-                  getOptionLabel={(option: any) => option.name}
-                  getOptionValue={(option: any) => option.id}
-                  placeholder={t('label-selectLevel')}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_oldLevel()}
+                      options={dataLevels?.levels || []}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      placeholder={m.label_selectLevel()}
+                    />
+                  )}
                 />
 
-                <ControlledReactSelect
+                <AppField
                   name="decision"
-                  control={control}
-                  label={t('label-currentDecision')}
-                  onChange={(val) => setValue('decision', val)}
-                  options={data?.councilDecisions || undefined}
-                  getOptionLabel={(option: any) => option.name}
-                  getOptionValue={(option: any) => option.id}
-                  components={{ Option: decisionOptions }}
-                  placeholder={t('label-select')}
+                  children={(field) => (
+                    <field.ControlledSelect
+                      label={m.label_currentDecision()}
+                      options={data?.councilDecisions || []}
+                      getOptionLabel={(option: any) => option.name}
+                      getOptionValue={(option: any) => option.id}
+                      components={{ Option: decisionOptions }}
+                      placeholder={m.label_select()}
+                    />
+                  )}
                 />
               </CompactGrid>
             </FormSection>
 
             <FormSection
               icon={<Settings className="w-5 h-5" />}
-              title={t('label-options') || 'Options'}
+              title={m.label_options()}
               description="Options de traitement et d'affichage"
               color="#ea5455"
             >
               <CompactGrid>
-                <FormItem
+                <AppField
                   name="name"
-                  control={control}
-                  label={t('label-newBranch')}
-                  prepend={<List size={16} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_newBranch()}
+                      prepend={<List size={16} />}
+                    />
+                  )}
                 />
 
-                <FormItem
+                <AppField
                   name="limit"
-                  control={control}
-                  label={t('label-limitResultTo')}
-                  prepend={<Hash size={16} />}
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_limitResultTo()}
+                      prepend={<Hash size={16} />}
+                    />
+                  )}
                 />
 
-                <FormItem
+                <AppField
                   name="gender"
-                  control={control}
-                  label={t('label-gender')}
-                  type="select"
-                  prepend={<Users size={16} />}
-                >
-                  <option value="">{t('label-select')}</option>
-                  <option value="MALE">{t('MALE')}</option>
-                  <option value="FEMALE">{t('FEMALE')}</option>
-                </FormItem>
+                  children={(field) => (
+                    <field.Input
+                      label={m.label_gender()}
+                      type="select"
+                      prepend={<Users size={16} />}
+                    >
+                      <option value="">{m.label_select()}</option>
+                      <option value="MALE">{m.label_male()}</option>
+                      <option value="FEMALE">{m.label_female()}</option>
+                    </field.Input>
+                  )}
+                />
 
                 <div className="flex flex-wrap gap-4 mt-2">
-                  <Switch
+                  <AppField
                     name="newClassIsNull"
-                    control={control}
-                    label={t('label-newClassIsNull')}
-                    className="form-switch"
-                    defaultChecked={values.newClassIsNull}
+                    children={(field) => (
+                      <field.Switch
+                        label={m.label_newClassIsNull()}
+                        className="form-switch"
+                      />
+                    )}
                   />
 
-                  <Switch
+                  <AppField
                     name="shuffle"
-                    control={control}
-                    label={t('label-randomList')}
-                    className="form-switch"
-                    defaultChecked={values.shuffle}
+                    children={(field) => (
+                      <field.Switch
+                        label={m.label_randomList()}
+                        className="form-switch"
+                      />
+                    )}
                   />
 
-                  <Switch
+                  <AppField
                     name="sortByMerit"
-                    control={control}
-                    label={t('label-sortByMerit')}
-                    className="form-switch"
-                    defaultChecked={values.sortByMerit}
+                    children={(field) => (
+                      <field.Switch
+                        label={m.label_sortByMerit()}
+                        className="form-switch"
+                      />
+                    )}
                   />
                 </div>
               </CompactGrid>
@@ -538,10 +536,10 @@ const BulkAnnualResults = () => {
                 className="round"
                 color="primary"
                 type="button"
-                onClick={() => handleSubmit(onSearch)()}
+                onClick={() => handleSubmit()}
                 loading={loadingAnnualRanking}
               >
-                {t('label-execute')}
+                {m.label_execute()}
               </Button>
               <Button
                 className="round"

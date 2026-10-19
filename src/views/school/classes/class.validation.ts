@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { m } from '@/paraglide/messages'
-import { optionalString, requiredSelect } from '#/utils/zod.helpers'
+import { requiredSelect } from '#/utils/zod.helpers'
 
 export const classValidation = z.object({
   name: z
@@ -9,7 +9,10 @@ export const classValidation = z.object({
     .max(120, m.string_max({ max: 120 })),
   branchId: requiredSelect(),
   headTeacherId: z.any().nullable().optional(),
-  code: optionalString(),
+  code: z
+    .string()
+    .min(1, m.string_min({ min: 1 }))
+    .max(10, m.string_max({ max: 10 })),
   examClass: z.boolean(),
   autoTimeTable: z.boolean(),
   competenceClass: z.boolean(),

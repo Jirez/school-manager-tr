@@ -110,7 +110,6 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
             messageService.sendMessage('clazz', result.clazz)
             props.onModalClose?.()
           }
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (meta.close) {
             modal?.hide()
           }
@@ -188,6 +187,7 @@ const ClassForm: FC<ClassFormProps> = ({ clazz, modal, action, ...props }) => {
                     label={m.label_code()}
                     prepend={<Hash size={16} />}
                     placeholder="Ex: 6EME-A"
+                    required
                   />
                 )}
               />

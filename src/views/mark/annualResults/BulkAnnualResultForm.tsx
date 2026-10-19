@@ -1,24 +1,16 @@
-import ControlledSelect from '@/@core/components/ui/forms/controlled-select'
-import { default as FormItem } from '@/@core/components/ui/forms/input'
-import { useAuthentication } from '@/hooks/useAuthentication'
 import LiveView from '@/utils/LiveView'
 import {
   branchOptions,
   classOptions,
   decisionOptions,
 } from '@/utils/select/selectComponents'
-import SimpleInput from '@/@core/components/ui/simple-input'
-import type { SubmitHandler } from 'react-hook-form'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useAuthentication } from '@/hooks/useAuthentication'
 import { useTranslation } from 'react-i18next'
 import { Form, Table, Input as BaseInput } from 'reactstrap'
-import type { Draft } from 'immer'
-import { produce } from 'immer'
-import { useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import Button from '@/@core/components/button'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   CouncilDecisionCreatedDocument,
@@ -35,7 +27,12 @@ import {
   Hash,
 } from 'lucide-react'
 import FormSection from '@/@core/components/ui/forms/form-section'
+import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { TypeBadge } from '@/@core/components/ui/table/table.style'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import { useSelector } from '@tanstack/react-form'
+import { z } from 'zod'
+import { optionalString, requiredSelect } from '#/utils/zod.helpers'
 
 interface AnnualResult {
   average: number
@@ -60,14 +57,23 @@ interface BulkAnnualResultFormProps extends BaseFormProps {
   currentSchoolYearId: number
 }
 
-interface FormValues {
-  items: AnnualResult[]
-  councilDecision: any
-  councilDecisionId: any
-  nextBranchId: any
-  nextClassId: any
-  observation?: string
-}
+const bulkAnnualResultItemSchema = z
+  .object({
+    studentId: z.number(),
+    checkbox: z.boolean().optional().default(false),
+    observation: z.string().optional().nullable(),
+  })
+  .passthrough()
+
+const bulkAnnualResultSchema = z.object({
+  councilDecisionId: requiredSelect(),
+  nextBranchId: z.any().optional().nullable(),
+  nextClassId: z.any().optional().nullable(),
+  observation: optionalString(),
+  items: z.array(bulkAnnualResultItemSchema),
+})
+
+type BulkAnnualResultSchemaType = z.infer<typeof bulkAnnualResultSchema>
 
 const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
   annualResults,
@@ -78,10 +84,7 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
 }) => {
   const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
-  const [checkboxes, setCheckboxes] = useState({
-    indeterminate: true,
-    checkAll: false,
-  })
+  const checkAllRef = useRef<HTMLInputElement>(null)
 
   const { data, loading, subscribeToMore } = useCouncilDecisionsQuery({
     variables: { id: enterpriseId },
@@ -97,69 +100,92 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
     skip: !nextSchoolYearId,
   })
 
-  const { control, register, handleSubmit, setValue, getValues, watch } =
-    useForm<FormValues>({
-      defaultValues: {
-        observation: '',
-        nextClassId: null,
-        nextBranchId: null,
-        councilDecisionId: null,
-        items: annualResults,
-      },
-    })
+  const {
+    handleSubmit,
+    AppField,
+    AppForm,
+    SubmitButton,
+    setFieldValue,
+    getFieldValue,
+    store,
+  } = useAppForm({
+    defaultValues: {
+      observation: '',
+      nextClassId: null,
+      nextBranchId: null,
+      councilDecisionId: null,
+      items: annualResults.map((item) => ({
+        ...item,
+        checkbox: Boolean((item as any).checkbox),
+      })),
+    } as any,
+    validators: {
+      // @ts-ignore desc
+      onChange: bulkAnnualResultSchema,
+    },
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value }) {
+      const values = bulkAnnualResultSchema.parse(value)
 
-  const { fields } = useFieldArray({ control, name: 'items' })
-  const studentList = watch('items')
-  const selectedCount = studentList?.filter((i) => i.checkbox).length || 0
-
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
-    const items = values.items
-      .filter((item: any) => itemValid(item))
-      .map((item: any) => {
-        return {
-          studentId: Number(item.studentId),
-          observation: item.observation ? item.observation : null,
-        }
-      })
-
-    if (items.length === 0) {
-      toast.error('Données invalides, rien à enregistrer')
-      return false
-    }
-
-    action({
-      variables: {
-        anForm: {
-          items: items,
-          currentSchoolYearId: Number(currentSchoolYearId),
-          nextSchoolYearId: Number(nextSchoolYearId),
-          councilDecisionId: values.councilDecisionId
-            ? Number(values.councilDecisionId.id)
-            : null,
-          nextClassId: values.nextClassId
-            ? Number(values.nextClassId.id)
-            : null,
-          nextBranchId: values.nextBranchId
-            ? Number(values.nextBranchId.id)
-            : null,
-          observation: values.observation ? values.observation : null,
-        },
-      },
-    })
-      .then(async ({ data }) => {
-        toast.success(`Résultats annuel enregistrés`, {
-          ...TOAST_OPTIONS,
+      const items = values.items
+        .filter((item: any) => itemValid(item))
+        .map((item: any) => {
+          return {
+            studentId: Number(item.studentId),
+            observation: item.observation ? item.observation : null,
+          }
         })
-        messageService.sendMessage('annualResults', true)
+
+      if (items.length === 0) {
+        toast.error('Données invalides, rien à enregistrer')
+        return
+      }
+
+      action({
+        variables: {
+          anForm: {
+            items: items,
+            currentSchoolYearId: Number(currentSchoolYearId),
+            nextSchoolYearId: Number(nextSchoolYearId),
+            councilDecisionId: values.councilDecisionId
+              ? Number(values.councilDecisionId.id)
+              : null,
+            nextClassId: values.nextClassId
+              ? Number(values.nextClassId.id)
+              : null,
+            nextBranchId: values.nextBranchId
+              ? Number(values.nextBranchId.id)
+              : null,
+            observation: values.observation ? values.observation : null,
+          },
+        },
       })
-      .catch((error) => {
-        toast.error(
-          `Impossible d'enregistrer les résultats annuels : ${formatError(
-            error,
-          )}`,
-        )
-      })
-  }
+        .then(async () => {
+          toast.success(`Résultats annuel enregistrés`, {
+            ...TOAST_OPTIONS,
+          })
+          messageService.sendMessage('annualResults', true)
+        })
+        .catch((error) => {
+          toast.error(
+            `Impossible d'enregistrer les résultats annuels : ${formatError(
+              error,
+            )}`,
+          )
+        })
+    },
+  })
+
+  const items = useSelector(store, (state) => state.values.items)
+  const selectedCount = items.filter((i: any) => i.checkbox).length || 0
+  const allChecked = items.length > 0 && items.every((i: any) => i.checkbox)
+  const someChecked = items.some((i: any) => i.checkbox) || false
+
+  useEffect(() => {
+    if (checkAllRef.current) {
+      checkAllRef.current.indeterminate = !allChecked && someChecked
+    }
+  }, [allChecked, someChecked])
 
   const itemValid = (item: any) => {
     const { checkbox, studentId } = item
@@ -167,25 +193,22 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
   }
 
   const onCheckAllChange = (e: any) => {
-    setCheckboxes({
-      indeterminate: false,
-      checkAll: e.target.checked,
-    })
-
-    const items = getValues('items')
-    const updatedItem = produce(items, (draftState: Draft<any>) => {
-      for (let i = 0; i < items.length; i++) {
-        draftState[i].checkbox = e.target.checked
-      }
-    })
-
-    setValue('items', updatedItem)
+    const checked = e.target.checked
+    const current = getFieldValue('items') as any[]
+    setFieldValue(
+      'items',
+      current.map((item) => ({ ...item, checkbox: checked })),
+    )
   }
 
   const getDecisionBadge = (decision: string) => {
     let $color:
-      'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' =
-      'primary'
+      | 'primary'
+      | 'secondary'
+      | 'success'
+      | 'danger'
+      | 'warning'
+      | 'info' = 'primary'
     if (decision === 'ADMISSIBLE') $color = 'success'
     else if (decision === 'REPEAT') $color = 'warning'
     else if (decision === 'EXCLUDED') $color = 'danger'
@@ -197,7 +220,13 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+      className="space-y-6"
+    >
       <FormSection
         icon={<Gavel className="w-5 h-5" />}
         title={t('label-councilDecision') || 'Décision du conseil'}
@@ -216,62 +245,76 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
             enterpriseId={enterpriseId}
           >
             {({ councilDecisions }) => (
-              <ControlledSelect
+              <AppField
                 name="councilDecisionId"
-                control={control}
-                label={t('label-councilDecision')}
-                required
-                loading={loading}
-                onChange={(val) => setValue('councilDecisionId', val)}
-                options={councilDecisions || undefined}
-                getOptionLabel={(option) => option.name}
-                getOptionValue={(option) => option.id}
-                optionLabel="name"
-                components={{ Option: decisionOptions }}
-                prepend={<Gavel size={16} />}
+                children={(field) => (
+                  <field.ControlledSelect
+                    label={t('label-councilDecision')}
+                    required
+                    isLoading={loading}
+                    onChange={(val) =>
+                      setFieldValue('councilDecisionId', val)
+                    }
+                    options={councilDecisions || undefined}
+                    getOptionLabel={(option: any) => option.name}
+                    getOptionValue={(option: any) => option.id}
+                    optionLabel="name"
+                    components={{ Option: decisionOptions }}
+                    prepend={<Gavel size={16} />}
+                  />
+                )}
               />
             )}
           </LiveView>
 
-          <ControlledSelect
+          <AppField
             name="nextBranchId"
-            control={control}
-            label={t('label-nextBranch')}
-            onChange={(val) => setValue('nextBranchId', val)}
-            options={
-              dataBranchesBySchoolYear
-                ? dataBranchesBySchoolYear.branches
-                : undefined
-            }
-            getOptionLabel={(option) => option.name}
-            getOptionValue={(option) => option.id}
-            optionLabel="name"
-            components={{ Option: branchOptions }}
-            prepend={<ArrowRight size={16} />}
+            children={(field) => (
+              <field.ControlledSelect
+                label={t('label-nextBranch')}
+                onChange={(val) => setFieldValue('nextBranchId', val)}
+                options={
+                  dataBranchesBySchoolYear
+                    ? dataBranchesBySchoolYear.branches
+                    : undefined
+                }
+                getOptionLabel={(option: any) => option.name}
+                getOptionValue={(option: any) => option.id}
+                optionLabel="name"
+                components={{ Option: branchOptions }}
+                prepend={<ArrowRight size={16} />}
+              />
+            )}
           />
 
-          <ControlledSelect
+          <AppField
             name="nextClassId"
-            control={control}
-            label={t('label-nextClass')}
-            onChange={(val) => setValue('nextClassId', val)}
-            options={
-              dataClassesBySchoolYear
-                ? dataClassesBySchoolYear.clazzes
-                : undefined
-            }
-            getOptionLabel={(option) => option.name}
-            getOptionValue={(option) => option.id}
-            optionLabel="name"
-            components={{ Option: classOptions }}
-            prepend={<GraduationCap size={16} />}
+            children={(field) => (
+              <field.ControlledSelect
+                label={t('label-nextClass')}
+                onChange={(val) => setFieldValue('nextClassId', val)}
+                options={
+                  dataClassesBySchoolYear
+                    ? dataClassesBySchoolYear.clazzes
+                    : undefined
+                }
+                getOptionLabel={(option: any) => option.name}
+                getOptionValue={(option: any) => option.id}
+                optionLabel="name"
+                components={{ Option: classOptions }}
+                prepend={<GraduationCap size={16} />}
+              />
+            )}
           />
 
-          <FormItem
+          <AppField
             name="observation"
-            control={control}
-            label={t('label-observation')}
-            prepend={<FileText size={16} />}
+            children={(field) => (
+              <field.Input
+                label={t('label-observation')}
+                prepend={<FileText size={16} />}
+              />
+            )}
           />
         </div>
       </FormSection>
@@ -288,8 +331,9 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
               <th className="!py-2 !px-2 text-center" style={{ width: '40px' }}>
                 <BaseInput
                   type="checkbox"
+                  innerRef={checkAllRef}
                   onChange={onCheckAllChange}
-                  checked={checkboxes.checkAll}
+                  checked={allChecked}
                   className="mx-auto"
                 />
               </th>
@@ -346,76 +390,86 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {fields.map((field, index) => (
-              <tr
-                key={field.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                <td className="!py-1 !px-2 text-center text-gray-500">
-                  {index + 1}
-                </td>
-                <td style={{ display: 'none' }}>
-                  <SimpleInput
-                    {...register(`items.${index}.studentId`)}
-                    readOnly={true}
-                  />
-                </td>
+            <AppField name="items" mode="array">
+              {(fieldArray) => (
+                <>
+                  {fieldArray.state.value.map((item: any, index: number) => (
+                    <tr
+                      key={item.studentId ?? index}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                      <td className="!py-1 !px-2 text-center text-gray-500">
+                        {index + 1}
+                      </td>
 
-                <td className="!py-1 !px-2 text-center">
-                  <FormItem
-                    name={`items.${index}.checkbox`}
-                    control={control}
-                    type="checkbox"
-                    className="mb-0"
-                    checked={watch(`items.${index}.checkbox`)}
-                  />
-                </td>
+                      <td className="!py-1 !px-2 text-center">
+                        <AppField name={`items[${index}].checkbox`}>
+                          {(field) => (
+                            <BaseInput
+                              type="checkbox"
+                              checked={!!field.state.value}
+                              onChange={(e) =>
+                                field.handleChange(e.target.checked)
+                              }
+                              onBlur={field.handleBlur}
+                              className="mx-auto"
+                            />
+                          )}
+                        </AppField>
+                      </td>
 
-                <td className="!py-1 !px-2">
-                  <SimpleInput
-                    {...register(`items.${index}.studentName`)}
-                    readOnly={true}
-                    title={watch(`items.${index}.studentName`)}
-                    className="font-medium"
-                  />
-                </td>
+                      <td
+                        className="!py-1 !px-2 font-medium"
+                        title={item.studentName}
+                      >
+                        {item.studentName}
+                      </td>
 
-                <td className="!py-1 !px-2 text-center">
-                  <span className="font-semibold text-primary">
-                    {Math.floor(field.average * 100) / 100}
-                  </span>
-                </td>
+                      <td className="!py-1 !px-2 text-center">
+                        <span className="font-semibold text-primary">
+                          {item.average != null
+                            ? Math.floor(item.average * 100) / 100
+                            : '-'}
+                        </span>
+                      </td>
 
-                <td className="!py-1 !px-2 text-sm text-gray-500 truncate max-w-[150px]">
-                  {watch(`items.${index}.observation`) || '-'}
-                </td>
+                      <td className="!py-1 !px-2 text-sm text-gray-500 truncate max-w-[150px]">
+                        {item.observation || '-'}
+                      </td>
 
-                <td className="!py-1 !px-2 text-sm">
-                  {watch(`items.${index}.className`)}
-                </td>
+                      <td className="!py-1 !px-2 text-sm">
+                        {item.className}
+                      </td>
 
-                <td className="!py-1 !px-2 text-center">
-                  {getDecisionBadge(watch(`items.${index}.decision`))}
-                </td>
+                      <td className="!py-1 !px-2 text-center">
+                        {getDecisionBadge(item.decision)}
+                      </td>
 
-                <td className="!py-1 !px-2 text-sm text-gray-500">
-                  {watch(`items.${index}.newBranch`) || '-'}
-                </td>
+                      <td className="!py-1 !px-2 text-sm text-gray-500">
+                        {item.newBranch || '-'}
+                      </td>
 
-                <td className="!py-1 !px-2 text-sm text-gray-500">
-                  {watch(`items.${index}.newClass`) || '-'}
-                </td>
-              </tr>
-            ))}
+                      <td className="!py-1 !px-2 text-sm text-gray-500">
+                        {item.newClass || '-'}
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
+            </AppField>
           </tbody>
         </Table>
       </div>
 
-      <div className="flex justify-end">
-        <Button loading={props.loading} color="primary" className="round">
-          {t('label-save')}
-        </Button>
-      </div>
+      <StickyActions>
+        <AppForm>
+          <SubmitButton
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
+      </StickyActions>
     </Form>
   )
 }

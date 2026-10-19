@@ -1,19 +1,18 @@
-import type { FC } from 'react'
 import { Input as BaseInput, Label, FormFeedback } from 'reactstrap'
 import type { InputProps } from 'reactstrap'
 import { useController } from 'react-hook-form'
-import type { Control } from 'react-hook-form'
+import type { Control, FieldPath, FieldValues } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { AlertCircle } from 'lucide-react'
 import { styled } from 'styled-components'
 
 import Required from '@/@core/components/ui/forms/required'
 
-interface Props extends InputProps {
-  name: string
+interface Props<TFieldValues extends FieldValues> extends InputProps {
+  name: FieldPath<TFieldValues>
   label?: string
   required?: boolean
-  control: Control<any>
+  control: Control<TFieldValues>
   id?: string
   className?: string
   labelClassName?: string
@@ -230,7 +229,7 @@ const StyledFormFeedback = styled(FormFeedback)`
   }
 `
 
-const Input: FC<Props> = ({
+const Input = <TFieldValues extends FieldValues,>({
   label,
   required = false,
   control,
@@ -242,7 +241,7 @@ const Input: FC<Props> = ({
   prepend,
   append,
   ...props
-}) => {
+}: Props<TFieldValues>) => {
   const {
     formState: { errors },
     field,

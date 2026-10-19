@@ -1,13 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import type { InitSchoolType } from "./init.school.type";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { initSchoolValidation } from "./init.school.validation";
-import Button from "@/@core/components/button";
-import { useInitSchoolMutation } from "@/gql/graphql";
-import { toast } from "react-toastify";
-import { LOGIN, TOAST_OPTIONS } from "@/utils/constants";
-import { useNavigate } from "@tanstack/react-router";
+import { useForm } from 'react-hook-form'
+import type { InitSchoolType } from './init.school.type'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { initSchoolValidation } from './init.school.validation'
+import Button from '@/@core/components/button'
+import { useInitSchoolMutation } from '@/gql/graphql'
+import { toast } from 'react-toastify'
+import { LOGIN, TOAST_OPTIONS } from '@/utils/constants'
+import { useNavigate } from '@tanstack/react-router'
 import {
   Building2,
   User,
@@ -19,35 +18,35 @@ import {
   X,
   EyeOff,
   Eye,
-} from "lucide-react";
-import FormSection from "@/@core/components/ui/forms/form-section";
-import { default as FormItem } from "@/@core/components/ui/forms/input";
-import StickyActions from "@/@core/components/ui/forms/sticky-actions";
-import { useState } from "react";
+} from 'lucide-react'
+import FormSection from '@/@core/components/ui/forms/form-section'
+import { default as FormItem } from '@/@core/components/ui/forms/input'
+import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { useState } from 'react'
+import { m } from '@/paraglide/messages'
 
 const InitSchoolForm = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const { handleSubmit, control } = useForm<InitSchoolType>({
     defaultValues: {
-      administratorName: "",
-      schoolName: "",
-      username: "",
-      password: "",
-      administratorNumber: "",
-      confirm: "",
-      schoolCategory: "",
+      administratorName: '',
+      schoolName: '',
+      username: '',
+      password: '',
+      administratorNumber: '',
+      confirm: '',
+      schoolCategory: '',
     },
     resolver: yupResolver(initSchoolValidation) as any,
-  });
+  })
 
-  const [save, { loading }] = useInitSchoolMutation();
+  const [save, { loading }] = useInitSchoolMutation()
 
   const onSubmit = (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
     return handleSubmit(async (values) => {
       save({
@@ -63,23 +62,23 @@ const InitSchoolForm = () => {
         },
       })
         .then(() => {
-          toast.success("Enregistrement effectué", { ...TOAST_OPTIONS });
-          navigate({to: LOGIN});
+          toast.success('Enregistrement effectué', { ...TOAST_OPTIONS })
+          navigate({ to: LOGIN })
         })
         .catch((error) => {
-          toast.error("Une erreur est survenue");
-        });
-    })(e);
-  };
+          toast.error('Une erreur est survenue')
+        })
+    })(e)
+  }
 
   return (
     <form onSubmit={onSubmit} className="space-y-8">
       <FormSection
         icon={<Building2 className="w-5 h-5" />}
-        title={t("label-schoolInformation") || "Informations de l'école"}
+        title={m.label_schoolInformation()}
         description={
-          t("label-initializeSchoolDescription") ||
-          "Configuration de base de votre établissement"
+          m.label_initializeSchoolDescription() ||
+          'Configuration de base de votre établissement'
         }
         color="#7367f0"
       >
@@ -88,37 +87,38 @@ const InitSchoolForm = () => {
             type="select"
             name="schoolCategory"
             control={control}
-            label={t("label-schoolCategory")}
+            label={m.label_category()}
             required
             prepend={<List size={16} />}
             className="col-span-2"
           >
-            <option value="">{t("label-select")}</option>
-            <option value="PRIMARY_SCHOOL">{t("label-primarySchool")}</option>
+            <option value="">{m.label_select()}</option>
+            <option value="PRIMARY_SCHOOL">{m.label_primarySchool()}</option>
             <option value="ENGLISH_PRIMARY_SCHOOL">
-              {t("label-englishPrimarySchool")}
+              {m.label_englishPrimarySchool()}
             </option>
             <option value="BILINGUAL_PRIMARY_SCHOOL">
-              {t("label-bilingualPrimarySchool")}
+              {m.label_bilingualPrimarySchool()}
             </option>
-            <option value="HIGH_SCHOOL">{t("label-highSchool")}</option>
+            <option value="HIGH_SCHOOL">{m.label_highSchool()}</option>
             <option value="ENGLISH_HIGH_SCHOOL">
-              {t("label-englishHighSchool")}
+              {m.label_englishHighSchool()}
             </option>
             <option value="BILINGUAL_HIGH_SCHOOL">
-              {t("label-bilingualHighSchool")}
+              {m.label_bilingualHighSchool()}
             </option>
             <option value="CETIC">CETIC</option>
             <option value="TECHNICAL_HIGH_SCHOOL">
-              {t("label-technicalHighSchool")}
+              {m.label_technicalHighSchool()}
             </option>
-            <option value="COLLEGE">{t("label-college")}</option>
-            <option value="UNIVERSITY">{t("label-university")}</option>
+            <option value="COLLEGE">{m.label_college()}</option>
+            <option value="ENIEG">{m.label_enieg()}</option>
+            <option value="UNIVERSITY">{m.label_university()}</option>
           </FormItem>
 
           <FormItem
             name="schoolName"
-            label={t("label-schoolName")}
+            label={m.label_schoolName()}
             control={control}
             required={true}
             prepend={<Building2 size={16} />}
@@ -129,19 +129,14 @@ const InitSchoolForm = () => {
 
       <FormSection
         icon={<UserCircle className="w-5 h-5" />}
-        title={
-          t("label-administratorInformation") ||
-          "Informations de l'administrateur"
-        }
-        description={
-          t("label-administratorInfoDesc") || "Responsable principal du système"
-        }
+        title={m.label_administratorInformation()}
+        description={m.label_administratorInfoDesc()}
         color="#28c76f"
       >
         <div className="grid grid-cols-1 md:grid-cols-5 gap-1">
           <FormItem
             name="administratorNumber"
-            label={t("label-registrationNumber")}
+            label={m.label_registrationNumber()}
             control={control}
             required={true}
             prepend={<Phone size={16} />}
@@ -150,7 +145,7 @@ const InitSchoolForm = () => {
 
           <FormItem
             name="administratorName"
-            label={t("label-administratorName")}
+            label={m.label_administratorName()}
             control={control}
             required={true}
             prepend={<User size={16} />}
@@ -161,16 +156,14 @@ const InitSchoolForm = () => {
 
       <FormSection
         icon={<Lock className="w-5 h-5" />}
-        title={t("label-accountCredentials") || "Identifiants du compte"}
-        description={
-          t("label-loginInfoDesc") || "Informations de connexion sécurisée"
-        }
+        title={m.label_accountCredentials()}
+        description={m.label_loginInfoDesc()}
         color="#ea5455"
       >
         <div className="space-y-2">
           <FormItem
             name="username"
-            label={t("label-username")}
+            label={m.label_username()}
             control={control}
             required={true}
             prepend={<User size={16} />}
@@ -178,9 +171,9 @@ const InitSchoolForm = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
             <FormItem
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name="password"
-              label={t("label-password")}
+              label={m.label_password()}
               control={control}
               required={true}
               prepend={<Lock size={16} />}
@@ -192,9 +185,9 @@ const InitSchoolForm = () => {
             />
 
             <FormItem
-              type={showConfirmPassword ? "text" : "password"}
+              type={showConfirmPassword ? 'text' : 'password'}
               name="confirm"
-              label={t("label-confirm")}
+              label={m.label_confirm()}
               control={control}
               required={true}
               prepend={<Lock size={16} />}
@@ -222,10 +215,10 @@ const InitSchoolForm = () => {
             outline
             loading={loading}
             className="round flex items-center gap-1 px-2 text-sm"
-            onClick={() => navigate({to: LOGIN})}
+            onClick={() => navigate({ to: '/login' })}
           >
             <X size={15} />
-            {t("label-cancel")}
+            {m.label_cancel()}
           </Button>
 
           <Button
@@ -235,12 +228,12 @@ const InitSchoolForm = () => {
             className="round flex items-center gap-1 px-2 shadow-primary text-sm"
           >
             <Save size={15} />
-            {t("label-save")}
+            {m.label_save()}
           </Button>
         </div>
       </StickyActions>
     </form>
-  );
-};
+  )
+}
 
-export default InitSchoolForm;
+export default InitSchoolForm

@@ -222,7 +222,7 @@ export function CustomTable<T extends RowData>({
                     `}
                     onClick={() => onRowClicked?.(row.original)}
                   >
-                    {row.getAllCells().map((cell) => {
+                    {row.getVisibleCells().map((cell) => {
                       const meta = cell.column.columnDef.meta as any
                       const alignment =
                         meta?.align === 'right'
