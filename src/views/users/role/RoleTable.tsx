@@ -12,6 +12,7 @@ import Avatar from '@/@core/components/avatar'
 import { Shield, ShieldCheck, FileText } from 'lucide-react'
 import { Badge } from 'reactstrap'
 import type { AppFeatures } from '#/hooks/table'
+import { m } from '@/paraglide/messages'
 
 const RoleTable: FC<CommonTableProps> = (props) => {
   const { t } = useTranslation()
@@ -19,7 +20,7 @@ const RoleTable: FC<CommonTableProps> = (props) => {
   const columns = useMemo<ColumnDef<AppFeatures, RoleType>[]>(
     () => [
       {
-        header: `${t('label-name')}`,
+        header: `${m.label_name()}`,
         accessorKey: 'name',
         cell: ({ row: { original } }) => (
           <div className="flex items-center gap-3">
@@ -47,34 +48,34 @@ const RoleTable: FC<CommonTableProps> = (props) => {
         ),
       },
       {
-        header: `${t('label-active')}`,
+        header: `${m.label_active()}`,
         accessorKey: 'active',
         cell: ({ row: { original } }) => (
           <ActiveRenderer active={original.active} size="sm" />
         ),
       },
       {
-        header: `${t('label-all-permissions')}`,
+        header: `${m.label_permissions()}`,
         accessorKey: 'allPermissions',
         cell: ({ row: { original } }) =>
           original.allPermissions ? (
             <Badge color="light-success" pill className="text-uppercase">
-              {t('label-yes')}
+              {m.label_yes()}
             </Badge>
           ) : (
             <Badge color="light-secondary" pill className="text-uppercase">
-              {t('label-no')}
+              {m.label_no()}
             </Badge>
           ),
       },
       {
-        header: `${t('label-description')}`,
+        header: `${m.label_description()}`,
         accessorKey: 'description',
         cell: ({ row: { original } }) => (
           <div className="flex items-center gap-2 max-w-[250px]">
             <FileText size={14} className="text-gray-400 shrink-0" />
             <span className="text-gray-500 truncate italic">
-              {original.description || t('text-no-description')}
+              {original.description || m.no_description()}
             </span>
           </div>
         ),

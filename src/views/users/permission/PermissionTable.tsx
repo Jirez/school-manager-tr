@@ -3,19 +3,17 @@ import type { FC } from 'react'
 import { showDisplayedRowCount, cutText } from '@/utils/helpers'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
-import { useTranslation } from 'react-i18next'
 import CommonTable from '@/@core/components/react-table/common-react-table'
 import PermissionDelete from '@/views/users/permission/PermissionDelete'
 import type { PermissionType } from '@/views/users/permission/permission.type'
 import { Shield, CheckCircle, AlignLeft } from 'lucide-react'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import { createAppColumnHelper } from '#/hooks/table'
+import { m } from '@/paraglide/messages'
 
 const columnHelper = createAppColumnHelper<PermissionType>()
 
 const PermissionTable: FC<CommonTableProps> = (props) => {
-  const { t } = useTranslation()
-
   const columns = useMemo(
     () =>
       columnHelper.columns([
@@ -24,13 +22,14 @@ const PermissionTable: FC<CommonTableProps> = (props) => {
           accessorKey: 'code',
           header: () => (
             <div className="flex items-center gap-0.5">
-              <Shield size={14} className="text-primary" /> {t('label-code')}
+              <Shield size={14} className="text-primary" /> {m.label_code()}
             </div>
           ),
           cell: ({ row: { original } }) => (
             <TextWithAvatar
               letter={original.code.charAt(0)}
-              title={t(original.code)}
+              // @ts-ignore desc
+              title={m[original.code]?.() || original.code}
               titleClassName="!font-semibold"
               subtitle={original.code}
             />
@@ -42,7 +41,7 @@ const PermissionTable: FC<CommonTableProps> = (props) => {
           accessorKey: 'active',
           header: () => (
             <div className="flex items-center gap-0.5 justify-center w-full">
-              <CheckCircle size={14} /> {t('label-active')}
+              <CheckCircle size={14} /> {m.label_active()}
             </div>
           ),
           cell: ({ row: { original } }) => (
@@ -56,7 +55,7 @@ const PermissionTable: FC<CommonTableProps> = (props) => {
           id: 'description',
           header: () => (
             <div className="flex items-center gap-0.5">
-              <AlignLeft size={14} /> {t('label-description')}
+              <AlignLeft size={14} /> {m.label_description()}
             </div>
           ),
           accessorKey: 'description',
@@ -72,7 +71,7 @@ const PermissionTable: FC<CommonTableProps> = (props) => {
         },
         {
           id: 'actions',
-          header: () => <div className="text-right">{t('label-actions')}</div>,
+          header: () => <div className="text-right">{m.label_actions()}</div>,
           cell: ({ row: { original } }) => (
             <div className="flex justify-end">
               <ActionRenderer
@@ -87,7 +86,7 @@ const PermissionTable: FC<CommonTableProps> = (props) => {
           size: 80,
         },
       ]),
-    [t, props.modal],
+    [props.modal],
   )
 
   return (

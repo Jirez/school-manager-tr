@@ -21,13 +21,14 @@ import {
 import { TOAST_OPTIONS } from '@/utils/constants'
 import SplitButton from '@/@core/components/ui/buttons/split-button'
 import { RefreshCw } from 'lucide-react'
+import { m } from '@/paraglide/messages'
 
 const Permissions = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
   const { enterpriseId } = useAuthentication()
   const modal = useModal(PermissionModal)
   const { t } = useTranslation()
-  useTitle(t('text-permissions'))
+  useTitle(m.Permissions())
 
   const { data, error, loading, subscribeToMore, refetch } =
     usePermissionsQuery()
@@ -82,7 +83,7 @@ const Permissions = () => {
         setGlobalFilter={filterApi?.setGlobalFilter}
         setDefaultGlobalFilter={filterApi?.setDefaultGlobalFilter}
         actionLabel="action.add_permission"
-        //onClick={() => modal.show()}
+        // onClick={() => modal.show()}
         extraButton={extraButton()}
         refetch={refetch}
         abilitySubject="role"

@@ -2067,5 +2067,8 @@
   "label_studentProgression": "Student's progression",
   "label_currentSchoolYear": "Current school year",
   "label_nextSchoolYear": "Next school year",
-  "label_enieg": "ENIEG"
+  "label_enieg": "ENIEG",
+  "no_description": "No description",
+  "DISCIPLINE_MASTER": "Discipline Master",
+  "discipline_distribution": "Discipline Master Distribution"
 }

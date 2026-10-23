@@ -1,17 +1,14 @@
-import React from 'react'
-import { useFieldArray, useWatch } from 'react-hook-form'
-
-import type { Control, UseFormRegister, UseFormSetValue } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
-import type { RoleType } from './role.type'
+import type { ChangeEvent } from 'react'
+import type { AnyFieldApi } from '@tanstack/react-form'
+import type { PermissionItemItem } from './role.type'
 import { StyledCheckbox } from '@/@core/components/ui/styled-checkbox'
+import { m } from '@/paraglide/messages'
+import { translateMessage } from '@/utils/helpers'
 
 interface RoleItemProps {
   nestIndex: number
-  control: Control<RoleType>
-  register: UseFormRegister<RoleType>
-  setValue: UseFormSetValue<RoleType>
   groupName: string
+  field: AnyFieldApi
 }
 
 const cn = (...classes: (string | undefined | null | false)[]) =>
@@ -52,42 +49,24 @@ const COLORS = [
   },
 ]
 
-const RoleItem = ({
-  nestIndex,
-  control,
-  register,
-  setValue,
-  groupName,
-}: RoleItemProps) => {
-  const { fields } = useFieldArray({
-    control,
-    name: `items.${nestIndex}.items`,
-  })
-
-  const { t } = useTranslation()
-
-  // Watch items for counts and indeterminate state
-  const items = useWatch({
-    control,
-    name: `items.${nestIndex}.items`,
-  })
-
-  const currentItems = items || []
+const RoleItem = ({ nestIndex, groupName, field }: RoleItemProps) => {
+  const currentItems = (field.state.value ?? []) as PermissionItemItem[]
   const checkedCount = currentItems.filter((item) => item.checked).length
-  const totalCount = fields.length
+  const totalCount = currentItems.length
   const isAllChecked = totalCount > 0 && checkedCount === totalCount
   const isIndeterminate = checkedCount > 0 && !isAllChecked
 
   const colorScheme = COLORS[nestIndex % COLORS.length]
 
-  const handleToggleAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked
-    fields.forEach((_, index) => {
-      setValue(`items.${nestIndex}.items.${index}.checked`, isChecked, {
-        shouldDirty: true,
-        shouldValidate: true,
-      })
+  const handleToggleAll = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked
+    currentItems.forEach((item, index) => {
+      void field.replaceValue(index, { ...item, checked })
     })
+  }
+
+  const handleToggleItem = (index: number, checked: boolean) => {
+    void field.replaceValue(index, { ...currentItems[index], checked })
   }
 
   return (
@@ -109,7 +88,7 @@ const RoleItem = ({
             {nestIndex + 1}
           </span>
           <span className={cn('font-bold', colorScheme.text)}>
-            {t(groupName)}
+            {translateMessage(groupName)}
           </span>
         </div>
 
@@ -127,7 +106,7 @@ const RoleItem = ({
             indeterminate={isIndeterminate}
             onChange={handleToggleAll}
             activeColorClass={colorScheme.checkboxActive}
-            title={t('label.selectAll')}
+            title={m.label_checkAllPermissions()}
           />
         </div>
       </div>
@@ -135,34 +114,26 @@ const RoleItem = ({
       {/* Body */}
       <div className="flex-1 p-2">
         <div className="flex flex-col gap-1">
-          {fields.map((field, index) => {
-            // Get current checked state from watched items
-            const currentChecked = currentItems[index]?.checked ?? false
-
-            return (
-              <label
-                key={field.id}
-                className="group flex cursor-pointer items-center gap-1 rounded-lg px-3 py-0.5 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50"
-              >
-                <input
-                  type="hidden"
-                  {...register(`items.${nestIndex}.items.${index}.id`)}
+          {currentItems.map((item, index) => (
+            <label
+              key={item.id}
+              className="group flex cursor-pointer items-center gap-1 rounded-lg px-3 py-0.5 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50"
+            >
+              <div className="relative flex items-center">
+                <StyledCheckbox
+                  checked={item.checked}
+                  onChange={(event) =>
+                    handleToggleItem(index, event.target.checked)
+                  }
+                  activeColorClass="bg-primary border-primary hover:bg-primary/90 text-white"
                 />
+              </div>
 
-                <div className="relative flex items-center">
-                  <StyledCheckbox
-                    {...register(`items.${nestIndex}.items.${index}.checked`)}
-                    checked={currentChecked}
-                    activeColorClass="bg-primary border-primary hover:bg-primary/90 text-white"
-                  />
-                </div>
-
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100">
-                  {t(field.code)}
-                </span>
-              </label>
-            )
-          })}
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100">
+                {translateMessage(item.code)}
+              </span>
+            </label>
+          ))}
         </div>
       </div>
     </div>

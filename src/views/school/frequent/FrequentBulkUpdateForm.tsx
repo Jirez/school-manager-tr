@@ -164,8 +164,13 @@ const FrequentBulkUpdateForm: FC<Props> = ({
                             )}
                           </AppField>
                         </td>
-
                         <td>
+                          <AppField name={`items[${index}].birthDate`}>
+                            {(field) => <field.DatePicker label="" />}
+                          </AppField>
+                        </td>
+
+                        {/* <td>
                           <AppField name={`items[${index}].birthDate`}>
                             {(field) => (
                               <input
@@ -184,7 +189,7 @@ const FrequentBulkUpdateForm: FC<Props> = ({
                               />
                             )}
                           </AppField>
-                        </td>
+                        </td> */}
 
                         <td>
                           <AppField name={`items[${index}].birthplace`}>

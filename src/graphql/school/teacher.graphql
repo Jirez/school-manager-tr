@@ -146,3 +146,19 @@ query NonEmployeePersonnel($id: Int!) {
     ...personnelFields
   }
 }
+
+query TeachersWithPermissions(
+  $schoolId: Int!
+  $permissions: [PermissionType!]!
+) {
+  teachers: teachersWithPermissions(
+    schoolId: $schoolId
+    permissions: $permissions
+  ) {
+    id
+    lastName
+    firstName
+    code
+    gender
+  }
+}

@@ -15,7 +15,7 @@ import { useClassesQuery } from '@/gql/graphql'
 
 interface ImportStudentFormProps {
   modal?: NiceModalHandler
-  refetch: Function
+  refetch: () => void
 }
 
 const ImportStudentForm: React.FC<ImportStudentFormProps> = ({
@@ -52,7 +52,7 @@ const ImportStudentForm: React.FC<ImportStudentFormProps> = ({
     const formData = new FormData()
     formData.append('file', values.file)
 
-    const callback = (data: any) => {
+    const callback = () => {
       setValues((val) => ({ ...val, uploading: false }))
       toast.success('Importation terminée avec succès', { ...TOAST_OPTIONS })
       refetch()
@@ -105,8 +105,8 @@ const ImportStudentForm: React.FC<ImportStudentFormProps> = ({
 
       <FileUpload
         accept="text/csv"
-        onChange={(data: any) =>
-          setValues((val) => ({ ...val, file: data[0] }))
+        onChange={(_data: any) =>
+          setValues((val) => ({ ...val, file: _data[0] }))
         }
       />
 

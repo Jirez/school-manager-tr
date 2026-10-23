@@ -95,6 +95,7 @@ import { Route as PrivateLayoutVerticalbankBankAccountsRouteImport } from './rou
 import { Route as PrivateLayoutVerticalbankBankTransactionsRouteImport } from './routes/_privateLayout/_vertical/(bank)/bank-transactions'
 import { Route as PrivateLayoutVerticaldisciplineAnnualDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/annual-discipline'
 import { Route as PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport } from './routes/_privateLayout/_vertical/(discipline)/discipline-calculation'
+import { Route as PrivateLayoutVerticaldisciplineDisciplineDistributionRouteImport } from './routes/_privateLayout/_vertical/(discipline)/discipline-distribution'
 import { Route as PrivateLayoutVerticaldisciplineQuarterlyDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/quarterly-discipline'
 import { Route as PrivateLayoutVerticaldisciplineSequentialDisciplineRouteImport } from './routes/_privateLayout/_vertical/(discipline)/sequential-discipline'
 import { Route as PrivateLayoutVerticalexpenseExpenseCategoriesRouteImport } from './routes/_privateLayout/_vertical/(expense)/expense-categories'
@@ -701,6 +702,12 @@ const PrivateLayoutVerticaldisciplineDisciplineCalculationRoute =
   PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport.update({
     id: '/(discipline)/discipline-calculation',
     path: '/discipline-calculation',
+    getParentRoute: () => PrivateLayoutVerticalRoute,
+  } as any)
+const PrivateLayoutVerticaldisciplineDisciplineDistributionRoute =
+  PrivateLayoutVerticaldisciplineDisciplineDistributionRouteImport.update({
+    id: '/(discipline)/discipline-distribution',
+    path: '/discipline-distribution',
     getParentRoute: () => PrivateLayoutVerticalRoute,
   } as any)
 const PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute =
@@ -1394,6 +1401,7 @@ export interface FileRoutesByFullPath {
   '/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
   '/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
   '/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/discipline-distribution': typeof PrivateLayoutVerticaldisciplineDisciplineDistributionRoute
   '/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
   '/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
   '/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
@@ -1580,6 +1588,7 @@ export interface FileRoutesByTo {
   '/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
   '/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
   '/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/discipline-distribution': typeof PrivateLayoutVerticaldisciplineDisciplineDistributionRoute
   '/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
   '/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
   '/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
@@ -1770,6 +1779,7 @@ export interface FileRoutesById {
   '/_privateLayout/_vertical/(bank)/bank-transactions': typeof PrivateLayoutVerticalbankBankTransactionsRoute
   '/_privateLayout/_vertical/(discipline)/annual-discipline': typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
   '/_privateLayout/_vertical/(discipline)/discipline-calculation': typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  '/_privateLayout/_vertical/(discipline)/discipline-distribution': typeof PrivateLayoutVerticaldisciplineDisciplineDistributionRoute
   '/_privateLayout/_vertical/(discipline)/quarterly-discipline': typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
   '/_privateLayout/_vertical/(discipline)/sequential-discipline': typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
   '/_privateLayout/_vertical/(expense)/expense-categories': typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
@@ -1958,6 +1968,7 @@ export interface FileRouteTypes {
     | '/bank-transactions'
     | '/annual-discipline'
     | '/discipline-calculation'
+    | '/discipline-distribution'
     | '/quarterly-discipline'
     | '/sequential-discipline'
     | '/expense-categories'
@@ -2144,6 +2155,7 @@ export interface FileRouteTypes {
     | '/bank-transactions'
     | '/annual-discipline'
     | '/discipline-calculation'
+    | '/discipline-distribution'
     | '/quarterly-discipline'
     | '/sequential-discipline'
     | '/expense-categories'
@@ -2333,6 +2345,7 @@ export interface FileRouteTypes {
     | '/_privateLayout/_vertical/(bank)/bank-transactions'
     | '/_privateLayout/_vertical/(discipline)/annual-discipline'
     | '/_privateLayout/_vertical/(discipline)/discipline-calculation'
+    | '/_privateLayout/_vertical/(discipline)/discipline-distribution'
     | '/_privateLayout/_vertical/(discipline)/quarterly-discipline'
     | '/_privateLayout/_vertical/(discipline)/sequential-discipline'
     | '/_privateLayout/_vertical/(expense)/expense-categories'
@@ -3051,6 +3064,13 @@ declare module '@tanstack/react-router' {
       path: '/discipline-calculation'
       fullPath: '/discipline-calculation'
       preLoaderRoute: typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRouteImport
+      parentRoute: typeof PrivateLayoutVerticalRoute
+    }
+    '/_privateLayout/_vertical/(discipline)/discipline-distribution': {
+      id: '/_privateLayout/_vertical/(discipline)/discipline-distribution'
+      path: '/discipline-distribution'
+      fullPath: '/discipline-distribution'
+      preLoaderRoute: typeof PrivateLayoutVerticaldisciplineDisciplineDistributionRouteImport
       parentRoute: typeof PrivateLayoutVerticalRoute
     }
     '/_privateLayout/_vertical/(discipline)/quarterly-discipline': {
@@ -3968,6 +3988,7 @@ interface PrivateLayoutVerticalRouteChildren {
   PrivateLayoutVerticalbankBankTransactionsRoute: typeof PrivateLayoutVerticalbankBankTransactionsRoute
   PrivateLayoutVerticaldisciplineAnnualDisciplineRoute: typeof PrivateLayoutVerticaldisciplineAnnualDisciplineRoute
   PrivateLayoutVerticaldisciplineDisciplineCalculationRoute: typeof PrivateLayoutVerticaldisciplineDisciplineCalculationRoute
+  PrivateLayoutVerticaldisciplineDisciplineDistributionRoute: typeof PrivateLayoutVerticaldisciplineDisciplineDistributionRoute
   PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute: typeof PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute
   PrivateLayoutVerticaldisciplineSequentialDisciplineRoute: typeof PrivateLayoutVerticaldisciplineSequentialDisciplineRoute
   PrivateLayoutVerticalexpenseExpenseCategoriesRoute: typeof PrivateLayoutVerticalexpenseExpenseCategoriesRoute
@@ -4100,6 +4121,8 @@ const PrivateLayoutVerticalRouteChildren: PrivateLayoutVerticalRouteChildren = {
     PrivateLayoutVerticaldisciplineAnnualDisciplineRoute,
   PrivateLayoutVerticaldisciplineDisciplineCalculationRoute:
     PrivateLayoutVerticaldisciplineDisciplineCalculationRoute,
+  PrivateLayoutVerticaldisciplineDisciplineDistributionRoute:
+    PrivateLayoutVerticaldisciplineDisciplineDistributionRoute,
   PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute:
     PrivateLayoutVerticaldisciplineQuarterlyDisciplineRoute,
   PrivateLayoutVerticaldisciplineSequentialDisciplineRoute:

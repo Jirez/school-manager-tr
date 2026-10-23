@@ -7,6 +7,7 @@ import { concat } from '@/utils/helpers'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type { GuardianType } from './Guardian.type'
 import CommonTable from '@/@core/components/react-table/common-react-table'
+import type { AppFeatures } from '#/hooks/table'
 
 interface Props extends CommonTableProps {
   onRowClicked: (data: any) => void
@@ -17,7 +18,7 @@ const SimpleGuardianTable: FC<Props> = (props) => {
   const { t } = useTranslation()
   const [currentRows, setCurrentRows] = useState<number>(0)
 
-  const columns = useMemo<ColumnDef<GuardianType>[]>(
+  const columns = useMemo<ColumnDef<AppFeatures, GuardianType>[]>(
     () => [
       {
         accessorFn: (row) => `${row.lastName} ${row.firstName}`,
@@ -32,8 +33,8 @@ const SimpleGuardianTable: FC<Props> = (props) => {
 
           return (
             <TextWithAvatar
-              letter={name!.charAt(0)}
-              title={name!}
+              letter={name.charAt(0)}
+              title={name}
               subtitle={''}
             />
           )
@@ -77,7 +78,7 @@ const SimpleGuardianTable: FC<Props> = (props) => {
       columns={columns}
       onModelUpdate={(rows) => {
         setCurrentRows(rows.length)
-        //showDisplayedRowCount(rows)
+        // showDisplayedRowCount(rows)
       }}
       showQuickFilter={true}
       onGlobalFilterChanged={props.onGlobalFilterChanged}

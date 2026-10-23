@@ -1565,6 +1565,52 @@ export enum DirectionType {
   Debit = 'DEBIT'
 }
 
+export type DisciplineDistribution = {
+  __typename?: 'DisciplineDistribution';
+  clazz?: Maybe<Clazz>;
+  coTeacher?: Maybe<Teacher>;
+  distributionPK?: Maybe<DisciplineDistributionPk>;
+  headerTeacher?: Maybe<Scalars['Boolean']['output']>;
+  subject?: Maybe<Subject>;
+  teacher?: Maybe<Teacher>;
+  weekHoursCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type DisciplineDistributionItem = {
+  __typename?: 'DisciplineDistributionItem';
+  items?: Maybe<Array<DisciplineDistributionItemItem>>;
+  teacherFullName: Scalars['String']['output'];
+  teacherId: Scalars['Long']['output'];
+};
+
+export type DisciplineDistributionItemInput = {
+  items?: InputMaybe<Array<DisciplineDistributionItemItemInput>>;
+  teacherFullName: Scalars['String']['input'];
+  teacherId: Scalars['Long']['input'];
+};
+
+export type DisciplineDistributionItemItem = {
+  __typename?: 'DisciplineDistributionItemItem';
+  classId: Scalars['Int']['output'];
+  className: Scalars['String']['output'];
+};
+
+export type DisciplineDistributionItemItemInput = {
+  classId: Scalars['Int']['input'];
+  className: Scalars['String']['input'];
+};
+
+export type DisciplineDistributionPk = {
+  __typename?: 'DisciplineDistributionPK';
+  classId: Scalars['Int']['output'];
+  schoolYearId: Scalars['Int']['output'];
+};
+
+export type DisciplineDistributionPkInput = {
+  classId?: InputMaybe<Scalars['Int']['input']>;
+  schoolYearId?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type DisciplineJson = {
   __typename?: 'DisciplineJson';
   blame?: Maybe<Scalars['String']['output']>;
@@ -3216,6 +3262,7 @@ export type Mutation = {
   disableSchoolSection?: Maybe<SchoolSection>;
   disableSubject?: Maybe<Subject>;
   disableSubjectDepartment?: Maybe<SubjectDepartment>;
+  disciplineDistributionSave?: Maybe<Scalars['Boolean']['output']>;
   discountDeleteById?: Maybe<Scalars['Boolean']['output']>;
   discountSave?: Maybe<Discount>;
   discountUpdate?: Maybe<Discount>;
@@ -4076,6 +4123,12 @@ export type MutationDisableSubjectArgs = {
 
 export type MutationDisableSubjectDepartmentArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type MutationDisciplineDistributionSaveArgs = {
+  distributions: Array<DisciplineDistributionItemInput>;
+  schoolId: Scalars['Int']['input'];
 };
 
 
@@ -5698,6 +5751,98 @@ export type PermissionItemItemInput = {
   id: Scalars['Int']['input'];
 };
 
+export enum PermissionType {
+  AccountDelete = 'ACCOUNT_DELETE',
+  AccountRead = 'ACCOUNT_READ',
+  AccountUpdate = 'ACCOUNT_UPDATE',
+  AccountWrite = 'ACCOUNT_WRITE',
+  BankDelete = 'BANK_DELETE',
+  BankRead = 'BANK_READ',
+  BankUpdate = 'BANK_UPDATE',
+  BankWrite = 'BANK_WRITE',
+  CustomerDelete = 'CUSTOMER_DELETE',
+  CustomerRead = 'CUSTOMER_READ',
+  CustomerUpdate = 'CUSTOMER_UPDATE',
+  CustomerWrite = 'CUSTOMER_WRITE',
+  DisciplineMaster = 'DISCIPLINE_MASTER',
+  DisciplineRead = 'DISCIPLINE_READ',
+  DisciplineWrite = 'DISCIPLINE_WRITE',
+  EmployeeDelete = 'EMPLOYEE_DELETE',
+  EmployeeRead = 'EMPLOYEE_READ',
+  EmployeeUpdate = 'EMPLOYEE_UPDATE',
+  EmployeeWrite = 'EMPLOYEE_WRITE',
+  ExpenseDelete = 'EXPENSE_DELETE',
+  ExpenseRead = 'EXPENSE_READ',
+  ExpenseUpdate = 'EXPENSE_UPDATE',
+  ExpenseWrite = 'EXPENSE_WRITE',
+  GuardianDelete = 'GUARDIAN_DELETE',
+  GuardianRead = 'GUARDIAN_READ',
+  GuardianUpdate = 'GUARDIAN_UPDATE',
+  GuardianWrite = 'GUARDIAN_WRITE',
+  InvoiceDelete = 'INVOICE_DELETE',
+  InvoiceRead = 'INVOICE_READ',
+  InvoiceUpdate = 'INVOICE_UPDATE',
+  InvoiceWrite = 'INVOICE_WRITE',
+  None = 'NONE',
+  NoteAdmin = 'NOTE_ADMIN',
+  NoteDelete = 'NOTE_DELETE',
+  NoteRead = 'NOTE_READ',
+  NoteTeacher = 'NOTE_TEACHER',
+  NoteUpdate = 'NOTE_UPDATE',
+  NoteWrite = 'NOTE_WRITE',
+  PaymentDelete = 'PAYMENT_DELETE',
+  PaymentRead = 'PAYMENT_READ',
+  PaymentUpdate = 'PAYMENT_UPDATE',
+  PaymentWrite = 'PAYMENT_WRITE',
+  PayrollDelete = 'PAYROLL_DELETE',
+  PayrollRead = 'PAYROLL_READ',
+  PayrollUpdate = 'PAYROLL_UPDATE',
+  PayrollWrite = 'PAYROLL_WRITE',
+  PlanningRead = 'PLANNING_READ',
+  PlanningUpdate = 'PLANNING_UPDATE',
+  PlanningWrite = 'PLANNING_WRITE',
+  ProductDelete = 'PRODUCT_DELETE',
+  ProductRead = 'PRODUCT_READ',
+  ProductUpdate = 'PRODUCT_UPDATE',
+  ProductWrite = 'PRODUCT_WRITE',
+  PurchaseDelete = 'PURCHASE_DELETE',
+  PurchaseRead = 'PURCHASE_READ',
+  PurchaseUpdate = 'PURCHASE_UPDATE',
+  PurchaseWrite = 'PURCHASE_WRITE',
+  RoleDelete = 'ROLE_DELETE',
+  RoleRead = 'ROLE_READ',
+  RoleUpdate = 'ROLE_UPDATE',
+  RoleWrite = 'ROLE_WRITE',
+  SaleDelete = 'SALE_DELETE',
+  SaleRead = 'SALE_READ',
+  SaleUpdate = 'SALE_UPDATE',
+  SaleWrite = 'SALE_WRITE',
+  SchoolConfigDelete = 'SCHOOL_CONFIG_DELETE',
+  SchoolConfigRead = 'SCHOOL_CONFIG_READ',
+  SchoolConfigUpdate = 'SCHOOL_CONFIG_UPDATE',
+  SchoolConfigWrite = 'SCHOOL_CONFIG_WRITE',
+  StockDelete = 'STOCK_DELETE',
+  StockRead = 'STOCK_READ',
+  StockUpdate = 'STOCK_UPDATE',
+  StockWrite = 'STOCK_WRITE',
+  StudentDelete = 'STUDENT_DELETE',
+  StudentRead = 'STUDENT_READ',
+  StudentUpdate = 'STUDENT_UPDATE',
+  StudentWrite = 'STUDENT_WRITE',
+  TeacherDelete = 'TEACHER_DELETE',
+  TeacherRead = 'TEACHER_READ',
+  TeacherUpdate = 'TEACHER_UPDATE',
+  TeacherWrite = 'TEACHER_WRITE',
+  UserDelete = 'USER_DELETE',
+  UserRead = 'USER_READ',
+  UserUpdate = 'USER_UPDATE',
+  UserWrite = 'USER_WRITE',
+  VendorDelete = 'VENDOR_DELETE',
+  VendorRead = 'VENDOR_READ',
+  VendorUpdate = 'VENDOR_UPDATE',
+  VendorWrite = 'VENDOR_WRITE'
+}
+
 export type PermissionUpdateInput = {
   /** name: String! */
   active: Scalars['Boolean']['input'];
@@ -6144,6 +6289,7 @@ export type Query = {
   deductionCategoryById?: Maybe<DeductionCategory>;
   deductions?: Maybe<Array<Deduction>>;
   departments?: Maybe<Array<Department>>;
+  disciplineDistribution?: Maybe<Array<Maybe<DisciplineDistributionItem>>>;
   discountById?: Maybe<Discount>;
   discounts?: Maybe<Array<Discount>>;
   downgradeSubject?: Maybe<Array<SequentialNote>>;
@@ -6233,6 +6379,7 @@ export type Query = {
   findClassBySubjectNotInDistribution?: Maybe<Array<Clazz>>;
   findClassByTeacher?: Maybe<Array<Clazz>>;
   findClassDistribution?: Maybe<Array<Maybe<Distribution>>>;
+  findClassForDisciplineInput?: Maybe<Array<Clazz>>;
   findClassForNoteInput?: Maybe<Array<Clazz>>;
   findClassSubject?: Maybe<Array<Clazz>>;
   findClassWhereAnnualReportCardReady?: Maybe<Array<Clazz>>;
@@ -6436,6 +6583,7 @@ export type Query = {
   supplierCategories?: Maybe<Array<SupplierCategory>>;
   supplierCategoryById?: Maybe<SupplierCategory>;
   suppliers?: Maybe<Array<Supplier>>;
+  teachersWithPermissions?: Maybe<Array<Teacher>>;
   timeTables?: Maybe<Array<TimeTableForm>>;
   tuitionByEnterpriseId?: Maybe<Array<Maybe<TuitionUnion>>>;
   tuitionUnionById?: Maybe<TuitionUnion>;
@@ -6691,6 +6839,11 @@ export type QueryDeductionsArgs = {
 
 export type QueryDepartmentsArgs = {
   enterpriseId: Scalars['Int']['input'];
+};
+
+
+export type QueryDisciplineDistributionArgs = {
+  schoolId: Scalars['Int']['input'];
 };
 
 
@@ -7052,6 +7205,11 @@ export type QueryFindClassByTeacherArgs = {
 
 export type QueryFindClassDistributionArgs = {
   classId: Scalars['Int']['input'];
+  schoolId: Scalars['Int']['input'];
+};
+
+
+export type QueryFindClassForDisciplineInputArgs = {
   schoolId: Scalars['Int']['input'];
 };
 
@@ -8039,6 +8197,12 @@ export type QuerySuppliersArgs = {
 };
 
 
+export type QueryTeachersWithPermissionsArgs = {
+  permissions: Array<PermissionType>;
+  schoolId: Scalars['Int']['input'];
+};
+
+
 export type QueryTimeTablesArgs = {
   classId: Scalars['Int']['input'];
   schoolId: Scalars['Int']['input'];
@@ -8290,6 +8454,7 @@ export enum SchoolCategory {
   College = 'COLLEGE',
   EnglishHighSchool = 'ENGLISH_HIGH_SCHOOL',
   EnglishPrimarySchool = 'ENGLISH_PRIMARY_SCHOOL',
+  Enieg = 'ENIEG',
   HighSchool = 'HIGH_SCHOOL',
   PrimarySchool = 'PRIMARY_SCHOOL',
   TechnicalHighSchool = 'TECHNICAL_HIGH_SCHOOL',
@@ -10633,6 +10798,21 @@ export type OperationClassCreatedSubscriptionVariables = Exact<{ [key: string]: 
 
 
 export type OperationClassCreatedSubscription = { __typename?: 'Subscription', operationClass?: { __typename?: 'OperationClass', id: number, name: string, active?: boolean | null, description?: string | null, enterpriseId: number } | null };
+
+export type DisciplineDistributionQueryVariables = Exact<{
+  schoolId: Scalars['Int']['input'];
+}>;
+
+
+export type DisciplineDistributionQuery = { __typename?: 'Query', disciplineDistribution?: Array<{ __typename?: 'DisciplineDistributionItem', teacherId: any, teacherFullName: string, items?: Array<{ __typename?: 'DisciplineDistributionItemItem', classId: number, className: string }> | null } | null> | null };
+
+export type DisciplineDistributionSaveMutationVariables = Exact<{
+  distributions: Array<DisciplineDistributionItemInput> | DisciplineDistributionItemInput;
+  schoolId: Scalars['Int']['input'];
+}>;
+
+
+export type DisciplineDistributionSaveMutation = { __typename?: 'Mutation', disciplineDistributionSave?: boolean | null };
 
 export type SequentialDisciplineQueryVariables = Exact<{
   classId: Scalars['Int']['input'];
@@ -13020,6 +13200,13 @@ export type ClassesForNoteQueryVariables = Exact<{
 
 export type ClassesForNoteQuery = { __typename?: 'Query', clazzes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
 
+export type ClassesForDisciplineQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type ClassesForDisciplineQuery = { __typename?: 'Query', clazzes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
+
 export type ClassSaveMutationVariables = Exact<{
   clazz?: InputMaybe<ClazzInput>;
 }>;
@@ -14319,6 +14506,14 @@ export type NonEmployeePersonnelQueryVariables = Exact<{
 
 
 export type NonEmployeePersonnelQuery = { __typename?: 'Query', personnel?: Array<{ __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, displayName?: string | null, gender?: Gender | null, active?: boolean | null, note?: string | null, code: string, civility?: Civility | null, birthDate?: string | null, birthplace?: string | null, status?: PersonnelStatus | null, personnelType?: PersonnelType | null, bloodGroup?: string | null, rhesus?: string | null, religion?: string | null, ethnicGroup?: string | null, departureDate?: string | null, maritalStatus?: MaritalStatus | null, fatherName?: string | null, fatherProfession?: string | null, motherName?: string | null, motherProfession?: string | null, childrenCount?: number | null, rank?: string | null, registrationNumber?: string | null, grading?: string | null, category?: string | null, clazz?: string | null, administrationEntryDate?: string | null, firstServiceDate?: string | null, firstServicePlace?: string | null, schoolServiceDate?: string | null, function?: string | null, currentPost?: string | null, spouseProfession?: string | null, schoolCharge?: boolean | null, numberAssignment?: string | null, cniNumber?: string | null, currentPicture?: string | null, address?: { __typename?: 'Address', street?: string | null, state?: string | null, town?: string | null, country?: string | null, zipCode?: string | null } | null, contactInfo?: { __typename?: 'ContactInfo', telephone?: string | null, mobile?: string | null, email?: string | null, postOfficeBox?: string | null, fax?: string | null } | null, origin?: { __typename?: 'Origin', countryOrigin?: string | null, departmentOrigin?: string | null, regionOrigin?: string | null, districtOrigin?: string | null } | null }> | null };
+
+export type TeachersWithPermissionsQueryVariables = Exact<{
+  schoolId: Scalars['Int']['input'];
+  permissions: Array<PermissionType> | PermissionType;
+}>;
+
+
+export type TeachersWithPermissionsQuery = { __typename?: 'Query', teachers?: Array<{ __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null, code: string, gender?: Gender | null }> | null };
 
 export type UserGroupFieldsFragment = { __typename?: 'UserGroup', id: number, name: string, isActive?: boolean | null, description?: string | null, roleCollection?: Array<{ __typename?: 'Role', id: number, name: string }> | null };
 
@@ -17379,6 +17574,50 @@ export function useOperationClassCreatedSubscription(baseOptions?: Apollo.Subscr
       }
 export type OperationClassCreatedSubscriptionHookResult = ReturnType<typeof useOperationClassCreatedSubscription>;
 export type OperationClassCreatedSubscriptionResult = Apollo.SubscriptionResult<OperationClassCreatedSubscription>;
+export const DisciplineDistributionDocument = gql`
+    query DisciplineDistribution($schoolId: Int!) {
+  disciplineDistribution(schoolId: $schoolId) {
+    teacherId
+    teacherFullName
+    items {
+      classId
+      className
+    }
+  }
+}
+    `;
+export function useDisciplineDistributionQuery(baseOptions: Apollo.QueryHookOptions<DisciplineDistributionQuery, DisciplineDistributionQueryVariables> & ({ variables: DisciplineDistributionQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>(DisciplineDistributionDocument, options);
+      }
+export function useDisciplineDistributionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>(DisciplineDistributionDocument, options);
+        }
+// @ts-ignore
+export function useDisciplineDistributionSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>): Apollo.UseSuspenseQueryResult<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>;
+export function useDisciplineDistributionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>): Apollo.UseSuspenseQueryResult<DisciplineDistributionQuery | undefined, DisciplineDistributionQueryVariables>;
+export function useDisciplineDistributionSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>(DisciplineDistributionDocument, options);
+        }
+export type DisciplineDistributionQueryHookResult = ReturnType<typeof useDisciplineDistributionQuery>;
+export type DisciplineDistributionLazyQueryHookResult = ReturnType<typeof useDisciplineDistributionLazyQuery>;
+export type DisciplineDistributionSuspenseQueryHookResult = ReturnType<typeof useDisciplineDistributionSuspenseQuery>;
+export type DisciplineDistributionQueryResult = Apollo.QueryResult<DisciplineDistributionQuery, DisciplineDistributionQueryVariables>;
+export const DisciplineDistributionSaveDocument = gql`
+    mutation DisciplineDistributionSave($distributions: [DisciplineDistributionItemInput!]!, $schoolId: Int!) {
+  disciplineDistributionSave(distributions: $distributions, schoolId: $schoolId)
+}
+    `;
+export type DisciplineDistributionSaveMutationFn = Apollo.MutationFunction<DisciplineDistributionSaveMutation, DisciplineDistributionSaveMutationVariables>;
+export function useDisciplineDistributionSaveMutation(baseOptions?: Apollo.MutationHookOptions<DisciplineDistributionSaveMutation, DisciplineDistributionSaveMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DisciplineDistributionSaveMutation, DisciplineDistributionSaveMutationVariables>(DisciplineDistributionSaveDocument, options);
+      }
+export type DisciplineDistributionSaveMutationHookResult = ReturnType<typeof useDisciplineDistributionSaveMutation>;
+export type DisciplineDistributionSaveMutationResult = Apollo.MutationResult<DisciplineDistributionSaveMutation>;
+export type DisciplineDistributionSaveMutationOptions = Apollo.BaseMutationOptions<DisciplineDistributionSaveMutation, DisciplineDistributionSaveMutationVariables>;
 export const SequentialDisciplineDocument = gql`
     query SequentialDiscipline($classId: Int!, $subPeriodId: Int!) {
   sequentialDisciplines: findSequentialDiscipline(
@@ -23824,6 +24063,32 @@ export type ClassesForNoteQueryHookResult = ReturnType<typeof useClassesForNoteQ
 export type ClassesForNoteLazyQueryHookResult = ReturnType<typeof useClassesForNoteLazyQuery>;
 export type ClassesForNoteSuspenseQueryHookResult = ReturnType<typeof useClassesForNoteSuspenseQuery>;
 export type ClassesForNoteQueryResult = Apollo.QueryResult<ClassesForNoteQuery, ClassesForNoteQueryVariables>;
+export const ClassesForDisciplineDocument = gql`
+    query ClassesForDiscipline($id: Int!) {
+  clazzes: findClassForDisciplineInput(schoolId: $id) {
+    ...classFields
+  }
+}
+    ${ClassFieldsFragmentDoc}`;
+export function useClassesForDisciplineQuery(baseOptions: Apollo.QueryHookOptions<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables> & ({ variables: ClassesForDisciplineQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>(ClassesForDisciplineDocument, options);
+      }
+export function useClassesForDisciplineLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>(ClassesForDisciplineDocument, options);
+        }
+// @ts-ignore
+export function useClassesForDisciplineSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>): Apollo.UseSuspenseQueryResult<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>;
+export function useClassesForDisciplineSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>): Apollo.UseSuspenseQueryResult<ClassesForDisciplineQuery | undefined, ClassesForDisciplineQueryVariables>;
+export function useClassesForDisciplineSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>(ClassesForDisciplineDocument, options);
+        }
+export type ClassesForDisciplineQueryHookResult = ReturnType<typeof useClassesForDisciplineQuery>;
+export type ClassesForDisciplineLazyQueryHookResult = ReturnType<typeof useClassesForDisciplineLazyQuery>;
+export type ClassesForDisciplineSuspenseQueryHookResult = ReturnType<typeof useClassesForDisciplineSuspenseQuery>;
+export type ClassesForDisciplineQueryResult = Apollo.QueryResult<ClassesForDisciplineQuery, ClassesForDisciplineQueryVariables>;
 export const ClassSaveDocument = gql`
     mutation ClassSave($clazz: ClazzInput) {
   clazz: storeClass(clazz: $clazz) {
@@ -27652,6 +27917,39 @@ export type NonEmployeePersonnelQueryHookResult = ReturnType<typeof useNonEmploy
 export type NonEmployeePersonnelLazyQueryHookResult = ReturnType<typeof useNonEmployeePersonnelLazyQuery>;
 export type NonEmployeePersonnelSuspenseQueryHookResult = ReturnType<typeof useNonEmployeePersonnelSuspenseQuery>;
 export type NonEmployeePersonnelQueryResult = Apollo.QueryResult<NonEmployeePersonnelQuery, NonEmployeePersonnelQueryVariables>;
+export const TeachersWithPermissionsDocument = gql`
+    query TeachersWithPermissions($schoolId: Int!, $permissions: [PermissionType!]!) {
+  teachers: teachersWithPermissions(
+    schoolId: $schoolId
+    permissions: $permissions
+  ) {
+    id
+    lastName
+    firstName
+    code
+    gender
+  }
+}
+    `;
+export function useTeachersWithPermissionsQuery(baseOptions: Apollo.QueryHookOptions<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables> & ({ variables: TeachersWithPermissionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>(TeachersWithPermissionsDocument, options);
+      }
+export function useTeachersWithPermissionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>(TeachersWithPermissionsDocument, options);
+        }
+// @ts-ignore
+export function useTeachersWithPermissionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>): Apollo.UseSuspenseQueryResult<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>;
+export function useTeachersWithPermissionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>): Apollo.UseSuspenseQueryResult<TeachersWithPermissionsQuery | undefined, TeachersWithPermissionsQueryVariables>;
+export function useTeachersWithPermissionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>(TeachersWithPermissionsDocument, options);
+        }
+export type TeachersWithPermissionsQueryHookResult = ReturnType<typeof useTeachersWithPermissionsQuery>;
+export type TeachersWithPermissionsLazyQueryHookResult = ReturnType<typeof useTeachersWithPermissionsLazyQuery>;
+export type TeachersWithPermissionsSuspenseQueryHookResult = ReturnType<typeof useTeachersWithPermissionsSuspenseQuery>;
+export type TeachersWithPermissionsQueryResult = Apollo.QueryResult<TeachersWithPermissionsQuery, TeachersWithPermissionsQueryVariables>;
 export const UserGroupsDocument = gql`
     query UserGroups {
   userGroups: findAllUserGroups {

@@ -17,7 +17,7 @@ import type { SubmitHandler } from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import SimpleInput from '@/@core/components/ui/simple-input'
-import SimpleDatePicker from '@/@core/components/ui/forms/simple-date-picker'
+// import SimpleDatePicker from '@/@core/components/ui/forms/simple-date-picker'
 import Button from '@/@core/components/button'
 import dayjs from 'dayjs'
 import { formatError } from '@/utils/ErrorHelper'
@@ -29,7 +29,7 @@ interface FormValues {
 
 interface StudentImportProcessFormProps {
   modal?: NiceModalHandler
-  refetch: Function
+  refetch: () => void
 }
 
 const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
@@ -130,9 +130,9 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
     setValues({ ...values, clazz: val })
   }
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (_data) => {
     // formatting items
-    const items = data.items
+    const items = _data.items
       .filter((item: any) => itemValid(item))
       .map((item: any) => {
         return {
@@ -167,7 +167,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
         classId: values.clazz.id,
       },
     })
-      .then(async ({ data }) => {
+      .then(async () => {
         // form.resetFields();
         toast.success(`Import terminé avec succès`, {
           ...TOAST_OPTIONS,
@@ -216,8 +216,8 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
 
         <FileUpload
           accept="text/csv"
-          onChange={(data: any) =>
-            setValues((val) => ({ ...val, file: data[0] }))
+          onChange={(_data: any) =>
+            setValues((val) => ({ ...val, file: _data[0] }))
           }
         />
 
@@ -259,9 +259,9 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
                 <td>
                   <SimpleInput
                     {...register(`items.${index}.studentId`)}
-                    //readOnly={watch(`items.${index}.studentId`) !== undefined}
+                    // readOnly={watch(`items.${index}.studentId`) !== undefined}
                     readOnly={field.studentId !== null}
-                    //type="number"
+                    // type="number"
                   />
                 </td>
 
@@ -283,6 +283,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
                   <DatePicker
                     name={`items.${index}.birthDate`}
                     control={control}
+                    label=""
                   />
                 </td>
 

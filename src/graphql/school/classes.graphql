@@ -52,6 +52,12 @@ query ClassesForNote($id: Int!) {
   }
 }
 
+query ClassesForDiscipline($id: Int!) {
+  clazzes: findClassForDisciplineInput(schoolId: $id) {
+    ...classFields
+  }
+}
+
 mutation ClassSave($clazz: ClazzInput) {
   clazz: storeClass(clazz: $clazz) {
     ...classFields

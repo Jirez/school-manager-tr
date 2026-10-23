@@ -1,37 +1,31 @@
-import { useTranslation } from 'react-i18next'
+import type { ChangeEvent, FC } from 'react'
 import { Form } from 'reactstrap'
-import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import type { FC } from 'react'
-import { useFieldArray, useForm, useWatch } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import type { NiceModalHandler } from '@ebay/nice-modal-react'
+import { Activity, List, Shield } from 'lucide-react'
+import { useSelector } from '@tanstack/react-form'
+
 import { TOAST_OPTIONS } from '@/utils/constants'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import Input from '@/@core/components/ui/forms/input'
-import Switch from '@/@core/components/ui/forms/swith'
-import ActionButtons from '@/@core/components/ui/forms/action-buttons'
 import { useAuthentication } from '@/hooks/useAuthentication'
-import RoleItem from './RoleItem'
-import { Shield, Activity, List } from 'lucide-react'
-
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { StyledCheckbox } from '@/@core/components/ui/styled-checkbox'
-import type { PermissionItem, RoleType } from './role.type'
-import { roleValidation } from './role.validation'
+import { defaultMeta, useAppForm } from '#/hooks/form/form'
+import RoleItem from './RoleItem'
+import type { PermissionItem, PermissionItemItem, RoleType } from './role.type'
+import { roleSchema } from './role.validation'
 
 interface FormProps extends BaseFormProps {
   role?: RoleType
   modal?: NiceModalHandler
-  permissions?: PermissionItem[]
-}
-
-const initialValues: Partial<RoleType> = {
-  name: '',
-  active: true,
-  description: '',
+  permissions?: Array<{
+    groupName: string
+    items: PermissionItemItem[]
+  }>
 }
 
 const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
@@ -39,59 +33,31 @@ const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
   const { enterpriseId } = useAuthentication()
 
   const {
-    control,
+    AppField,
+    AppForm,
+    SubmitButton,
     handleSubmit,
-    // getValues,
-    formState: { isDirty },
     reset,
-    setValue,
-    register,
-  } = useForm<RoleType>({
+    setFieldValue,
+    store,
+  } = useAppForm({
     defaultValues: {
-      description: role?.description || '',
       name: role?.name || '',
+      description: role?.description || '',
       active: role ? role.active : true,
-      items: props.permissions ? props.permissions : [],
+      items: (props.permissions ?? []).map((group) => ({
+        groupName: group.groupName,
+        checked:
+          group.items.length > 0 && group.items.every((item) => item.checked),
+        items: group.items.map((item) => ({ ...item })),
+      })),
+    } as any,
+    validators: {
+      onChange: roleSchema,
     },
-    resolver: yupResolver(roleValidation),
-  })
-
-  const { fields } = useFieldArray({ control, name: 'items' })
-  const active = useWatch({ control, name: 'active' })
-
-  // Watch all items to determine global checked state
-  const items = useWatch({ control, name: 'items' })
-
-  const allPermissions = items?.flatMap((group: any) => group.items || []) || []
-  const checkingPermissions = allPermissions.filter((p: any) => p?.checked)
-  const totalPermissionsCount = allPermissions.length
-
-  const isAllChecked =
-    totalPermissionsCount > 0 &&
-    checkingPermissions.length === totalPermissionsCount
-  const isIndeterminate = checkingPermissions.length > 0 && !isAllChecked
-
-  const handleToggleGlobal = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked
-
-    fields.forEach((group, groupIndex) => {
-      group.items.forEach((_, itemIndex) => {
-        setValue(`items.${groupIndex}.items.${itemIndex}.checked`, isChecked, {
-          shouldDirty: true,
-          shouldValidate: true,
-        })
-      })
-    })
-  }
-
-  const onSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-    close?: boolean,
-  ) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    return handleSubmit(async (values) => {
+    onSubmitMeta: defaultMeta,
+    onSubmit({ value, meta }) {
+      const values = roleSchema.parse(value)
       const id = role ? Number(role.id) : undefined
 
       action({
@@ -99,12 +65,12 @@ const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
           role: {
             id,
             enterpriseId,
-            permissionItems: values.items.map((item: any) => ({
+            permissionItems: values.items.map((item) => ({
               groupName: item.groupName,
-              items: item.items.map((item: any) => ({
-                id: item.id,
-                code: item.code,
-                checked: item.checked,
+              items: item.items.map((permission) => ({
+                id: permission.id,
+                code: permission.code,
+                checked: permission.checked,
               })),
             })),
             name: values.name,
@@ -114,44 +80,84 @@ const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
         },
       })
         .then(async ({ data }) => {
-          reset(initialValues)
+          reset()
           toast.success(`Role enregistré`, { ...TOAST_OPTIONS })
 
           if (props.popover) {
             messageService.sendMessage('role', data.role)
             props.onModalClose?.()
           }
-          if (close) {
+
+          if (meta.close) {
             modal?.hide()
           }
         })
         .catch((error) => {
           toast.error(`Impossible d'ajouter le role: ${formatError(error)}`)
         })
-    })(event)
+    },
+  })
+
+  const active = useSelector(store, (state) => state.values.active)
+  const items = (useSelector(store, (state) => state.values.items) ??
+    []) as PermissionItem[]
+
+  const allPermissions = items.flatMap((group) => group.items)
+  const checkedPermissions = allPermissions.filter(
+    (permission) => permission.checked,
+  )
+  const totalPermissionsCount = allPermissions.length
+
+  const isAllChecked =
+    totalPermissionsCount > 0 &&
+    checkedPermissions.length === totalPermissionsCount
+  const isIndeterminate = checkedPermissions.length > 0 && !isAllChecked
+
+  const handleToggleGlobal = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked
+
+    setFieldValue('items', (previous: PermissionItem[]) =>
+      previous.map((group) => ({
+        ...group,
+        checked,
+        items: group.items.map((item) => ({
+          ...item,
+          checked,
+        })),
+      })),
+    )
   }
 
   return (
-    <Form onSubmit={onSubmit} className="flex flex-col max-w-5xl mx-auto gap-1">
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault()
+        handleSubmit()
+      }}
+      className="flex flex-col max-w-5xl mx-auto gap-1"
+    >
       <FormSection
         icon={<Shield size={18} />}
         title={t('label-roleDetails', 'Role Details')}
         description={t('role.detailsDesc', 'Basic information about the role')}
       >
         <div className="grid grid-cols-1 gap-1">
-          <Input
+          <AppField
             name="name"
-            control={control}
-            label={t('label-name')}
-            required
+            children={(field) => (
+              <field.Input label={t('label-name')} required />
+            )}
           />
 
-          <Input
+          <AppField
             name="description"
-            control={control}
-            label={t('label-description')}
-            type="textarea"
-            rows={3}
+            children={(field) => (
+              <field.Input
+                label={t('label-description')}
+                type="textarea"
+                rows={3}
+              />
+            )}
           />
         </div>
       </FormSection>
@@ -170,7 +176,10 @@ const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
           )}
           isActive={active}
         >
-          <Switch name="active" control={control} label="" />
+          <AppField
+            name="active"
+            children={(field) => <field.Switch label="" />}
+          />
         </ToggleOption>
       </FormSection>
 
@@ -193,28 +202,37 @@ const RoleForm: FC<FormProps> = ({ role, modal, action, ...props }) => {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-          {fields.map((field, index) => (
-            <RoleItem
-              key={field.id}
-              nestIndex={index}
-              control={control}
-              register={register}
-              setValue={setValue}
-              groupName={field.groupName}
-            />
-          ))}
-        </div>
+        <AppField name="items" mode="array">
+          {(field) => (
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+              {field.state.value.map((group: PermissionItem, index: number) => (
+                <AppField
+                  key={index}
+                  name={`items[${index}].items`}
+                  mode="array"
+                  children={(itemsField) => (
+                    <RoleItem
+                      nestIndex={index}
+                      groupName={group.groupName}
+                      field={itemsField}
+                    />
+                  )}
+                />
+              ))}
+            </div>
+          )}
+        </AppField>
       </FormSection>
 
       <StickyActions>
-        <ActionButtons
-          cancelAction={modal?.hide}
-          isSubmitting={props.loading}
-          popover={props.popover}
-          dirty={isDirty}
-          onSubmit={onSubmit}
-        />
+        <AppForm>
+          <SubmitButton
+            cancelAction={modal?.hide}
+            isSubmitting={props.loading}
+            popover={props.popover}
+            onSubmit={(_, meta) => handleSubmit(meta)}
+          />
+        </AppForm>
       </StickyActions>
     </Form>
   )

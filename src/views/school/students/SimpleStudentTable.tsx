@@ -38,8 +38,8 @@ const SimpleStudentTable: FC<Props> = (props) => {
 
           return (
             <TextWithAvatar
-              letter={name!.charAt(0)}
-              title={name!}
+              letter={name.charAt(0)}
+              title={name}
               subtitle={registrationNumber}
             />
           )
@@ -73,8 +73,6 @@ const SimpleStudentTable: FC<Props> = (props) => {
     [],
   )
 
-  //console.log(currentRows);
-
   return (
     <div className="text-sm">
       <CommonTable
@@ -82,7 +80,7 @@ const SimpleStudentTable: FC<Props> = (props) => {
         columns={columns}
         onModelUpdate={(rows) => {
           setCurrentRows(rows.length)
-          //showDisplayedRowCount(rows)
+          // showDisplayedRowCount(rows)
         }}
         showQuickFilter={true}
         onGlobalFilterChanged={props.onGlobalFilterChanged}

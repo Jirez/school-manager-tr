@@ -2071,5 +2071,8 @@
   "label_studentProgression": "Progression des élèves",
   "label_currentSchoolYear": "Année scolaire actuelle",
   "label_nextSchoolYear": "Année scolaire prochaine",
-  "label_enieg":"ENIEG"
+  "label_enieg":"ENIEG",
+  "no_description": "Pas de description",
+  "DISCIPLINE_MASTER": "Surveillant général",
+  "discipline_distribution": "Répartition des surveillants"
 }

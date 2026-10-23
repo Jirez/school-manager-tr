@@ -1,0 +1,17 @@
+query DisciplineDistribution($schoolId: Int!) {
+  disciplineDistribution(schoolId: $schoolId) {
+    teacherId
+    teacherFullName
+    items {
+      classId
+      className
+    }
+  }
+}
+
+mutation DisciplineDistributionSave(
+  $distributions: [DisciplineDistributionItemInput!]!
+  $schoolId: Int!
+) {
+  disciplineDistributionSave(distributions: $distributions, schoolId: $schoolId)
+}

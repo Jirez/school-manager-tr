@@ -4,6 +4,7 @@ import _ from 'lodash'
 import type { TConfiguration } from './types'
 import { useDebounceFn } from 'ahooks'
 import type { RefObject } from 'react'
+import { m } from '@/paraglide/messages'
 // import Swal from "sweetalert2";
 
 export const unusedChars = (
@@ -381,4 +382,9 @@ export const buildPartialFilters = (
 ): string | null => {
   const opts = options.map((val) => val[id])
   return opts ? opts.join('-') : null
+}
+
+export const translateMessage = (key: string) => {
+  const message = m[key as keyof typeof m]
+  return typeof message === 'function' ? message() : key
 }

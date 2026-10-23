@@ -14,7 +14,7 @@ import Select from '@/@core/components/select'
 import {
   ClassCreatedDocument,
   SubPeriodCreatedDocument,
-  useClassesQuery,
+  useClassesForDisciplineQuery,
   useSequentialDisciplineQuery,
   useSubPeriodsQuery,
 } from '@/gql/graphql'
@@ -28,7 +28,7 @@ const SequentialDisciplines = () => {
   )
   const { enterpriseId } = useAuthentication()
 
-  const { data, loading, subscribeToMore } = useClassesQuery({
+  const { data, loading, subscribeToMore } = useClassesForDisciplineQuery({
     variables: { id: enterpriseId },
   })
 
