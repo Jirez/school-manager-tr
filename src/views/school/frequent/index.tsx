@@ -30,6 +30,7 @@ import Select from '@/@core/components/select'
 import StudentImportProcessModal from './StudentImportProcessModal'
 import type { ColumnVisibilityState } from '@tanstack/react-table'
 import { useCreateAtom } from '@tanstack/react-store'
+import { m } from '@/paraglide/messages'
 
 const getFrequentColumnVisibility = (schoolFeeCompulsory: boolean) => ({
   classId: false,
@@ -105,7 +106,7 @@ const Frequents = () => {
   }
 
   const schoolNumberOrders = async () => {
-    toast.info('Opération en cours, veuillez patienter...')
+    toast.info(m.operation_in_progress_wait())
 
     await client.query({
       query: FrequentSchoolNumberOrderDocument,

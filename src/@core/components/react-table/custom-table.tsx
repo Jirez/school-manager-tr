@@ -1,6 +1,6 @@
 import type { GlobalFilterApi } from '@/@core/components/base-table/base-react-table'
 import QuickFilter from '@/@core/components/base-table/quick-filter'
-import Loader from '@/@core/components/spinner/loader'
+import LoadingTable from '@/@core/components/ui/table/loading-table'
 import ErrorComponent from '@/@core/components/ui/error-component'
 import type { RowData, ReactTable } from '@tanstack/react-table'
 // import { flexRender } from '@tanstack/react-table'
@@ -67,6 +67,7 @@ export function CustomTable<T extends RowData>({
   // const [headerGroups] = getTableHeaderGroups(table, tableGroup)
   const [globalFilter, setGlobalFilter] = React.useState('')
   // const { t } = useTranslation()
+  const loadingColumns = table.getVisibleLeafColumns().length || 1
 
   // Sort indicator component
   const SortIndicator = ({ direction }: { direction: string | false }) => {
@@ -266,9 +267,11 @@ export function CustomTable<T extends RowData>({
           {!serverOperations && <TablePagination table={table} />}
         </div>
       ) : loading ? (
-        <div className="flex justify-center items-center py-12">
-          <Loader />
-        </div>
+        <LoadingTable
+          rows={10}
+          columns={loadingColumns}
+          label="Chargement des données"
+        />
       ) : !globalFilter ? (
         <NoData createData={() => modal?.show()} />
       ) : (

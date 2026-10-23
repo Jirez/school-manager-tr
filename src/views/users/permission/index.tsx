@@ -36,7 +36,7 @@ const Permissions = () => {
   const [initPermissions] = useInitPermissionsMutation()
 
   const schoolNumberOrders = async () => {
-    toast.info('Opération en cours, veuillez patienter...')
+    toast.info(m.operation_in_progress_wait())
 
     await initPermissions()
     refetch()

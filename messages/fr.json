@@ -2074,5 +2074,6 @@
   "label_enieg":"ENIEG",
   "no_description": "Pas de description",
   "DISCIPLINE_MASTER": "Surveillant général",
-  "discipline_distribution": "Répartition des surveillants"
+  "discipline_distribution": "Répartition des surveillants",
+  "operation_in_progress_wait": "Opération en cours, veuillez patienter..."
 }

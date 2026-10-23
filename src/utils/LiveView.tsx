@@ -1,34 +1,34 @@
-import React, { Component } from "react";
-import _ from "lodash";
+import React, { Component } from 'react'
+import _ from 'lodash'
 
-import type { DocumentNode } from "graphql";
-import type { SubscribeToMoreOptions } from "@apollo/client";
+import type { DocumentNode } from 'graphql'
+import type { SubscribeToMoreOptions } from '@apollo/client'
 // import LoadingSpinner from "@components/spinner/Loading-spinner";
-import ComponentSpinner from "@/@core/components/spinner/component-loader";
+import ComponentSpinner from '@/@core/components/spinner/component-loader'
 
 interface LiveViewProps {
-  subscribeToMore: (options: SubscribeToMoreOptions) => void;
-  document: DocumentNode;
-  deleteDocument?: DocumentNode;
-  listVar: string;
-  singleVar: string;
-  sortField?: string;
-  uniqueField?: string;
-  data: any;
-  triggerUpdate?: boolean;
-  loading?: boolean;
-  showLoader?: boolean;
+  subscribeToMore: (options: SubscribeToMoreOptions) => void
+  document: DocumentNode
+  deleteDocument?: DocumentNode
+  listVar: string
+  singleVar: string
+  sortField?: string
+  uniqueField?: string
+  data: any
+  triggerUpdate?: boolean
+  loading?: boolean
+  showLoader?: boolean
   //
   // authUser?: AuthResponse
-  enterpriseId: number | undefined;
+  enterpriseId: number | undefined
 
-  children: (data: any, loading?: boolean) => React.ReactElement;
+  children: (data: any, loading?: boolean) => React.ReactElement
 }
 
 class LiveView extends Component<LiveViewProps, {}> {
   static defaultProps = {
-    showLoader: true,
-  };
+    showLoader: false,
+  }
 
   subscribeToMoreData = () => {
     const {
@@ -39,36 +39,36 @@ class LiveView extends Component<LiveViewProps, {}> {
       sortField,
       triggerUpdate,
       uniqueField,
-    } = this.props;
+    } = this.props
 
     subscribeToMore({
       document: document,
       updateQuery: (previousResult: any, { subscriptionData }: any) => {
         if (!subscriptionData.data) {
           // return {[listVar]: previousResult[listVar].filter(({addButton}) => addButton !== -1) };
-          return previousResult;
+          return previousResult
         }
 
         /* const exists = prev.feed.links.find(({ id }) => id === newLink.id);
                 if (exists) return prev;*/
 
-        const newData = subscriptionData.data[singleVar];
+        const newData = subscriptionData.data[singleVar]
 
-        const enterpriseId = newData?.enterpriseId || newData.enterprise?.id;
+        const enterpriseId = newData?.enterpriseId || newData.enterprise?.id
 
         if (!triggerUpdate) {
           if (!enterpriseId || enterpriseId !== this.props.enterpriseId) {
-            return previousResult;
+            return previousResult
           }
         }
         let previous: never[] = previousResult[listVar].filter(
-          ({ id }: { id: string }) => id !== newData["id"]
-        );
+          ({ id }: { id: string }) => id !== newData['id'],
+        )
 
         if (uniqueField) {
           previous = previous.filter(
-            ({ [uniqueField]: field }) => field !== newData[uniqueField]
-          );
+            ({ [uniqueField]: field }) => field !== newData[uniqueField],
+          )
         }
 
         return {
@@ -80,13 +80,13 @@ class LiveView extends Component<LiveViewProps, {}> {
           [listVar]: sortField
             ? _.sortBy(previous.concat(newData), (o) => o[sortField])
             : previous.concat(newData),
-        };
+        }
       },
-    });
-  };
+    })
+  }
 
   componentDidMount() {
-    this.subscribeToMoreData();
+    this.subscribeToMoreData()
     /* if (this.props.deleteDocument) {
             this.subscribeToDelete();
         }*/
@@ -100,8 +100,8 @@ class LiveView extends Component<LiveViewProps, {}> {
       <ComponentSpinner />
     ) : (
       <span />
-    );
+    )
   }
 }
 
-export default LiveView;
+export default LiveView

@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next'
 import { useModal } from '@ebay/nice-modal-react'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
@@ -12,13 +11,13 @@ import { useTableColumns } from './subjectModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import React, { useState } from 'react'
+import { m } from '@/paraglide/messages'
 
 const Subjects = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(SubjectFormModal)
   const [isMount, setIsMount] = useState(false)
-  const { t } = useTranslation()
-  useTitle(t('sidebar.subjects'))
+  useTitle(m.label_subjects())
 
   const { data, error, loading, refetch } = useSubjectsQuery({
     variables: { id: enterpriseId },
@@ -54,7 +53,7 @@ const Subjects = () => {
     <Scrollbar className="flex flex-col w-full">
       <Navs links={SubjectLinks} />
       <Toolbar
-        title={t('sidebar.subjects')}
+        title={m.label_subjects()}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         actionLabel="action.add_subject"

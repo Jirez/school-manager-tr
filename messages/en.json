@@ -2070,5 +2070,6 @@
   "label_enieg": "ENIEG",
   "no_description": "No description",
   "DISCIPLINE_MASTER": "Discipline Master",
-  "discipline_distribution": "Discipline Master Distribution"
+  "discipline_distribution": "Discipline Master Distribution",
+  "operation_in_progress_wait": "Operation in progress, please wait..."
 }

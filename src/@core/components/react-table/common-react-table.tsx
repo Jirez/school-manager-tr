@@ -21,7 +21,7 @@ import QuickFilter from '@/@core/components/base-table/quick-filter'
 import { matchWord } from '@/utils/SearchFn'
 import Button from '@/@core/components/button'
 import { useTable } from '@/context/table.context'
-import Loader from '@/@core/components/spinner/loader'
+import LoadingTable from '@/@core/components/ui/table/loading-table'
 import dayjs from 'dayjs'
 import IndeterminateCheckbox from './indeterminate-checkbox'
 import {
@@ -298,6 +298,9 @@ const CommonTable: React.FC<TableProps> = ({
   }, [rowSelection])
 
   const paginatedRows = table.getRowModel().rows
+  const loadingColumns =
+    table.getVisibleLeafColumns().length ||
+    columns.length + (showCheckbox ? 1 : 0)
 
   // Keyboard navigation
   useKeyPress(
@@ -409,55 +412,63 @@ const CommonTable: React.FC<TableProps> = ({
           />
         </div>
       )}
-      <StyledTableContainer ref={tableContainerRef}>
-        {table.getRowModel().rows.length > 0 ? (
-          <div className="overflow-x-auto">
-            <StyledTable>
-              <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      const meta = header.column.columnDef.meta as any
-                      const alignClass =
-                        meta?.align === 'right'
-                          ? 'justify-end text-right'
-                          : meta?.align === 'center'
-                            ? 'justify-center text-center'
-                            : 'justify-start text-left'
-                      const isSorted = header.column.getIsSorted()
-                      return (
-                        <th
-                          key={header.id}
-                          colSpan={header.colSpan}
-                          className={
-                            meta?.align === 'right' ? 'text-right' : ''
-                          }
-                        >
-                          {header.isPlaceholder ? null : (
-                            <div
-                              {...{
-                                className: `${
-                                  header.column.getCanSort()
-                                    ? 'cursor-pointer select-none flex items-center gap-2 group'
-                                    : 'flex items-center gap-2'
-                                } ${alignClass}`,
-                                onClick:
-                                  header.column.getToggleSortingHandler(),
-                              }}
-                            >
-                              <span
-                                className={
-                                  meta?.align === 'right' ? '' : 'flex-1'
-                                }
+      {loading && table.getRowModel().rows.length === 0 ? (
+        <LoadingTable
+          rows={Math.min(pagination.pageSize, 10)}
+          columns={loadingColumns}
+          className="mb-8"
+          label="Chargement des données"
+        />
+      ) : (
+        <StyledTableContainer ref={tableContainerRef}>
+          {table.getRowModel().rows.length > 0 ? (
+            <div className="overflow-x-auto">
+              <StyledTable>
+                <thead>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        const meta = header.column.columnDef.meta as any
+                        const alignClass =
+                          meta?.align === 'right'
+                            ? 'justify-end text-right'
+                            : meta?.align === 'center'
+                              ? 'justify-center text-center'
+                              : 'justify-start text-left'
+                        const isSorted = header.column.getIsSorted()
+                        return (
+                          <th
+                            key={header.id}
+                            colSpan={header.colSpan}
+                            className={
+                              meta?.align === 'right' ? 'text-right' : ''
+                            }
+                          >
+                            {header.isPlaceholder ? null : (
+                              <div
+                                {...{
+                                  className: `${
+                                    header.column.getCanSort()
+                                      ? 'cursor-pointer select-none flex items-center gap-2 group'
+                                      : 'flex items-center gap-2'
+                                  } ${alignClass}`,
+                                  onClick:
+                                    header.column.getToggleSortingHandler(),
+                                }}
                               >
-                                {flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext(),
-                                )}
-                              </span>
-                              {header.column.getCanSort() && (
-                                <div
-                                  className={`
+                                <span
+                                  className={
+                                    meta?.align === 'right' ? '' : 'flex-1'
+                                  }
+                                >
+                                  {flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
+                                </span>
+                                {header.column.getCanSort() && (
+                                  <div
+                                    className={`
                                   transition-all duration-200
                                   ${
                                     isSorted
@@ -465,82 +476,79 @@ const CommonTable: React.FC<TableProps> = ({
                                       : 'text-gray-400 opacity-0 group-hover:opacity-100'
                                   }
                                 `}
-                                >
-                                  {{
-                                    asc: <ChevronUp size={14} />,
-                                    desc: <ChevronDown size={14} />,
-                                  }[isSorted as string] ?? (
-                                    <ChevronsUpDown size={14} />
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </th>
-                      )
-                    })}
-                  </tr>
-                ))}
-              </thead>
-              <tbody>
-                {paginatedRows.map((row, index) => {
-                  return (
-                    <tr
-                      key={row.id}
-                      onClick={() => onRowClicked?.(row.original)}
-                      data-row-index={index}
-                      className={`cursor-pointer ${
-                        focusedRowIndex === index ? 'focused' : ''
-                      }`}
-                    >
-                      {row.getVisibleCells().map((cell) => {
-                        const meta = cell.column.columnDef.meta as any
-                        const alignment =
-                          meta?.align === 'right'
-                            ? 'text-right'
-                            : meta?.align === 'center'
-                              ? 'text-center'
-                              : 'text-left'
-                        return (
-                          <td key={cell.id} className={alignment}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
+                                  >
+                                    {{
+                                      asc: <ChevronUp size={14} />,
+                                      desc: <ChevronDown size={14} />,
+                                    }[isSorted as string] ?? (
+                                      <ChevronsUpDown size={14} />
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             )}
-                          </td>
+                          </th>
                         )
                       })}
                     </tr>
-                  )
-                })}
-              </tbody>
-            </StyledTable>
-          </div>
-        ) : loading ? (
-          <div className="py-20">
-            <Loader />
-          </div>
-        ) : !globalFilter ? (
-          <NoData createData={() => modal?.show()} />
-        ) : (
-          <div className="w-full py-20 flex justify-center items-center flex-col text-center">
-            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-4">
-              <Search size={40} className="text-gray-400" />
+                  ))}
+                </thead>
+                <tbody>
+                  {paginatedRows.map((row, index) => {
+                    return (
+                      <tr
+                        key={row.id}
+                        onClick={() => onRowClicked?.(row.original)}
+                        data-row-index={index}
+                        className={`cursor-pointer ${
+                          focusedRowIndex === index ? 'focused' : ''
+                        }`}
+                      >
+                        {row.getVisibleCells().map((cell) => {
+                          const meta = cell.column.columnDef.meta as any
+                          const alignment =
+                            meta?.align === 'right'
+                              ? 'text-right'
+                              : meta?.align === 'center'
+                                ? 'text-center'
+                                : 'text-left'
+                          return (
+                            <td key={cell.id} className={alignment}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </td>
+                          )
+                        })}
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </StyledTable>
             </div>
-            <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-2">
-              Aucun résultat
-            </h4>
-            <p className="text-gray-500 max-w-xs">
-              Votre recherche "<strong>{globalFilter}</strong>" n'a donné aucun
-              résultat. Essayez avec d'autres mots-clés.
-            </p>
-          </div>
-        )}
+          ) : !globalFilter ? (
+            <NoData createData={() => modal?.show()} />
+          ) : (
+            <div className="w-full py-20 flex justify-center items-center flex-col text-center">
+              <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-4">
+                <Search size={40} className="text-gray-400" />
+              </div>
+              <h4 className="font-bold text-gray-800 dark:text-gray-100 mb-2">
+                Aucun résultat
+              </h4>
+              <p className="text-gray-500 max-w-xs">
+                Votre recherche "<strong>{globalFilter}</strong>" n'a donné
+                aucun résultat. Essayez avec d'autres mots-clés.
+              </p>
+            </div>
+          )}
 
-        {!serverOperations && table.getRowModel().rows.length > 0 && (
-          <TablePagination table={table as any} />
-        )}
-      </StyledTableContainer>
+          {!serverOperations && table.getRowModel().rows.length > 0 && (
+            <TablePagination table={table as any} />
+          )}
+        </StyledTableContainer>
+      )}
     </>
   )
 }

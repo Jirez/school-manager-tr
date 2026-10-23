@@ -17,6 +17,7 @@ export const Route = createRootRoute({
   }, */
   component: RootComponent,
   notFoundComponent: NotFound,
+  pendingComponent: () => <div>Loading...</div>,
 })
 
 function RootComponent() {

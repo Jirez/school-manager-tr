@@ -5,30 +5,27 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { SubjectLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import DepartmentModal from '@/views/school/subjectDepartments/DepartmentModal'
 import {
-  SubjectDepartmentCreatedDocument,
+  useSubjectDepartmentCreatedSubscription,
   useSubjectDepartmentsQuery,
 } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import { useTableColumns } from './departmentModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import React, { useState } from 'react'
+import { useEffect } from 'react'
 
 const SubjectDepartments = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(DepartmentModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.subjects.departments'))
-  const [isMount, setIsMount] = useState(false)
 
-  const { data, error, loading, subscribeToMore, refetch } =
-    useSubjectDepartmentsQuery({
-      variables: { id: enterpriseId },
-    })
+  const { data, error, loading, refetch } = useSubjectDepartmentsQuery({
+    variables: { id: enterpriseId },
+  })
 
   const { columns } = useTableColumns(modal)
 
@@ -37,13 +34,13 @@ const SubjectDepartments = () => {
     columns,
   })
 
-  React.useEffect(() => {
-    setIsMount(true)
-  }, [])
+  const { data: subscriptionData } = useSubjectDepartmentCreatedSubscription()
 
-  if (!isMount) {
-    return null
-  }
+  useEffect(() => {
+    if (subscriptionData) {
+      refetch()
+    }
+  }, [subscriptionData])
 
   if (error) {
     return <div>Error! {error.message}</div>
@@ -65,21 +62,7 @@ const SubjectDepartments = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={SubjectDepartmentCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="subjectDepartments"
-          singleVar="subjectDepartment"
-          sortField="name"
-          triggerUpdate={true}
-          loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} loading={loading} modal={modal} />
-          )}
-        </LiveView>
+        <CustomTable table={table as any} loading={loading} modal={modal} />
       </div>
     </Scrollbar>
   )
