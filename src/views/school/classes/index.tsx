@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { ClassLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import ClassModal from '@/views/school/classes/ClassModal'
@@ -12,6 +11,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './classModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Classes = () => {
   const { enterpriseId } = useAuthentication()
@@ -23,16 +23,22 @@ const Classes = () => {
     variables: { id: enterpriseId },
   })
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: ClassCreatedDocument,
+    listVar: 'clazzes',
+    singleVar: 'clazz',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     data: data?.clazzes || [],
     columns,
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -49,19 +55,13 @@ const Classes = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={ClassCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="clazzes"
-          singleVar="clazz"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => <CustomTable table={table as any} modal={modal} />}
-        </LiveView>
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

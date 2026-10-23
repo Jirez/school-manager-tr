@@ -37,6 +37,7 @@ import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { m } from '@/paraglide/messages'
+import { useSelector } from '@tanstack/react-form'
 
 interface GuardianFormProps extends BaseFormProps {
   guardian?: GuardianZodSchemaType
@@ -69,6 +70,7 @@ const GuardianForm: FC<GuardianFormProps> = ({
     AppForm,
     SubmitButton,
     setFieldValue,
+    store,
   } = useAppForm({
     defaultValues: {
       lastName: guardian?.lastName || '',
@@ -166,6 +168,8 @@ const GuardianForm: FC<GuardianFormProps> = ({
         })
     },
   })
+
+  const religion = useSelector(store, (state) => state.values.religion)
 
   return (
     <Form
@@ -297,13 +301,13 @@ const GuardianForm: FC<GuardianFormProps> = ({
                   children={(field) => <field.Input className="hidden" />}
                 />
                 <GuardianReligionAutocomplete
-                  onFill={(value: string) => {
-                    setFieldValue('religion', value)
+                  onFill={(value) => {
+                    setFieldValue('religion', value as string)
                   }}
                   canRefetch={false}
                   label={m.label_religion()}
                   id="religionF"
-                  value={guardian?.religion}
+                  value={religion}
                 />
               </div>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SplitButton } from '@/@core/components/ui/buttons/split-button'
 import { UserPlus, FileSpreadsheet } from 'lucide-react'
 import { useModal } from '@ebay/nice-modal-react'
@@ -7,19 +7,15 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { StudentsLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import GuardianTable from '@/views/school/guardians/GuardianTable'
 import GuardianModal from './GuardianModal'
 import ImportGuardianModal from './ImportGuardianModal'
-import {
-  GuardianCreatedDocument,
-  useGuardianCreatedSubscription,
-  useGuardiansQuery,
-} from '@/gql/graphql'
+import { GuardianCreatedDocument, useGuardiansQuery } from '@/gql/graphql'
 import { useAbility } from '@/context/Can'
 import { useTitle } from 'ahooks'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Guardians = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -34,19 +30,15 @@ const Guardians = () => {
     variables: { id: enterpriseId },
   })
 
-  const { data: createdData, loading: createdLoading } =
-    useGuardianCreatedSubscription()
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
-  useEffect(() => {
-    if (createdData) {
-      // setGuardians([...guardians, createdData.guardian]);
-      // console.log(createdData.guardian);
-    }
-  }, [createdData])
+  useLiveSubscription({
+    subscribeToMore,
+    document: GuardianCreatedDocument,
+    listVar: 'guardians',
+    singleVar: 'guardian',
+    sortField: 'lastName',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   const extraButton = () =>
     ability.can('write', 'student') && (
@@ -82,26 +74,14 @@ const Guardians = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={GuardianCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="guardians"
-          singleVar="guardian"
-          sortField="lastName"
-          triggerUpdate={true}
+        <GuardianTable
+          modal={modal}
+          dataSource={data?.guardians || ([] as any)}
+          onGlobalFilterChanged={setFilterApi}
+          refetch={refetch}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ guardians }) => (
-            <GuardianTable
-              modal={modal}
-              dataSource={guardians}
-              onGlobalFilterChanged={setFilterApi}
-              refetch={refetch}
-            />
-          )}
-        </LiveView>
+        />
       </div>
     </Scrollbar>
   )

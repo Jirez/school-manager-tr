@@ -5,6 +5,7 @@ export const Route = createFileRoute(
   '/_privateLayout/_vertical/(school)/departments',
 )({
   component: SubjectDepartments,
+  pendingComponent: () => <div>Loading...</div>,
   staticData: {
     meta: {
       resource: 'config',

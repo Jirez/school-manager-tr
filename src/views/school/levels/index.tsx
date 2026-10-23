@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { ClassLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import LevelModal from '@/views/school/levels/LevelModal'
@@ -12,6 +11,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './levelModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Levels = () => {
   const { enterpriseId } = useAuthentication()
@@ -23,16 +23,22 @@ const Levels = () => {
     variables: { id: enterpriseId },
   })
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: LevelCreatedDocument,
+    listVar: 'levels',
+    singleVar: 'level',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     columns,
     data: data?.levels || [],
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -49,21 +55,13 @@ const Levels = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={LevelCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="levels"
-          singleVar="level"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

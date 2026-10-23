@@ -6,6 +6,7 @@ import type { RowData, ReactTable } from '@tanstack/react-table'
 // import { flexRender } from '@tanstack/react-table'
 import React from 'react'
 import { Table as BootstrapTable } from 'reactstrap'
+import TableError from '@/@core/components/ui/table/table-error'
 import Button from '@/@core/components/button'
 import illustration from '@/assets/images/illustration/email.svg'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
@@ -52,6 +53,8 @@ type Props<T extends RowData> = {
   onAddButtonClick?: () => void
   modal?: NiceModalHandler
   serverOperations?: boolean
+  error?: Error
+  onRetry?: () => void | Promise<unknown>
 }
 
 export function CustomTable<T extends RowData>({
@@ -63,6 +66,8 @@ export function CustomTable<T extends RowData>({
   onAddButtonClick,
   modal,
   serverOperations = false,
+  error,
+  onRetry,
 }: Props<T>) {
   // const [headerGroups] = getTableHeaderGroups(table, tableGroup)
   const [globalFilter, setGlobalFilter] = React.useState('')
@@ -81,6 +86,10 @@ export function CustomTable<T extends RowData>({
         )}
       </span>
     )
+  }
+
+  if (error) {
+    return <TableError error={error} onRetry={onRetry} />
   }
 
   return (

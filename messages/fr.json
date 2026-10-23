@@ -2075,5 +2075,7 @@
   "no_description": "Pas de description",
   "DISCIPLINE_MASTER": "Surveillant général",
   "discipline_distribution": "Répartition des surveillants",
-  "operation_in_progress_wait": "Opération en cours, veuillez patienter..."
+  "operation_in_progress_wait": "Opération en cours, veuillez patienter...",
+  "loading_error": "Erreur de chargement",
+  "try_again": "Réessayer"
 }

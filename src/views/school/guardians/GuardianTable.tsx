@@ -24,12 +24,15 @@ import {
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import type { AppFeatures } from '#/hooks/table'
+import type { Guardian } from '#/gql/graphql'
 
 interface GuardianTableProps {
-  dataSource?: GuardianType[]
+  dataSource?: Guardian[]
   onGlobalFilterChanged?: (filterApi: any) => void
   modal: NiceModalHandler
   refetch: () => void
+  error?: Error
+  loading?: boolean
 }
 
 const GuardianTable: FC<GuardianTableProps> = (props) => {
@@ -205,6 +208,9 @@ const GuardianTable: FC<GuardianTableProps> = (props) => {
           refetch: props.refetch,
         })
       }
+      error={props.error}
+      onRetry={() => props.refetch()}
+      loading={props.loading}
     />
   )
 }

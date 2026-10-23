@@ -16,10 +16,10 @@ import {
 } from './autocompletes.style'
 
 interface AutocompleteHintProps {
-  onFill(value: string | HintOption): void
+  onFill: (value: string | HintOption) => void
   focus$?: EventEmitter<void>
 
-  onOpenTable?(value: string | HintOption): void // open list inside a table
+  onOpenTable?: (value: string | HintOption) => void // open list inside a table
 
   reload$?: EventEmitter<void>
   canRefetch?: boolean
@@ -68,15 +68,16 @@ const GuardianReligionAutocomplete: React.FC<AutocompleteHintProps> = ({
         </PrependWrapper>
         <AutocompleteHintInput
           options={data && data.guardianReligions ? data.guardianReligions : []}
-          onFill={(value: string) => {
-            props.onFill(value)
-            setText(value)
+          onFill={(_value: string) => {
+            props.onFill(_value)
+            setText(_value)
+            text$.emit(_value)
           }}
-          allowTabFill={false}
+          allowTabFill={true}
           uniqueKey="id"
-          onChange={(value: string) => {
-            setText(value)
-            props.onFill(value)
+          onChange={(_value: string) => {
+            setText(_value)
+            props.onFill(_value)
           }}
           text$={text$}
           initialText={value}

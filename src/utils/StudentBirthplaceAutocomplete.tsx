@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { EventEmitter } from 'ahooks/lib/useEventEmitter'
+import type { EventEmitter } from 'ahooks/lib/useEventEmitter'
 import type { HintOption } from '@/utils/libraries/autocompleteHint/HintOption'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import AutocompleteHintInput from '@/utils/AutocompleteHintInput'
@@ -16,10 +16,10 @@ import {
 } from './autocompletes.style'
 
 interface AutocompleteHintProps {
-  onFill(value: string | HintOption): void
+  onFill: (value: string | HintOption) => void
   focus$?: EventEmitter<void>
 
-  onOpenTable?(value: string | HintOption): void // open list inside a table
+  onOpenTable?: (value: string | HintOption) => void // open list inside a table
 
   reload$?: EventEmitter<void>
   canRefetch?: boolean
@@ -49,7 +49,7 @@ const StudentBirthplaceAutocomplete: React.FC<AutocompleteHintProps> = ({
   const { data, loading, refetch } = useStudentBirthplacesQuery({
     variables: { id: enterpriseId },
     fetchPolicy: 'cache-and-network',
-    //pollInterval: 15000,
+    // pollInterval: 15000,
   })
 
   props.reload$?.useSubscription(() => refetch())

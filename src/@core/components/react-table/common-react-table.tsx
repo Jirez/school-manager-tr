@@ -10,7 +10,8 @@ import type {
   // VisibilityState,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import { useAppTable, type AppFeatures } from '@/hooks/table'
+import { useAppTable } from '@/hooks/table'
+import type { AppFeatures } from '@/hooks/table'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { useKeyPress, useMount, useUpdateEffect } from 'ahooks'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +33,7 @@ import {
   Plus,
 } from 'lucide-react'
 import styled from 'styled-components'
+import TableError from '../ui/table/table-error'
 
 const StyledTableContainer = styled.div`
   background: white;
@@ -147,6 +149,8 @@ export interface TableProps {
   setRowSelection?: OnChangeFn<RowSelectionState>
   loading?: boolean
   initialFilter?: string
+  error?: Error
+  onRetry?: () => void
 }
 
 const CommonTable: React.FC<TableProps> = ({
@@ -169,6 +173,8 @@ const CommonTable: React.FC<TableProps> = ({
   setRowSelection,
   loading = false,
   initialFilter,
+  error,
+  onRetry,
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const { setSorting: dispatchSorting, setSelectedRow } = useTable()
@@ -357,6 +363,10 @@ const CommonTable: React.FC<TableProps> = ({
         onRowClicked?.(paginatedRows[0].original)
       }
     }
+  }
+
+  if (error) {
+    return <TableError error={error} onRetry={onRetry} />
   }
 
   return (

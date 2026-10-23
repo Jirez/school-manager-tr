@@ -2071,5 +2071,7 @@
   "no_description": "No description",
   "DISCIPLINE_MASTER": "Discipline Master",
   "discipline_distribution": "Discipline Master Distribution",
-  "operation_in_progress_wait": "Operation in progress, please wait..."
+  "operation_in_progress_wait": "Operation in progress, please wait...",
+  "loading_error": "Loading error",
+  "try_again": "Try again"
 }
