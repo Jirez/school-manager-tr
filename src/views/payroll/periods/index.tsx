@@ -9,17 +9,16 @@ import {
   usePayrollPeriodCreatedSubscription,
   usePayrollPeriodsQuery,
 } from '@/gql/graphql'
-import { useMount, useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTableColumns } from './payrollPeriodModel'
 import PayrollPeriodModal from './PayrollPeriodModal'
 
 const PayrollPeriods = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(PayrollPeriodModal)
-  const [isMount, setIsMount] = useState(false)
   const { t } = useTranslation()
   useTitle(t('sidebar.payroll.periods'))
 
@@ -45,14 +44,6 @@ const PayrollPeriods = () => {
     }
   }, [subscriptionData])
 
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={PayrollLinks} />
@@ -67,11 +58,15 @@ const PayrollPeriods = () => {
       />
 
       {/* Table here */}
-      {isMount && (
-        <div className="text-sm">
-          <CustomTable modal={modal} table={table as any} loading={loading} />
-        </div>
-      )}
+      <div className="text-sm">
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
+      </div>
     </Scrollbar>
   )
 }

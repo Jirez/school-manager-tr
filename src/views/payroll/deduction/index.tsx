@@ -5,14 +5,12 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { PayrollLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import { useTitle } from 'ahooks'
 import { DeductionCreatedDocument, useDeductionsQuery } from '@/gql/graphql'
 import DeductionModal from './DeductionModal'
 import DeductionTable from './DeductionTable'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Deductions = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -27,16 +25,15 @@ const Deductions = () => {
     },
   )
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: DeductionCreatedDocument,
+    listVar: 'deductions',
+    singleVar: 'deduction',
+    // sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <div className="flex flex-col w-full">
@@ -53,23 +50,14 @@ const Deductions = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={DeductionCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="deductions"
-          singleVar="deduction"
+        <DeductionTable
+          modal={modal}
+          dataSource={data?.deductions || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
+          refetch={refetch}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ deductions }) => (
-            <DeductionTable
-              modal={modal}
-              dataSource={deductions}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+        />
       </div>
     </div>
   )

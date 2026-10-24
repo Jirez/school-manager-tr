@@ -15,12 +15,9 @@ import CustomTable from '@/@core/components/react-table/custom-table'
 import { useEffect } from 'react'
 import { useTableColumns } from './installmentModel'
 import InstallmentModal from './InstallmentModal'
-import { useState } from 'react'
-import { useMount } from 'ahooks'
 
 const Installments = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(InstallmentModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.installments'))
@@ -39,21 +36,10 @@ const Installments = () => {
   const { data: subscriptionData } = useInstallmentCreatedSubscription()
 
   useEffect(() => {
-    if (
-      subscriptionData //&&
-      //subscriptionData.installment?.enterpriseId === enterpriseId
-    ) {
+    if (subscriptionData) {
       refetch()
     }
   }, [subscriptionData])
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
 
   if (error) {
     return <div>Error! {error.message}</div>
@@ -74,7 +60,13 @@ const Installments = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

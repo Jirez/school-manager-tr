@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { AccountLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import LogCodeModal from '@/views/accounting/logCodes/LogCodeModal'
@@ -12,6 +11,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './logCodeModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const LogCodes = () => {
   const { enterpriseId } = useAuthentication()
@@ -23,16 +23,22 @@ const LogCodes = () => {
     variables: { id: enterpriseId },
   })
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: LogCodeCreatedDocument,
+    listVar: 'logCodes',
+    singleVar: 'logCode',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     columns,
     data: data?.logCodes || [],
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -49,21 +55,13 @@ const LogCodes = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={LogCodeCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="logCodes"
-          singleVar="logCode"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

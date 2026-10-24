@@ -106,6 +106,9 @@ const RoleTable: FC<CommonTableProps> = (props) => {
       showQuickFilter={false}
       onGlobalFilterChanged={props.onGlobalFilterChanged}
       modal={props.modal}
+      error={props.error}
+      loading={props.loading}
+      onRetry={props.refetch}
     />
   )
 }

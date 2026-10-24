@@ -5,14 +5,12 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { expenseLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import ExpenseTable from './ExpenseTable'
 import ExpenseModal from './ExpenseModal'
 import { useTitle } from 'ahooks'
 import { ExpenseCreatedDocument, useExpensesQuery } from '@/gql/graphql'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Expenses = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -25,16 +23,15 @@ const Expenses = () => {
     variables: { id: enterpriseId },
   })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: ExpenseCreatedDocument,
+    listVar: 'expenses',
+    singleVar: 'expense',
+    // sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <div className="flex flex-col w-full">
@@ -51,24 +48,14 @@ const Expenses = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={ExpenseCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="expenses"
-          singleVar="expense"
+        <ExpenseTable
+          modal={modal}
+          dataSource={data?.expenses || []}
+          onGlobalFilterChanged={setFilterApi}
+          refetch={refetch}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ expenses }) => (
-            <ExpenseTable
-              modal={modal}
-              dataSource={expenses}
-              onGlobalFilterChanged={setFilterApi}
-              refetch={refetch}
-            />
-          )}
-        </LiveView>
+          error={error}
+        />
       </div>
     </div>
   )

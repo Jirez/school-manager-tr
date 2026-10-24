@@ -12,14 +12,12 @@ import {
 import { useTitle } from 'ahooks'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTableColumns } from './paymentConditionModel'
 import PaymentCodnitionModal from './PaymentCodnitionModal'
-import { useMount } from 'ahooks'
 
 const PaymentConditions = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(PaymentCodnitionModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.conditions'))
@@ -46,18 +44,6 @@ const PaymentConditions = () => {
     }
   }, [subscriptionData])
 
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={SupplierLinks} />
@@ -73,7 +59,13 @@ const PaymentConditions = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

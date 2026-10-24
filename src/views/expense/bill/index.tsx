@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { SplitButton } from '@/@core/components/ui/buttons/split-button'
 import { FileText, CreditCard } from 'lucide-react'
 import { useModal } from '@ebay/nice-modal-react'
@@ -9,7 +9,7 @@ import { operationLinks } from '@/navigation/links'
 import { useTranslation } from 'react-i18next'
 import ErrorComponent from '@/@core/components/ui/error-component'
 import { formatError } from '@/utils/ErrorHelper'
-import { useKeyPress, useMount, useTitle } from 'ahooks'
+import { useKeyPress, useTitle } from 'ahooks'
 import { useVendorOperationsQuery } from '@/gql/graphql'
 import PaymentInfo from '@/@core/components/payment/PaymentInfo'
 import dayjs from 'dayjs'
@@ -51,7 +51,6 @@ const Bills = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(VendorOperationModal)
   const { t } = useTranslation()
-  const [isMounted, setIsMounted] = useState(false)
   useTitle(t('text-sales'))
 
   interface FormValues {
@@ -83,20 +82,16 @@ const Bills = () => {
 
   const paymentInfo = data?.vendorOperations?.paymentInfo
 
-  const onPeriodFilterChanged = (period: any) => {
+  const onPeriodFilterChanged = (_period: any) => {
     refetch({
-      startDate: dayjs(period[0]).format(INPUT_DATE_FORMAT),
-      endDate: dayjs(period[1]).format(INPUT_DATE_FORMAT),
+      startDate: dayjs(_period[0]).format(INPUT_DATE_FORMAT),
+      endDate: dayjs(_period[1]).format(INPUT_DATE_FORMAT),
     })
   }
 
   useEffect(() => {
     onPeriodFilterChanged(period)
   }, [period])
-
-  useMount(() => {
-    setIsMounted(true)
-  })
 
   const extraButton = () => (
     <SplitButton
@@ -175,34 +170,34 @@ const Bills = () => {
               options={{
                 dateFormat: 'd/m/Y',
                 mode: 'range',
-                //defaultDate: [dayjs().toDate(), dayjs().toDate()],
+                // defaultDate: [dayjs().toDate(), dayjs().toDate()],
                 allowInput: true,
               }}
             />
           </FieldGrid>
         </FilterSection>
 
-        {isMounted && (
-          <>
-            <PaymentInfo
-              estimate={0}
-              estimateCount={0}
-              overdue={paymentInfo?.overdue || 0}
-              overdueCount={paymentInfo?.overdueCount || 0}
-              openInvoice={paymentInfo?.openBill || 0}
-              openInvoiceCount={paymentInfo?.openBillCount || 0}
-              paid={paymentInfo?.paid || 0}
-              paidCount={paymentInfo?.paidCount || 0}
+        <>
+          <PaymentInfo
+            estimate={0}
+            estimateCount={0}
+            overdue={paymentInfo?.overdue || 0}
+            overdueCount={paymentInfo?.overdueCount || 0}
+            openInvoice={paymentInfo?.openBill || 0}
+            openInvoiceCount={paymentInfo?.openBillCount || 0}
+            paid={paymentInfo?.paid || 0}
+            paidCount={paymentInfo?.paidCount || 0}
+          />
+          <div className="mt-1 text-[0.8rem]">
+            <CustomTable
+              table={table as any}
+              modal={modal}
+              loading={loading}
+              error={error}
+              onRetry={refetch}
             />
-            <div className="mt-1 text-[0.8rem]">
-              <CustomTable
-                table={table as any}
-                modal={modal}
-                loading={loading}
-              />
-            </div>
-          </>
-        )}
+          </div>
+        </>
       </>
     </div>
   )

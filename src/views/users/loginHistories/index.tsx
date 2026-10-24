@@ -14,17 +14,12 @@ import { useTitle } from 'ahooks'
 const LoginHistories = () => {
   const [filterApi] = useState<GlobalFilterApi>()
   const { enterpriseId } = useAuthentication()
-  //const modal = useModal(PaymentModeModal);
   const { t } = useTranslation()
   useTitle(t('sidebar.users.history'))
 
   const { data, error, loading, refetch } = useLoginHistoriesQuery({
     variables: { id: enterpriseId },
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -34,8 +29,8 @@ const LoginHistories = () => {
         globalFilter={filterApi?.globalFilter}
         setGlobalFilter={filterApi?.setGlobalFilter}
         setDefaultGlobalFilter={filterApi?.setDefaultGlobalFilter}
-        //actionLabel="action.add_paymentMode"
-        //onClick={() => modal.show()}
+        // actionLabel="action.add_paymentMode"
+        // onClick={() => modal.show()}
         refetch={() => refetch()}
       />
 
@@ -44,6 +39,8 @@ const LoginHistories = () => {
         <LoginHistoryTable
           dataSource={data?.loginHistories || []}
           loading={loading}
+          error={error}
+          refetch={refetch}
         />
       </div>
     </Scrollbar>

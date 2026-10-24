@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { OfficialLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import OfficialFunctionModal from '@/views/school/officialFunctions/OfficialFunctionModal'
@@ -15,6 +14,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './officialFunctionModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const OfficialFunctions = () => {
   const { enterpriseId } = useAuthentication()
@@ -25,16 +25,22 @@ const OfficialFunctions = () => {
   const { data, error, loading, subscribeToMore, refetch } =
     useOfficialTypesQuery()
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: OfficialTypeCreatedDocument,
+    listVar: 'officialTypes',
+    singleVar: 'officialType',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     columns,
     data: data?.officialTypes || [],
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -51,21 +57,13 @@ const OfficialFunctions = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={OfficialTypeCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="officialTypes"
-          singleVar="officialType"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

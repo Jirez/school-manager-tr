@@ -5,14 +5,12 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { UserLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import RoleTable from '@/views/users/role/RoleTable'
 import RoleModal from '@/views/users/role/RoleModal'
 import { useTitle } from 'ahooks'
 import { useRolesQuery, RoleNewCreatedDocument } from '@/gql/graphql'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Roles = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -25,16 +23,15 @@ const Roles = () => {
     variables: { id: enterpriseId },
   })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: RoleNewCreatedDocument,
+    listVar: 'roles',
+    singleVar: 'role',
+    // sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <div className="flex flex-col w-full">
@@ -47,28 +44,19 @@ const Roles = () => {
         actionLabel="action.add_role"
         onClick={() => modal.show()}
         refetch={refetch}
-        //abilitySubject="role"
+        // abilitySubject="role"
       />
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={RoleNewCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="roles"
-          singleVar="role"
+        <RoleTable
+          modal={modal}
+          dataSource={data?.roles || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ roles }) => (
-            <RoleTable
-              modal={modal}
-              dataSource={roles}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+          refetch={refetch}
+        />
       </div>
     </div>
   )

@@ -14,13 +14,10 @@ import CustomTable from '@/@core/components/react-table/custom-table'
 import { useEffect } from 'react'
 import { useTableColumns } from './dayOfClassModel'
 import DayOfClassModal from './DayOfClassModal'
-import { useMount } from 'ahooks'
-import { useState } from 'react'
 import { PlanningLinks } from '#/navigation/links'
 
 const DayOfClass = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(DayOfClassModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.planning.dayOfClass'))
@@ -39,25 +36,10 @@ const DayOfClass = () => {
   const { data: subscriptionData } = useDayOfClassCreatedSubscription()
 
   useEffect(() => {
-    if (
-      subscriptionData //&&
-      //subscriptionData.timeSlot?.enterpriseId === enterpriseId
-    ) {
+    if (subscriptionData) {
       refetch()
     }
   }, [subscriptionData])
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -74,7 +56,13 @@ const DayOfClass = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

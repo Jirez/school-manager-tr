@@ -5,13 +5,13 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { AccountEntriesLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import AccountingEntryTable from './AccountingEntryTable'
 import AccountingEntryModal from './AccountingEntryModal'
 import { OperationCreatedDocument, useOperationsQuery } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const AccountingEntries = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -26,9 +26,15 @@ const AccountingEntries = () => {
     },
   )
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: OperationCreatedDocument,
+    listVar: 'operations',
+    singleVar: 'operation',
+    // sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -45,29 +51,18 @@ const AccountingEntries = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={OperationCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="operations"
-          singleVar="operation"
-          triggerUpdate={true}
+        <AccountingEntryTable
+          modal={modal}
+          dataSource={
+            data?.operations?.filter(
+              ({ __typename }: any) => __typename === 'AccountingEntry',
+            ) || []
+          }
+          onGlobalFilterChanged={setFilterApi}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ operations }) => (
-            <AccountingEntryTable
-              modal={modal}
-              dataSource={
-                operations &&
-                operations.filter(
-                  ({ __typename }: any) => __typename === 'AccountingEntry',
-                )
-              }
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+          refetch={refetch}
+          error={error}
+        />
       </div>
     </Scrollbar>
   )

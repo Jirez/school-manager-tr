@@ -6,28 +6,26 @@ import { ProductLinks } from '@/navigation/links'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import {
+  ProductCategoryCreatedDocument,
   useProductCategoriesQuery,
-  useProductCategoryCreatedSubscription,
 } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useEffect } from 'react'
 import ProductCategoryModal from './ProductCategoryModal'
 import { useTableColumns } from './productCategoryModel'
-import { useMount } from 'ahooks'
-import { useState } from 'react'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const ProductCategories = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMounted, setIsMounted] = useState(false)
   const modal = useModal(ProductCategoryModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.productCategories'))
 
-  const { data, error, loading, refetch } = useProductCategoriesQuery({
-    variables: { id: enterpriseId },
-  })
+  const { data, error, loading, refetch, subscribeToMore } =
+    useProductCategoriesQuery({
+      variables: { id: enterpriseId },
+    })
 
   const { columns } = useTableColumns(modal)
 
@@ -36,28 +34,15 @@ const ProductCategories = () => {
     data: data?.productCategories || [],
   })
 
-  const { data: subscriptionData } = useProductCategoryCreatedSubscription()
-
-  useEffect(() => {
-    if (
-      subscriptionData &&
-      subscriptionData.productCategory?.enterpriseId === enterpriseId
-    ) {
-      refetch()
-    }
-  }, [subscriptionData])
-
-  useMount(() => {
-    setIsMounted(true)
+  useLiveSubscription({
+    subscribeToMore,
+    document: ProductCategoryCreatedDocument,
+    listVar: 'productCategories',
+    singleVar: 'productCategory',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
   })
-
-  if (!isMounted) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -75,7 +60,13 @@ const ProductCategories = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

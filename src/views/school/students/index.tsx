@@ -38,10 +38,6 @@ const Students = () => {
     setMount(true)
   })
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <div className="flex flex-col w-full">
       <Navs links={StudentsLinks} />
@@ -58,7 +54,13 @@ const Students = () => {
       {/* Table here */}
       <div className="!text-sm">
         {isMount && (
-          <CustomTable table={table as any} modal={modal} loading={loading} />
+          <CustomTable
+            table={table as any}
+            modal={modal}
+            loading={loading}
+            error={error}
+            onRetry={() => refetch()}
+          />
         )}
       </div>
     </div>

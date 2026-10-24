@@ -14,7 +14,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './accountGroupModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import LiveView from '#/utils/LiveView'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const AccountGroups = () => {
   const { enterpriseId } = useAuthentication()
@@ -34,9 +34,15 @@ const AccountGroups = () => {
     data: data?.accountGroups || [],
   })
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: AccountGroupCreatedDocument,
+    listVar: 'accountGroups',
+    singleVar: 'accountGroup',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -53,21 +59,13 @@ const AccountGroups = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={AccountGroupCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="accountGroups"
-          singleVar="accountGroup"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

@@ -15,12 +15,9 @@ import CustomTable from '@/@core/components/react-table/custom-table'
 import { useEffect } from 'react'
 import { useTableColumns } from './feeGroupModel'
 import FeeGroupModal from './FeeGroupModal'
-import { useState } from 'react'
-import { useMount } from 'ahooks'
 
 const FeeGroups = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(FeeGroupModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.feeGroups'))
@@ -39,25 +36,10 @@ const FeeGroups = () => {
   const { data: subscriptionData } = useFeeGroupCreatedSubscription()
 
   useEffect(() => {
-    if (
-      subscriptionData //&&
-      //subscriptionData.installment?.enterpriseId === enterpriseId
-    ) {
+    if (subscriptionData) {
       refetch()
     }
   }, [subscriptionData])
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -74,7 +56,13 @@ const FeeGroups = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

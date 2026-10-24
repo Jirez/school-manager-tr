@@ -3,24 +3,21 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { SchoolYearLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import SchoolYearModal from './SchoolYearModal'
-import ErrorComponent from '@/@core/components/ui/error-component'
 import { SchoolYearCreatedDocument, useSchoolYearsQuery } from '@/gql/graphql'
-import { useMount, useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { useTableColumns } from './schoolYearModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useState } from 'react'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const SchoolYears = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(SchoolYearModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.school.schoolYears'))
-  const [isMount, setIsMount] = useState(false)
 
   const { data, error, loading, subscribeToMore, refetch } =
     useSchoolYearsQuery({
@@ -34,21 +31,15 @@ const SchoolYears = () => {
     columns,
   })
 
-  useMount(() => {
-    setIsMount(true)
+  useLiveSubscription({
+    subscribeToMore,
+    document: SchoolYearCreatedDocument,
+    listVar: 'schoolYears',
+    singleVar: 'schoolYear',
+    sortField: 'label',
+    triggerUpdate: true,
+    enterpriseId,
   })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-row items-center">
-        <ErrorComponent title={'Erreur'} message={error.message} />
-      </div>
-    )
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -65,19 +56,13 @@ const SchoolYears = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={SchoolYearCreatedDocument}
-          data={data}
+        <CustomTable
+          table={table as any}
+          modal={modal}
+          error={error}
           loading={loading}
-          subscribeToMore={subscribeToMore}
-          listVar="schoolYears"
-          singleVar="schoolYear"
-          sortField="label"
-          triggerUpdate={true}
-          enterpriseId={enterpriseId}
-        >
-          {() => <CustomTable table={table as any} modal={modal} />}
-        </LiveView>
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

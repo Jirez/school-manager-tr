@@ -5,7 +5,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { SchoolYearLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import SchoolSectionTable from '@/views/school/schoolSections/SchoolSectionTable'
@@ -15,6 +14,7 @@ import {
   useSchoolSectionsQuery,
 } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const SchoolSections = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -23,13 +23,20 @@ const SchoolSections = () => {
   const { t } = useTranslation()
   useTitle(t('sidebar.school.schoolSections'))
 
-  const { data, error, loading, subscribeToMore } = useSchoolSectionsQuery({
-    variables: { id: enterpriseId },
-  })
+  const { data, error, loading, subscribeToMore, refetch } =
+    useSchoolSectionsQuery({
+      variables: { id: enterpriseId },
+    })
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: SchoolSectionCreatedDocument,
+    listVar: 'schoolSections',
+    singleVar: 'schoolSection',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -45,25 +52,14 @@ const SchoolSections = () => {
 
       {/* Table here */}
       <div>
-        <LiveView
-          document={SchoolSectionCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="schoolSections"
-          singleVar="schoolSection"
-          sortField="name"
-          triggerUpdate={true}
+        <SchoolSectionTable
+          modal={modal}
+          dataSource={data?.schoolSections || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
+          refetch={refetch}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ schoolSections }) => (
-            <SchoolSectionTable
-              modal={modal}
-              dataSource={schoolSections}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+        />
       </div>
     </Scrollbar>
   )

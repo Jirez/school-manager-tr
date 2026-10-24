@@ -5,8 +5,6 @@ import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { operationLinks } from '@/navigation/links'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import { useMount, useTitle } from 'ahooks'
 import { useMobileOperationsQuery } from '@/gql/graphql'
 import dayjs from 'dayjs'
@@ -71,17 +69,6 @@ const MobileOperations = () => {
     setIsMounted(true)
   })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col w-full overflow-auto">
       <Navs links={operationLinks} />
@@ -89,7 +76,7 @@ const MobileOperations = () => {
         title={t('sidebar.sales.mobileOperations')}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
-        //extraButton={extraButton()}
+        // extraButton={extraButton()}
         refetch={refetch}
         onClick={() => modal.show({ type: 'PROFORMA', refetch })}
         totalCount={totalCount}
@@ -107,10 +94,10 @@ const MobileOperations = () => {
               options={{
                 dateFormat: 'd/m/Y',
                 mode: 'range',
-                //defaultDate: [dayjs().toDate(), dayjs().toDate()],
+                // defaultDate: [dayjs().toDate(), dayjs().toDate()],
                 allowInput: true,
               }}
-              //className="col-span-2"
+              // className="col-span-2"
             />
           </FieldGrid>
         </FilterSection>
@@ -122,6 +109,8 @@ const MobileOperations = () => {
                 table={table as any}
                 modal={modal}
                 loading={loading}
+                error={error}
+                onRetry={refetch}
               />
             </div>
           </>

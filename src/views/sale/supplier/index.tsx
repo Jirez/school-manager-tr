@@ -15,12 +15,9 @@ import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import SupplierModal from './SupplierModal'
 import { useEffect } from 'react'
-import { useMount } from 'ahooks'
-import { useState } from 'react'
 
 const Suppliers = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMounted, setIsMounted] = useState(false)
   const modal = useModal(SupplierModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.suppliers'))
@@ -47,18 +44,6 @@ const Suppliers = () => {
     }
   }, [subscriptionData])
 
-  useMount(() => {
-    setIsMounted(true)
-  })
-
-  if (!isMounted) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={SupplierLinks} />
@@ -75,7 +60,13 @@ const Suppliers = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

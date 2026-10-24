@@ -94,6 +94,8 @@ const LoginHistoryTable: FC<CommonTableProps> = (props) => {
           onGlobalFilterChanged={props.onGlobalFilterChanged}
           onRowSelected={(row) => setCheckedRows(row)}
           loading={props.loading}
+          error={props.error}
+          onRetry={props.refetch}
         />
       </div>
     </>

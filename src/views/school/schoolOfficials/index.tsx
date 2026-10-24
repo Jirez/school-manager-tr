@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { OfficialLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
 import SchoolOfficialModal from '@/views/school/schoolOfficials/SchoolOfficialModal'
 import {
@@ -14,6 +13,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './schoolOfficialModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const SchoolOfficials = () => {
   const { enterpriseId } = useAuthentication()
@@ -26,16 +26,22 @@ const SchoolOfficials = () => {
       variables: { id: enterpriseId },
     })
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: SchoolOfficialCreatedDocument,
+    listVar: 'schoolOfficials',
+    singleVar: 'schoolOfficial',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     data: data?.schoolOfficials || [],
     columns,
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <div className="flex flex-col w-full">
@@ -52,21 +58,13 @@ const SchoolOfficials = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={SchoolOfficialCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="schoolOfficials"
-          singleVar="schoolOfficial"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          modal={modal}
+          table={table as any}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable modal={modal} table={table as any} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </div>
   )

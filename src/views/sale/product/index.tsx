@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { SplitButton } from '@/@core/components/ui/buttons/split-button'
 import {
   Package,
@@ -12,22 +11,19 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { ProductLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import ProductModal from './ProductModal'
 import { PRODUCT_CATEGORIES, DEFAULT_POLL_INTERVAL } from '@/utils/constants'
 import { useNavigate } from '@tanstack/react-router'
-import { useMount, useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { NewProductCreatedDocument, useProductsQuery } from '@/gql/graphql'
 import { useTableColumns } from './productModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Products = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMounted, setIsMounted] = useState(false)
   const modal = useModal(ProductModal)
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -49,6 +45,16 @@ const Products = () => {
     pollInterval: DEFAULT_POLL_INTERVAL,
   }); */
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: NewProductCreatedDocument,
+    listVar: 'products',
+    singleVar: 'product',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const refetch = () => {
     refetchProducts()
   }
@@ -59,25 +65,6 @@ const Products = () => {
     columns,
     data: data?.products || [],
   })
-
-  useMount(() => {
-    setIsMounted(true)
-  })
-
-  if (!isMounted) {
-    return null
-  }
-
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
 
   const addProduct = () => {
     modal.show({ type: 'ARTICLE' })
@@ -136,25 +123,16 @@ const Products = () => {
           low={dataInfo?.stockInfo?.low || 0}
           out={dataInfo?.stockInfo?.out || 0}
         /> */}
-        <LiveView
-          document={NewProductCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="products"
-          singleVar="product"
-          loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <div className="mt-1 text-sm">
-              <CustomTable
-                table={table as any}
-                modal={modal}
-                loading={loading}
-              />
-            </div>
-          )}
-        </LiveView>
+
+        <div className="mt-1 text-sm">
+          <CustomTable
+            table={table as any}
+            modal={modal}
+            loading={loading}
+            error={error}
+            onRetry={refetch}
+          />
+        </div>
       </>
     </div>
   )

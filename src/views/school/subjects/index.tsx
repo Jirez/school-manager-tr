@@ -45,10 +45,6 @@ const Subjects = () => {
     return null
   }
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={SubjectLinks} />
@@ -64,7 +60,13 @@ const Subjects = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

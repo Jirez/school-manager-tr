@@ -15,6 +15,9 @@ const EarningCategoryTable: FC<CommonTableProps> = (props) => {
       showQuickFilter={false}
       onGlobalFilterChanged={props.onGlobalFilterChanged}
       modal={props.modal}
+      loading={props.loading}
+      error={props.error}
+      onRetry={props.refetch}
     />
   )
 }

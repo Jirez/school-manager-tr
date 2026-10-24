@@ -5,7 +5,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { StudentsLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import TeacherModal from './TeacherModal'
@@ -16,6 +15,7 @@ import { useTitle } from 'ahooks'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import { useTableColumns } from './personnelModel'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Personnel = () => {
   const { enterpriseId } = useAuthentication()
@@ -29,16 +29,22 @@ const Personnel = () => {
     variables: { id: enterpriseId },
   })
 
+  useLiveSubscription({
+    subscribeToMore,
+    document: PersonnelCreatedDocument,
+    listVar: 'personnels',
+    singleVar: 'personnel',
+    sortField: 'lastName',
+    triggerUpdate: true,
+    enterpriseId,
+  })
+
   const { columns } = useTableColumns(modal)
 
   const { table, globalFilter, setGlobalFilter, totalCount } = useTable<any>({
     data: data?.personnels || [],
     columns,
   })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   const extraButton = () =>
     ability.can('write', 'teacher') && (
@@ -74,21 +80,13 @@ const Personnel = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={PersonnelCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="personnels"
-          singleVar="personnel"
-          sortField="lastName"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

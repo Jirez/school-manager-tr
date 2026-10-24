@@ -15,12 +15,9 @@ import CustomTable from '@/@core/components/react-table/custom-table'
 import { useEffect } from 'react'
 import CustomerCategoryModal from './CustomerCategoryModal'
 import { useTableColumns } from './customerCategoryModel'
-import { useState } from 'react'
-import { useMount } from 'ahooks'
 
 const CustomerCategories = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(CustomerCategoryModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.sales.customerCategories'))
@@ -47,18 +44,6 @@ const CustomerCategories = () => {
     }
   }, [subscriptionData])
 
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={CustomerLinks} />
@@ -74,7 +59,13 @@ const CustomerCategories = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

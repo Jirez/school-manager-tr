@@ -15,12 +15,9 @@ import CustomTable from '@/@core/components/react-table/custom-table'
 import { useEffect } from 'react'
 import { useTableColumns } from './timeSlotModel'
 import TimeSlotModal from './TimeSlotModal'
-import { useMount } from 'ahooks'
-import { useState } from 'react'
 
 const TimeSlots = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(TimeSlotModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.planning.timeSlots'))
@@ -40,24 +37,12 @@ const TimeSlots = () => {
 
   useEffect(() => {
     if (
-      subscriptionData //&&
-      //subscriptionData.timeSlot?.enterpriseId === enterpriseId
+      subscriptionData // &&
+      // subscriptionData.timeSlot?.enterpriseId === enterpriseId
     ) {
       refetch()
     }
   }, [subscriptionData])
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -74,7 +59,13 @@ const TimeSlots = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <CustomTable modal={modal} table={table as any} loading={loading} />
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

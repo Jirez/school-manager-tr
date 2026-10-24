@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { BankLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import BankTransactionModal from './BankTransactionModal'
@@ -15,6 +14,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './bankTransactionModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const BankTransactions = () => {
   const { enterpriseId } = useAuthentication()
@@ -34,11 +34,15 @@ const BankTransactions = () => {
     data: data?.bankTransactions || [],
   })
 
-  //const {} = useBankTransactionCreatedSubscription();
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: BankTransactionCreatedDocument,
+    listVar: 'bankTransactions',
+    singleVar: 'bankTransaction',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -55,21 +59,13 @@ const BankTransactions = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={BankTransactionCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="bankTransactions"
-          singleVar="bankTransaction"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          modal={modal}
+          table={table as any}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable modal={modal} table={table as any} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

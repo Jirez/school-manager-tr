@@ -5,10 +5,7 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { PayrollLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import { useTitle } from 'ahooks'
 import {
   DeductionCategoryCreatedDocument,
@@ -16,6 +13,7 @@ import {
 } from '@/gql/graphql'
 import DeductionCategoryModal from './DeductionCategoryModal'
 import DeductionCategoryTable from './DeductionCategoryTable'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const DeductionCategories = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -29,16 +27,15 @@ const DeductionCategories = () => {
       variables: { id: enterpriseId },
     })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: DeductionCategoryCreatedDocument,
+    listVar: 'deductionCategories',
+    singleVar: 'deductionCategory',
+    // sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <div className="flex flex-col w-full">
@@ -55,23 +52,14 @@ const DeductionCategories = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={DeductionCategoryCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="deductionCategories"
-          singleVar="deductionCategory"
+        <DeductionCategoryTable
+          modal={modal}
+          dataSource={data?.deductionCategories || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ deductionCategories }) => (
-            <DeductionCategoryTable
-              modal={modal}
-              dataSource={deductionCategories}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+          refetch={refetch}
+        />
       </div>
     </div>
   )

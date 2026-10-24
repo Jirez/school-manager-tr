@@ -5,10 +5,7 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { UserLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import PermissionModal from '@/views/users/permission/PermissionModal'
 import PermissionTable from '@/views/users/permission/PermissionTable'
 import { useTitle } from 'ahooks'
@@ -22,6 +19,7 @@ import { TOAST_OPTIONS } from '@/utils/constants'
 import SplitButton from '@/@core/components/ui/buttons/split-button'
 import { RefreshCw } from 'lucide-react'
 import { m } from '@/paraglide/messages'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Permissions = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -32,6 +30,16 @@ const Permissions = () => {
 
   const { data, error, loading, subscribeToMore, refetch } =
     usePermissionsQuery()
+
+  useLiveSubscription({
+    subscribeToMore,
+    document: PermissionSubscriptionDocument,
+    listVar: 'permissions',
+    singleVar: 'permission',
+    // sortField: 'lastName',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   const [initPermissions] = useInitPermissionsMutation()
 
@@ -63,17 +71,6 @@ const Permissions = () => {
     />
   )
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col w-full">
       <Navs links={UserLinks} />
@@ -91,24 +88,14 @@ const Permissions = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={PermissionSubscriptionDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="permissions"
-          singleVar="permission"
+        <PermissionTable
+          modal={modal}
+          dataSource={data?.permissions || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-          triggerUpdate={true}
-        >
-          {({ permissions }) => (
-            <PermissionTable
-              modal={modal}
-              dataSource={permissions}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+          refetch={refetch}
+        />
       </div>
     </div>
   )

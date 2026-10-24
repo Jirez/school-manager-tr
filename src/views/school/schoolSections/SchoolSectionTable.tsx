@@ -14,6 +14,9 @@ const SchoolSectionTable: FC<CommonTableProps> = (props) => {
       showQuickFilter={false}
       onGlobalFilterChanged={props.onGlobalFilterChanged}
       modal={props.modal}
+      error={props.error}
+      onRetry={props.refetch}
+      loading={props.loading}
     />
   )
 }

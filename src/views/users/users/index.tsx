@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { UserLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import UserModal from '@/views/users/users/UserModal'
@@ -19,13 +18,11 @@ import { useAbility } from '@/context/Can'
 import { useTitle } from 'ahooks'
 import { useTableColumns } from './userModel'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useState } from 'react'
-import { useMount } from 'ahooks'
 import { useTable } from '#/@core/components/react-table/useTable'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const Users = () => {
   const { enterpriseId } = useAuthentication()
-  const [isMount, setIsMount] = useState(false)
   const modal = useModal(UserModal)
   const { t } = useTranslation()
   useTitle(t('sidebar.users'))
@@ -33,6 +30,16 @@ const Users = () => {
 
   const { data, error, loading, subscribeToMore, refetch } = useUsersQuery({
     variables: { id: enterpriseId },
+  })
+
+  useLiveSubscription({
+    subscribeToMore,
+    document: UserCreatedDocument,
+    listVar: 'users',
+    singleVar: 'user',
+    sortField: 'username',
+    triggerUpdate: true,
+    enterpriseId,
   })
 
   const [activate, { loading: activating }] = useUsersChangeStatusMutation()
@@ -48,18 +55,6 @@ const Users = () => {
     columns,
     data: data?.users || [],
   })
-
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (!isMount) {
-    return null
-  }
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -144,21 +139,13 @@ const Users = () => {
 
       {/* Table */}
       <div className="text-sm">
-        <LiveView
-          document={UserCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="users"
-          singleVar="user"
-          sortField="username"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={() => refetch()}
+        />
       </div>
     </Scrollbar>
   )

@@ -7,8 +7,6 @@ import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { operationLinks } from '@/navigation/links'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import { useKeyPress, useMount, useTitle } from 'ahooks'
 // import { useHotkeys } from "react-hotkeys-hook";
 import { useCustomerOperationsQuery } from '@/gql/graphql'
@@ -207,17 +205,6 @@ const Invoices = () => {
     modal.show({ type: 'PROFORMA', refetch })
   })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
-
   return (
     <Container>
       <Navs links={operationLinks} />
@@ -264,7 +251,13 @@ const Invoices = () => {
             paidCount={paymentInfo?.paidCount || 0}
           />
           <TableWrapper>
-            <CustomTable table={table as any} modal={modal} loading={loading} />
+            <CustomTable
+              table={table as any}
+              modal={modal}
+              loading={loading}
+              error={error}
+              onRetry={refetch}
+            />
           </TableWrapper>
         </ContentSection>
       )}

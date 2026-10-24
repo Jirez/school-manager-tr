@@ -3,7 +3,6 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { AccountLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import Scrollbar from '@/@core/components/ui/scrollbar'
 import { useTranslation } from 'react-i18next'
 import ChartOfAccountModal from './ChartOfAccountModal'
@@ -15,6 +14,7 @@ import { useTitle } from 'ahooks'
 import { useTableColumns } from './chartModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const ChartOfAccounts = () => {
   const { enterpriseId } = useAuthentication()
@@ -34,9 +34,15 @@ const ChartOfAccounts = () => {
     data: data?.chartOfAccounts || [],
   })
 
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: ChartOfAccountCreatedDocument,
+    listVar: 'chartOfAccounts',
+    singleVar: 'chartOfAccount',
+    sortField: 'name',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <Scrollbar className="flex flex-col w-full">
@@ -53,21 +59,13 @@ const ChartOfAccounts = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={ChartOfAccountCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="chartOfAccounts"
-          singleVar="chartOfAccount"
-          sortField="name"
-          triggerUpdate={true}
+        <CustomTable
+          table={table as any}
+          modal={modal}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {() => (
-            <CustomTable table={table as any} modal={modal} loading={loading} />
-          )}
-        </LiveView>
+          error={error}
+          onRetry={refetch}
+        />
       </div>
     </Scrollbar>
   )

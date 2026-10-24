@@ -9,15 +9,14 @@ import {
   useExpenseCategoriesQuery,
   useExpenseCategoryCreatedSubscription,
 } from '@/gql/graphql'
-import { useMount, useTitle } from 'ahooks'
+import { useTitle } from 'ahooks'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ExpenseCategoryModal from './ExpenseCategoryModal'
 import { useTableColumns } from './expenseCategoryModel'
 
 const ExpenseCategories = () => {
-  const [isMount, setIsMount] = useState(false)
   const { enterpriseId } = useAuthentication()
   const modal = useModal(ExpenseCategoryModal)
   const { t } = useTranslation()
@@ -45,14 +44,6 @@ const ExpenseCategories = () => {
     }
   }, [subscriptionData])
 
-  useMount(() => {
-    setIsMount(true)
-  })
-
-  if (error) {
-    return <div>Error! {error.message}</div>
-  }
-
   return (
     <Scrollbar className="flex flex-col w-full">
       <Navs links={SupplierLinks} />
@@ -68,11 +59,15 @@ const ExpenseCategories = () => {
       />
 
       {/* Table here */}
-      {isMount && (
-        <div className="text-sm">
-          <CustomTable modal={modal} table={table as any} loading={loading} />
-        </div>
-      )}
+      <div className="text-sm">
+        <CustomTable
+          modal={modal}
+          table={table as any}
+          loading={loading}
+          error={error}
+          onRetry={refetch}
+        />
+      </div>
     </Scrollbar>
   )
 }

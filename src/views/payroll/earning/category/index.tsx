@@ -5,10 +5,7 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { PayrollLinks } from '@/navigation/links'
-import LiveView from '@/utils/LiveView'
 import { useTranslation } from 'react-i18next'
-import ErrorComponent from '@/@core/components/ui/error-component'
-import { formatError } from '@/utils/ErrorHelper'
 import { useTitle } from 'ahooks'
 import {
   EarningCategoryCreatedDocument,
@@ -16,6 +13,7 @@ import {
 } from '@/gql/graphql'
 import EarningCategoryModal from './EarningCategoryModal'
 import EarningCategoryTable from './EarningCategoryTable'
+import { useLiveSubscription } from '#/hooks/useLiveSubscription'
 
 const EarningCategories = () => {
   const [filterApi, setFilterApi] = useState<GlobalFilterApi>()
@@ -29,16 +27,15 @@ const EarningCategories = () => {
       variables: { id: enterpriseId },
     })
 
-  if (error) {
-    return (
-      <div className="mx-auto">
-        <ErrorComponent
-          message={formatError(error)}
-          title={t('label-graphqlError')}
-        />
-      </div>
-    )
-  }
+  useLiveSubscription({
+    subscribeToMore,
+    document: EarningCategoryCreatedDocument,
+    listVar: 'earningCategories',
+    singleVar: 'earningCategory',
+    sortField: 'createdAt',
+    triggerUpdate: true,
+    enterpriseId,
+  })
 
   return (
     <div className="flex flex-col w-full">
@@ -55,23 +52,14 @@ const EarningCategories = () => {
 
       {/* Table here */}
       <div className="text-sm">
-        <LiveView
-          document={EarningCategoryCreatedDocument}
-          data={data}
-          subscribeToMore={subscribeToMore}
-          listVar="earningCategories"
-          singleVar="earningCategory"
+        <EarningCategoryTable
+          modal={modal}
+          dataSource={data?.earningCategories || []}
+          onGlobalFilterChanged={setFilterApi}
+          error={error}
           loading={loading}
-          enterpriseId={enterpriseId}
-        >
-          {({ earningCategories }) => (
-            <EarningCategoryTable
-              modal={modal}
-              dataSource={earningCategories}
-              onGlobalFilterChanged={setFilterApi}
-            />
-          )}
-        </LiveView>
+          refetch={refetch}
+        />
       </div>
     </div>
   )
