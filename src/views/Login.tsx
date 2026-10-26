@@ -10,14 +10,13 @@ import { useTranslation } from 'react-i18next'
 import { Row, Col, CardTitle, CardText } from 'reactstrap'
 
 import json from '../../package.json'
-import darkImg from '@/assets/images/pages/login-v9.svg'
+import darkImg from '@/assets/images/pages/login-v9-dark.svg'
 import lightImg from '@/assets/images/pages/login-v9.svg'
 
 // ** Styles
 import '@/@core/scss/react/pages/page-authentication.scss'
 
 import ThemeToggler from '@/@core/components/theme/theme-toggler'
-import { useTitle } from 'ahooks'
 import LoginForm from './users/login-form'
 import { SocialIconButton, SocialIconsContainer } from './login.style'
 
@@ -26,7 +25,6 @@ import { SocialIconButton, SocialIconsContainer } from './login.style'
 const Login = () => {
   const { t } = useTranslation()
   const { skin } = useSkin()
-  useTitle(t('app.userAuth'))
 
   return (
     <div className="auth-wrapper auth-cover">
