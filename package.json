@@ -1,7 +1,7 @@
 {
   "name": "school-manager-ts",
   "private": true,
-  "version": "11.0.17",
+  "version": "11.0.18",
   "author": "Jirez Tchinda <jireztchinda@neemadev.com>",
   "type": "module",
   "imports": {
@@ -24,6 +24,8 @@
     "@apollo/client": "^3.14.1",
     "@casl/ability": "^7.0.1",
     "@casl/react": "^7.0.1",
+    "@dnd-kit/helpers": "^0.5.1",
+    "@dnd-kit/react": "^0.5.1",
     "@hookform/resolvers": "^5.9.1",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.12.0",
@@ -61,7 +63,6 @@
     "overlayscrollbars-react": "^0.5.6",
     "randomcolor": "^0.6.2",
     "react": "^19.2.8",
-    "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.3.1",
     "react-country-flag": "^3.1.0",
     "react-dom": "^19.2.8",
@@ -110,7 +111,6 @@
     "@types/overlayscrollbars": "^2.0.0",
     "@types/randomcolor": "^0.5.9",
     "@types/react": "^19.2.18",
-    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "autoprefixer": "^10.5.5",

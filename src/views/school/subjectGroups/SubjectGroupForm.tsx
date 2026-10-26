@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import type { FC } from 'react'
+import type { Dispatch, FC, SetStateAction } from 'react'
 import { v4 as uuid } from 'uuid'
 import { produce } from 'immer'
+import { move } from '@dnd-kit/helpers'
+import type { DragEndEvent } from '@dnd-kit/react'
+import { DragDropProvider } from '@dnd-kit/react'
 import { useApolloClient } from '@apollo/client'
 import styled from 'styled-components'
-import type { DropResult } from 'react-beautiful-dnd'
-import { DragDropContext } from 'react-beautiful-dnd'
 import {
   Button,
   Form,
@@ -246,41 +247,31 @@ const EmptyStateMessage = styled.div`
   }
 `
 
-const onDragEnd = (result: DropResult, columns: any, setColumns: Function) => {
-  if (!result.destination) return
-  const { source, destination } = result
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId]
-    const destColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.items]
-    const destItems = [...destColumn.items]
-    const [removed] = sourceItems.splice(source.index, 1)
-    destItems.splice(destination.index, 0, removed)
-    setColumns((cols: any) => ({
-      ...cols,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems,
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems,
-      },
-    }))
-  } else {
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.items]
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setColumns((cols: any) => ({
-      ...cols,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems,
-      },
-    }))
+const onDragEnd = (
+  event: DragEndEvent,
+  columns: Record<string, any>,
+  setColumns: Dispatch<SetStateAction<Record<string, any>>>,
+) => {
+  if (event.canceled || !event.operation.source || !event.operation.target) {
+    return
   }
+
+  const itemsByColumn = Object.fromEntries(
+    Object.entries(columns).map(([columnId, column]: [string, any]) => [
+      columnId,
+      column.items,
+    ]),
+  )
+  const movedItemsByColumn = move(itemsByColumn, event)
+
+  setColumns((cols: any) =>
+    Object.fromEntries(
+      Object.entries(cols).map(([columnId, column]: [string, any]) => [
+        columnId,
+        { ...column, items: movedItemsByColumn[columnId] },
+      ]),
+    ),
+  )
 }
 
 interface SubjectGroupFormProps extends BaseFormProps {
@@ -323,7 +314,7 @@ const SubjectGroupForm: FC<SubjectGroupFormProps> = (props) => {
     },
   }
 
-  const [columns, setColumns] = useState(initialData)
+  const [columns, setColumns] = useState<Record<string, any>>(initialData)
   const [title, setTitle] = useState<string>('')
   const [showModal, setShowModal] = useState(false)
 
@@ -538,10 +529,10 @@ const SubjectGroupForm: FC<SubjectGroupFormProps> = (props) => {
           <DragDropContainer>
             {branchId ? (
               <>
-                <DragDropContext
-                  onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+                <DragDropProvider
+                  onDragEnd={(event) => onDragEnd(event, columns, setColumns)}
                 >
-                  {Object.entries(columns).map(([columnId, column], index) => (
+                  {Object.entries(columns).map(([columnId, column]) => (
                     <Column
                       key={columnId}
                       columnId={columnId}
@@ -550,7 +541,7 @@ const SubjectGroupForm: FC<SubjectGroupFormProps> = (props) => {
                       columns={columns}
                     />
                   ))}
-                </DragDropContext>
+                </DragDropProvider>
 
                 <AddColumnButton
                   type="button"

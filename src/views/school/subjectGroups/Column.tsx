@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
-import type { FC } from 'react'
+import type { Dispatch, FC, SetStateAction } from 'react'
+import { useDroppable } from '@dnd-kit/react'
 import styled from 'styled-components'
 import type { Draft } from 'immer'
 import { produce } from 'immer'
@@ -7,7 +8,6 @@ import { Input } from 'reactstrap'
 import { Check, Edit2, X, Move } from 'react-feather'
 
 import DraggableItem from './DraggableItem'
-import { StrictModeDroppable } from './strict-mode-droppable'
 
 const Container = styled.div`
   border-radius: 12px;
@@ -219,13 +219,17 @@ interface ColumnProps {
   columnId: string
   column: any
   columns: any
-  setColumns: Function
+  setColumns: Dispatch<SetStateAction<Record<string, any>>>
 }
 
 const Column: FC<ColumnProps> = ({ columnId, column, columns, setColumns }) => {
   const [updateTitle, setUpdateTitle] = useState(false)
   const [title, setTitle] = useState(column.name)
   const inputRef = useRef<HTMLInputElement>(null)
+  const { ref, isDropTarget } = useDroppable({
+    id: columnId,
+    accept: 'subject',
+  })
 
   const handleNameChange = () => {
     if (title.trim()) {
@@ -301,31 +305,23 @@ const Column: FC<ColumnProps> = ({ columnId, column, columns, setColumns }) => {
         )}
       </Header>
 
-      <StrictModeDroppable droppableId={columnId} key={columnId}>
-        {(provided, snapshot) => (
-          <DroppableArea
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            $isDraggingOver={snapshot.isDraggingOver}
-          >
-            {column.items && column.items.length > 0 ? (
-              column.items.map((item: any, index: number) => (
-                <DraggableItem
-                  key={item.id || index}
-                  item={item}
-                  index={index}
-                />
-              ))
-            ) : (
-              <EmptyState>
-                <Move />
-                <p>Glisser les éléments ici</p>
-              </EmptyState>
-            )}
-            {provided.placeholder}
-          </DroppableArea>
+      <DroppableArea ref={ref} $isDraggingOver={isDropTarget}>
+        {column.items && column.items.length > 0 ? (
+          column.items.map((item: any, index: number) => (
+            <DraggableItem
+              key={item.id || index}
+              item={item}
+              index={index}
+              columnId={columnId}
+            />
+          ))
+        ) : (
+          <EmptyState>
+            <Move />
+            <p>Glisser les éléments ici</p>
+          </EmptyState>
         )}
-      </StrictModeDroppable>
+      </DroppableArea>
     </Container>
   )
 }

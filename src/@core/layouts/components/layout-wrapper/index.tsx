@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useEffect, memo } from 'react'
+import { useEffect, memo } from 'react'
 
 // ** Third Party Components
 import classnames from 'classnames'
@@ -22,19 +22,16 @@ const LayoutWrapper = (props: any) => {
 
   // ** Store Vars
   const dispatch = useDispatch()
-  const store: any = useSelector((state) => state)
-
-  const navbarStore = store.navbar
-  const layoutStored = store.layout.layout
-  const contentWidth = store.layout.contentWidth
-  const transition = store.layout.routerTransition
+  const navbarQuery = useSelector((state: any) => state.navbar.query)
+  const layout = useSelector((state: any) => state.layout.layout)
+  const contentWidth = useSelector((state: any) => state.layout.contentWidth)
+  const transition = useSelector((state: any) => state.layout.routerTransition)
 
   //* * Vars
   // const Tag = layout === 'HorizontalLayout' && !appLayout ? 'div' : Fragment
   const appLayoutCondition =
-    (layoutStored.layout === 'horizontal' && !routeMeta) ||
-    (layoutStored.layout === 'horizontal' && routeMeta && !routeMeta.appLayout)
-  const Tag = appLayoutCondition ? 'div' : Fragment
+    (layout === 'horizontal' && !routeMeta) ||
+    (layout === 'horizontal' && routeMeta && !routeMeta.appLayout)
 
   // ** Clean Up Function
   const cleanUp = () => {
@@ -75,7 +72,7 @@ const LayoutWrapper = (props: any) => {
       className={classnames('app-content content overflow-hidden', {
         [routeMeta ? routeMeta.className : '']:
           routeMeta && routeMeta.className,
-        'show-overlay': navbarStore.query.length,
+        'show-overlay': navbarQuery.length,
       })}
     >
       <div className="content-overlay" />
@@ -89,9 +86,11 @@ const LayoutWrapper = (props: any) => {
             transition !== 'none' && transition.length,
         })}
       >
-        <Tag {...(appLayoutCondition ? { className: 'content-body' } : {})}>
-          {children}
-        </Tag>
+        {appLayoutCondition ? (
+          <div className="content-body">{children}</div>
+        ) : (
+          <>{children}</>
+        )}
       </div>
     </div>
   )

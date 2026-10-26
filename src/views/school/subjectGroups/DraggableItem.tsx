@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Draggable } from 'react-beautiful-dnd'
+import { useSortable } from '@dnd-kit/react/sortable'
 import styled, { css } from 'styled-components'
 import SubjectCard from './SubjectCard'
 
@@ -71,39 +71,40 @@ const DragPlaceholder = styled.div`
 interface DraggableItemProps {
   item: { [key: string]: any }
   index: number
+  columnId: string
   isDragDisabled?: boolean
 }
 
 const DraggableItem: FC<DraggableItemProps> = ({
   item,
   index,
+  columnId,
   isDragDisabled = false,
-}) => (
-  <Draggable
-    key={item.id}
-    draggableId={String(item.id)}
-    index={index}
-    isDragDisabled={isDragDisabled}
-  >
-    {(provided, snapshot) => (
-      <DraggableWrapper
-        ref={provided.innerRef}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        $isDragging={snapshot.isDragging}
-        $isDragDisabled={isDragDisabled}
-      >
-        <SubjectCard
-          key={`subject-${item.id}`}
-          displayName={item.name}
-          category={item.code}
-          telephone={item.section}
-          id={item.id}
-        />
-        {snapshot.isDragging && <DragPlaceholder />}
-      </DraggableWrapper>
-    )}
-  </Draggable>
-)
+}) => {
+  const { ref, isDragging } = useSortable({
+    id: String(item.id),
+    index,
+    group: columnId,
+    type: 'subject',
+    accept: 'subject',
+    disabled: isDragDisabled,
+  })
+
+  return (
+    <DraggableWrapper
+      ref={ref}
+      $isDragging={isDragging}
+      $isDragDisabled={isDragDisabled}
+    >
+      <SubjectCard
+        displayName={item.name}
+        category={item.code}
+        telephone={item.section}
+        id={item.id}
+      />
+      {isDragging && <DragPlaceholder />}
+    </DraggableWrapper>
+  )
+}
 
 export default DraggableItem
