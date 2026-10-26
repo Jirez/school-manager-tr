@@ -57,6 +57,10 @@ import FeeGroupAdd from '@/views/sale/group/FeeGroupAdd'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
+import {
+  FormSkeleton,
+  SkeletonBlock,
+} from '@/@core/components/ui/forms/form.style'
 
 interface FrequentUpdateFormProps extends BaseFormProps {
   frequent: FrequentUpdateType
@@ -153,7 +157,7 @@ const FrequentUpdateForm: FC<FrequentUpdateFormProps> = ({
         ...rest
       } = values
 
-      //formatting student guardians
+      // formatting student guardians
       const guardians = items
         .filter((item: any) => itemValid(item))
         .map((item: any) => ({
@@ -252,7 +256,21 @@ const FrequentUpdateForm: FC<FrequentUpdateFormProps> = ({
     }
   }, [responsive])
 
-  if (!student) return <h1>L'élève sélectionné est introuvable</h1>
+  if (!student)
+    return (
+      <FormSkeleton aria-busy="true" aria-label="Loading enrollment form">
+        <SkeletonBlock $height="5rem" />
+        <SkeletonBlock $width="35%" $height="1.25rem" />
+        <SkeletonBlock />
+        <SkeletonBlock />
+        <SkeletonBlock />
+        <SkeletonBlock />
+        <SkeletonBlock $width="45%" $height="1.25rem" />
+        <SkeletonBlock />
+        <SkeletonBlock />
+        <SkeletonBlock $height="8rem" />
+      </FormSkeleton>
+    )
 
   const socialCase = methods.watch('socialCase')
 
