@@ -1,4 +1,4 @@
-import { createRootRoute } from '@tanstack/react-router'
+import { createRootRoute, HeadContent } from '@tanstack/react-router'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
@@ -6,23 +6,18 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 // import '../styles.css'
 import NextApp from '#/NextApp'
 import NotFound from '#/views/Error'
-// import { shouldRedirect } from '#/paraglide/runtime'
+import GlobalProgress from '#/components/GlobalProgress'
 
 export const Route = createRootRoute({
-  /* beforeLoad: async () => {
-    const decision = await shouldRedirect({ url: window.location.href })
-    if (decision.redirectUrl) {
-      throw redirect({ href: decision.redirectUrl.href })
-    }
-  }, */
   component: RootComponent,
   notFoundComponent: NotFound,
-  pendingComponent: () => <div>Loading...</div>,
 })
 
 function RootComponent() {
   return (
     <>
+      <HeadContent />
+      <GlobalProgress />
       <NextApp />
       <TanStackDevtools
         config={{

@@ -1,7 +1,7 @@
 {
   "name": "school-manager-ts",
   "private": true,
-  "version": "11.0.14",
+  "version": "11.0.15",
   "author": "Jirez Tchinda <jireztchinda@neemadev.com>",
   "type": "module",
   "imports": {

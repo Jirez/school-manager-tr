@@ -6,6 +6,7 @@ import * as path from 'path'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
+// import { redact } from '@tanstack/redact/vite'
 import tailwindcss from '@tailwindcss/vite'
 
 const config = defineConfig({
@@ -22,6 +23,7 @@ const config = defineConfig({
     tailwindcss(),
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     viteReact(),
+    // redact(),
   ],
   build: {
     sourcemap: false,
