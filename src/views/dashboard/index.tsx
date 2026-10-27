@@ -15,6 +15,7 @@ import {
   Settings,
 } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { Content } from './tour'
@@ -37,9 +38,125 @@ import {
   USERS,
 } from '@/utils/constants'
 import { useDashboardQuery } from '@/gql/graphql'
+import type { DashboardQuery } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import { useAbility } from '@/context/Can'
 import Loader from '#/@core/components/spinner/loader'
+
+type DashboardMetric = keyof NonNullable<DashboardQuery['dashboard']>
+type DashboardSubject =
+  'student' | 'teacher' | 'user' | 'config' | 'note' | 'payment' | 'report'
+
+const dashboardCards = [
+  {
+    to: FREQUENTS,
+    icon: <GraduationCap size={21} />,
+    color: 'info',
+    title: 'label-students',
+    metric: 'students',
+    subject: 'student',
+    className: 'md:row-span-2',
+  },
+  {
+    to: PERSONNEL,
+    icon: <UserCog size={21} />,
+    color: 'warning',
+    title: 'label-personnel',
+    metric: 'personnel',
+    subject: 'teacher',
+    className: 'col-span-1',
+  },
+  {
+    to: USERS,
+    icon: <Shield size={21} />,
+    color: 'danger',
+    title: 'label-users',
+    metric: 'users',
+    subject: 'user',
+    className: 'col-span-1',
+  },
+  {
+    to: SCHOOL_SECTIONS,
+    icon: <BookOpen size={21} />,
+    color: 'primary',
+    title: 'label-section',
+    metric: 'sections',
+    subject: 'config',
+    className: 'col-span-1',
+  },
+  {
+    to: CYCLES,
+    icon: <Repeat size={21} />,
+    color: 'info',
+    title: 'label-cycles',
+    metric: 'cycles',
+    subject: 'config',
+    className: 'col-span-1',
+  },
+  {
+    to: LEVELS,
+    icon: <Layers size={21} />,
+    color: 'warning',
+    title: 'label-levels',
+    metric: 'levels',
+    subject: 'config',
+    className: 'col-span-1',
+  },
+  {
+    to: CLASSES,
+    icon: <Monitor size={21} />,
+    color: 'success',
+    title: 'label-classes',
+    metric: 'classes',
+    subject: 'config',
+    className: 'col-span-1',
+  },
+  {
+    to: SEQUENTIAL_NOTES,
+    icon: <Notebook size={21} />,
+    color: 'info',
+    title: 'label-notes',
+    stats: '',
+    subject: 'note',
+    className: 'col-span-1',
+  },
+  {
+    to: OPERATIONS,
+    icon: <CreditCard size={21} />,
+    color: 'danger',
+    title: 'label-payments',
+    stats: '',
+    subject: 'payment',
+    className: 'col-span-1',
+  },
+  {
+    to: REPORTS,
+    icon: <FileText size={21} />,
+    color: 'success',
+    title: 'label-reports',
+    stats: '',
+    subject: 'report',
+    className: 'col-span-1',
+  },
+  {
+    to: CONFIGURATION,
+    icon: <Settings size={21} />,
+    color: 'warning',
+    title: 'label-configuration',
+    stats: '',
+    subject: 'config',
+    className: 'col-span-1',
+  },
+] satisfies {
+  to: string
+  icon: ReactNode
+  color: string
+  title: string
+  metric?: DashboardMetric
+  stats?: string
+  subject: DashboardSubject
+  className: string
+}[]
 
 const Dashboard = () => {
   const { t } = useTranslation()
@@ -97,152 +214,26 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-[0.25rem] text-sm">
-        <Link
-          to={FREQUENTS}
-          className="md:row-span-2"
-          hidden={!ability.can('read', 'student')}
-        >
-          <StatsVertical
-            icon={<GraduationCap size={21} />}
-            color="info"
-            stats={dashboard?.students as any}
-            title={t('label-students')}
-            className="shadow-md"
-          />
-        </Link>
-        <Link
-          to={PERSONNEL}
-          className="col-span-1"
-          hidden={!ability.can('read', 'teacher')}
-        >
-          <StatsVertical
-            icon={<UserCog size={21} />}
-            color="warning"
-            stats={dashboard?.personnel as any}
-            title={t('label-personnel')}
-          />
-        </Link>
-
-        <Link
-          to={USERS}
-          className="col-span-1"
-          hidden={!ability.can('read', 'user')}
-        >
-          <StatsVertical
-            icon={<Shield size={21} />}
-            color="danger"
-            stats={dashboard?.users as any}
-            title={t('label-users')}
-          />
-        </Link>
-
-        <Link
-          to={SCHOOL_SECTIONS}
-          className="col-span-1"
-          hidden={!ability.can('read', 'config')}
-        >
-          <StatsVertical
-            icon={<BookOpen size={21} />}
-            color="primary"
-            stats={dashboard?.sections as any}
-            title={t('label-section')}
-          />
-        </Link>
-
-        <Link
-          to={CYCLES}
-          className="col-span-1"
-          hidden={!ability.can('read', 'config')}
-        >
-          <StatsVertical
-            icon={<Repeat size={21} />}
-            color="info"
-            stats={dashboard?.cycles as any}
-            title={t('label-cycles')}
-          />
-        </Link>
-
-        <Link
-          to={LEVELS}
-          className="col-span-1"
-          hidden={!ability.can('read', 'config')}
-        >
-          <StatsVertical
-            icon={<Layers size={21} />}
-            color="warning"
-            stats={dashboard?.levels as any}
-            title={t('label-levels')}
-          />
-        </Link>
-
-        <Link
-          to={CLASSES}
-          className="col-span-1"
-          hidden={!ability.can('read', 'config')}
-        >
-          <StatsVertical
-            icon={<Monitor size={21} />}
-            color="success"
-            stats={dashboard?.classes as any}
-            title={t('label-classes')}
-          />
-        </Link>
-
-        <Link
-          to={SEQUENTIAL_NOTES}
-          className="col-span-1"
-          hidden={!ability.can('read', 'note')}
-        >
-          <StatsVertical
-            icon={<Notebook size={21} />}
-            color="info"
-            stats={''}
-            title={t('label-notes')}
-          />
-        </Link>
-
-        <Link
-          to={OPERATIONS}
-          className="col-span-1"
-          hidden={!ability.can('read', 'payment')}
-        >
-          <StatsVertical
-            icon={<CreditCard size={21} />}
-            color="danger"
-            stats={''}
-            title={t('label-payments')}
-          />
-        </Link>
-
-        <Link
-          to={REPORTS}
-          className="col-span-1"
-          hidden={!ability.can('read', 'report')}
-        >
-          <StatsVertical
-            icon={<FileText size={21} />}
-            color="success"
-            stats={''}
-            title={t('label-reports')}
-          />
-        </Link>
-
-        <Link
-          to={CONFIGURATION}
-          className="col-span-1"
-          hidden={!ability.can('read', 'config')}
-        >
-          <StatsVertical
-            icon={<Settings size={21} />}
-            color="warning"
-            stats={''}
-            title={t('label-configuration')}
-          />
-        </Link>
+        {dashboardCards.map((card) => (
+          <Link
+            key={card.to}
+            to={card.to}
+            className={card.className}
+            hidden={!ability.can('read', card.subject)}
+          >
+            <StatsVertical
+              icon={card.icon}
+              color={card.color}
+              stats={card.metric ? dashboard?.[card.metric] : card.stats}
+              title={t(card.title)}
+              className={card.to === FREQUENTS ? 'shadow-md' : undefined}
+            />
+          </Link>
+        ))}
       </div>
 
       <div className="mt-2">
-        <DashboardChart dashboard={dashboard as any} />
+        <DashboardChart dashboard={dashboard} />
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ interface Props {
   className?: string;
   icon: React.ReactNode;
   color?: string;
-  stats?: string;
+  stats?: React.ReactNode;
   title: string;
 }
 

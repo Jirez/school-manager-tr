@@ -11,6 +11,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, CardHeader, CardTitle } from "reactstrap";
+import type { DashboardQuery } from "@/gql/graphql";
 
 ChartJS.register(
   CategoryScale,
@@ -22,15 +23,7 @@ ChartJS.register(
 );
 
 interface DashboardChartProps {
-  dashboard: {
-    students?: number | null;
-    personnel?: number | null;
-    users?: number | null;
-    sections?: number | null;
-    cycles?: number | null;
-    levels?: number | null;
-    classes?: number | null;
-  };
+  dashboard: DashboardQuery["dashboard"];
 }
 
 const DashboardChart: React.FC<DashboardChartProps> = ({ dashboard }) => {
