@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useSafeState as useState, useTitle } from 'ahooks'
 
 import { useAuthentication } from '@/hooks/useAuthentication'
@@ -16,11 +15,11 @@ import {
   useFrequentByClassQuery,
 } from '@/gql/graphql'
 import FrequentBulkUpdate from './FrequentBulkUpdate'
+import { m } from '@/paraglide/messages'
 
 const FrequentBulk = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any } | null>()
-  const { t } = useTranslation()
-  useTitle(t('sidebar.students.frequents'))
+  useTitle(m.student_bulk_update())
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useClassesQuery({
@@ -50,7 +49,7 @@ const FrequentBulk = () => {
     <div className="flex flex-col w-full px-1 md:!px-0">
       <div>
         <div className="w-full">
-          <PageHeader title={t('sidebar.students.frequents')} />
+          <PageHeader title={m.student_bulk_update()} />
         </div>
 
         <div className="w-full">

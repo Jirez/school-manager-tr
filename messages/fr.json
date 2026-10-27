@@ -2077,5 +2077,7 @@
   "discipline_distribution": "Répartition des surveillants",
   "operation_in_progress_wait": "Opération en cours, veuillez patienter...",
   "loading_error": "Erreur de chargement",
-  "try_again": "Réessayer"
+  "try_again": "Réessayer",
+  "competences_definition": "Définition des compétences",
+  "student_bulk_update": "Mise à jour en lot des élèves"
 }

@@ -2073,5 +2073,7 @@
   "discipline_distribution": "Discipline Master Distribution",
   "operation_in_progress_wait": "Operation in progress, please wait...",
   "loading_error": "Loading error",
-  "try_again": "Try again"
+  "try_again": "Try again",
+  "competences_definition": "Definition of competences",
+  "student_bulk_update": "Student bulk update"
 }
