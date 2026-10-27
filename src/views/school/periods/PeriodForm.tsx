@@ -4,7 +4,7 @@ import { Form } from 'reactstrap'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import type { FC } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar, FileText, Hash, MessageSquare, Settings } from 'lucide-react'
 import LiveView from '@/utils/LiveView'
 import { schoolYearOptions } from '@/utils/select/selectComponents'
@@ -19,6 +19,7 @@ import {
   SchoolYearCreatedDocument,
   useSchoolYearActiveQuery,
   useSchoolYearsQuery,
+  usePeriodsQuery,
 } from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
@@ -42,9 +43,27 @@ const PeriodForm: FC<PeriodFormProps> = ({
     variables: { schoolId: enterpriseId },
   })
 
+  const { data: periodsData, loading: periodsLoading } = usePeriodsQuery({
+    variables: { id: enterpriseId },
+  })
+
   const { data, loading, subscribeToMore } = useSchoolYearsQuery({
     variables: { id: enterpriseId },
   })
+
+  const [selectedSchoolYearId, setSelectedSchoolYearId] = useState<number | undefined>(
+    period?.schoolYear?.id == null ? undefined : Number(period.schoolYear.id),
+  )
+
+  const usedOrders = new Set(
+    (periodsData?.periods ?? [])
+      .filter(
+        (existingPeriod) =>
+          Number(existingPeriod.schoolYear?.id) === selectedSchoolYearId &&
+          existingPeriod.id !== period?.id,
+      )
+      .map((existingPeriod) => Number(existingPeriod.numberOrder)),
+  )
 
   const {
     handleSubmit,
@@ -108,6 +127,7 @@ const PeriodForm: FC<PeriodFormProps> = ({
   useEffect(() => {
     if (!period?.id && schoolYearData?.schoolYear) {
       setFieldValue('schoolYearId', schoolYearData.schoolYear)
+      setSelectedSchoolYearId(Number(schoolYearData.schoolYear.id))
     }
   }, [schoolYearData, setFieldValue])
 
@@ -155,9 +175,12 @@ const PeriodForm: FC<PeriodFormProps> = ({
                         formId="schoolYear"
                         optionLabel="label"
                         prepend={<Calendar size={16} />}
-                        onChange={(val: any) =>
+                        onChange={(val: any) => {
                           setFieldValue('schoolYearId', val)
-                        }
+                          setSelectedSchoolYearId(
+                            val?.id == null ? undefined : Number(val.id),
+                          )
+                        }}
                       />
                     )}
                   />
@@ -172,11 +195,16 @@ const PeriodForm: FC<PeriodFormProps> = ({
                     required={true}
                     prepend={<Hash size={16} />}
                     type="select"
+                    disabled={periodsLoading}
                   >
                     <option value="">{m.label_select()}</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    {[1, 2, 3]
+                      .filter((order) => !usedOrders.has(order))
+                      .map((order) => (
+                        <option key={order} value={order}>
+                          {order}
+                        </option>
+                      ))}
                   </field.Input>
                 )}
               />

@@ -3,6 +3,7 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import type { SubPeriodType } from '@/views/school/subPeriods/SubPeriod.type'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import type { FC } from 'react'
+import { useState } from 'react'
 import { Calendar, FileText, Hash, MessageSquare, Settings } from 'lucide-react'
 import LiveView from '@/utils/LiveView'
 import { periodOptions } from '@/utils/select/selectComponents'
@@ -13,7 +14,11 @@ import { formatError } from '@/utils/ErrorHelper'
 import { subPeriodValidation } from '@/views/school/subPeriods/subPeriod.validation'
 // import type { SubPeriodSchemaType } from '@/views/school/subPeriods/subPeriod.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
-import { PeriodCreatedDocument, usePeriodsQuery } from '@/gql/graphql'
+import {
+  PeriodCreatedDocument,
+  usePeriodsQuery,
+  useSubPeriodsQuery,
+} from '@/gql/graphql'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
@@ -22,6 +27,15 @@ import { m } from '@/paraglide/messages'
 interface SubPeriodFormProps extends BaseFormProps {
   subPeriod?: SubPeriodType
   modal?: NiceModalHandler
+}
+
+const getPeriodId = (value: unknown): number | undefined => {
+  const id =
+    typeof value === 'object' && value !== null && 'id' in value
+      ? value.id
+      : value
+
+  return id == null ? undefined : Number(id)
 }
 
 const SubPeriodForm: FC<SubPeriodFormProps> = ({
@@ -35,6 +49,25 @@ const SubPeriodForm: FC<SubPeriodFormProps> = ({
   const { data, loading, subscribeToMore } = usePeriodsQuery({
     variables: { id: enterpriseId },
   })
+
+  const { data: subPeriodsData, loading: subPeriodsLoading } =
+    useSubPeriodsQuery({
+      variables: { id: enterpriseId },
+    })
+
+  const [selectedPeriodId, setSelectedPeriodId] = useState(
+    getPeriodId(subPeriod?.period),
+  )
+
+  const usedOrders = new Set(
+    (subPeriodsData?.subPeriods ?? [])
+      .filter(
+        (existingSubPeriod) =>
+          Number(existingSubPeriod.period?.id) === selectedPeriodId &&
+          existingSubPeriod.id !== subPeriod?.id,
+      )
+      .map((existingSubPeriod) => Number(existingSubPeriod.numberOrder)),
+  )
 
   const {
     handleSubmit,
@@ -142,7 +175,14 @@ const SubPeriodForm: FC<SubPeriodFormProps> = ({
                         optionLabel="label"
                         formTitle={m.action_add_period()}
                         prepend={<Calendar size={16} />}
-                        onChange={(val: any) => setFieldValue('periodId', val)}
+                        onChange={(val: any) => {
+                          const nextPeriodId = getPeriodId(val)
+                          setFieldValue('periodId', val)
+                          if (nextPeriodId !== selectedPeriodId) {
+                            setFieldValue('numberOrder', '')
+                          }
+                          setSelectedPeriodId(nextPeriodId)
+                        }}
                       />
                     )}
                   />
@@ -157,14 +197,18 @@ const SubPeriodForm: FC<SubPeriodFormProps> = ({
                     required={true}
                     type="select"
                     prepend={<Hash size={16} />}
+                    disabled={subPeriodsLoading}
                   >
                     <option value="">{m.label_select()}</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                    {[1, 2, 3, 4, 5, 6].map((order) => (
+                      <option
+                        key={order}
+                        value={order}
+                        disabled={usedOrders.has(order)}
+                      >
+                        {order}
+                      </option>
+                    ))}
                   </field.Input>
                 )}
               />

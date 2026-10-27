@@ -1,12 +1,12 @@
-import { Card, CardBody } from "reactstrap";
-import cs from "classnames";
+import { Card, CardBody } from 'reactstrap'
+import cs from 'classnames'
 
 interface Props {
-  className?: string;
-  icon: React.ReactNode;
-  color?: string;
-  stats?: React.ReactNode;
-  title: string;
+  className?: string
+  icon: React.ReactNode
+  color?: string
+  stats?: React.ReactNode
+  title: string
 }
 
 const StatsVertical: React.FC<Props> = ({
@@ -18,14 +18,14 @@ const StatsVertical: React.FC<Props> = ({
 }) => {
   return (
     <Card
-      className={cs("text-center h-full rounded-sm", {
+      className={cs('text-center h-full rounded-sm', {
         [className!]: className !== undefined,
       })}
     >
       <CardBody className="flex flex-col items-center justify-center">
         <div
           className={`avatar p-50 m-0 mb-1 ${
-            color ? `bg-light-${color}` : "bg-light-primary"
+            color ? `bg-light-${color}` : 'bg-light-primary'
           }`}
         >
           <div className="avatar-content">{icon}</div>
@@ -36,7 +36,7 @@ const StatsVertical: React.FC<Props> = ({
         </p>
       </CardBody>
     </Card>
-  );
-};
+  )
+}
 
-export default StatsVertical;
+export default StatsVertical

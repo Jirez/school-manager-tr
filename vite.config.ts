@@ -141,7 +141,7 @@ const config = defineConfig({
   },
 
   // envDir: 'public/',
-  envPrefix: 'EPS_',
+  envPrefix: 'ND_',
   server: {
     port: 3001,
     host: '0.0.0.0',
