@@ -1,6 +1,5 @@
 import Button from '@/@core/components/button'
 import { useContext, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
   useLocation,
   useNavigate,
@@ -34,7 +33,6 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
-  const { t } = useTranslation()
 
   const ability = useContext(AbilityContext)
   const location: any = useLocation()
@@ -109,7 +107,7 @@ export default function LoginForm() {
             run() // redirect
             toast.success(
               <ToastContent
-                title={`${t('text-welcome')} ${data?.loginUser?.user?.username}`}
+                title={`${m['text-welcome']()} ${data?.loginUser?.user?.username}`}
                 type="success"
               />,
               {
@@ -125,7 +123,7 @@ export default function LoginForm() {
           // message.error(`Impossible de se connecter : ${formatError(error)}`, 10);
           if (error.networkError) {
             toast.error(
-              <ToastContent title={t('label-networkError')} type="danger" />,
+              <ToastContent title={m['label_network-error']()} type="danger" />,
               {
                 icon: false,
                 transition: Slide,
@@ -213,7 +211,7 @@ export default function LoginForm() {
           <div className="flex justify-between items-center mb-0.5">
             <label className="form-label mb-0">{m.label_password()}</label>
             <Link to="/forgot-password" tabIndex={-1}>
-              <small>{t('text-forgot-password')}</small>
+              <small>{m['text-forgot-password']()}</small>
             </Link>
           </div>
 

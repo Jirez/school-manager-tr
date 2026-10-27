@@ -508,8 +508,8 @@ const SubjectGroupForm: FC<SubjectGroupFormProps> = (props) => {
                     }
                   }}
                   options={branches || undefined}
-                  getOptionLabel={(option) => option.name}
-                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option: any) => option.name}
+                  getOptionValue={(option: any) => option.id}
                   components={{ Option: branchOptions }}
                   optionLabel="name"
                   prepend={<GitBranch size={16} />}
