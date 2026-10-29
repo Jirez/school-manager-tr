@@ -13,6 +13,7 @@ import type { QuarterlyCompNoteType } from './quarterly.comp.note.type'
 import { useEffect, useState } from 'react'
 import CompetenceItems from './CompetenceItem'
 import { Save } from 'react-feather'
+import { m } from '@/paraglide/messages'
 
 interface QuarterlyNoteFormProps extends BaseFormProps {
   quarterlyNotes: QuarterlyCompNoteType[]
@@ -50,7 +51,7 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
   const { fields } = useFieldArray({ control, name: 'items' })
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    //formatting items
+    // formatting items
     const items = values.items
       .filter((item) => itemValid(item))
       .map((item) => ({
@@ -69,7 +70,7 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
       return
     }
 
-    //console.log(items);
+    // console.log(items);
 
     action({
       variables: {
@@ -81,11 +82,11 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
       },
     })
       .then(async ({ data }) => {
-        //form.resetFields();
+        // form.resetFields();
         toast.success(`Evaluation enregistrée`, { ...TOAST_OPTIONS })
         document.getElementById('displayStudentName')!.innerText = ''
         messageService.sendMessage('quarterlyNote', true)
-        //history.push('/sequential-notes');
+        // history.push('/sequential-notes');
       })
       .catch((error) => {
         toast.error(
@@ -126,7 +127,7 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
                 {t('label-registrationNumber')}
               </th>
               <th className="text-xs md:text-sm" style={{ width: '35%' }}>
-                {t('label-names')}
+                {m.label_names()}
               </th>
               {competences.map((competence: any) => (
                 <th key={competence.id} className="text-xs md:text-sm">

@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next'
 import { useSafeState as useState, useTitle } from 'ahooks'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { useEffect } from 'react'
@@ -19,14 +18,14 @@ import {
   useSubjectsForNotesQuery,
 } from '@/gql/graphql'
 import QuarterlyCompNoteAdd from './QuarterlyCompNoteAdd'
+import { m } from '@/paraglide/messages'
 
 const QuarterlyCompNotes = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any }>()
   const [subject, setSubject] = useState<{ [key: string]: any } | null>()
   const [period, setPeriod] = useState<{ [key: string]: any }>()
 
-  const { t } = useTranslation()
-  useTitle(t('sidebar.marks.quarterlyCompNotes'))
+  useTitle(m['sidebar.marks.quarterlyCompNotes']())
   const { enterpriseId } = useAuthentication()
 
   const { data, loading, subscribeToMore } = useClassesForNoteQuery({
@@ -75,16 +74,14 @@ const QuarterlyCompNotes = () => {
     })
   })
 
-  //console.log(JSON.parse(localStorage.getItem(TokenStorage.authUserKey())!))
-
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div>
         <div className="w-full">
           <div id="displayStudentName" className="">
             {' '}
           </div>
-          <PageHeader title={t('sidebar.marks.quarterlyCompNotes')} />
+          <PageHeader title={m['sidebar.marks.quarterlyCompNotes']()} />
         </div>
 
         <div className="flex flex-col md:flex-row gap-0.5">
@@ -112,7 +109,7 @@ const QuarterlyCompNotes = () => {
                   getOptionValue={(option: any) => option.id}
                   value={clazz}
                   components={{ Option: classOptions }}
-                  placeholder={t('label-selectClass')}
+                  placeholder={m['label_selectClass']()}
                   className="react-select"
                   classNamePrefix="select"
                   theme={selectThemeColors}
@@ -143,7 +140,7 @@ const QuarterlyCompNotes = () => {
                   getOptionValue={(option: any) => option.id}
                   value={period}
                   components={{ Option: periodOptions }}
-                  placeholder={t('label-selectPeriod')}
+                  placeholder={m['label_selectPeriod']()}
                   className="react-select"
                   classNamePrefix="select"
                   theme={selectThemeColors}
@@ -161,7 +158,7 @@ const QuarterlyCompNotes = () => {
                 options={dataSubject?.subjects || undefined}
                 getOptionLabel={(option: any) => option.name}
                 getOptionValue={(option: any) => option.id}
-                placeholder={t('label-selectSubject')}
+                placeholder={m['label_selectSubject']()}
                 className="react-select"
                 classNamePrefix="select"
                 theme={selectThemeColors}
@@ -197,7 +194,7 @@ const QuarterlyCompNotes = () => {
               message={
                 "Vous n'êtes pas autorisé à éditer les notes de cette évaluation. Veuillez contacter votre fournisseur afin de renouveler votre licence."
               }
-              title={t('label-invalidLicense')}
+              title={m['label_invalidLicense']()}
             />
           </div>
         )}

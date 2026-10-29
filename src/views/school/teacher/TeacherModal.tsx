@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import TeacherAdd from './TeacherAdd'
 import { Suspense } from 'react'
 import TeacherUpdate from './TeacherUpdate'
+import cs from 'classnames'
 
 export default NiceModal.create(({ teacher, update }: any) => {
   const modal = useModal()
@@ -12,7 +13,11 @@ export default NiceModal.create(({ teacher, update }: any) => {
   return (
     <DrawerForm
       modal={modal}
-      className="w-full"
+      className={cs(
+        'w-full',
+        { 'md:!w-10/12 lg:!w-8/12': !update },
+        { 'md:!w-11/12 lg:!w-10/12': update },
+      )}
       title={update ? t('action.update_teacher') : t('action.add_teacher')}
     >
       <Suspense>

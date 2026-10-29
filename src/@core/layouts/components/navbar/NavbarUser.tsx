@@ -11,12 +11,31 @@ import { Sun, Moon } from 'react-feather'
 // ** Reactstrap Imports
 import { NavItem, NavLink } from 'reactstrap'
 import ReactSwitch from '@/@core/components/react-switch/react-switch'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const NavbarUser = (props: any) => {
   // ** Props
   const { skin, setSkin } = props
   const [checked, setChecked] = useState<boolean>(skin === 'dark')
+  const [isSmallScreen, setIsSmallScreen] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 576px)').matches,
+  )
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 576px)')
+    const handleMediaQueryChange = (event: MediaQueryListEvent) => {
+      setIsSmallScreen(event.matches)
+    }
+
+    setIsSmallScreen(mediaQuery.matches)
+    mediaQuery.addEventListener('change', handleMediaQueryChange)
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange)
+    }
+  }, [])
 
   // ** Function to toggle Theme (Light/Dark)
   const ThemeToggler = () => {
@@ -42,7 +61,7 @@ const NavbarUser = (props: any) => {
         onHandleColor="#fff"
         offColor="#7367f0"
         offHandleColor="#ffffff"
-        size="md"
+        size={isSmallScreen ? 'sm' : 'md'}
       />
     )
   }

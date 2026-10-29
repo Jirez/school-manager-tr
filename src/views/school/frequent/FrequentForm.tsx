@@ -233,7 +233,7 @@ const FrequentForm: FC<FrequentFormProps> = ({
               'student',
               concat(message.value.lastName, message.value.firstName),
             )
-            //setDataModal(false);
+            // setDataModal(false);
             formModal.hide()
           }
         }
@@ -251,7 +251,7 @@ const FrequentForm: FC<FrequentFormProps> = ({
 
   useEffect(() => {
     // set drawer size
-    //setOffcanvasSize(size && size.width <= 400 ? '100%' : '50%')
+    // setOffcanvasSize(size && size.width <= 400 ? '100%' : '50%')
     if (responsive['md']) {
       setOffcanvasSize('50%')
     } else {

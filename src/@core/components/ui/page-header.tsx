@@ -111,7 +111,7 @@ const PageHeader: FC<PageHeaderProps> = ({
         <div className="flex flex-col justify-center min-w-0">
           <h1
             className="
-              text-xl md:text-2xl font-semibold
+              text-lg md:text-2xl font-semibold
               text-gray-800 dark:!text-white
               m-0 leading-tight
               truncate

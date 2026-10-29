@@ -80,7 +80,7 @@ const SequentialNotes = () => {
     } */
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div className="w-full">
         <div id="displayStudentName"> </div>
         <PageHeader title={t('sidebar.marks.sequentialNotes')} />
@@ -92,7 +92,7 @@ const SequentialNotes = () => {
             document={ClassCreatedDocument}
             singleVar="clazz"
             data={data}
-            //loading={loading}
+            // loading={loading}
             listVar="clazzes"
             subscribeToMore={subscribeToMore}
             sortField="name"
@@ -126,7 +126,7 @@ const SequentialNotes = () => {
             document={SubPeriodCreatedDocument}
             singleVar="subPeriod"
             data={dataSubPeriod}
-            //loading={loadingSubPeriod}
+            // loading={loadingSubPeriod}
             listVar="subPeriods"
             subscribeToMore={subscribeToMoreSubPeriod}
             sortField="name"

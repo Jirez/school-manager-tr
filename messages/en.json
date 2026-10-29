@@ -2075,5 +2075,7 @@
   "loading_error": "Loading error",
   "try_again": "Try again",
   "competences_definition": "Definition of competences",
-  "student_bulk_update": "Student bulk update"
+  "student_bulk_update": "Student bulk update",
+  "update_student": "Update student",
+  "new_inscription": "New inscription"
 }

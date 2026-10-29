@@ -48,6 +48,7 @@ import useActionOnBackNavigation from '@/hooks/useActionOnBackNavigation'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import PictureManager from '@/@core/components/ui/forms/picture-manager'
+import { useResponsive } from 'ahooks'
 
 interface TeacherFormProps extends BaseFormProps {
   teacher?: TeacherType
@@ -75,6 +76,7 @@ const TeacherForm: FC<TeacherFormProps> = ({
   const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
   const client = useApolloClient()
+  const responsive = useResponsive()
 
   const { data, loading, subscribeToMore } = useSubjectDepartmentsQuery({
     variables: { id: enterpriseId },
@@ -286,7 +288,13 @@ const TeacherForm: FC<TeacherFormProps> = ({
 
   useEffect(() => {
     populateRegistrationNumber()
-    setOffcanvasSize('60%')
+    // set drawer size
+    // setOffcanvasSize(size && size.width <= 400 ? '100%' : '50%')
+    if (responsive['md']) {
+      setOffcanvasSize('60%')
+    } else {
+      setOffcanvasSize('100%')
+    }
   }, [])
 
   const isBackNavigation = useActionOnBackNavigation('/personnel')

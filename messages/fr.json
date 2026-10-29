@@ -2079,5 +2079,7 @@
   "loading_error": "Erreur de chargement",
   "try_again": "Réessayer",
   "competences_definition": "Définition des compétences",
-  "student_bulk_update": "Mise à jour en lot des élèves"
+  "student_bulk_update": "Mise à jour en lot des élèves",
+  "update_student": "Mettre à jour l'élève",
+  "new_inscription": "Nouvelle inscription"
 }

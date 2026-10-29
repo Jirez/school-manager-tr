@@ -12,7 +12,6 @@ import Avatar from '@/@core/components/avatar'
 import { User, Settings, Power } from 'react-feather'
 
 // ** Translations
-import { useTranslation } from 'react-i18next'
 
 // ** Reactstrap Imports
 import {
@@ -28,11 +27,11 @@ import { useLogout } from '@/hooks/useLogout'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { useNavigate } from '@tanstack/react-router'
 import { PROFILE, CONFIGURATION } from '@/utils/constants'
+import { m } from '@/paraglide/messages'
 
 const UserDropdown = () => {
   // ** State
   const [userData] = useState<any>(null)
-  const { t } = useTranslation()
   const { logout } = useLogout()
   const { username, displayName } = useAuthentication()
   const navigate = useNavigate()
@@ -72,7 +71,7 @@ const UserDropdown = () => {
           className="flex flex-row"
         >
           <User size={14} className="me-75" />
-          <span className="align-middle">{t('text-profile')}</span>
+          <span className="align-middle">{m['text-profile']()}</span>
         </DropdownItem>
         {/* <DropdownItem tag='a' href='/apps/email' onClick={e => e.preventDefault()} className="flex flex-row">
                     <Mail size={14} className='me-75' />
@@ -97,7 +96,7 @@ const UserDropdown = () => {
           className="flex flex-row"
         >
           <Settings size={14} className="me-75" />
-          <span className="align-middle">{t('sidebar.settings')}</span>
+          <span className="align-middle">{m['sidebar.settings']()}</span>
         </DropdownItem>
         {/* <DropdownItem tag='a' href='/pages/pricing' onClick={e => e.preventDefault()} className="flex flex-row">
                     <CreditCard size={14} className='me-75' />
@@ -109,7 +108,7 @@ const UserDropdown = () => {
                 </DropdownItem>*/}
         <DropdownItem onClick={() => logout(true)} className="flex flex-row">
           <Power size={14} className="me-75" />
-          <span className="align-middle">{t('app.userAuth.logout')}</span>
+          <span className="align-middle">{m['app.userAuth.logout']()}</span>
         </DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>

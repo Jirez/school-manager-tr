@@ -36,7 +36,9 @@ const Footer = () => {
         {!loading && data?.schoolYear?.label && (
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary">
             <Calendar size={12} />
-            <span className="font-medium">{data.schoolYear.label}</span>
+            <span className="font-medium text-[6px] md:text-xs">
+              {data.schoolYear.label}
+            </span>
           </div>
         )}
 
