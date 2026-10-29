@@ -74,7 +74,7 @@ const AnnualResults = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div>
         <div className="w-full">
           <div id="displayStudentName"> </div>
@@ -104,7 +104,6 @@ const AnnualResults = () => {
                     getOptionValue={(option) => option.id}
                     value={clazz}
                     components={{ Option: classOptions }}
-                    //form={<AddClass/>}
                     placeholder="Sélectionnez une classe"
                     className="react-select"
                     classNamePrefix="select"
@@ -136,7 +135,6 @@ const AnnualResults = () => {
                     components={{
                       Option: schoolYearOptions,
                     }}
-                    //form={<AddClass/>}
                     placeholder="Année scolaire en cours"
                     className="react-select"
                     classNamePrefix="select"
@@ -168,7 +166,6 @@ const AnnualResults = () => {
                     components={{
                       Option: schoolYearOptions,
                     }}
-                    //form={<AddClass/>}
                     placeholder="Année scolaire prochaine"
                     className="react-select"
                     classNamePrefix="select"

@@ -71,7 +71,7 @@ const DowngradeSubject = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div>
         <div className="w-full">
           <div id="displayStudentName"> </div>
@@ -104,7 +104,7 @@ const DowngradeSubject = () => {
                     getOptionValue={(option) => option.id}
                     value={clazz}
                     components={{ Option: classOptions }}
-                    //form={<AddClass/>}
+                    // form={<AddClass/>}
                     placeholder="Sélectionnez une classe"
                     className="react-select"
                     classNamePrefix="select"
@@ -136,7 +136,6 @@ const DowngradeSubject = () => {
                     components={{
                       Option: subPeriodOptions,
                     }}
-                    //form={<AddClass/>}
                     placeholder="Sélectionnez une séquence"
                     className="react-select"
                     classNamePrefix="select"
@@ -177,7 +176,7 @@ const DowngradeSubject = () => {
                   classId={clazz.id}
                   subPeriodId={subPeriod.id}
                   subjectId={subject.id}
-                  //appreciations={dataAppreciation.markAppreciations && dataLanguage.lang ? dataAppreciation.markAppreciations.filter(({language}) => language.id === dataLanguage.lang.id) : null}
+                  // appreciations={dataAppreciation.markAppreciations && dataLanguage.lang ? dataAppreciation.markAppreciations.filter(({language}) => language.id === dataLanguage.lang.id) : null}
                 />
               </div>
             )}

@@ -55,7 +55,7 @@ const ImportSequentialNote = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div className="w-full">
         <PageHeader title={t('sidebar.marks.sequentialNotes')} />
       </div>
@@ -108,7 +108,6 @@ const ImportSequentialNote = () => {
                 getOptionValue={(option) => option.id}
                 value={subPeriod}
                 components={{ Option: subPeriodOptions }}
-                //form={<AddClass/>}
                 placeholder="Sélectionnez une séquence"
               />
             )}

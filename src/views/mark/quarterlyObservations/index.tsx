@@ -57,7 +57,7 @@ const QuarterlyReportObservation = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div>
         <div className="w-full">
           <div id="displayStudentName"> </div>
@@ -89,7 +89,6 @@ const QuarterlyReportObservation = () => {
                     getOptionValue={(option) => option.id}
                     value={clazz}
                     components={{ Option: classOptions }}
-                    //form={<AddClass/>}
                     placeholder="Sélectionnez une classe"
                   />
                 )}
@@ -115,7 +114,6 @@ const QuarterlyReportObservation = () => {
                     getOptionValue={(option) => option.id}
                     value={period}
                     components={{ Option: periodOptions }}
-                    //form={<AddClass/>}
                     placeholder="Sélectionnez un trimestre"
                   />
                 )}

@@ -48,7 +48,7 @@ const ClassDistribution = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div>
         <div className="w-full">
           <PageHeader title={t('sidebar.planning.distribution')} />

@@ -10,11 +10,11 @@ import AlgoliaSearch from './AlgoliaSearch'
 import { useReport } from './useReport'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import PageHeader from '@/@core/components/ui/page-header'
-import { useTranslation } from 'react-i18next'
 import Loader from '@/@core/components/spinner/loader'
 import ErrorComponent from '@/@core/components/ui/error-component'
 import { useTitle } from 'ahooks'
 import { useReportSaveMutation } from '@/gql/graphql'
+import { m } from '@/paraglide/messages'
 
 const PageContainer = styled.div`
   display: flex;
@@ -26,6 +26,10 @@ const PageContainer = styled.div`
 
 const HeaderSection = styled.div`
   margin-bottom: 1.5rem;
+
+  @media (max-width: 576px) {
+    margin-bottom: 0.5rem;
+  }
 `
 
 const StatsContainer = styled.div`
@@ -33,6 +37,10 @@ const StatsContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 576px) {
+    gap: 0.5rem;
+  }
 `
 
 const StatCard = styled.div`
@@ -288,9 +296,8 @@ const EmptyFavoritesText = styled.p`
 
 const Reports = () => {
   const { enterpriseId } = useAuthentication()
-  const { t } = useTranslation()
   const navigate = useNavigate()
-  useTitle(t('label-reports'))
+  useTitle(m.label_reports())
 
   const { items, setItems, loading, error } = useReport(enterpriseId)
 
@@ -353,9 +360,9 @@ const Reports = () => {
   const totalFavorites = favoriteReports.length
 
   return (
-    <PageContainer className="px-1 md:!px-0">
+    <PageContainer className="px- md:!px-0">
       <HeaderSection>
-        <PageHeader title={t('sidebar.reports')} />
+        <PageHeader title={m['sidebar.reports']()} />
       </HeaderSection>
 
       <StatsContainer>
@@ -365,7 +372,7 @@ const Reports = () => {
           </StatIconWrapper>
           <StatContent>
             <StatValue>{totalReports}</StatValue>
-            <StatLabel>{t('label-totalReports')}</StatLabel>
+            <StatLabel>{m.label_totalReports()}</StatLabel>
           </StatContent>
         </StatCard>
 
@@ -375,7 +382,7 @@ const Reports = () => {
           </StatIconWrapper>
           <StatContent>
             <StatValue>{totalCategories}</StatValue>
-            <StatLabel>{t('label-categories')}</StatLabel>
+            <StatLabel>{m.label_categories()}</StatLabel>
           </StatContent>
         </StatCard>
 
@@ -385,7 +392,7 @@ const Reports = () => {
           </StatIconWrapper>
           <StatContent>
             <StatValue>{totalFavorites}</StatValue>
-            <StatLabel>{t('label-favorites')}</StatLabel>
+            <StatLabel>{m.label_favorites()}</StatLabel>
           </StatContent>
         </StatCard>
 
@@ -400,7 +407,7 @@ const Reports = () => {
                 : 0}
               %
             </StatValue>
-            <StatLabel>{t('label-favorited')}</StatLabel>
+            <StatLabel>{m.label_favorited()}</StatLabel>
           </StatContent>
         </StatCard>
       </StatsContainer>
@@ -412,15 +419,15 @@ const Reports = () => {
               <Search size={20} strokeWidth={2} />
             </SearchIcon>
             <div>
-              <SearchTitle>{t('label-quickSearch')}</SearchTitle>
+              <SearchTitle>{m.label_quickSearch()}</SearchTitle>
               <SearchSubtitle>
-                {t('label-quickSearchPlaceholder')}
+                {m.label_quickSearchPlaceholder()}
               </SearchSubtitle>
             </div>
           </SearchHeader>
           <AlgoliaSearch
             options={allReports}
-            placeholder={t('label-reportSearchPlaceholder')}
+            placeholder={m.label_reportSearchPlaceholder()}
             onSelect={(option) => {
               if (option && option.link) {
                 navigate({ to: `/${option.link}` })
@@ -436,7 +443,7 @@ const Reports = () => {
           <SectionIconWrapper $color="#ff9f43">
             <Star size={20} strokeWidth={2} />
           </SectionIconWrapper>
-          <SectionTitle>{t('label-myFavorites')}</SectionTitle>
+          <SectionTitle>{m.label_myFavorites()}</SectionTitle>
           <SectionBadge>{totalFavorites}</SectionBadge>
         </SectionHeader>
 
@@ -465,7 +472,7 @@ const Reports = () => {
           <SectionIconWrapper $color="#7367f0">
             <FolderOpen size={20} strokeWidth={2} />
           </SectionIconWrapper>
-          <SectionTitle>{t('label-allCategories')}</SectionTitle>
+          <SectionTitle>{m.label_allCategories()}</SectionTitle>
           <SectionBadge>{totalCategories}</SectionBadge>
         </SectionHeader>
 

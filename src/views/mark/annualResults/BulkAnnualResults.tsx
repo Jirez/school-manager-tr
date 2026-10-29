@@ -284,7 +284,7 @@ const BulkAnnualResults = () => {
   }, [messageService])
 
   return (
-    <div className="flex flex-col w-full px-1 md:!px-0">
+    <div className="flex flex-col w-full px- md:!px-0">
       <div className="w-full mb-0">
         <div id="displayStudentName"> </div>
         <PageHeader title={m.sidebar_marks_bulkAnnualResult()} />
