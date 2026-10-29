@@ -30,8 +30,10 @@ const StatsVertical: React.FC<Props> = ({
         >
           <div className="avatar-content">{icon}</div>
         </div>
-        <h2 className="fw-bolder">{stats}</h2>
-        <p className="card-text line-ellipsis text-lg font-semibold mt-0.5">
+        {stats !== undefined && stats !== null && stats !== '' && (
+          <h2 className="fw-bolder mb-1">{stats}</h2>
+        )}
+        <p className="card-text line-ellipsis text-lg font-semibold mt-0">
           {title}
         </p>
       </CardBody>

@@ -47,7 +47,7 @@ const CardCongratulations: React.FC<Props> = ({ onClick }) => {
           <h1 className="mb-1 text-white font-thin">
             <strong>{username}</strong>, {t('label-welcome')}{' '}
           </h1>
-          <CardText className="m-auto w-75 text-md font-medium">
+          <CardText className="m-auto w-full px-2 md:w-3/4 md:px-0 text-md font-medium">
             {t('label-startGuideText')}
           </CardText>
         </div>

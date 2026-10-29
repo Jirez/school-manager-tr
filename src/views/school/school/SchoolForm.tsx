@@ -38,6 +38,7 @@ import { INPUT_DATE_FORMAT, TOAST_OPTIONS } from '@/utils/constants'
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import { m } from '@/paraglide/messages'
 
 interface SchoolFormProps extends BaseFormProps {
   school: SchoolType
@@ -57,7 +58,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
       schoolType: school.schoolType,
       schoolCategory: school.schoolCategory,
       shortName: school.shortName || '',
-      active: school.active ?? true,
+      active: school.active,
       note: school.note || '',
       logo: school.logo,
       creationDate: school.creationDate
@@ -155,8 +156,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="schoolCode"
-              label={t('label-schoolCode')}
-              placeholder={t('label-schoolCodePlaceholder')}
+              label={m.label_schoolCode()}
+              placeholder={m.label_schoolCodePlaceholder()}
               control={control}
               prepend={<Hash size={14} />}
             />
@@ -164,15 +165,15 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="shortName"
-              label={t('label-shortName')}
-              placeholder={t('label-shortNamePlaceholder')}
+              label={m.label_shortName()}
+              placeholder={m.label_shortNamePlaceholder()}
               control={control}
             />
           </div>
           <div className="md:col-span-4">
             <FormItem
               name="registrationNumber"
-              label={t('label-registrationNumber')}
+              label={m.label_registrationNumber()}
               control={control}
             />
           </div>
@@ -180,20 +181,20 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-6">
             <FormItem
               name="name"
-              label={t('label-name')}
+              label={m.label_name()}
               control={control}
               required
               prepend={<Building2 size={14} />}
             />
           </div>
           <div className="md:col-span-6">
-            <FormItem name="name2" label={t('label-name2')} control={control} />
+            <FormItem name="name2" label={m.label_name2()} control={control} />
           </div>
 
           <div className="md:col-span-4">
             <FormItem
               name="identifier"
-              label={t('label-identifier')}
+              label={m.label_identifier()}
               control={control}
               readOnly
             />
@@ -201,8 +202,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-8">
             <FormItem
               name="bilingualName"
-              label={t('label-bilingualName')}
-              placeholder={t('label-bilingualNamePlaceholder')}
+              label={m.label_bilingualName()}
+              placeholder={m.label_bilingualNamePlaceholder()}
               control={control}
             />
           </div>
@@ -215,12 +216,12 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
               control={control}
               type="select"
               className="mb-0"
-              label={t('label-schoolType')}
+              label={m.label_schoolType()}
               required
             >
-              <option value="">{t('label-select')}</option>
-              <option value="PUBLIC">{t('label-public')}</option>
-              <option value="PRIVATE">{t('label-private')}</option>
+              <option value="">{m.label_select()}</option>
+              <option value="PUBLIC">{m.label_public()}</option>
+              <option value="PRIVATE">{m.label_private()}</option>
             </FormItem>
           </div>
 
@@ -230,31 +231,31 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
               control={control}
               type="select"
               className="mb-0"
-              label={t('label-schoolCategory')}
+              label={m.label_schoolCategory()}
               required
             >
-              <option value="">{t('label-select')}</option>
-              <option value="PRIMARY_SCHOOL">{t('label-primarySchool')}</option>
+              <option value="">{m.label_select()}</option>
+              <option value="PRIMARY_SCHOOL">{m.label_primarySchool()}</option>
               <option value="ENGLISH_PRIMARY_SCHOOL">
-                {t('label-englishPrimarySchool')}
+                {m.label_englishPrimarySchool()}
               </option>
               <option value="BILINGUAL_PRIMARY_SCHOOL">
-                {t('label-bilingualPrimarySchool')}
+                {m.label_bilingualPrimarySchool()}
               </option>
-              <option value="HIGH_SCHOOL">{t('label-highSchool')}</option>
+              <option value="HIGH_SCHOOL">{m.label_highSchool()}</option>
               <option value="ENGLISH_HIGH_SCHOOL">
-                {t('label-englishHighSchool')}
+                {m.label_englishHighSchool()}
               </option>
               <option value="BILINGUAL_HIGH_SCHOOL">
-                {t('label-bilingualHighSchool')}
+                {m.label_bilingualHighSchool()}
               </option>
               <option value="CETIC">CETIC</option>
               <option value="TECHNICAL_HIGH_SCHOOL">
-                {t('label-technicalHighSchool')}
+                {m.label_technicalHighSchool()}
               </option>
-              <option value="COLLEGE">{t('label-college')}</option>
-              <option value="ENIEG">{t('label-enieg')}</option>
-              <option value="UNIVERSITY">{t('label-university')}</option>
+              <option value="COLLEGE">{m.label_college()}</option>
+              <option value="ENIEG">{m.label_enieg()}</option>
+              <option value="UNIVERSITY">{m.label_university()}</option>
             </FormItem>
           </div>
 
@@ -264,14 +265,14 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
               control={control}
               type="select"
               className="mb-0"
-              label={t('label-studentType')}
+              label={m.label_studentType()}
               required
             >
-              <option value="">{t('label-select')}</option>
-              <option value="PUPIL">{t('label-pupil') || 'Ecoliers'}</option>
-              <option value="STUDENT">{t('label-student') || 'Elèves'}</option>
+              <option value="">{m.label_select()}</option>
+              <option value="PUPIL">{m.label_pupil() || 'Ecoliers'}</option>
+              <option value="STUDENT">{m.label_student() || 'Elèves'}</option>
               <option value="UNIVERSITY_STUDENT">
-                {t('label-universityStudent') || 'Etudiants'}
+                {m.label_universityStudent() || 'Etudiants'}
               </option>
             </FormItem>
           </div>
@@ -280,22 +281,22 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
 
       {/* Mottos & Vision */}
       <FormSection
-        title={t('label-schoolMottoInfo')}
-        description={t('label-schoolMottoInfoDesc')}
+        title={m.label_schoolMottoInfo()}
+        description={m.label_schoolMottoInfoDesc()}
         icon={<Languages size={20} />}
         color="#ff9f43"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <FormItem
             name="motto"
-            label={t('label-motto')}
+            label={m.label_motto()}
             control={control}
             required
             prepend={<Flag size={14} />}
           />
           <FormItem
             name="motto2"
-            label={t('label-motto2')}
+            label={m.label_motto2()}
             control={control}
             required
             prepend={<Flag size={14} />}
@@ -305,8 +306,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
 
       {/* Communications & Contacts */}
       <FormSection
-        title={t('label-schoolContactInfo')}
-        description={t('label-schoolContactInfoDesc')}
+        title={m.label_schoolContactInfo()}
+        description={m.label_schoolContactInfoDesc()}
         icon={<Phone size={20} />}
         color="#28c76f"
       >
@@ -314,8 +315,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-8">
             <FormItem
               name="webSite"
-              label={t('label-webSite')}
-              placeholder={t('label-webSitePlaceholder')}
+              label={m.label_webSite()}
+              placeholder={m.label_webSitePlaceholder()}
               control={control}
               prepend={<Globe size={14} />}
             />
@@ -323,7 +324,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="contactInfo.email"
-              label={t('label-email')}
+              label={m.label_email()}
               control={control}
               prepend={<Mail size={14} />}
             />
@@ -332,28 +333,28 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <PhoneInput
               name="contactInfo.telephone"
-              label={t('label-telephone')}
+              label={m.label_telephone()}
               control={control}
             />
           </div>
           <div className="md:col-span-4">
             <PhoneInput
               name="contactInfo.mobile"
-              label={t('label-mobileTelephone')}
+              label={m.label_mobileTelephone()}
               control={control}
             />
           </div>
           <div className="md:col-span-2">
             <FormItem
               name="contactInfo.fax"
-              label={t('label-fax')}
+              label={m.label_fax()}
               control={control}
             />
           </div>
           <div className="md:col-span-2">
             <FormItem
               name="contactInfo.postOfficeBox"
-              label={t('label-postOfficeBox')}
+              label={m.label_postOfficeBox()}
               control={control}
             />
           </div>
@@ -362,8 +363,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
 
       {/* Location Section */}
       <FormSection
-        title={t('label-schoolAddressInfo')}
-        description={t('label-schoolAddressInfoDesc')}
+        title={m.label_schoolAddressInfo()}
+        description={m.label_schoolAddressInfoDesc()}
         icon={<MapPin size={20} />}
         color="#00cfe8"
       >
@@ -371,21 +372,21 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-2">
             <FormItem
               name="address.zipCode"
-              label={t('label-zipCode')}
+              label={m.label_zipCode()}
               control={control}
             />
           </div>
           <div className="md:col-span-5">
             <FormItem
               name="address.country"
-              label={t('label-country')}
+              label={m.label_country()}
               control={control}
             />
           </div>
           <div className="md:col-span-5">
             <FormItem
               name="address.state"
-              label={t('label-state')}
+              label={m.label_state()}
               control={control}
             />
           </div>
@@ -393,7 +394,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-6">
             <FormItem
               name="address.town"
-              label={t('label-town')}
+              label={m.label_town()}
               control={control}
               required
               prepend={<Building size={14} />}
@@ -402,7 +403,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-6">
             <FormItem
               name="venue"
-              label={t('label-venue')}
+              label={m.label_venue()}
               control={control}
               prepend={<MapPin size={14} />}
             />
@@ -411,7 +412,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-12">
             <FormItem
               name="address.street"
-              label={t('label-address')}
+              label={m.label_address()}
               control={control}
               prepend={<Navigation size={14} />}
             />
@@ -419,7 +420,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-12">
             <FormItem
               name="signingAddress"
-              label={t('label-signingAddress')}
+              label={m.label_signingAddress()}
               control={control}
             />
           </div>
@@ -428,8 +429,8 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
 
       {/* Administrative & Legal */}
       <FormSection
-        title={t('label-schoolLegalInfo')}
-        description={t('label-schoolLegalInfoDesc')}
+        title={m.label_schoolLegalInfo()}
+        description={m.label_schoolLegalInfoDesc()}
         icon={<Briefcase size={20} />}
         color="#ea5455"
       >
@@ -437,14 +438,14 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="legalInfo.legalForm"
-              label={t('label-legalForm')}
+              label={m.label_legalForm()}
               control={control}
             />
           </div>
           <div className="md:col-span-4">
             <FormItem
               name="legalInfo.taxpayerNumber"
-              label={t('label-taxPayerNumber')}
+              label={m.label_taxPayerNumber()}
               control={control}
               prepend={<CreditCard size={14} />}
             />
@@ -452,7 +453,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="legalInfo.tradeRegister"
-              label={t('label-tradeRegister')}
+              label={m.label_tradeRegister()}
               control={control}
             />
           </div>
@@ -460,7 +461,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="legalInfo.shareCapital"
-              label={t('label-shareCapital')}
+              label={m.label_shareCapital()}
               control={control}
               type="number"
             />
@@ -468,7 +469,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="authNumber"
-              label={t('label-authNumber')}
+              label={m.label_authNumber()}
               control={control}
               prepend={<FileSignature size={14} />}
             />
@@ -476,7 +477,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-4">
             <FormItem
               name="nsifNumber"
-              label={t('label-nsifNumber')}
+              label={m.label_nsifNumber()}
               control={control}
             />
           </div>
@@ -484,7 +485,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-6">
             <DatePicker
               name="creationDate"
-              label={t('label-creationDate')}
+              label={m.label_creationDate()}
               control={control}
               showIcon
             />
@@ -492,7 +493,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
           <div className="md:col-span-6">
             <FormItem
               name="logo"
-              label={t('label-logo')}
+              label={m.label_logo()}
               control={control}
               prepend={<ImageIcon size={14} />}
             />
@@ -501,11 +502,11 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
       </FormSection>
 
       {/* Status */}
-      <FormSection>
+      <FormSection className="mb-4">
         <ToggleOption
           icon={<CheckCircle size={20} />}
-          title={t('label-active')}
-          description={t('label-schoolActiveDesc')}
+          title={m.label_active()}
+          description={m.label_schoolActiveDesc()}
           isActive={isActive}
         >
           <Switch
@@ -525,7 +526,7 @@ const SchoolForm: FC<SchoolFormProps> = ({ school, action, ...props }) => {
             className="round text-sm flex gap-1 items-center px-2 py-1"
           >
             <Check size={16} />
-            {t('label-save')}
+            {m.label_save()}
           </Button>
         </div>
       </StickyActions>

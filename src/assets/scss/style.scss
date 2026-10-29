@@ -332,6 +332,14 @@ input {
   // padding-top: -2.95rem !important;
   margin: -1px !important;
   margin-top: -20px !important;
+  // border: 2px solid red;
+}
+
+@media (max-width: 576px) {
+  .content-wrapper {
+    margin: -15px !important;
+    margin-top: -30px !important;
+  }
 }
 
 .layout-navbar {
@@ -372,6 +380,40 @@ body {
   font-family: 'Inter', sans-serif !important;
   padding: 10px;
   padding-top: 0;
+}
+
+@media (max-width: 576px) {
+  body {
+    padding-inline: 4px;
+  }
+
+  .layout-page-content,
+  .app-content,
+  .layout-navbar,
+  .layout-footer {
+    padding-inline: 0.025rem !important;
+  }
+}
+
+// ** Compact spacing on small devices (phones & small tablets)
+@media (max-width: 767.98px) {
+  .card {
+    --bs-card-spacer-y: 1rem;
+    --bs-card-spacer-x: 1rem;
+    --bs-card-title-spacer-y: 0.75rem;
+    --bs-card-cap-padding-y: 1rem;
+    --bs-card-cap-padding-x: 1rem;
+  }
+
+  // Keep the small gap on mobile while preserving any explicit margin
+  // utility (mb-*) declared on the card.
+  .card:not([class*='mb-']) {
+    margin-bottom: 0.75rem;
+  }
+
+  .card-congratulations .avatar {
+    margin-bottom: 1rem;
+  }
 }
 
 // ** Custom Scrollbar

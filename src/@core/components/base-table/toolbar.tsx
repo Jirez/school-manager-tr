@@ -33,14 +33,14 @@ const rotate = keyframes`
 const ToolbarContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.75rem;
+  gap: 0.5rem;
+  padding: 0.625rem;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(115, 103, 240, 0.1);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 
   .dark-layout & {
     background: rgba(40, 48, 70, 0.8);

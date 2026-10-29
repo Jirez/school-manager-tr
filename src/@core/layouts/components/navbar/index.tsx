@@ -31,7 +31,7 @@ const ThemeNavbar = (props: any) => {
         </NavItem>
       </ul>
       <div className="bookmark-wrapper d-flex align-items-center">
-        <span className="truncate text-xs md:text-sm font-medium w-44 md:w-full">
+        <span className="truncate text-xs md:text-sm font-medium w-32 md:w-full">
           {enterprise}
         </span>
         {/* <NavbarBookmarks setMenuVisibility={setMenuVisibility} /> */}
