@@ -1,12 +1,12 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { useTranslation } from 'react-i18next'
 import type { ClassType } from './Class.type'
 import ClassDelete from './ClassDelete'
 import ActiveRenderer from '@/@core/components/base-table/active-renderer'
 import ActionRenderer from '@/@core/components/base-table/action-renderer'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
-import { useMemo } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { concat } from '@/utils/helpers'
+import { formatError } from '@/utils/ErrorHelper'
 import {
   BookOpen,
   User,
@@ -19,9 +19,37 @@ import {
 import { TypeBadge, SkuText } from '@/@core/components/ui/table/table.style'
 import TextWithAvatar from '@/@core/components/ui/text-with-avatar'
 import type { AppFeatures } from '#/hooks/table'
+import { m } from '@/paraglide/messages'
+import { useClassToggleCompetenceClassMutation } from '@/gql/graphql'
+import { toast } from 'react-toastify'
 
 export function useTableColumns(modal?: NiceModalHandler) {
-  const { t } = useTranslation()
+  const [toggleCompetenceClass] = useClassToggleCompetenceClassMutation()
+  const togglingClassIdsRef = useRef(new Set<number>())
+  const [togglingClassIds, setTogglingClassIds] = useState<Set<number>>(
+    () => new Set(),
+  )
+
+  const handleToggleCompetenceClass = useCallback(
+    async (id?: number) => {
+      if (id == null || togglingClassIdsRef.current.has(id)) return
+
+      togglingClassIdsRef.current.add(id)
+      setTogglingClassIds(new Set(togglingClassIdsRef.current))
+
+      try {
+        await toggleCompetenceClass({ variables: { id } })
+      } catch (error) {
+        toast.error(
+          `Impossible de modifier le type de classe : ${formatError(error)}`,
+        )
+      } finally {
+        togglingClassIdsRef.current.delete(id)
+        setTogglingClassIds(new Set(togglingClassIdsRef.current))
+      }
+    },
+    [toggleCompetenceClass],
+  )
 
   const columns: Array<ColumnDef<AppFeatures, ClassType>> = useMemo(
     () => [
@@ -30,7 +58,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         accessorKey: 'name',
         header: () => (
           <div className="flex items-center gap-0.5">
-            <BookOpen size={14} className="text-primary" /> {t('label-name')}
+            <BookOpen size={14} className="text-primary" /> {m.label_name()}
           </div>
         ),
         cell: ({ row: { original } }) => (
@@ -50,11 +78,11 @@ export function useTableColumns(modal?: NiceModalHandler) {
         accessorFn: (row) => row.headTeacher?.lastName,
         header: () => (
           <div className="flex items-center gap-0.5">
-            <User size={14} /> {t('label-headTeacher')}
+            <User size={14} /> {m.label_headTeacher()}
           </div>
         ),
         cell: ({ row: { original } }) => {
-          const headTeacher = original?.headTeacher
+          const headTeacher = original.headTeacher
           if (!headTeacher)
             return (
               <span className="text-sm text-gray-400 italic">Non défini</span>
@@ -73,7 +101,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         id: 'branch',
         header: () => (
           <div className="flex items-center gap-0.5">
-            <Layers size={14} /> {t('label-branch')}
+            <Layers size={14} /> {m.label_branch()}
           </div>
         ),
         accessorFn: (row) => row.branch.name,
@@ -86,7 +114,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         id: 'level',
         header: () => (
           <div className="flex items-center gap-0.5">
-            <GraduationCap size={14} /> {t('label-level')}
+            <GraduationCap size={14} /> {m.label_level()}
           </div>
         ),
         accessorFn: (row) => row.branch.level.name,
@@ -99,7 +127,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         id: 'cycle',
         header: () => (
           <div className="flex items-center gap-0.5">
-            <Trophy size={14} /> {t('label-cycle')}
+            <Trophy size={14} /> {m.label_cycle()}
           </div>
         ),
         accessorFn: (row) => row.branch.level.cycle.name,
@@ -113,15 +141,20 @@ export function useTableColumns(modal?: NiceModalHandler) {
         accessorKey: 'competenceClass',
         header: () => (
           <div className="flex items-center gap-0.5 justify-center w-full">
-            <Activity size={14} /> {t('label-competenceClass')}
+            <Activity size={14} /> {m.label_competenceClass()}
           </div>
         ),
-        cell: (info) => (
+        cell: ({ row, getValue }) => (
           <div className="flex justify-center">
             <ActiveRenderer
-              active={info.getValue() as boolean}
+              active={getValue() as boolean}
               inactiveText="label.no"
               activeText="label.yes"
+              onClick={() => void handleToggleCompetenceClass(row.original.id)}
+              loading={
+                row.original.id != null && togglingClassIds.has(row.original.id)
+              }
+              title={m.label_competenceClassDesc()}
             />
           </div>
         ),
@@ -144,7 +177,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
       },
       {
         id: 'actions',
-        header: () => <div className="text-right">{t('label-actions')}</div>,
+        header: () => <div className="text-right">{m.label_actions()}</div>,
         cell: (info) => (
           <div className="flex justify-end">
             <ActionRenderer
@@ -159,7 +192,7 @@ export function useTableColumns(modal?: NiceModalHandler) {
         size: 80,
       },
     ],
-    [modal, t],
+    [handleToggleCompetenceClass, modal, togglingClassIds],
   )
 
   return { columns }

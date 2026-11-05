@@ -9,17 +9,16 @@ import {
 } from '@/utils/constants'
 import { useTitle } from 'ahooks'
 import { Layers } from 'react-feather'
-import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
+import { m } from '@/paraglide/messages'
 
 const AverageCalculation = () => {
-  const { t } = useTranslation()
-  useTitle(t('sidebar.marks.averageCalculation'))
+  useTitle(m['sidebar.marks.averageCalculation']())
 
   return (
     <Scrollbar className="flex flex-col w-full">
       <div className="w-full">
-        <PageHeader title={t('sidebar.marks.averageCalculation')} />
+        <PageHeader title={m['sidebar.marks.averageCalculation']()} />
       </div>
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-4/12">
@@ -27,8 +26,8 @@ const AverageCalculation = () => {
             <StatsVertical
               icon={<Layers size={21} />}
               color="info"
-              //stats='36.9k'
-              title={t('label-sequentialAverage')}
+              // stats='36.9k'
+              title={m['label_sequentialAverage']()}
             />
           </Link>
         </div>
@@ -38,8 +37,8 @@ const AverageCalculation = () => {
             <StatsVertical
               icon={<Layers size={21} />}
               color="primary"
-              //stats='36.9k'
-              title={t('label-quarterlyAverage')}
+              // stats='36.9k'
+              title={m['label_quarterlyAverage']()}
             />
           </Link>
         </div>
@@ -49,8 +48,8 @@ const AverageCalculation = () => {
             <StatsVertical
               icon={<Layers size={21} />}
               color="danger"
-              //stats='36.9k'
-              title={t('label-annualAverage')}
+              // stats='36.9k'
+              title={m['label_annualAverage']()}
             />
           </Link>
         </div>
@@ -60,8 +59,8 @@ const AverageCalculation = () => {
             <StatsVertical
               icon={<Layers size={21} />}
               color="danger"
-              //stats='36.9k'
-              title={t('label-annualCompAverage')}
+              // stats='36.9k'
+              title={m['label_annualCompAverage']()}
             />
           </Link>
         </div>

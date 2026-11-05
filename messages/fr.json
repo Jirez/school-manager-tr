@@ -2081,5 +2081,16 @@
   "competences_definition": "Définition des compétences",
   "student_bulk_update": "Mise à jour en lot des élèves",
   "update_student": "Mettre à jour l'élève",
-  "new_inscription": "Nouvelle inscription"
+  "new_inscription": "Nouvelle inscription",
+  "invalid_dataNothingToSave": "Données invalides, rien à enregistrer",
+  "frequent_update_success": "Mise à jour des élèves réussie",
+  "frequent_update_error": "Impossible de mettre à jour : {error}",
+  "label_annualCompAverage": "Moyenne annuelle par compétence",
+  "quarterlyCompNoteInput": "Saisie des notes trimestrielles par compétence",
+  "label_competenceReminderTitle": "Rappel des compétences",
+  "label_competenceReminderLoading": "Chargement des compétences...",
+  "label_competenceReminderError": "Impossible de charger les compétences.",
+  "label_competenceReminderEmpty": "Aucune compétence n'est définie pour cette sélection.",
+  "label_competenceNumber": "Compétence {no}",
+  "loading_notes": "Chargement des notes..."
 }

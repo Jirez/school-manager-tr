@@ -28,24 +28,24 @@ export default [
         navLink: '/eval-competences',
         resource: 'config',
       },
-      {
+      /* {
         id: 'competences',
         title: 'sidebar.marks.expectedCompetences',
         icon: <Circle size={12} />,
         navLink: '/competences',
-      },
+      }, */
       {
         id: 'quarterly-comp-notes',
         title: 'sidebar.marks.quarterlyCompNotes',
         icon: <Circle size={12} />,
         navLink: '/quarterly-comp-note',
       },
-      {
+      /* {
         id: 'quarterly-comp-notes-eval',
         title: 'sidebar.marks.quarterlyCompNoteFromEval',
         icon: <Circle size={12} />,
         navLink: '/quarterly-comp-note-eval',
-      },
+      }, */
       {
         id: 'sequential-notes',
         title: 'sidebar.marks.sequentialNotes',

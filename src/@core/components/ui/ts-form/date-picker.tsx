@@ -40,6 +40,7 @@ interface Props extends DateTimePickerProps {
   required?: boolean
   className?: string
   showIcon?: boolean
+  borderRadius?: string
 }
 
 const DatePickerContainer = styled.div<{ $error?: boolean }>`
@@ -72,7 +73,10 @@ const StyledLabel = styled(Label)<{ $error?: boolean }>`
   `}
 `
 
-const InputWrapper = styled.div<{ $error?: boolean }>`
+const InputWrapper = styled.div<{
+  $error?: boolean
+  $borderRadius: string
+}>`
   position: relative;
   width: 100%;
 
@@ -85,7 +89,7 @@ const InputWrapper = styled.div<{ $error?: boolean }>`
     color: #2c3e50;
     background-color: #ffffff;
     border: 1px solid ${({ $error }) => ($error ? '#ea5455' : '#d0d7de')};
-    border-radius: 8px;
+    border-radius: ${({ $borderRadius }) => $borderRadius};
     transition: all 0.2s ease;
     outline: none;
 
@@ -209,6 +213,7 @@ const DatePicker: FC<Props> = ({
   required = false,
   className = 'mb-1',
   showIcon = true,
+  borderRadius = '8px',
   ...props
 }) => {
   const field = useFieldContext<Date[]>()
@@ -334,7 +339,7 @@ const DatePicker: FC<Props> = ({
           {required ? <Required /> : ''}
         </StyledLabel>
       )}
-      <InputWrapper $error={hasError}>
+      <InputWrapper $error={hasError} $borderRadius={borderRadius}>
         {showIcon && (
           <IconWrapper $error={hasError}>
             <Calendar size={18} />

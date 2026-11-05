@@ -33,6 +33,7 @@ import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { useSelector } from '@tanstack/react-form'
 import { z } from 'zod'
 import { optionalString, requiredSelect } from '#/utils/zod.helpers'
+import { m } from '@/paraglide/messages'
 
 interface AnnualResult {
   average: number
@@ -203,12 +204,8 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
 
   const getDecisionBadge = (decision: string) => {
     let $color:
-      | 'primary'
-      | 'secondary'
-      | 'success'
-      | 'danger'
-      | 'warning'
-      | 'info' = 'primary'
+      'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' =
+      'primary'
     if (decision === 'ADMISSIBLE') $color = 'success'
     else if (decision === 'REPEAT') $color = 'warning'
     else if (decision === 'EXCLUDED') $color = 'danger'
@@ -249,12 +246,10 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
                 name="councilDecisionId"
                 children={(field) => (
                   <field.ControlledSelect
-                    label={t('label-councilDecision')}
+                    label={m.label_councilDecision()}
                     required
                     isLoading={loading}
-                    onChange={(val) =>
-                      setFieldValue('councilDecisionId', val)
-                    }
+                    onChange={(val) => setFieldValue('councilDecisionId', val)}
                     options={councilDecisions || undefined}
                     getOptionLabel={(option: any) => option.name}
                     getOptionValue={(option: any) => option.id}
@@ -291,7 +286,7 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
             name="nextClassId"
             children={(field) => (
               <field.ControlledSelect
-                label={t('label-nextClass')}
+                label={m.label_nextClass()}
                 onChange={(val) => setFieldValue('nextClassId', val)}
                 options={
                   dataClassesBySchoolYear
@@ -311,7 +306,7 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
             name="observation"
             children={(field) => (
               <field.Input
-                label={t('label-observation')}
+                label={m.label_observation()}
                 prepend={<FileText size={16} />}
               />
             )}
@@ -437,9 +432,7 @@ const BulkAnnualResultForm: React.FC<BulkAnnualResultFormProps> = ({
                         {item.observation || '-'}
                       </td>
 
-                      <td className="!py-1 !px-2 text-sm">
-                        {item.className}
-                      </td>
+                      <td className="!py-1 !px-2 text-sm">{item.className}</td>
 
                       <td className="!py-1 !px-2 text-center">
                         {getDecisionBadge(item.decision)}

@@ -255,7 +255,9 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
           <tbody>
             {fields.map((field, index) => (
               <tr key={field.id}>
-                <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                <td style={{ textAlign: 'center' }} className="font-medium">
+                  {index + 1}
+                </td>
                 <td>
                   <SimpleInput
                     {...register(`items.${index}.studentId`)}
@@ -284,6 +286,8 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
                     name={`items.${index}.birthDate`}
                     control={control}
                     label=""
+                    className="mb-0 mt-0"
+                    borderRadius="0"
                   />
                 </td>
 

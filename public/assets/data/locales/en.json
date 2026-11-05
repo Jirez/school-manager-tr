@@ -2001,5 +2001,10 @@
   "text-pageLayoutSettings": "Page Layout Settings",
   "label-expenseReport": "Expense Report",
   "label-expenseSummary": "Expense Summary Report",
-  "label-selectCategories": "Select categories"
+  "label-selectCategories": "Select categories",
+  "label_competenceReminderTitle": "Competence reminder",
+  "label_competenceReminderLoading": "Loading competences...",
+  "label_competenceReminderError": "Unable to load the competences.",
+  "label_competenceReminderEmpty": "No competences are defined for this selection.",
+  "label_competenceNumber": "Competence {{number}}"
 }

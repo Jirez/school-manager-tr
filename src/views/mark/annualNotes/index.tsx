@@ -18,6 +18,7 @@ import {
   useSubjectsForNotesQuery,
 } from '@/gql/graphql'
 import { m } from '@/paraglide/messages'
+import LoadingTable from '#/@core/components/ui/table/loading-table'
 
 const AnnualNotes = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any }>()
@@ -167,7 +168,14 @@ const AnnualNotes = () => {
           subject && (
             <div className="w-full">
               {loadingNote ? (
-                <LoadingSpinner />
+                <div style={{ marginTop: 20 }}>
+                  <LoadingTable
+                    rows={8}
+                    columns={9}
+                    showAvatar={false}
+                    label={m.loading_notes()}
+                  />
+                </div>
               ) : (
                 <div className="card" style={{ marginTop: 20 }}>
                   <AnnualNoteAdd

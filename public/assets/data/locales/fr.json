@@ -2003,5 +2003,10 @@
   "text-pageLayoutSettings": "Paramètres de mise en page",
   "label-expenseReport": "Rapport des dépenses",
   "label-expenseSummary": "Rapport de synthèse des dépenses",
-  "label-selectCategories": "Sélectionnez les catégories"
+  "label-selectCategories": "Sélectionnez les catégories",
+  "label_competenceReminderTitle": "Rappel des compétences",
+  "label_competenceReminderLoading": "Chargement des compétences...",
+  "label_competenceReminderError": "Impossible de charger les compétences.",
+  "label_competenceReminderEmpty": "Aucune compétence n'est définie pour cette sélection.",
+  "label_competenceNumber": "Compétence {{number}}"
 }

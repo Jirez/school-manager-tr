@@ -9,6 +9,7 @@ import { Trash2, FileText } from 'lucide-react'
 import { useFieldArray } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Table } from 'reactstrap'
+import { m } from '@/paraglide/messages'
 
 interface Props {
   nestIndex: number
@@ -33,7 +34,7 @@ const FSItemItemForm = ({
   const { fields, append, remove } = useFieldArray({
     control,
     name: `items.${nestIndex}.items.${subIndex}.items`,
-    //rules: { minLength: 0 },
+    // rules: { minLength: 0 },
   })
 
   const bottomTableRef = useRef<HTMLSpanElement>(null)
@@ -50,7 +51,7 @@ const FSItemItemForm = ({
         }.requiredAmountF`,
       )
       input?.focus()
-      //bottomTableRef.current?.scrollIntoView(true);
+      // bottomTableRef.current?.scrollIntoView(true);
     },
     {
       wait: 500,
@@ -94,19 +95,19 @@ const FSItemItemForm = ({
                     #
                   </th>
                   <th className="text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2 min-w-[200px]">
-                    {t('label-schoolFee')}
+                    {m.label_schoolFee()}
                   </th>
                   <th className="text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2">
-                    {t('label-requiredAmount')}
+                    {m.label_requiredAmount()}
                   </th>
                   <th className="text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2">
-                    {t('label-dueDate')}
+                    {m.label_dueDate()}
                   </th>
                   <th className="text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2">
-                    {t('label-lateFee')}
+                    {m.label_lateFee()}
                   </th>
                   <th className="text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2">
-                    {t('label-gracePeriodDays')}
+                    {m.label_gracePeriodDays()}
                   </th>
                   <th className="w-12 text-center text-xs font-semibold text-gray-700 dark:!text-gray-300 px-2 py-2">
                     #
@@ -173,6 +174,7 @@ const FSItemItemForm = ({
                         onKeyPress={preventSubmitting}
                         onKeyUp={(e) => handleFocusAndScroll(e, focus$)}
                         showIcon={false}
+                        borderRadius="0"
                       />
                     </td>
                     <td className="px-2 py-1.5">
@@ -212,7 +214,7 @@ const FSItemItemForm = ({
                           transition-colors duration-150
                           cursor-pointer
                         "
-                        title={t('label-delete') || 'Supprimer'}
+                        title={m.label_delete()}
                       >
                         <Trash2 size={14} />
                       </button>
@@ -248,11 +250,10 @@ const FSItemItemForm = ({
               />
             </div>
             <p className="text-sm font-medium text-gray-600 dark:!text-gray-400 mb-0.5">
-              {t('label-noData') || 'Aucune donnée'}
+              {m.label_noData()}
             </p>
             <p className="text-xs text-gray-500 dark:!text-gray-500">
-              {t('label-addSchoolFeeHint') ||
-                'Utilisez le champ ci-dessus pour ajouter une frais de scolarité'}
+              {m.label_addSchoolFeeHint()}
             </p>
           </div>
         </div>

@@ -44,7 +44,7 @@ const FeeStructureForm: FC<CompetenceFormProps> = ({
     })
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    //formatting items
+    // formatting items
     const items = values.items
       .filter((item) => itemValid(item))
       .map((item) => {
@@ -85,7 +85,6 @@ const FeeStructureForm: FC<CompetenceFormProps> = ({
       toast.error('Données invalides, rien à enregistrer')
       return
     }
-    //console.log(items);
 
     action({
       variables: {
@@ -94,7 +93,7 @@ const FeeStructureForm: FC<CompetenceFormProps> = ({
       },
     })
       .then(async ({ data }) => {
-        //form.resetFields();
+        // form.resetFields();
         toast.success(`Structure des frais de scolarité enregistrée`, {
           ...TOAST_OPTIONS,
         })

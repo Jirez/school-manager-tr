@@ -13,6 +13,7 @@ interface PageHeaderProps {
   iconColor?: string
   /** Optional actions to display on the right side */
   actions?: ReactNode
+  titleClassName?: string
 }
 
 const PageHeader: FC<PageHeaderProps> = ({
@@ -23,6 +24,7 @@ const PageHeader: FC<PageHeaderProps> = ({
   icon,
   iconColor = '#7367f0',
   actions,
+  titleClassName = 'text-lg md:text-2xl',
 }) => {
   const navigate = useNavigate()
   const router = useRouter()
@@ -110,12 +112,12 @@ const PageHeader: FC<PageHeaderProps> = ({
         {/* Title & Subtitle */}
         <div className="flex flex-col justify-center min-w-0">
           <h1
-            className="
-              text-lg md:text-2xl font-semibold
+            className={`
+              ${titleClassName} font-semibold
               text-gray-800 dark:!text-white
               m-0 leading-tight
               truncate
-            "
+            `}
           >
             {title}
           </h1>

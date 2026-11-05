@@ -99,7 +99,7 @@ const FeeStructures = () => {
                   getOptionValue={({ id }) => id}
                   value={level}
                   components={{ Option: levelOptions }}
-                  //formId="clazz"
+                  // formId="clazz"
                   placeholder="Sélectionnez un niveau"
                 />
               )}

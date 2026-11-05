@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { messageService } from '@/utils/message.service'
 import LiveView from '@/utils/LiveView'
 import Select from '@/@core/components/select'
-import LoadingSpinner from '@/@core/components/spinner/Loading-spinner'
+import LoadingTable from '@/@core/components/ui/table/loading-table'
 import SequentialNoteAdd from '@/views/mark/sequentialNotes/SequentialNoteAdd'
 import PageHeader from '@/@core/components/ui/page-header'
 import { classOptions, subPeriodOptions } from '@/utils/select/selectComponents'
@@ -177,7 +177,14 @@ const SequentialNotes = () => {
         subject && (
           <div className="w-full">
             {loadingNote ? (
-              <LoadingSpinner />
+              <div style={{ marginTop: 20 }}>
+                <LoadingTable
+                  rows={8}
+                  columns={4}
+                  showAvatar={false}
+                  label="Chargement des notes"
+                />
+              </div>
             ) : (
               <div className="card" style={{ marginTop: 20 }}>
                 <SequentialNoteAdd

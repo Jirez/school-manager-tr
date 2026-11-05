@@ -3180,6 +3180,7 @@ export type Mutation = {
   cashVoucherSave?: Maybe<CashVoucher>;
   cashVoucherUpdate?: Maybe<CashVoucher>;
   checkPaymentAndConfirm?: Maybe<GiselPaymentCheckResult>;
+  classToggleCompetenceClass?: Maybe<Clazz>;
   cloneConfig?: Maybe<Scalars['Boolean']['output']>;
   competenceDeleteById?: Maybe<Scalars['Boolean']['output']>;
   competenceLevelSave?: Maybe<Scalars['Boolean']['output']>;
@@ -3707,6 +3708,11 @@ export type MutationCashVoucherUpdateArgs = {
 
 export type MutationCheckPaymentAndConfirmArgs = {
   input: GiselPaymentCheckInput;
+};
+
+
+export type MutationClassToggleCompetenceClassArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -13246,6 +13252,13 @@ export type ClassesWithAnnualReportCardQueryVariables = Exact<{
 
 
 export type ClassesWithAnnualReportCardQuery = { __typename?: 'Query', classes?: Array<{ __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null }> | null };
+
+export type ClassToggleCompetenceClassMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type ClassToggleCompetenceClassMutation = { __typename?: 'Mutation', clazz?: { __typename?: 'Clazz', id: number, name: string, code?: string | null, examClass?: boolean | null, autoTimeTable?: boolean | null, competenceClass?: boolean | null, headTeacher?: { __typename?: 'Teacher', id: any, lastName?: string | null, firstName?: string | null } | null, branch?: { __typename?: 'Branch', id: number, name: string, level?: { __typename?: 'Level', id: number, name: string, cycle?: { __typename?: 'Cycle', id: number, name: string, schoolYear?: { __typename?: 'SchoolYear', id: number, label: string } | null } | null } | null } | null } | null };
 
 export type ConfigurationFieldsFragment = { __typename?: 'Configuration', id: string, createdBy?: string | null, createdDate?: string | null, lastModifiedBy?: string | null, lastModifiedDate?: string | null, configData?: string | null, configurationPK: { __typename?: 'ConfigurationPK', key: string, enterpriseId: number } };
 
@@ -24212,6 +24225,21 @@ export type ClassesWithAnnualReportCardQueryHookResult = ReturnType<typeof useCl
 export type ClassesWithAnnualReportCardLazyQueryHookResult = ReturnType<typeof useClassesWithAnnualReportCardLazyQuery>;
 export type ClassesWithAnnualReportCardSuspenseQueryHookResult = ReturnType<typeof useClassesWithAnnualReportCardSuspenseQuery>;
 export type ClassesWithAnnualReportCardQueryResult = Apollo.QueryResult<ClassesWithAnnualReportCardQuery, ClassesWithAnnualReportCardQueryVariables>;
+export const ClassToggleCompetenceClassDocument = gql`
+    mutation ClassToggleCompetenceClass($id: Int!) {
+  clazz: classToggleCompetenceClass(id: $id) {
+    ...classFields
+  }
+}
+    ${ClassFieldsFragmentDoc}`;
+export type ClassToggleCompetenceClassMutationFn = Apollo.MutationFunction<ClassToggleCompetenceClassMutation, ClassToggleCompetenceClassMutationVariables>;
+export function useClassToggleCompetenceClassMutation(baseOptions?: Apollo.MutationHookOptions<ClassToggleCompetenceClassMutation, ClassToggleCompetenceClassMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ClassToggleCompetenceClassMutation, ClassToggleCompetenceClassMutationVariables>(ClassToggleCompetenceClassDocument, options);
+      }
+export type ClassToggleCompetenceClassMutationHookResult = ReturnType<typeof useClassToggleCompetenceClassMutation>;
+export type ClassToggleCompetenceClassMutationResult = Apollo.MutationResult<ClassToggleCompetenceClassMutation>;
+export type ClassToggleCompetenceClassMutationOptions = Apollo.BaseMutationOptions<ClassToggleCompetenceClassMutation, ClassToggleCompetenceClassMutationVariables>;
 export const ConfigurationDocument = gql`
     query Configuration($id: Int!) {
   configs: findConfiguration(id: $id) {

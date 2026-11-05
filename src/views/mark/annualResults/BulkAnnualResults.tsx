@@ -27,9 +27,9 @@ import {
   useCouncilDecisionsQuery,
   useLevelsBySchoolYearQuery,
   useSchoolYearsQuery,
+  useAnnualResultSummaryQuery,
+  SchoolYearCreatedDocument,
 } from '@/gql/graphql'
-import { useAnnualResultSummaryQuery } from '@/gql/graphql'
-import { SchoolYearCreatedDocument } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import GraphQLError from '@/@core/components/errors/graphql-error'
 import FormSection from '@/@core/components/ui/forms/form-section'

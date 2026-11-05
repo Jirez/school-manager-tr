@@ -74,7 +74,7 @@ const FrequentBulk = () => {
                   getOptionValue={(option) => option.id}
                   value={clazz}
                   components={{ Option: classOptions }}
-                  placeholder="Sélectionnez une classe"
+                  placeholder={m.label_selectClass()}
                 />
               )}
             </LiveView>

@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { messageService } from '@/utils/message.service'
 import LiveView from '@/utils/LiveView'
 import Select from '@/@core/components/select'
-import LoadingSpinner from '@/@core/components/spinner/Loading-spinner'
+import LoadingTable from '@/@core/components/ui/table/loading-table'
 import PageHeader from '@/@core/components/ui/page-header'
 import { classOptions, periodOptions } from '@/utils/select/selectComponents'
 import { selectThemeColors } from '@/utils/Utils'
@@ -13,18 +13,22 @@ import {
   ClassCreatedDocument,
   PeriodCreatedDocument,
   useClassesForNoteQuery,
+  useEvalCompBySubjectQuery,
   usePeriodsQuery,
   useQuarterlyCompNotesQuery,
   useSubjectsForNotesQuery,
 } from '@/gql/graphql'
 import QuarterlyCompNoteAdd from './QuarterlyCompNoteAdd'
 import { m } from '@/paraglide/messages'
+import { Info } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const QuarterlyCompNotes = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any }>()
   const [subject, setSubject] = useState<{ [key: string]: any } | null>()
   const [period, setPeriod] = useState<{ [key: string]: any }>()
 
+  const { t } = useTranslation()
   useTitle(m['sidebar.marks.quarterlyCompNotes']())
   const { enterpriseId } = useAuthentication()
 
@@ -48,6 +52,20 @@ const QuarterlyCompNotes = () => {
       skip: !clazz,
       fetchPolicy: 'network-only',
     })
+
+  const {
+    data: dataCompetence,
+    loading: loadingCompetence,
+    error: competenceError,
+  } = useEvalCompBySubjectQuery({
+    variables: {
+      classId: clazz ? Number(clazz.id) : -1,
+      periodId: period ? Number(period.id) : -1,
+      subjectId: subject ? Number(subject.id) : -1,
+    },
+    skip: !clazz || !period || !subject,
+    fetchPolicy: 'network-only',
+  })
 
   const {
     data: dataNote,
@@ -74,6 +92,11 @@ const QuarterlyCompNotes = () => {
     })
   })
 
+  const competences =
+    dataCompetence?.competences
+      ?.flatMap((competence) => competence.items)
+      .sort((a, b) => a.numberOrder - b.numberOrder) ?? []
+
   return (
     <div className="flex flex-col w-full px- md:!px-0">
       <div>
@@ -81,7 +104,10 @@ const QuarterlyCompNotes = () => {
           <div id="displayStudentName" className="">
             {' '}
           </div>
-          <PageHeader title={m['sidebar.marks.quarterlyCompNotes']()} />
+          <PageHeader
+            title={m.quarterlyCompNoteInput()}
+            titleClassName="text-sm md:text-xl "
+          />
         </div>
 
         <div className="flex flex-col md:flex-row gap-0.5">
@@ -174,8 +200,49 @@ const QuarterlyCompNotes = () => {
           period &&
           subject && (
             <div className="w-full">
+              <aside
+                className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-4 text-blue-900 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-100"
+                aria-label={m.label_competenceReminderTitle()}
+              >
+                <div className="mb-3 flex items-center gap-2 font-semibold">
+                  <Info size={18} aria-hidden="true" />
+                  <h2>{m.label_competenceReminderTitle()}</h2>
+                </div>
+                {competenceError ? (
+                  <p role="alert">{m.label_competenceReminderError()}</p>
+                ) : loadingCompetence ? (
+                  <p>{m.label_competenceReminderLoading()}</p>
+                ) : competences.length > 0 ? (
+                  <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                    {competences.map((competence) => (
+                      <li
+                        key={competence.id ?? competence.numberOrder}
+                        className="rounded-md bg-white/70 p-2 dark:bg-slate-900/40"
+                      >
+                        <strong>
+                          {m.label_competenceNumber({
+                            no: competence.numberOrder,
+                          })}
+                          : :
+                        </strong>{' '}
+                        {competence.competence}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{m.label_competenceReminderEmpty()}</p>
+                )}
+              </aside>
+
               {loadingNote ? (
-                <LoadingSpinner />
+                <div style={{ marginTop: 20 }}>
+                  <LoadingTable
+                    rows={8}
+                    columns={6}
+                    showAvatar={false}
+                    label={m.loading_notes()}
+                  />
+                </div>
               ) : (
                 <div className="card" style={{ marginTop: 20 }}>
                   <QuarterlyCompNoteAdd

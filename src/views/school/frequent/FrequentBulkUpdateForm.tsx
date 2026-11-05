@@ -56,7 +56,7 @@ const FrequentBulkUpdateForm: FC<Props> = ({
         })
 
       if (items.length === 0) {
-        toast.error('Données invalides, rien à enregistrer')
+        toast.error(m.invalid_dataNothingToSave())
         return
       }
 
@@ -67,7 +67,7 @@ const FrequentBulkUpdateForm: FC<Props> = ({
         },
       })
         .then(async () => {
-          toast.success(`Répartition des enseignants enregistrée`, {
+          toast.success(m.frequent_update_success(), {
             ...TOAST_OPTIONS,
           })
           messageService.sendMessage('classDistribution', true)
@@ -166,30 +166,15 @@ const FrequentBulkUpdateForm: FC<Props> = ({
                         </td>
                         <td>
                           <AppField name={`items[${index}].birthDate`}>
-                            {(field) => <field.DatePicker label="" />}
-                          </AppField>
-                        </td>
-
-                        {/* <td>
-                          <AppField name={`items[${index}].birthDate`}>
                             {(field) => (
-                              <input
-                                type="date"
-                                value={
-                                  field.state.value
-                                    ? dayjs(field.state.value).format(
-                                        'YYYY-MM-DD',
-                                      )
-                                    : ''
-                                }
-                                onChange={(e) =>
-                                  field.handleChange(new Date(e.target.value))
-                                }
-                                className="form-control"
+                              <field.DatePicker
+                                label=""
+                                className="mb-0 mt-0"
+                                borderRadius="0"
                               />
                             )}
                           </AppField>
-                        </td> */}
+                        </td>
 
                         <td>
                           <AppField name={`items[${index}].birthplace`}>

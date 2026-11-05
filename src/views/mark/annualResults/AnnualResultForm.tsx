@@ -18,6 +18,7 @@ import {
   useClassesBySchoolYearQuery,
   useCouncilDecisionsQuery,
 } from '@/gql/graphql'
+import { m } from '@/paraglide/messages'
 
 interface AnnualResultFormProps extends BaseFormProps {
   nextSchoolYearId?: number
@@ -72,12 +73,10 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
     },
   })
 
-  //console.log(annualResults.map(value => ({ ...value, councilDecisionId: value.councilDecision?.id })))
-
   const { fields } = useFieldArray({ control, name: 'items' })
 
   const onSubmit: SubmitHandler<FormValues> = (values) => {
-    //formatting items
+    // formatting items
     const items = values.items
       .filter((item: any) => itemValid(item))
       .map((item: any) => {
@@ -110,13 +109,13 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
       },
     })
       .then(async ({ data }) => {
-        //form.resetFields();
+        // form.resetFields();
         toast.success(`Résultats annuels enregistrés`, {
           ...TOAST_OPTIONS,
         })
         document.getElementById('displayStudentName')!.innerText = ''
         messageService.sendMessage('annualResult', true)
-        //history.push('/sequential-notes');
+        // history.push('/sequential-notes');
       })
       .catch((error) => {
         toast.error(
@@ -159,13 +158,13 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
             <tr>
               <th style={{ width: '10px' }}>#</th>
               <th>{t('label-registrationNumber')}</th>
-              <th style={{ width: '25%' }}>{t('label-names')}</th>
+              <th style={{ width: '25%' }}>{m.label_names()}</th>
               <th style={{ width: '10px' }}>{t('label-average')}</th>
               <th style={{ width: '10px' }}>{t('label-ranking')}</th>
               <th>{t('label-observation')}</th>
               <th>{t('label-councilDecision')}</th>
               <th>{t('label-newBranch')}</th>
-              <th>{t('label-newClass')}</th>
+              <th>{m.label_newClass()}</th>
             </tr>
           </thead>
           <tbody>
@@ -239,10 +238,17 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
                       setValue(`items.${index}.councilDecisionId`, val)
                     }
                     options={data ? data.councilDecisions : undefined}
-                    getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option: any) => option.name}
+                    getOptionValue={(option: any) => option.id}
                     className="inline border-0"
                     loading={loading}
+                    styles={{
+                      control: (provided: any) => ({
+                        ...provided,
+                        borderRadius: '0px',
+                        borderColor: 'none',
+                      }),
+                    }}
                   />
                   {/* <LiveView
                                     document={councilDecisionSubscription}
@@ -276,9 +282,16 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
                     control={control}
                     onChange={(val) => setValue(`items.${index}.branchId`, val)}
                     options={dataBranches ? dataBranches.branches : undefined}
-                    getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option: any) => option.name}
+                    getOptionValue={(option: any) => option.id}
                     className="inline border-0"
+                    styles={{
+                      control: (provided: any) => ({
+                        ...provided,
+                        borderRadius: '0px',
+                        borderColor: 'none',
+                      }),
+                    }}
                   />
                 </td>
 
@@ -288,9 +301,16 @@ const AnnualResultForm: React.FC<AnnualResultFormProps> = ({
                     control={control}
                     onChange={(val) => setValue(`items.${index}.classId`, val)}
                     options={dataClasses ? dataClasses.clazzes : undefined}
-                    getOptionLabel={(option) => option.name}
-                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option: any) => option.name}
+                    getOptionValue={(option: any) => option.id}
                     className="inline border-0"
+                    styles={{
+                      control: (provided: any) => ({
+                        ...provided,
+                        borderRadius: '0px',
+                        borderColor: 'none',
+                      }),
+                    }}
                   />
                 </td>
               </tr>

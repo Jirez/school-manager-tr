@@ -95,3 +95,9 @@ query ClassesWithAnnualReportCard($schoolYear: Int!) {
     ...classFields
   }
 }
+
+mutation ClassToggleCompetenceClass($id: Int!) {
+  clazz: classToggleCompetenceClass(id: $id) {
+    ...classFields
+  }
+}

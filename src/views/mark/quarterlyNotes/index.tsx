@@ -19,6 +19,8 @@ import {
   useQuarterlyNotesQuery,
   useSubjectsForNotesQuery,
 } from '@/gql/graphql'
+import { m } from '@/paraglide/messages'
+import LoadingTable from '#/@core/components/ui/table/loading-table'
 
 const QuarterlyNotes = () => {
   const [clazz, setClazz] = useState<{ [key: string]: any }>()
@@ -74,8 +76,6 @@ const QuarterlyNotes = () => {
       }
     })
   })
-
-  //console.log(JSON.parse(localStorage.getItem(TokenStorage.authUserKey())!))
 
   return (
     <div className="flex flex-col w-full px-1 md:!px-0">
@@ -178,7 +178,14 @@ const QuarterlyNotes = () => {
           subject && (
             <div className="w-full">
               {loadingNote ? (
-                <LoadingSpinner />
+                <div style={{ marginTop: 20 }}>
+                  <LoadingTable
+                    rows={8}
+                    columns={5}
+                    showAvatar={false}
+                    label={m.loading_notes()}
+                  />
+                </div>
               ) : (
                 <div className="card" style={{ marginTop: 20 }}>
                   <QuarterlyNoteAdd

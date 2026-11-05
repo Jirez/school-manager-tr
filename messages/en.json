@@ -2077,5 +2077,16 @@
   "competences_definition": "Definition of competences",
   "student_bulk_update": "Student bulk update",
   "update_student": "Update student",
-  "new_inscription": "New inscription"
+  "new_inscription": "New inscription",
+  "invalid_dataNothingToSave": "Invalid data, nothing to save",
+  "frequent_update_success": "Student update successful",
+  "frequent_update_error": "Failed to update students: {error}",
+  "label_annualCompAverage": "Annual Average by Competence",
+  "quarterlyCompNoteInput": "Quarterly Competence Note Input",
+  "label_competenceReminderTitle": "Competence reminder",
+  "label_competenceReminderLoading": "Loading competences...",
+  "label_competenceReminderError": "Unable to load the competences.",
+  "label_competenceReminderEmpty": "No competences are defined for this selection.",
+  "label_competenceNumber": "Competence {no}",
+  "loading_notes": "Loading notes..."
 }

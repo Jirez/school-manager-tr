@@ -41,6 +41,7 @@ interface Props<TFieldValues extends FieldValues> extends DateTimePickerProps {
   control: Control<TFieldValues>
   className?: string
   showIcon?: boolean
+  borderRadius?: string | number
 }
 
 const DatePickerContainer = styled.div<{ $error?: boolean }>`
@@ -73,7 +74,10 @@ const StyledLabel = styled(Label)<{ $error?: boolean }>`
   `}
 `
 
-const InputWrapper = styled.div<{ $error?: boolean }>`
+const InputWrapper = styled.div<{
+  $error?: boolean
+  $borderRadius?: string | number
+}>`
   position: relative;
   width: 100%;
 
@@ -86,7 +90,7 @@ const InputWrapper = styled.div<{ $error?: boolean }>`
     color: #2c3e50;
     background-color: #ffffff;
     border: 1px solid ${({ $error }) => ($error ? '#ea5455' : '#d0d7de')};
-    border-radius: 8px;
+    border-radius: ${({ $borderRadius }) => $borderRadius || '8px'};
     transition: all 0.2s ease;
     outline: none;
 
@@ -205,13 +209,14 @@ const StyledFormFeedback = styled(FormFeedback)`
   }
 `
 
-const DatePicker = <TFieldValues extends FieldValues,>({
+const DatePicker = <TFieldValues extends FieldValues>({
   name,
   label,
   required = false,
   control,
   className = 'mb-1',
   showIcon = true,
+  borderRadius,
   ...props
 }: Props<TFieldValues>) => {
   const {
@@ -338,7 +343,7 @@ const DatePicker = <TFieldValues extends FieldValues,>({
           {required ? <Required /> : ''}
         </StyledLabel>
       )}
-      <InputWrapper $error={hasError}>
+      <InputWrapper $error={hasError} $borderRadius={borderRadius}>
         {showIcon && (
           <IconWrapper $error={hasError}>
             <Calendar size={18} />
