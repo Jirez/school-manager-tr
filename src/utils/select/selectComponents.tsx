@@ -51,6 +51,15 @@ export const periodOptions = (props: any) => (
   </components.Option>
 )
 
+export const classicOptions = (props: any) => (
+  <components.Option {...props}>
+    <ComboboxItem
+      name={props.data.name}
+      // description={props.data.period ? props.data.period.label : ''}
+    />
+  </components.Option>
+)
+
 export const levelOptions = (props: any) => (
   <components.Option {...props}>
     <DetailedComboboxItem

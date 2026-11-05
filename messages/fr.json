@@ -2092,5 +2092,6 @@
   "label_competenceReminderError": "Impossible de charger les compétences.",
   "label_competenceReminderEmpty": "Aucune compétence n'est définie pour cette sélection.",
   "label_competenceNumber": "Compétence {no}",
-  "loading_notes": "Chargement des notes..."
+  "loading_notes": "Chargement des notes...",
+  "select_class_before": "Sélectionnez d'abord une classe."
 }

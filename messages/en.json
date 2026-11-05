@@ -2088,5 +2088,6 @@
   "label_competenceReminderError": "Unable to load the competences.",
   "label_competenceReminderEmpty": "No competences are defined for this selection.",
   "label_competenceNumber": "Competence {no}",
-  "loading_notes": "Loading notes..."
+  "loading_notes": "Loading notes...",
+  "select_class_before": "Please select a class first."
 }

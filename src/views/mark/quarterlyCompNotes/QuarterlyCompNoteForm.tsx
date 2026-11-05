@@ -116,21 +116,33 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       {/* Scrollable table container with sticky header */}
-      <div className="tableFixHead">
-        <Table className="table table-bordered table-condensed table-hover responsive tableur">
+      <div className="tableFixHead rounded-lg border border-slate-200 dark:border-slate-700">
+        <Table className="table table-bordered table-condensed table-hover responsive tableur mb-0 min-w-[760px]">
           <thead>
             <tr>
-              <th style={{ width: '10px' }} className="d-none d-md-block">
+              <th
+                style={{ width: '44px' }}
+                className="d-none d-md-table-cell bg-slate-50 dark:bg-slate-800"
+              >
                 #
               </th>
-              <th className="text-xs md:text-sm" style={{ width: '20px' }}>
+              <th
+                className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300 md:text-sm"
+                style={{ width: '120px' }}
+              >
                 {t('label-registrationNumber')}
               </th>
-              <th className="text-xs md:text-sm" style={{ width: '35%' }}>
+              <th
+                className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300 md:text-sm"
+                style={{ width: '35%' }}
+              >
                 {m.label_names()}
               </th>
               {competences.map((competence: any) => (
-                <th key={competence.id} className="text-xs md:text-sm">
+                <th
+                  key={competence.id}
+                  className="bg-slate-50 text-center text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-200 md:text-sm"
+                >
                   <span className="d-none d-md-inline">Compétence </span>
                   <span className="d-inline d-md-none">Comp.</span>
                   <span>{competence.numberOrder}</span>
@@ -165,7 +177,7 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
                 >
                   {index + 1}
                 </td>
-                <td>
+                <td className="align-middle">
                   <SimpleInput
                     {...register(`items.${index}.registrationNumber`)}
                     readOnly={true}
@@ -173,7 +185,7 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
                   />
                 </td>
 
-                <td>
+                <td className="align-middle">
                   <SimpleInput
                     {...register(`items.${index}.studentId`)}
                     readOnly={true}
@@ -202,11 +214,11 @@ const QuarterlyCompNoteForm: React.FC<QuarterlyNoteFormProps> = ({
         </Table>
       </div>
 
-      <div className="flex justify-end mt-2 mb-2">
+      <div className="flex justify-end border-t border-slate-100 px-3 py-3 dark:border-slate-700 sm:px-4">
         <Button
           loading={props.loading}
           color="primary"
-          className="round flex items-center gap-0.5 md:!gap-1"
+          className="round flex min-h-10 items-center gap-1 px-4 shadow-sm"
         >
           <Save size={15} />
           {t('label-save')}
