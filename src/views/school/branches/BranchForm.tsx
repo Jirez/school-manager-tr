@@ -46,8 +46,7 @@ import {
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { m } from '@/paraglide/messages'
 import { useSubjectBranch } from './useSubjectBranch'
-
-const config = await fetch('/configuration.json').then((res) => res.json())
+import config from '@/configuration'
 
 interface BranchFormProps extends BaseFormProps {
   branch?: BranchType

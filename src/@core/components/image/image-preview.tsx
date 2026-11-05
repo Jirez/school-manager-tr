@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { X } from 'react-feather'
+import config from '@/configuration'
 // import { useImage } from "react-image";
 
 // import Image from './Image';
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 const DeleteButton = styled.button`
   position: absolute;

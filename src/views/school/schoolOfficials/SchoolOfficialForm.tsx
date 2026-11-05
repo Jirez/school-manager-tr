@@ -26,8 +26,7 @@ import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { m } from '@/paraglide/messages'
-
-const config = await fetch('/configuration.json').then((res) => res.json())
+import config from '@/configuration'
 
 interface SchoolOfficialFormProps extends BaseFormProps {
   schoolOfficial?: SchoolOfficialType

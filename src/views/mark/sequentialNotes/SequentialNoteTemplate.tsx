@@ -9,8 +9,7 @@ import ErrorComponent from '@/@core/components/ui/error-component'
 import { ClassCreatedDocument, useClassesForNoteQuery } from '@/gql/graphql'
 import { useTitle } from 'ahooks'
 import ComponentSpinner from '@/@core/components/spinner/component-loader'
-
-const config = await fetch('/configuration.json').then((res) => res.json())
+import config from '@/configuration'
 
 const fadeIn = keyframes`
   from {

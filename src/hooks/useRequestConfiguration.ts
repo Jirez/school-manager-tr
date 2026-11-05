@@ -1,10 +1,9 @@
-import axios from 'axios'
+import configuration from '@/configuration'
 import { useRequest } from 'ahooks'
-import type { TConfiguration } from '@/utils/types'
 
 const useRequestConfiguration = () => {
   function loadConfiguration() {
-    return axios.get<TConfiguration>('/configuration.json')
+    return Promise.resolve({ data: configuration })
   }
 
   return useRequest(loadConfiguration)

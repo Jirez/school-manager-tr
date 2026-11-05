@@ -2,8 +2,7 @@ import { lazy, useEffect, useState } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import { Input as BaseInput } from 'reactstrap'
-import { Form } from 'reactstrap'
+import { Input as BaseInput, Form } from 'reactstrap'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 
@@ -48,6 +47,7 @@ import {
 import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
+import config from '@/configuration'
 
 const ProductCategoryAdd = lazy(
   () => import('@/views/sale/product/category/ProductCategoryAdd'),
@@ -56,8 +56,6 @@ const ProductCategoryAdd = lazy(
 interface TuitionFormProps extends BaseFormProps {
   product?: TuitionType
 }
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 const TuitionForm: React.FC<TuitionFormProps> = ({
   product,
@@ -116,7 +114,7 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
       isDeliverable: product ? product.isDeliverable : false,
       numberOrder: product ? product.numberOrder : '',
     },
-    //@ts-ignore
+    // @ts-ignore
     resolver: yupResolver(tuitionValidation),
   })
 
@@ -172,7 +170,6 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
           toast.success(`Stock ${data.product.name} enregistré`, {
             ...TOAST_OPTIONS,
           })
-          //console.log(data.product)
           props.refetch?.()
 
           if (props.popover) {
@@ -252,7 +249,7 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
     const dataSource = new RestDataSource()
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('picturePath', config?.uploadDir || 'C:/Temp/')
+    formData.append('picturePath', config.uploadDir || 'C:/Temp/')
 
     const callback = async (datum: any) => {
       toast.success('Importation terminée avec succès', { ...TOAST_OPTIONS })
@@ -288,8 +285,8 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
     const data = file.toString().replace(/^data:image\/jpeg;base64,/, '')
     formData.append('imageValue', data)
     formData.append('picturePath', config?.uploadDir || 'C:/Temp/')
-    //formData.append('title', "Un test en béton");
-    //formData.append('details', "details");
+    // formData.append('title', "Un test en béton");
+    // formData.append('details', "details");
 
     const callback = async (datum: any) => {
       toast.info('Image sauvegardée avec succès')
@@ -597,7 +594,7 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
                       prepend={
                         <ArrowUpRight size={14} className="text-success" />
                       }
-                      //description={t("label-saleAccountDesc")}
+                      // description={t("label-saleAccountDesc")}
                     />
                   )}
                 </LiveView>
@@ -631,7 +628,7 @@ const TuitionForm: React.FC<TuitionFormProps> = ({
                       prepend={
                         <ArrowDownLeft size={14} className="text-danger" />
                       }
-                      //description={t("label-purchaseAccountDesc")}
+                      // description={t("label-purchaseAccountDesc")}
                     />
                   )}
                 </LiveView>

@@ -47,6 +47,7 @@ import FormSection from '@/@core/components/ui/forms/form-section'
 import StickyActions from '@/@core/components/ui/forms/sticky-actions'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import NumericInput from '@/@core/components/ui/forms/numeric-input'
+import config from '@/configuration'
 
 const ProductCategoryAdd = lazy(
   () => import('@/views/sale/product/category/ProductCategoryAdd'),
@@ -55,8 +56,6 @@ const ProductCategoryAdd = lazy(
 interface ArticleFormProps extends BaseFormProps {
   product?: ArticleType
 }
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 const ArticleForm: React.FC<ArticleFormProps> = ({
   product,

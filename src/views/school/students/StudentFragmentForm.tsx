@@ -72,7 +72,6 @@ export const genderOptions = [
   { label: m.label_female(), value: 'FEMALE' },
 ]
 
-// const config = await fetch('/configuration.json').then((res) => res.json())
 
 const StyledInputGroup = styled(InputGroup)`
   display: flex;

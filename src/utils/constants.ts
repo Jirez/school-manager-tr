@@ -1,8 +1,8 @@
 import type { ToastOptions } from 'react-toastify'
 import { Slide } from 'react-toastify'
+import config from '@/configuration'
 
 // import config from '../../public/configuration.json';
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 export const BASE_REPORT_URL = `${config?.httpProtocol}://${config.serverAddress}:${config.serverPort}/api`
 // **************** ROUTE CONSTANT START **************************

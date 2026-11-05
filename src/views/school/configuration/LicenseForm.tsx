@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import type { FC } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { Form } from 'reactstrap'
@@ -14,6 +14,7 @@ import {
   EncodeLicenseDocument,
   LoadLicenseFromFileDocument,
 } from '@/gql/graphql'
+import config from '@/configuration'
 
 interface LicenseFormProps {
   action?: (variables: any) => Promise<any>
@@ -23,23 +24,8 @@ interface LicenseFormProps {
 
 const LicenseForm: FC<LicenseFormProps> = (props) => {
   const [values, setValues] = useState<{ [key: string]: any }>({})
-  const [config, setConfig] = useState<any>(null)
-  const [isLoading, setIsLoading] = useState(true)
   const client = useApolloClient()
   const { enterpriseId } = useAuthentication()
-
-  useEffect(() => {
-    fetch('/configuration.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setConfig(data)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        console.error('Failed to load configuration:', err)
-        setIsLoading(false)
-      })
-  }, [])
 
   const encode = async (json: any) => {
     const { data } = await client.query({
@@ -68,11 +54,6 @@ const LicenseForm: FC<LicenseFormProps> = (props) => {
 
     if (!values.file) {
       toast.error('Veuillez fournir le fichier contenant la licence')
-      return
-    }
-
-    if (!config) {
-      toast.error('Configuration non chargée. Veuillez réessayer.')
       return
     }
 

@@ -1,6 +1,7 @@
 //import React from 'react';
 import Axios from 'axios'
 import type { Method, ResponseType } from 'axios'
+import config from '@/configuration'
 //import config from '../../public/configuration.json';
 //import {connect} from "react-redux";
 
@@ -10,8 +11,6 @@ import type { Method, ResponseType } from 'axios'
     apachePort: 80,
     picturePath: '/root/'
 };*/
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 class RestDataSource {
   private locale: any

@@ -33,6 +33,7 @@ import {
   SkuText,
 } from '@/@core/components/ui/table/table.style'
 import { createAppColumnHelper } from '#/hooks/table'
+import config from '@/configuration'
 
 const columnHelper = createAppColumnHelper<ProductType>()
 
@@ -68,8 +69,6 @@ const TextWithPicture: React.FC<TextWithPictureProps> = ({
     </div>
   )
 }
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 export function useTableColumns(
   modal?: NiceModalHandler,

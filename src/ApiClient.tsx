@@ -20,13 +20,12 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
 
 import possibleTypes from './possibleTypes.json'
+import config from './configuration'
 import TokenStorage from '@/utils/TokenStorage'
 import { concat } from '@/utils/helpers'
 // import useConfiguration from '@hooks/useConfiguration';
 import type { TConfiguration } from '@/utils/types'
 // import {messageService} from "./util";
-
-const json = await fetch('/configuration.json').then((res) => res.json())
 
 // ** Browser-close logout detection **
 // If a previous session flagged a pending logout and sessionStorage is empty
@@ -227,7 +226,7 @@ function configureApolloClient(config?: TConfiguration) {
 export function useClient() {
   const [client, setClient] = useState<ApolloClient<NormalizedCacheObject>>()
   // const { data, error, loading } = useRequestConfiguration()
-  const config = json // useConfiguration('/configuration.json')
+  // const config = useConfiguration('/configuration.json')
   // console.log(import.meta.env.)
 
   useEffect(() => {

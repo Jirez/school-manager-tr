@@ -19,8 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import Loader from '@/@core/components/spinner/loader'
 import { Outlet } from '@tanstack/react-router'
-
-const config = await fetch('/configuration.json').then((res) => res.json())
+import config from '@/configuration'
 
 const App = () => {
   const { logout } = useLogout()
@@ -41,7 +40,7 @@ const App = () => {
   }
 
   useIdleTimer({
-    timeout: config?.timeout,
+    timeout: config.timeout,
     debounce: 250,
     onIdle,
     crossTab: true,

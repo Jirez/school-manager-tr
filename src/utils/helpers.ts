@@ -1,10 +1,9 @@
 import type { EventEmitter } from 'ahooks/lib/useEventEmitter'
-import axios from 'axios'
 import _ from 'lodash'
-import type { TConfiguration } from './types'
 import { useDebounceFn } from 'ahooks'
 import type { RefObject } from 'react'
 import { m } from '@/paraglide/messages'
+import configuration from '@/configuration'
 // import Swal from "sweetalert2";
 
 export const unusedChars = (
@@ -144,9 +143,7 @@ export const emptyStringToNull = (v: string) =>
   v === '' || Number.isNaN(v) ? undefined : v
 
 export async function getConfiguration() {
-  const { data } = await axios.get<TConfiguration>('/configuration.json')
-
-  return data
+  return configuration
 }
 
 export const extractNodeFromEdges = (edges: any[]) => {

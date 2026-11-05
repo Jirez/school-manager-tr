@@ -12,6 +12,7 @@ import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import RestDataSource from '@/utils/RestDataSource'
 import { TOAST_OPTIONS } from '@/utils/constants'
+import config from '@/configuration'
 
 interface PictureManagerProps {
   picture?: string | null
@@ -21,8 +22,6 @@ interface PictureManagerProps {
   className?: string
   hFull?: boolean
 }
-
-const config = await fetch('/configuration.json').then((res) => res.json())
 
 const PictureManager: FC<PictureManagerProps> = ({
   picture,
