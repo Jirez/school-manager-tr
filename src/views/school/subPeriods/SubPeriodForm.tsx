@@ -12,7 +12,7 @@ import dayjs from 'dayjs'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { subPeriodValidation } from '@/views/school/subPeriods/subPeriod.validation'
-// import type { SubPeriodSchemaType } from '@/views/school/subPeriods/subPeriod.validation'
+import type { SubPeriodSchemaType } from '@/views/school/subPeriods/subPeriod.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
   PeriodCreatedDocument,
@@ -87,7 +87,7 @@ const SubPeriodForm: FC<SubPeriodFormProps> = ({
       numberOrder: subPeriod?.numberOrder || '',
       periodId: subPeriod ? subPeriod.period : null,
       coefficient: subPeriod?.coefficient || 1,
-    } as any,
+    } as SubPeriodSchemaType,
     validators: {
       onChange: subPeriodValidation,
     },
@@ -117,7 +117,6 @@ const SubPeriodForm: FC<SubPeriodFormProps> = ({
             messageService.sendMessage('subPeriod', result.subPeriod)
             props.onModalClose?.()
           }
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           if (meta.close) {
             modal?.hide()
           }

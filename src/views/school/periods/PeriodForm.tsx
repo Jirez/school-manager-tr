@@ -13,6 +13,7 @@ import dayjs from 'dayjs'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
 import { periodSchema } from '@/views/school/periods/period.validation'
+import type { PeriodSchemaType } from '@/views/school/periods/period.validation'
 // import type { PeriodSchemaType } from '@/views/school/periods/period.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
@@ -51,9 +52,9 @@ const PeriodForm: FC<PeriodFormProps> = ({
     variables: { id: enterpriseId },
   })
 
-  const [selectedSchoolYearId, setSelectedSchoolYearId] = useState<number | undefined>(
-    period?.schoolYear?.id == null ? undefined : Number(period.schoolYear.id),
-  )
+  const [selectedSchoolYearId, setSelectedSchoolYearId] = useState<
+    number | undefined
+  >(period?.schoolYear?.id == null ? undefined : Number(period.schoolYear.id))
 
   const usedOrders = new Set(
     (periodsData?.periods ?? [])
@@ -83,7 +84,7 @@ const PeriodForm: FC<PeriodFormProps> = ({
       numberOrder: period?.numberOrder || '',
       schoolYearId: period ? period.schoolYear : null,
       coefficient: period?.coefficient || 1,
-    } as any,
+    } as PeriodSchemaType,
     validators: {
       onChange: periodSchema,
     },

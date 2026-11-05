@@ -6,10 +6,8 @@ import { useAuthentication } from '@/hooks/useAuthentication'
 import dayjs from 'dayjs'
 import { Form } from 'reactstrap'
 import { formatError } from '@/utils/ErrorHelper'
-import {
-  schoolYearSchema,
-  type SchoolYearSchemaType,
-} from '@/views/school/schoolYears/SchoolYear.validation'
+import { schoolYearSchema } from '@/views/school/schoolYears/SchoolYear.validation'
+import type { SchoolYearSchemaType } from '@/views/school/schoolYears/SchoolYear.validation'
 import { messageService } from '@/utils/message.service'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import {
@@ -27,6 +25,7 @@ import FormSection from '@/@core/components/ui/forms/form-section'
 import ToggleOption from '@/@core/components/ui/forms/toggle-option'
 import { defaultMeta, useAppForm } from '#/hooks/form/form'
 import { useSelector } from '@tanstack/react-form'
+import { m } from '#/paraglide/messages'
 
 interface SchoolYearFormProps extends BaseFormProps {
   schoolYear?: SchoolYearType
@@ -45,8 +44,8 @@ const SchoolYearForm: FC<SchoolYearFormProps> = ({
   const { enterpriseId } = useAuthentication()
 
   const perioTypeOptions = [
-    { value: 'TRIMESTER', label: t('label-trimester') },
-    { value: 'SEMESTER', label: t('label-semester') },
+    { value: 'TRIMESTER', label: m.label_trimester() },
+    { value: 'SEMESTER', label: m.label_semester() },
   ]
 
   const {

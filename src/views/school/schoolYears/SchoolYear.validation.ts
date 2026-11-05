@@ -23,16 +23,18 @@ export const schoolYearSchema = z.object({
   current: z.boolean(),
   id: z.number().optional(),
   ageMin: z.coerce
-    .number()
+    .number<string | null>()
     .transform((v) => (Number.isNaN(v) ? null : v))
     .nullable()
     .optional(),
-  //.refine((val) => !val || val > 0, { message: 'Must be positive' }),
+  // .refine((val) => !val || val > 0, { message: 'Must be positive' }),
   ageMax: z.coerce
-    .number()
+    .number<string | null>()
+    .transform((v) => (Number.isNaN(v) ? null : v))
     .nullable()
     .optional()
-    .refine((val) => !val || val > 0, { message: 'Must be positive' }),
+    .refine((val) => !val || val > 0, { message: 'Must be positive' })
+    .pipe(z.number().min(5).optional()),
   startDate: z.any(),
   endDate: z.any(),
 })

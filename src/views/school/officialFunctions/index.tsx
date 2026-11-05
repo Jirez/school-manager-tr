@@ -4,7 +4,6 @@ import Toolbar from '@/@core/components/base-table/toolbar'
 import Navs from '@/@core/components/navs/navs'
 import { OfficialLinks } from '@/navigation/links'
 import Scrollbar from '@/@core/components/ui/scrollbar'
-import { useTranslation } from 'react-i18next'
 import OfficialFunctionModal from '@/views/school/officialFunctions/OfficialFunctionModal'
 import {
   OfficialTypeCreatedDocument,
@@ -15,12 +14,12 @@ import { useTableColumns } from './officialFunctionModel'
 import { useTable } from '@/@core/components/react-table/useTable'
 import CustomTable from '@/@core/components/react-table/custom-table'
 import { useLiveSubscription } from '#/hooks/useLiveSubscription'
+import { m } from '@/paraglide/messages'
 
 const OfficialFunctions = () => {
   const { enterpriseId } = useAuthentication()
   const modal = useModal(OfficialFunctionModal)
-  const { t } = useTranslation()
-  useTitle(t('sidebar.school.liableTypes'))
+  useTitle(m['sidebar.school.liableTypes']())
 
   const { data, error, loading, subscribeToMore, refetch } =
     useOfficialTypesQuery()
@@ -46,7 +45,7 @@ const OfficialFunctions = () => {
     <Scrollbar className="flex flex-col w-full">
       <Navs links={OfficialLinks} />
       <Toolbar
-        title={t('sidebar.school.liableTypes')}
+        title={m['sidebar.school.liableTypes']()}
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
         actionLabel="action.add_officialFunction"

@@ -1,22 +1,22 @@
-import type { JwtPayload } from "jwt-decode";
-import { jwtDecode } from "jwt-decode";
+import type { JwtPayload } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 
-const key = "school-token"; // token key
+const key = 'school-token' // token key
 
 export default {
   write: (token: string): void => localStorage.setItem(key, token),
   read: (): string | null => localStorage.getItem(key),
   delete: (): void => localStorage.removeItem(key),
-  authUserKey: (): string => "schoolAuthUser",
+  authUserKey: (): string => 'schoolAuthUser',
   isTokenExpired: (token: string | null): boolean => {
     if (!token) {
-      return true;
+      return true
     }
     try {
-      const decoded = jwtDecode<JwtPayload>(token);
-      return decoded.exp! <= Date.now() / 1000;
+      const decoded = jwtDecode<JwtPayload>(token)
+      return decoded.exp! <= Date.now() / 1000
     } catch (err) {
-      return false;
+      return true
     }
   },
-};
+}

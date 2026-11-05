@@ -1,7 +1,7 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { defineConfig } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
-import * as path from 'path'
+import * as path from 'node:path'
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
@@ -146,27 +146,6 @@ const config = defineConfig({
     port: 3001,
     host: '0.0.0.0',
   },
-  /* resolve: {
-      alias: {
-        "@src": path.resolve(__dirname, "src"),
-        "@assets": path.resolve(__dirname, "src/@core/assets"),
-        "@myAssets": path.resolve(__dirname, "src/assets"),
-        "@components": path.resolve(__dirname, "src/@core/components"),
-        "@layouts": path.resolve(__dirname, "src/@core/layouts"),
-        "@store": path.resolve(__dirname, "src/redux"),
-        "@styles": path.resolve(__dirname, "src/@core/scss"),
-        "@configs": path.resolve(__dirname, "src/configs"),
-        "@utils": path.resolve(__dirname, "src/utils"),
-        "@hooks": path.resolve(__dirname, "src/hooks"),
-        "@context": path.resolve(__dirname, "src/context"),
-        "@myLayouts": path.resolve(__dirname, "src/layouts"),
-        "@navigation": path.resolve(__dirname, "src/navigation"),
-        "@views": path.resolve(__dirname, "src/views"),
-        "@auth": path.resolve(__dirname, "src/@core/auth"),
-        "@queries": path.resolve(__dirname, "src/queries"),
-        "@gql": path.resolve(__dirname, "src/gql"),
-      },
-    }, */
 })
 
 export default config

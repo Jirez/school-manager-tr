@@ -5,10 +5,8 @@ import { Form } from 'reactstrap'
 import type { NiceModalHandler } from '@ebay/nice-modal-react'
 import { messageService } from '@/utils/message.service'
 import { formatError } from '@/utils/ErrorHelper'
-import {
-  officialFunctionValidation,
-  type OfficialFunctionSchemaType,
-} from '@/views/school/officialFunctions/officialFunction.validation'
+import { officialFunctionValidation } from '@/views/school/officialFunctions/officialFunction.validation'
+// import type { OfficialFunctionSchemaType } from '@/views/school/officialFunctions/officialFunction.validation'
 import { TOAST_OPTIONS } from '@/utils/constants'
 import { Type, Hash, FileText, Activity, CheckCircle } from 'lucide-react'
 import FormSection from '@/@core/components/ui/forms/form-section'
@@ -36,7 +34,7 @@ const OfficialFunctionForm: FC<OfficialFunctionFormProps> = ({
         prefix: officialFunction?.prefix || '',
         active: officialFunction ? officialFunction.active : true,
         note: officialFunction?.note || '',
-      } as OfficialFunctionSchemaType,
+      },
       validators: {
         onChange: officialFunctionValidation,
       },

@@ -16,8 +16,8 @@ export const periodSchema = z.object({
   }),
   startDate: z.array(z.date()).or(z.date()),
   endDate: z.array(z.date()).or(z.date()),
-  numberOrder: z.coerce.number().min(1).max(3).positive().int(),
-  coefficient: z.coerce.number().optional().nullable(),
+  numberOrder: z.coerce.number<string>().min(1).max(3).positive().int(),
+  coefficient: z.coerce.number<string | number | null>().optional().nullable(),
   message: z.string().transform(emptyStringToNull).optional().nullable(),
   message2: z.string().transform(emptyStringToNull).optional().nullable(),
 })

@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 
 const StyledSection = styled(motion.div)`
   background: white;
-  border-radius: 10px;
+  border-radius: 6px;
   border: 1px solid rgba(115, 103, 240, 0.15);
   padding: 0.95rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
@@ -74,7 +74,7 @@ const TitleContent = styled.div`
 `
 
 const Title = styled.h3`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #2c3e50;
   margin: 0;

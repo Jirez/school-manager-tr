@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import {
   ApolloClient,
   split,
-  createHttpLink,
+  // createHttpLink,
   InMemoryCache,
   makeVar,
+  HttpLink,
 } from '@apollo/client'
 import type {
   ServerError,
@@ -15,11 +16,11 @@ import type {
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { createClient } from 'graphql-ws'
 import { setContext } from '@apollo/client/link/context'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { onError } from '@apollo/client/link/error'
 
 import possibleTypes from './possibleTypes.json'
 import TokenStorage from '@/utils/TokenStorage'
-import { getMainDefinition } from '@apollo/client/utilities'
-import { onError } from '@apollo/client/link/error'
 import { concat } from '@/utils/helpers'
 // import useConfiguration from '@hooks/useConfiguration';
 import type { TConfiguration } from '@/utils/types'
@@ -118,7 +119,7 @@ function configureApolloClient(config?: TConfiguration) {
 
   // const languages = import.meta.glob('/configuration.json')
 
-  const httpLink = createHttpLink({
+  const httpLink = new HttpLink({
     uri: `${config?.httpProtocol}://${config?.serverAddress}:${config?.serverPort}/graphql`,
     // credentials: 'same-origin'
   })
@@ -127,7 +128,7 @@ function configureApolloClient(config?: TConfiguration) {
     createClient({
       url: `${config?.wsProtocol}://${config?.serverAddress}:${config?.serverPort}/graphql`,
       connectionParams: {
-        authToken: TokenStorage.read(),
+        // authToken: TokenStorage.read(),
       },
     }),
   )
