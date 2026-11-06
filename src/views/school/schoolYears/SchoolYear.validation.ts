@@ -31,10 +31,9 @@ export const schoolYearSchema = z.object({
   ageMax: z.coerce
     .number<string | null>()
     .transform((v) => (Number.isNaN(v) ? null : v))
-    .nullable()
-    .optional()
-    .refine((val) => !val || val > 0, { message: 'Must be positive' })
-    .pipe(z.number().min(5).optional()),
+    .nullish()
+    .refine((val) => !val || val > 0, { message: 'Must be positive' }),
+  // .pipe(z.number().min(5).nullable()),
   startDate: z.any(),
   endDate: z.any(),
 })

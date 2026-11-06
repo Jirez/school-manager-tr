@@ -15,13 +15,13 @@ import { useClassesQuery, useStudentImportMutation } from '@/gql/graphql'
 import type { FrequentBulkImportType } from './Frequent.type'
 import type { SubmitHandler } from 'react-hook-form'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import SimpleInput from '@/@core/components/ui/simple-input'
 // import SimpleDatePicker from '@/@core/components/ui/forms/simple-date-picker'
 import Button from '@/@core/components/button'
 import dayjs from 'dayjs'
 import { formatError } from '@/utils/ErrorHelper'
 import DatePicker from '#/@core/components/ui/forms/date-picker'
+import { m } from '@/paraglide/messages'
 
 interface FormValues {
   items: FrequentBulkImportType[]
@@ -38,7 +38,6 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
 }) => {
   const [values, setValues] = useState<{ [key: string]: any }>({})
   const [showUpload, setShowUpload] = useState(true)
-  const { t } = useTranslation()
   const { enterpriseId } = useAuthentication()
 
   const { control, register, handleSubmit } = useForm<FormValues>({
@@ -77,18 +76,18 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
     const formData = new FormData()
     formData.append('file', values.file)
 
-    const callback = (data: any) => {
+    const callback = (_data: any) => {
       setValues((val) => ({ ...val, uploading: false }))
       toast.success('Chargement terminé avec succès', { ...TOAST_OPTIONS })
       // refetch();
 
       setShowUpload(false)
       // console.log(data);
-      data.forEach((item: any) => {
+      _data.forEach((item: any) => {
         append({
           studentId: item.studentId,
           lastName: item.lastName,
-          firstName: item.firstName,
+          firstName: item.firstName || null,
           birthDate: dayjs(item.birthDate).toDate(),
           birthplace: item.birthplace,
           registrationNumber: item.registrationNumber,
@@ -229,8 +228,8 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
           onSubmit={handleUpload}
           fixed
           disabled={values.uploading}
-          saveCloseLabel={t('label-import')}
-          saveLabel={t('label-import')}
+          saveCloseLabel={m.label_import()}
+          saveLabel={m.label_import()}
         />
       </Form>
 
@@ -243,13 +242,13 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
             <tr>
               <th style={{ width: '10px' }}>#</th>
               <th style={{ width: '10%' }}>Id</th>
-              <th style={{ width: '10%' }}>{t('label-registrationNumber')}</th>
-              <th style={{ width: '25%' }}>{t('label-lastName')}</th>
-              <th style={{ width: '20%' }}>{t('label-firstName')}</th>
-              <th>{t('label-birthDate')}</th>
-              <th>{t('label-birthplace')}</th>
-              <th>{t('label-gender')}</th>
-              <th>{t('label-repeater')}</th>
+              <th style={{ width: '10%' }}>{m.label_registrationNumber()}</th>
+              <th style={{ width: '25%' }}>{m.label_lastName()}</th>
+              <th style={{ width: '20%' }}>{m.label_firstName()}</th>
+              <th>{m.label_birthDate()}</th>
+              <th>{m.label_birthplace()}</th>
+              <th>{m.label_gender()}</th>
+              <th>{m.label_repeater()}</th>
             </tr>
           </thead>
           <tbody>
@@ -314,7 +313,7 @@ const StudentImportProcessForm: React.FC<StudentImportProcessFormProps> = ({
             color="primary"
             className="round text-sm"
           >
-            {t('label-save')}
+            {m.label_save()}
           </Button>
         </div>
       </Form>
