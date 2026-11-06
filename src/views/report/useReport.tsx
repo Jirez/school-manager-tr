@@ -3,16 +3,16 @@ import { useApolloClient } from '@apollo/client'
 import { ReportCategoriesByEnterpriseDocument } from '@/gql/graphql'
 
 export const useReport = (enterpriseId: number) => {
-  const [items, setItems] = useState<any[]>([])
+  const [items, setItems] = useState<any[] | null>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<any>(null)
   const client = useApolloClient()
 
-  const findReports = async (enterpriseId: number) => {
+  const findReports = async (_enterpriseId: number) => {
     setLoading(true)
     const { data } = await client.query({
       query: ReportCategoriesByEnterpriseDocument,
-      variables: { id: enterpriseId },
+      variables: { id: _enterpriseId },
       fetchPolicy: 'no-cache',
     })
 
@@ -25,8 +25,8 @@ export const useReport = (enterpriseId: number) => {
 
   useEffect(() => {
     if (enterpriseId) {
-      findReports(enterpriseId).catch((error) => {
-        setError(error)
+      findReports(enterpriseId).catch((e) => {
+        setError(e)
         setLoading(false)
       })
     }

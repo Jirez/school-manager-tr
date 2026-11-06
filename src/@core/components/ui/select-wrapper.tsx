@@ -22,7 +22,7 @@ const SelectWrapper = ({
     <label
       htmlFor={htmlFor}
       className={cn(
-        'quarterly-label mb-0.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400',
+        'quarterly-label mb-[6px] flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400',
         labelClassName,
       )}
     >

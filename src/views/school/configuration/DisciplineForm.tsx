@@ -3,7 +3,6 @@ import { useApolloClient } from '@apollo/client'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 import { Form } from 'reactstrap'
-import { useTranslation } from 'react-i18next'
 
 import { useAuthentication } from '@/hooks/useAuthentication'
 import { formatError } from '@/utils/ErrorHelper'
@@ -21,6 +20,7 @@ import {
   FieldGroup,
 } from './config-form-helper'
 import { AlertTriangle, XCircle } from 'lucide-react'
+import { m } from '@/paraglide/messages'
 
 interface DisciplineType {
   warning: string
@@ -46,7 +46,6 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
 }) => {
   const client = useApolloClient()
   const { enterpriseId } = useAuthentication()
-  const { t } = useTranslation()
 
   const encode = async (json: any) => {
     const { data } = await client.query({
@@ -118,7 +117,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="warning"
-                label={t('label-warning')}
+                label={m.label_warning()}
                 control={control}
                 required
                 placeholder="Ex: 1-5"
@@ -127,7 +126,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="blame"
-                label={t('label-blame')}
+                label={m.label_blame()}
                 control={control}
                 required
               />
@@ -147,7 +146,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="exclusion3"
-                label={t('label-exclusion3')}
+                label={m.label_exclusion3()}
                 control={control}
                 required
               />
@@ -155,7 +154,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="exclusion5"
-                label={t('label-exclusion5')}
+                label={m.label_exclusion5()}
                 control={control}
                 required
               />
@@ -163,7 +162,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="exclusion8"
-                label={t('label-exclusion8')}
+                label={m.label_exclusion8()}
                 control={control}
                 required
               />
@@ -171,7 +170,7 @@ const DisciplineForm: FC<DisciplineFormProps> = ({
             <FieldGroup>
               <Input
                 name="definitiveExclusion"
-                label={t('label-definitiveExclusion')}
+                label={m.label_definitiveExclusion()}
                 control={control}
                 required
               />

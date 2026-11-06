@@ -10,11 +10,11 @@ import AlgoliaSearch from './AlgoliaSearch'
 import { useReport } from './useReport'
 import { useAuthentication } from '@/hooks/useAuthentication'
 import PageHeader from '@/@core/components/ui/page-header'
-import Loader from '@/@core/components/spinner/loader'
 import ErrorComponent from '@/@core/components/ui/error-component'
 import { useTitle } from 'ahooks'
 import { useReportSaveMutation } from '@/gql/graphql'
 import { m } from '@/paraglide/messages'
+import ReportSkeleton from './ReportSkeleton'
 
 const PageContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const PageContainer = styled.div`
 `
 
 const HeaderSection = styled.div`
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.15rem;
 
   @media (max-width: 576px) {
     margin-bottom: 0.5rem;
@@ -320,10 +320,10 @@ const Reports = () => {
   }
 
   const [saveAction] = useReportSaveMutation({
-    update(cache, { data }) {
+    update(__, { data }) {
       updateItem(
         items,
-        data?.enterpriseReport?.enterpriseReportPK?.reportItemId,
+        data?.enterpriseReport?.enterpriseReportPK.reportItemId,
         data?.enterpriseReport?.favorite || false,
       )
     },
@@ -341,13 +341,13 @@ const Reports = () => {
   }
 
   if (loading) {
-    return <Loader />
+    return <ReportSkeleton />
   }
 
   const reportCategories = items
 
   const allReports = reportCategories
-    ? reportCategories.flatMap(({ items }) => items)
+    ? reportCategories.flatMap((rc) => rc.items)
     : []
 
   const favoriteReports = _.uniqBy(
@@ -477,7 +477,7 @@ const Reports = () => {
         </SectionHeader>
 
         <CategoriesGrid>
-          {reportCategories.map(({ id, name, items }) => (
+          {reportCategories?.map(({ id, name, items }) => (
             <ReportCategoryCard
               key={`rc-${id}`}
               name={name}

@@ -56,10 +56,11 @@ import {
   Key,
 } from 'lucide-react'
 import ConfigSection from './config-section'
+import { m } from '@/paraglide/messages'
 
 const Configuration = () => {
   const { t } = useTranslation()
-  useTitle(t('sidebar.tools.configuration'))
+  useTitle(m['sidebar.tools.configuration']())
   const [header, setHeader] = useState(false)
   const [reportHeader, setReportHeader] = useState(false)
   const [discipline, setDiscipline] = useState(false)
@@ -82,15 +83,15 @@ const Configuration = () => {
     variables: { id: enterpriseId },
   })
 
-  const findConfigByKey = (config: any[], key: string) => {
+  const findConfigByKey = (config: any[] | null, key: string) => {
     if (!config) return null
-    const data = config.filter(
+    const _data = config.filter(
       ({ configurationPK }) => configurationPK.key === key,
     )
-    return data && data[0] ? data[0].configData : null
+    return _data.length > 0 && _data[0] ? _data[0].configData : null
   }
 
-  const getDocumentHeader = (configs: any[]) => {
+  const getDocumentHeader = (configs: any[] | null) => {
     try {
       return JSON.parse(findConfigByKey(configs, 'DocumentHeader'))
     } catch (e) {
@@ -98,7 +99,7 @@ const Configuration = () => {
     }
   }
 
-  const getReportHeader = (configs: any[]) => {
+  const getReportHeader = (configs: any[] | null) => {
     try {
       return JSON.parse(findConfigByKey(configs, 'ReportHeader'))
     } catch (e) {
@@ -106,7 +107,7 @@ const Configuration = () => {
     }
   }
 
-  const parseConfig = (configs: any[], key: string) => {
+  const parseConfig = (configs: any[] | null, key: string) => {
     try {
       return JSON.parse(findConfigByKey(configs, key))
     } catch (e) {
@@ -117,7 +118,7 @@ const Configuration = () => {
   return (
     <PageContainer>
       <HeaderSection>
-        <PageHeader title={t('sidebar.tools.configuration')} />
+        <PageHeader title={m['sidebar.tools.configuration']()} />
       </HeaderSection>
 
       <TabContainer className="vertical-tabs">
@@ -128,7 +129,7 @@ const Configuration = () => {
           loading={loading}
           listVar="configs"
           subscribeToMore={subscribeToMore}
-          //sortField="name"
+          // sortField="name"
           triggerUpdate={true}
           enterpriseId={enterpriseId}
         >
@@ -136,19 +137,19 @@ const Configuration = () => {
             <div className="mb-6">
               <TabNav
                 items={[
-                  { id: '1', label: 'label-school' },
-                  { id: '2', label: 'label-disciplineAndNotes' },
-                  { id: '5', label: 'label-studentPayment' },
-                  { id: '6', label: 'label-salesAndExpenses' },
-                  { id: '3', label: 'label-security' },
-                  { id: '4', label: 'label-license' },
+                  { id: '1', label: m['label_school']() },
+                  { id: '2', label: m['label_disciplineAndNotes']() },
+                  { id: '5', label: m['label_studentPayment']() },
+                  { id: '6', label: m['label_salesAndExpenses']() },
+                  { id: '3', label: m['label_security']() },
+                  { id: '4', label: m['label_license']() },
                 ]}
               >
                 <TabPane tabId="1">
                   <GridRow>
                     <ConfigSection
-                      title="Entête des documents"
-                      description="Personnalisez les entêtes de vos rapports et documents"
+                      title={m['label_documentHeader']()}
+                      description={m['label_documentHeaderDesc']()}
                       icon={<FileText size={24} />}
                       iconColor="#6366f1"
                       isEditing={header}

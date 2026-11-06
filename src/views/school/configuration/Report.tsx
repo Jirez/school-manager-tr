@@ -7,6 +7,7 @@ import ConfigurationAdd from './ConfigurationAdd'
 import ReportForm from './ReportForm'
 import { Container, DimensionBadge } from './config-helper'
 import { Percent, Calendar, CalendarDays } from 'lucide-react'
+import { m } from '@/paraglide/messages'
 
 interface ReportData {
   minSubjectsPercentage: number
@@ -38,19 +39,13 @@ const Report: FC<ReportProps> = ({ data }) => {
     <Container>
       <Descriptions variant="card" layout="horizontal" columns={2} size="md">
         <DescriptionItem
-          title={
-            t('label-minSubjectsPercentage') ||
-            'Pourcentage de matière minimum nécessaire à un élève pour être classé séquentiellement'
-          }
+          title={m.label_minSubjectsPercentage()}
           icon={<Percent size={16} />}
         >
           <DimensionBadge>{reportData.minSubjectsPercentage}%</DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={
-            t('label-annualSubPeriodsRequired') ||
-            'Nombre de séquences requises pour être classé annuellement'
-          }
+          title={m.label_annualSubPeriodsRequired()}
           icon={<Calendar size={16} />}
         >
           <DimensionBadge>
@@ -61,10 +56,7 @@ const Report: FC<ReportProps> = ({ data }) => {
           </DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={
-            t('label-quarterlySubPeriodsRequired') ||
-            'Nombre de séquences requises pour être classé trimestriellement'
-          }
+          title={m.label_quarterlySubPeriodsRequired()}
           icon={<CalendarDays size={16} />}
         >
           <DimensionBadge>

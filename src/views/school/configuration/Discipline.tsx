@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 
@@ -7,6 +6,7 @@ import ConfigurationAdd from './ConfigurationAdd'
 import DisciplineForm from './DisciplineForm'
 import { Container, DimensionBadge } from './config-helper'
 import { AlertTriangle, Gavel, CalendarDays, XCircle } from 'lucide-react'
+import { m } from '@/paraglide/messages'
 
 interface DisciplineData {
   warning: number
@@ -22,8 +22,6 @@ interface DisciplineProps {
 }
 
 const Discipline: FC<DisciplineProps> = ({ data }) => {
-  const { t } = useTranslation()
-
   const disciplineData = useMemo<DisciplineData | null>(() => {
     if (!data) return null
     try {
@@ -41,7 +39,7 @@ const Discipline: FC<DisciplineProps> = ({ data }) => {
     <Container>
       <Descriptions variant="card" layout="horizontal" columns={2} size="md">
         <DescriptionItem
-          title={t('label-warning')}
+          title={m.label_warning()}
           icon={<AlertTriangle size={16} />}
         >
           <DimensionBadge>
@@ -49,14 +47,14 @@ const Discipline: FC<DisciplineProps> = ({ data }) => {
             {disciplineData.warning === 1 ? 'jour' : 'jours'}
           </DimensionBadge>
         </DescriptionItem>
-        <DescriptionItem title={t('label-blame')} icon={<Gavel size={16} />}>
+        <DescriptionItem title={m.label_blame()} icon={<Gavel size={16} />}>
           <DimensionBadge>
             {disciplineData.blame}{' '}
             {disciplineData.blame === 1 ? 'jour' : 'jours'}
           </DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={t('label-exclusion3')}
+          title={m.label_exclusion3()}
           icon={<CalendarDays size={16} />}
         >
           <DimensionBadge>
@@ -65,7 +63,7 @@ const Discipline: FC<DisciplineProps> = ({ data }) => {
           </DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={t('label-exclusion5')}
+          title={m.label_exclusion5()}
           icon={<CalendarDays size={16} />}
         >
           <DimensionBadge>
@@ -74,7 +72,7 @@ const Discipline: FC<DisciplineProps> = ({ data }) => {
           </DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={t('label-exclusion8')}
+          title={m.label_exclusion8()}
           icon={<CalendarDays size={16} />}
         >
           <DimensionBadge>
@@ -83,7 +81,7 @@ const Discipline: FC<DisciplineProps> = ({ data }) => {
           </DimensionBadge>
         </DescriptionItem>
         <DescriptionItem
-          title={t('label-definitiveExclusion')}
+          title={m.label_definitiveExclusion()}
           icon={<XCircle size={16} />}
         >
           <DimensionBadge>

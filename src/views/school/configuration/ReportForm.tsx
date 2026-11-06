@@ -83,7 +83,7 @@ const ReportForm: FC<ReportFormProps> = ({ report, action, ...props }) => {
       },
     })
       .then(async ({ data }) => {
-        //form.resetFields();
+        // form.resetFields();
         toast.success(`Configuration des bulletins de notes effectuée`, {
           ...TOAST_OPTIONS,
         })
