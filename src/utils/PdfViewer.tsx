@@ -17,7 +17,7 @@ import { useFullscreen } from 'ahooks'
 
 import RestDataSource from './RestDataSource'
 import Button from '@/@core/components/button'
-import Loader from '@/@core/components/spinner/loader'
+import { m } from '@/paraglide/messages'
 
 // Wrapper card for the entire PDF viewer
 const ViewerWrapper = styled.div`
@@ -205,74 +205,155 @@ const ErrorState = styled.div`
   }
 `
 
-const pulse = keyframes`
-  0% { opacity: 0.5; transform: scale(0.96); }
-  50% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0.5; transform: scale(0.96); }
+const shimmer = keyframes`
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
 `
 
-const shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+const SkeletonBlock = styled.div<{
+  $width?: string
+  $height?: string
+  $radius?: string
+}>`
+  width: ${({ $width = '100%' }) => $width};
+  height: ${({ $height = '1rem' }) => $height};
+  flex-shrink: 0;
+  border-radius: ${({ $radius = '6px' }) => $radius};
+  background: linear-gradient(
+    90deg,
+    rgba(115, 103, 240, 0.08) 25%,
+    rgba(115, 103, 240, 0.18) 50%,
+    rgba(115, 103, 240, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  animation: ${shimmer} 1.5s ease-in-out infinite;
+
+  .dark-layout & {
+    background: linear-gradient(
+      90deg,
+      rgba(167, 139, 250, 0.12) 25%,
+      rgba(167, 139, 250, 0.25) 50%,
+      rgba(167, 139, 250, 0.12) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `
 
 const LoadingPlaceholder = styled.div`
   width: 100%;
-  height: 600px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(115, 103, 240, 0.1);
+  background: #ffffff;
+
+  .dark-layout & {
+    background: #283046;
+    border-color: rgba(115, 103, 240, 0.2);
+  }
+`
+
+const LoadingToolbar = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
   background: linear-gradient(
     135deg,
-    rgba(115, 103, 240, 0.03) 0%,
-    rgba(115, 103, 240, 0.01) 100%
+    rgba(115, 103, 240, 0.08) 0%,
+    rgba(115, 103, 240, 0.04) 100%
   );
-  border-radius: 16px;
-  gap: 2rem;
-  border: 1px solid rgba(115, 103, 240, 0.1);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(115, 103, 240, 0.03) 50%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: ${shimmer} 2s infinite linear;
-  }
-
-  .loading-icon {
-    animation: ${pulse} 2s infinite ease-in-out;
-    color: #7367f0;
-    z-index: 1;
-  }
+  border-bottom: 1px solid rgba(115, 103, 240, 0.12);
 
   .dark-layout & {
     background: linear-gradient(
       135deg,
-      rgba(115, 103, 240, 0.08) 0%,
-      rgba(115, 103, 240, 0.04) 100%
+      rgba(115, 103, 240, 0.15) 0%,
+      rgba(115, 103, 240, 0.08) 100%
     );
+    border-bottom-color: rgba(115, 103, 240, 0.25);
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
   }
 `
 
-const LoadingText = styled.p`
-  font-size: 1rem;
-  font-weight: 500;
-  color: #7367f0;
-  z-index: 1;
-  margin: 0;
-  opacity: 0.9;
+const LoadingToolbarTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`
+
+const LoadingToolbarActions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media (max-width: 640px) {
+    justify-content: flex-end;
+  }
+`
+
+const LoadingDocument = styled.div<{ $height: number | string }>`
+  display: grid;
+  place-items: center;
+  height: ${({ $height }) =>
+    typeof $height === 'number' ? `${$height}px` : $height};
+  min-height: 400px;
+  padding: 1rem;
+  overflow: hidden;
+  background: #f3f4f6;
+
+  .dark-layout & {
+    background: #1e2538;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0.75rem;
+  }
+`
+
+const LoadingPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: min(70%, 620px);
+  max-height: 100%;
+  aspect-ratio: 0.707;
+  padding: 8%;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+
+  .dark-layout & {
+    background: #283046;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: 576px) {
+    width: 82%;
+    gap: 1rem;
+    padding: 7%;
+  }
+`
+
+const LoadingPageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`
+
+const LoadingPageRows = styled.div`
+  display: grid;
+  gap: 0.6rem;
 `
 
 const ActionButton = styled(Button)`
@@ -443,15 +524,56 @@ const PdfViewer: FC<PdfViewerProps> = ({
 
   if (loading) {
     return (
-      <ViewerWrapper>
-        <LoadingPlaceholder>
-          <div className="loading-icon">
-            <FileText size={72} strokeWidth={1.5} />
-          </div>
-          <Loader />
-          <LoadingText>
-            {t('label-generatingReport', 'Génération du rapport en cours...')}
-          </LoadingText>
+      <ViewerWrapper
+        aria-busy="true"
+        aria-label={m.label_generatingReport()}
+        role="status"
+      >
+        <LoadingPlaceholder aria-hidden="true">
+          <LoadingToolbar>
+            <LoadingToolbarTitle>
+              <SkeletonBlock $width="2rem" $height="2rem" $radius="8px" />
+              <SkeletonBlock $width="10rem" $height="1rem" />
+            </LoadingToolbarTitle>
+            <LoadingToolbarActions>
+              <SkeletonBlock $width="2rem" $height="2rem" $radius="6px" />
+              <SkeletonBlock $width="2rem" $height="2rem" $radius="6px" />
+              <ButtonDivider />
+              <SkeletonBlock $width="2rem" $height="2rem" $radius="6px" />
+              <SkeletonBlock $width="2rem" $height="2rem" $radius="6px" />
+              {showDownload && (
+                <SkeletonBlock $width="6rem" $height="2rem" $radius="6px" />
+              )}
+            </LoadingToolbarActions>
+          </LoadingToolbar>
+          <LoadingDocument $height={height}>
+            <LoadingPage>
+              <SkeletonBlock $width="42%" $height="0.75rem" />
+              <SkeletonBlock $width="78%" $height="1.25rem" />
+              <LoadingPageContent>
+                <SkeletonBlock $width="62%" $height="0.85rem" />
+                <LoadingPageRows>
+                  {[0, 1, 2, 3].map((row) => (
+                    <SkeletonBlock
+                      key={row}
+                      $width={`${92 - (row % 2) * 12}%`}
+                      $height="0.5rem"
+                    />
+                  ))}
+                </LoadingPageRows>
+              </LoadingPageContent>
+              <SkeletonBlock $width="50%" $height="0.85rem" />
+              <LoadingPageRows>
+                {[0, 1, 2, 3, 4, 5].map((row) => (
+                  <SkeletonBlock
+                    key={row}
+                    $width={`${96 - (row % 3) * 10}%`}
+                    $height="0.5rem"
+                  />
+                ))}
+              </LoadingPageRows>
+            </LoadingPage>
+          </LoadingDocument>
         </LoadingPlaceholder>
       </ViewerWrapper>
     )
@@ -475,7 +597,7 @@ const PdfViewer: FC<PdfViewerProps> = ({
             onClick={() => buildReport(getI18n().language)}
           >
             <RefreshCw size={16} />
-            {t('label-retry', 'Réessayer')}
+            {m.label_retry()}
           </ActionButton>
         </ErrorState>
       </ViewerWrapper>
@@ -502,23 +624,19 @@ const PdfViewer: FC<PdfViewerProps> = ({
               title={t('label-refresh', 'Actualiser')}
             >
               <RefreshCw size={14} />
-              <span className="d-none d-lg-inline">
-                {t('label-refresh', 'Actualiser')}
-              </span>
+              <span className="d-none d-lg-inline">{m.label_refresh()}</span>
             </IconButton>
             <IconButton
               outline
               color="secondary"
               onClick={toggleFullscreen}
               title={
-                isFullscreen ? t('label-exitFullscreen') : t('label-fullscreen')
+                isFullscreen ? m.label_exitFullscreen() : m.label_fullscreen()
               }
             >
               {isFullscreen ? <Minimize size={14} /> : <Maximize size={14} />}
               <span className="d-none d-lg-inline">
-                {isFullscreen
-                  ? t('label-exitFullscreen')
-                  : t('label-fullscreen')}
+                {isFullscreen ? m.label_exitFullscreen() : m.label_fullscreen()}
               </span>
             </IconButton>
 
@@ -528,28 +646,24 @@ const PdfViewer: FC<PdfViewerProps> = ({
               outline
               color="secondary"
               onClick={handleOpenNewTab}
-              title={t('label-open', 'Ouvrir')}
+              title={m.label_open()}
             >
               <ExternalLink size={14} />
-              <span className="d-none d-lg-inline">
-                {t('label-open', 'Ouvrir')}
-              </span>
+              <span className="d-none d-lg-inline">{m.label_open()}</span>
             </IconButton>
             <IconButton
               outline
               color="secondary"
               onClick={handlePrint}
-              title={t('label-print', 'Imprimer')}
+              title={m.label_print()}
             >
               <Printer size={14} />
-              <span className="d-none d-lg-inline">
-                {t('label-print', 'Imprimer')}
-              </span>
+              <span className="d-none d-lg-inline">{m.label_print()}</span>
             </IconButton>
             {showDownload && (
               <ActionButton color="primary" onClick={handleDownload}>
                 <Download size={14} />
-                <span>{t('label-download', 'Télécharger')}</span>
+                <span>{m.label_download()}</span>
               </ActionButton>
             )}
           </ToolbarActions>

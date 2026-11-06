@@ -2098,5 +2098,8 @@
   "label_documentHeaderDesc": "Personnalisez les entêtes de vos rapports et documents",
   "label_minSubjectsPercentage": "Pourcentage de matière minimum nécessaire à un élève pour être classé séquentiellement",
   "label_annualSubPeriodsRequired": "Nombre de séquences requises pour être classé annuellement",
-  "label_quarterlySubPeriodsRequired": "Nombre de séquences requises pour être classé trimestriellement"
+  "label_quarterlySubPeriodsRequired": "Nombre de séquences requises pour être classé trimestriellement",
+  "label_retry": "Rééssayer",
+  "label_generatingReport": "Génération du rapport en cours...",
+  "reportOptions": "Options du rapport"
 }

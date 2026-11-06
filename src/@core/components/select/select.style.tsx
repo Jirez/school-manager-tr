@@ -1,5 +1,9 @@
 import type { StylesConfig } from 'react-select'
 
+const isDarkMode = () =>
+  typeof document !== 'undefined' &&
+  document.querySelector('.dark-layout') !== null
+
 export const myCustomStyles = {
   container: (provided: any) => ({
     ...provided,
@@ -64,10 +68,11 @@ export const enhancedStyles: StylesConfig<Record<string, any>, boolean> = {
     ...provided,
     minHeight: '36px',
     borderRadius: '8px',
+    backgroundColor: isDarkMode() ? '#283046' : '#ffffff',
     borderColor: state.isFocused
       ? '#7367f0'
-      : state.hasValue
-        ? '#d0d7de'
+      : isDarkMode()
+        ? '#3b4253'
         : '#d0d7de',
     boxShadow: state.isFocused ? '0 0 0 3px rgba(115, 103, 240, 0.1)' : 'none',
     transition: 'all 0.2s ease',
@@ -87,19 +92,23 @@ export const enhancedStyles: StylesConfig<Record<string, any>, boolean> = {
   }),
   placeholder: (provided: any) => ({
     ...provided,
-    color: '#6c757d',
+    color: isDarkMode() ? '#9ca3af' : '#6c757d',
     fontSize: '0.95rem',
   }),
   singleValue: (provided: any) => ({
     ...provided,
-    color: '#2c3e50',
+    color: isDarkMode() ? '#e4e6eb' : '#2c3e50',
     fontSize: '0.95rem',
   }),
   menu: (provided: any) => ({
     ...provided,
     borderRadius: '8px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-    border: '1px solid rgba(0, 0, 0, 0.08)',
+    border: `1px solid ${
+      isDarkMode() ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)'
+    }`,
+    backgroundColor: isDarkMode() ? '#283046' : '#ffffff',
+    color: isDarkMode() ? '#e4e6eb' : '#2c3e50',
     marginTop: '4px',
     zIndex: 106000,
   }),
@@ -117,23 +126,33 @@ export const enhancedStyles: StylesConfig<Record<string, any>, boolean> = {
     backgroundColor: state.isSelected
       ? '#7367f0'
       : state.isFocused
-        ? 'rgba(115, 103, 240, 0.1)'
+        ? isDarkMode()
+          ? 'rgba(115, 103, 240, 0.25)'
+          : 'rgba(115, 103, 240, 0.1)'
         : 'transparent',
     color: state.isSelected
       ? '#ffffff'
       : state.isFocused
         ? '#7367f0'
-        : '#2c3e50',
+        : isDarkMode()
+          ? '#e4e6eb'
+          : '#2c3e50',
     '&:active': {
       backgroundColor: state.isSelected
         ? '#7367f0'
-        : 'rgba(115, 103, 240, 0.15)',
+        : isDarkMode()
+          ? 'rgba(115, 103, 240, 0.3)'
+          : 'rgba(115, 103, 240, 0.15)',
     },
   }),
   dropdownIndicator: (provided: any, state: any) => ({
     ...provided,
     padding: '4px 8px',
-    color: state.isFocused ? '#7367f0' : '#6c757d',
+    color: state.isFocused
+      ? '#7367f0'
+      : isDarkMode()
+        ? '#9ca3af'
+        : '#6c757d',
     transition: 'color 0.2s ease, transform 0.2s ease',
     transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
     '&:hover': {
@@ -143,7 +162,7 @@ export const enhancedStyles: StylesConfig<Record<string, any>, boolean> = {
   clearIndicator: (provided: any) => ({
     ...provided,
     padding: '4px 8px',
-    color: '#6c757d',
+    color: isDarkMode() ? '#9ca3af' : '#6c757d',
     cursor: 'pointer',
     transition: 'color 0.2s ease',
     '&:hover': {

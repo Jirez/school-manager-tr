@@ -9,6 +9,7 @@ import ReportOptions from '@/views/report/ReportOptions'
 import Select from '@/@core/components/select'
 import { useSchoolSectionsQuery, useSchoolYearsQuery } from '@/gql/graphql'
 import { PdfContainer, EmptyState } from '../report.style'
+import { m } from '@/paraglide/messages'
 
 const ClassSummaryReport = () => {
   const [values, setValues] = useState<{ [key: string]: any }>({})
@@ -39,7 +40,7 @@ const ClassSummaryReport = () => {
     <div className="flex flex-col w-full">
       <div className="w-full">
         <PageHeader
-          title={t('sidebar.reports.classSummary')}
+          title={m['sidebar.reports.classSummary']()}
           returnLink="/reports"
         />
       </div>
@@ -51,7 +52,7 @@ const ClassSummaryReport = () => {
             options={data?.schoolYears || undefined}
             getOptionLabel={(option: any) => option.label}
             getOptionValue={(option: any) => option.id}
-            placeholder={t('label-selectSchoolYear')}
+            placeholder={m.label_schoolYear()}
             className="react-select w-full md:w-4/12"
           />
 
@@ -61,7 +62,7 @@ const ClassSummaryReport = () => {
             options={dataSection?.schoolSections || undefined}
             getOptionLabel={(option: any) => option.name}
             getOptionValue={(option: any) => option.id}
-            placeholder={t('label-selectSection')}
+            placeholder={m.label_selectSection()}
             className="react-select w-full md:w-4/12"
           />
         </div>

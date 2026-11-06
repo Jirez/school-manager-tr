@@ -8,6 +8,7 @@ import {
 } from 'reactstrap'
 import { Settings } from 'lucide-react'
 import styled from 'styled-components'
+import { m } from '@/paraglide/messages'
 
 interface ReportOptionsProps {
   title?: string
@@ -29,8 +30,8 @@ const StyledAccordion = styled(Accordion)`
 
   .accordion-button {
     font-weight: 600;
-    font-size: 1.125rem;
-    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    padding: 0.625rem 1rem;
     color: #2c3e50;
     background: transparent;
     border: none;
@@ -58,7 +59,7 @@ const StyledAccordion = styled(Accordion)`
   }
 
   .accordion-body {
-    padding: 1.5rem;
+    padding: 1rem;
     background: transparent;
   }
 `
@@ -66,7 +67,7 @@ const StyledAccordion = styled(Accordion)`
 const HeaderContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.625rem;
   width: 100%;
 `
 
@@ -74,13 +75,15 @@ const HeaderIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
   background: rgba(115, 103, 240, 0.1);
 
   svg {
     color: #7367f0;
+    width: 16px;
+    height: 16px;
   }
 
   .dark-layout & {
@@ -101,7 +104,7 @@ const ReportOptions: FC<ReportOptionsProps> = ({
 
   return (
     <StyledAccordion
-      className="accordion-margin -mt-5"
+      className="accordion-margin -mt-4"
       open={open}
       toggle={toggle}
     >
@@ -111,7 +114,7 @@ const ReportOptions: FC<ReportOptionsProps> = ({
             <HeaderIcon>
               <Settings size={18} />
             </HeaderIcon>
-            <span>{title || 'Options du rapport'}</span>
+            <span>{title || m.reportOptions()}</span>
           </HeaderContent>
         </AccordionHeader>
         <AccordionBody accordionId="1">{children}</AccordionBody>

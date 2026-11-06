@@ -2094,5 +2094,8 @@
   "label_documentHeaderDesc": "Customize the header of the document",
   "label_minSubjectsPercentage": "Minimum subject percentage required for sequential classification",
   "label_annualSubPeriodsRequired": "Number of sub-periods required for annual classification",
-  "label_quarterlySubPeriodsRequired": "Number of sub-periods required for quarterly classification"
+  "label_quarterlySubPeriodsRequired": "Number of sub-periods required for quarterly classification",
+  "label_retry": "Retry",
+  "label_generatingReport": "Generating report...",
+  "reportOptions": "Report options"
 }
